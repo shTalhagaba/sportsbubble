@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
-    <device id="retina4_7" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina6_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -13,35 +13,78 @@
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sportsbubble" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="GJd-Yh-RWb">
-                                <rect key="frame" x="0.0" y="202" width="375" height="43"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Powered by React Native" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="MN2-I3-ftu">
-                                <rect key="frame" x="0.0" y="626" width="375" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LmX-hy-gbI" userLabel="SplashBackground">
+                                <rect key="frame" x="0.0" y="3" width="428" height="767"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.55000000000000004" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="Sports_background" translatesAutoresizingMaskIntoConstraints="NO" id="7bg-pE-Rmc">
+                                        <rect key="frame" x="0.0" y="0.0" width="428" height="342"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </imageView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.84999999999999998" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ellipse_splash_background" translatesAutoresizingMaskIntoConstraints="NO" id="LV5-ff-kHV">
+                                        <rect key="frame" x="-30" y="114.33333333333331" width="488" height="730"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="LV5-ff-kHV" secondAttribute="trailing" constant="-30" id="FeK-0s-7Ya"/>
+                                    <constraint firstItem="7bg-pE-Rmc" firstAttribute="leading" secondItem="LmX-hy-gbI" secondAttribute="leading" id="SID-wN-ojC"/>
+                                    <constraint firstItem="LV5-ff-kHV" firstAttribute="centerY" secondItem="LmX-hy-gbI" secondAttribute="centerY" multiplier="1.25" id="VsH-pp-n18"/>
+                                    <constraint firstAttribute="trailing" secondItem="7bg-pE-Rmc" secondAttribute="trailing" id="YJa-o3-WoY"/>
+                                    <constraint firstItem="LV5-ff-kHV" firstAttribute="leading" secondItem="LmX-hy-gbI" secondAttribute="leading" constant="-30" id="pFY-eW-zzU"/>
+                                    <constraint firstItem="7bg-pE-Rmc" firstAttribute="top" secondItem="LmX-hy-gbI" secondAttribute="top" id="soo-Tc-cZw"/>
+                                </constraints>
+                            </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" image="WatchSports_Logo_Splash" translatesAutoresizingMaskIntoConstraints="NO" id="dNB-xR-pOo">
+                                <rect key="frame" x="72.666666666666657" y="336.33333333333331" width="282.66666666666674" height="253.33333333333331"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sb_splash_logo" translatesAutoresizingMaskIntoConstraints="NO" id="kdi-LI-dGZ">
+                                <rect key="frame" x="174" y="703" width="80" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="QvT-9p-t2p"/>
+                                    <constraint firstAttribute="height" constant="80" id="aKs-30-IUd"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WatchSports_Logo_Footer" translatesAutoresizingMaskIntoConstraints="NO" id="uqz-Ro-I7B">
+                                <rect key="frame" x="0.0" y="803" width="428" height="49"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="49" id="7Y6-va-SH4"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="bottom" secondItem="MN2-I3-ftu" secondAttribute="bottom" constant="20" id="OZV-Vh-mqD"/>
-                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="centerX" secondItem="GJd-Yh-RWb" secondAttribute="centerX" id="Q3B-4B-g5h"/>
-                            <constraint firstItem="MN2-I3-ftu" firstAttribute="centerX" secondItem="Bcu-3y-fUS" secondAttribute="centerX" id="akx-eg-2ui"/>
-                            <constraint firstItem="MN2-I3-ftu" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" id="i1E-0Y-4RG"/>
-                            <constraint firstItem="GJd-Yh-RWb" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="bottom" multiplier="1/3" constant="1" id="moa-c2-u7t"/>
-                            <constraint firstItem="GJd-Yh-RWb" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" symbolic="YES" id="x7j-FC-K8j"/>
+                            <constraint firstItem="LmX-hy-gbI" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="topMargin" constant="-44" id="09M-I3-x5r"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="LmX-hy-gbI" secondAttribute="trailing" id="5FX-e2-SXb"/>
+                            <constraint firstItem="kdi-LI-dGZ" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="FuA-UY-ftL"/>
+                            <constraint firstItem="dNB-xR-pOo" firstAttribute="width" secondItem="Ze5-6b-2t3" secondAttribute="width" multiplier="0.66" id="Mw5-s4-D4J"/>
+                            <constraint firstItem="uqz-Ro-I7B" firstAttribute="centerX" secondItem="dNB-xR-pOo" secondAttribute="centerX" id="OfH-Og-YUb"/>
+                            <constraint firstItem="dNB-xR-pOo" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="TUX-Zy-Cpf"/>
+                            <constraint firstItem="kdi-LI-dGZ" firstAttribute="bottom" secondItem="uqz-Ro-I7B" secondAttribute="top" constant="-20" id="UY1-b5-Jtx"/>
+                            <constraint firstItem="uqz-Ro-I7B" firstAttribute="width" secondItem="Ze5-6b-2t3" secondAttribute="width" id="YW6-ii-DIv"/>
+                            <constraint firstItem="uqz-Ro-I7B" firstAttribute="top" secondItem="LmX-hy-gbI" secondAttribute="bottom" constant="33" id="dRq-Xt-DW3"/>
+                            <constraint firstItem="dNB-xR-pOo" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="mrP-Nd-dMF"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="uqz-Ro-I7B" secondAttribute="bottom" constant="40" id="vjV-gk-mrQ"/>
+                            <constraint firstItem="LmX-hy-gbI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="zCR-ce-nYb"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
                     </view>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="52.173913043478265" y="375"/>
+            <point key="canvasLocation" x="51.86915887850467" y="374.51403887688986"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Sports_background" width="375" height="342"/>
+        <image name="WatchSports_Logo_Footer" width="151.66667175292969" height="45"/>
+        <image name="WatchSports_Logo_Splash" width="322" height="253.33332824707031"/>
+        <image name="ellipse_splash_background" width="375" height="730"/>
+        <image name="sb_splash_logo" width="272.66665649414062" height="257.66665649414062"/>
+    </resources>
 </document>

@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "SPORTS_inCircle_OL.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "SPORTS_inCircle_OL-1.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "SPORTS_inCircle_OL-2.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
