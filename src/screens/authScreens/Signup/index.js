@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, ScrollView, ImageBackground, StatusBar } from 'react-native';
+import { View, Text, ScrollView, ImageBackground, StatusBar, TouchableOpacity } from 'react-native';
 import styles from './styles';
 import ContactTextInput from 'src/components/ContactTextInput'
 import AppHeader from 'src/components/AppHeader'
-import { Images, Colors } from 'src/utils';
+import { Images, Colors, Fonts } from 'src/utils';
+import CustomButton from 'src/components/CustomButton';
 
 
 export default function Signup() {
@@ -25,6 +26,7 @@ export default function Signup() {
 
     return (
         <ImageBackground source={Images.Background}
+            resizeMode="cover"
             style={styles.container}>
             <AppHeader
                 centerImage={Images.Logo}
@@ -123,8 +125,10 @@ export default function Signup() {
                         secureTextEntry={displayConfirmPassword}
                         eyeOpen={displayConfirmPassword}
                         onPress={() => setDisplayConfirmPassword(!displayConfirmPassword)}
-
                     />
+                    <CustomButton  
+                        title={"Continue"} />
+                  
                 </View>
 
             </ScrollView>

@@ -4,12 +4,12 @@ import { Colors } from 'src/utils';
 export default StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.appColor
-
+        backgroundColor: Colors.appColorBackground
     },
     signupTxt: {
         fontSize: 20,
         fontWeight: "bold",
-        textAlign: "center"
+        textAlign: "center",
+        color: Colors.white
     }
 });

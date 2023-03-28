@@ -1,12 +1,15 @@
+import { useNavigation } from '@react-navigation/native'
 import React from 'react'
 import { View, TouchableOpacity, Image } from 'react-native'
 import styles from './styles'
 
 const AppHeader = (props) => {
+    const navigation = useNavigation()
+
     return (
         <View style={[styles.headerContainer, props.headerContainer]}>
             {props.LeftImage ?
-                <TouchableOpacity onPress={props.leftIconPress} style={styles.iconContainer}>
+                <TouchableOpacity onPress={()=>navigation.goBack()} style={styles.iconContainer}>
                     <Image source={props.LeftImage} style={[styles.leftArrowIcon, props.customLeftImage]} resizeMode={"contain"} />
                 </TouchableOpacity> : null
             }

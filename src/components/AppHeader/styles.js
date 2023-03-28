@@ -5,7 +5,8 @@ const styles = StyleSheet.create({
         height: 70,
         flexDirection: "row",
         alignItems: "center",
-        backgroundColor: Colors.transparent
+        backgroundColor: Colors.transparent,
+        marginTop: Platform.OS === 'ios' ? 25 : 1,
     },
     leftArrowIcon: {
         width: 25,
