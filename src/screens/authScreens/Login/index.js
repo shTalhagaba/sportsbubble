@@ -20,7 +20,7 @@ export default function Login() {
     const passwordRef = useRef()
 
     return (
-        <ImageBackground source={Images.Background}
+        <ImageBackground source={Images.Background2}
             resizeMode="cover"
             style={styles.container}>
             <AppHeader

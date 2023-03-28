@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     inputField: {
         flex: 1,
         fontFamily: Fonts.Regular,
-        fontSize: 18,
+        fontSize: 17,
         fontWeight: "400",
         lineHeight: 21,
         padding: 0,

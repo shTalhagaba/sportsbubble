@@ -5,11 +5,9 @@ import ContactTextInput from 'src/components/ContactTextInput'
 import AppHeader from 'src/components/AppHeader'
 import { Images, Colors, Fonts } from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
-import { useNavigation } from '@react-navigation/native';
 
 
-export default function Signup() {
-    const navigation = useNavigation()
+export default function WelcomeAccount() {
     const [fullName, setFullName] = useState('')
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
@@ -37,13 +35,14 @@ export default function Signup() {
                 SimpleView />
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={{ marginHorizontal: 20 }}>
-                    <Text style={styles.signupTxt}>Sign Up</Text>
+                    <Text style={styles.signupTxt}>Welcome, FirstName!</Text>
+                    <Text style={styles.accountTxt}>We just need a few more details to configure your account</Text> 
                     <ContactTextInput
                         leftImage={Images.UserIcon}
                         refInner={fullNameRef}
                         Contianer={{ marginTop: 40 }}
                         placeholderTextColor={Colors.white}
-                        placeholder={"Full Name"}
+                        placeholder={"Zip Code"}
                         multiline={false}
                         value={fullName}
                         maxLength={50}
@@ -56,45 +55,12 @@ export default function Signup() {
                             lastNameRef.current.focus();
                         }}
                     />
-                    <ContactTextInput ddddddddd
-                        leftImage={Images.UserIcon}
-                        refInner={lastNameRef}
-                        placeholderTextColor={Colors.white}
-                        placeholder={"Last Name"}
-                        multiline={false}
-                        value={lastName}
-                        maxLength={50}
-                        onChangeText={(txt) => setLastName(txt)}
-                        keyboardType={"default"}
-                        autoCapitalize="none"
-                        returnKeyType={"next"}
-                        blurOnSubmit={false}
-                        onSubmitEditing={() => {
-                            emailRef.current.focus();
-                        }}
-                    />
-                    <ContactTextInput
-                        leftImage={Images.EmailIcon}
-                        refInner={emailRef}
-                        placeholderTextColor={Colors.white}
-                        placeholder={"Email"}
-                        multiline={false}
-                        value={email}
-                        maxLength={50}
-                        onChangeText={(txt) => setEmail(txt)}
-                        keyboardType={"email-address"}
-                        autoCapitalize="none"
-                        returnKeyType={"next"}
-                        blurOnSubmit={false}
-                        onSubmitEditing={() => {
-                            passwordRef.current.focus();
-                        }}
-                    />
+                    <Text style={styles.sideTxt}>Sharing your location allows us to surface the most relevant event listings in your area</Text> 
                     <ContactTextInput
                         leftImage={Images.LockIcon}
                         refInner={passwordRef}
                         placeholderTextColor={Colors.white}
-                        placeholder={"Password"}
+                        placeholder={"Birthdate"}
                         multiline={false}
                         value={password}
                         maxLength={50}
@@ -111,6 +77,7 @@ export default function Signup() {
                             confirmPasswordRef.current.focus();
                         }}
                     />
+                    <Text style={styles.sideTxt}>You must be at least 14 years of age of register.</Text> 
                     <ContactTextInput
                         leftImage={Images.LockIcon}
                         refInner={confirmPasswordRef}
@@ -128,9 +95,11 @@ export default function Signup() {
                         eyeOpen={displayConfirmPassword}
                         onPress={() => setDisplayConfirmPassword(!displayConfirmPassword)}
                     />
+                     <Text style={styles.sideTxt}>Wording for this tk</Text> 
+                    <View style={{marginTop: 55}}>
                     <CustomButton  
-                        title={"Continue"}
-                        onpress={()=>navigation.navigate('WelcomeAccount')} />
+                        title={"Continue"} />
+                    </View>
                   
                 </View>
 

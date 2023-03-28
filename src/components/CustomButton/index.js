@@ -5,7 +5,7 @@ import styles from './styles'
 
 const CustomButton = (props) => {
     return (
-        <TouchableOpacity style={[styles.container, props.Contianer,props.blue?{ backgroundColor: Colors.buttonBlue,}:{}]}>
+        <TouchableOpacity onPress={props.onpress} style={[styles.container, props.Contianer,props.blue?{ backgroundColor: Colors.buttonBlue,}:{}]}>
             <View style={[styles.innerContainer, props.innerContainer]}>
                     <Text style={styles.txt}>{props.title}</Text>
             </View>
