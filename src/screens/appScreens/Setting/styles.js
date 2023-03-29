@@ -7,4 +7,27 @@ export default StyleSheet.create({
         flex: 1,
         backgroundColor: Colors.appColorBackground
     },
+    loginTxt: {
+        fontSize: 20,
+        fontWeight: "bold",
+        textAlign: "center",
+        color: Colors.white
+    },
+    leftArrowIcon: {
+        width: 45,
+        height: 45,
+        resizeMode: "cover",
+    },
+    powerImage: {
+        width: 165,
+        height: 75,
+        resizeMode: "cover",
+        tintColor: Colors.white
+    },
+    versionTxt: {
+        fontSize: 16,
+        fontWeight: "bold",
+        textAlign: "center",
+        color: Colors.white
+    },
 });

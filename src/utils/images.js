@@ -12,8 +12,10 @@ const images = {
     Settings: require("src/assets/images/Settings.png"),
     Guide: require("src/assets/images/Guide.png"),
     NBALogo: require("src/assets/images/NBALogo.png"),
-
-
+    RightArrow: require("src/assets/images/RightArrow.png"),
+    Sports: require("src/assets/images/Sports.png"),
+    PoweredSB: require("src/assets/images/PoweredSB.png"),
+    
 }
 
 export default images

@@ -24,8 +24,6 @@ export default function Search() {
         customLeftImage={{ tintColor: Colors.orange }}
         SimpleView />
       <View style={{ flex: 1, marginHorizontal: 20 }}>
-
-
         <FlatList
           data={data}
           showsVerticalScrollIndicator={false}
@@ -36,12 +34,11 @@ export default function Search() {
                   <Image source={item?.img} style={{ height: 50, width: 50 }} />
                 </View>
                 <View style={styles.userNameContainer}>
-                  <Text>{item?.companyName}</Text>
-                  <Text >{item?.title}</Text>
+                  <Text style={{color:'white'}}>{item?.companyName}</Text>
+                  <Text style={{color:'white'}}>{item?.title}</Text>
                   <View style={{ flexDirection: "row" }}>
-                    <Text>{item?.day}</Text>
-                    <Text>{item?.time}</Text>
-
+                    <Text style={{color:'white'}}>{item?.day}</Text>
+                    <Text style={{color:'white'}}>{item?.time}</Text>
                   </View>
                 </View>
               </View>
