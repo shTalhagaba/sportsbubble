@@ -6,6 +6,7 @@ import {Image, View, StyleSheet, Text} from 'react-native';
 import Guide from 'src/screens/appScreens/Guide';
 import Search from 'src/screens/appScreens/Search';
 import Setting from 'src/screens/appScreens/Setting';
+import Legal from 'src/screens/appScreens/Legal';
 
 const Tab = createBottomTabNavigator();
 
@@ -81,7 +82,7 @@ const bottomTab = () => {
 
       <Tab.Screen
         name="Setting"
-        component={Setting}
+        component={Legal}
         options={{
           tabBarIcon: ({focused}) => (
             <View style={styles.bottomContainer}>
