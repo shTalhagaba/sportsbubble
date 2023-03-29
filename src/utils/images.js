@@ -8,6 +8,10 @@ const images = {
     LockIcon: require("src/assets/images/LockIcon.png"),
     EyeClose: require("src/assets/images/EyeClose.png"),
     EyeOpen: require("src/assets/images/EyeOpen.png"),
+    Search: require("src/assets/images/Search.png"),
+    Settings: require("src/assets/images/Settings.png"),
+    Guide: require("src/assets/images/Guide.png"),
+    NBALogo: require("src/assets/images/NBALogo.png"),
 
 
 }

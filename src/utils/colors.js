@@ -11,4 +11,5 @@ export default {
     buttonBlue: "#014EBD",
     greenText: "#69A833",
     greyText: "#676C71",
+    orange: "#fe9d0d",
 }

@@ -3,9 +3,8 @@ import { Colors } from 'src/utils';
 
 
 export default StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-
-  },
+    container: {
+        flex: 1,
+        backgroundColor: Colors.appColorBackground
+    },
 });
