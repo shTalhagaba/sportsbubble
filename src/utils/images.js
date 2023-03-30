@@ -15,7 +15,8 @@ const images = {
     RightArrow: require("src/assets/images/RightArrow.png"),
     Sports: require("src/assets/images/Sports.png"),
     PoweredSB: require("src/assets/images/PoweredSB.png"),
-    
+    Cross: require("src/assets/images/Cross.png"),
+
 }
 
 export default images

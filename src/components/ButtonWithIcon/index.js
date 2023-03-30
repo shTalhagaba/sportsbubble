@@ -1,7 +1,7 @@
 import React from 'react';
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import styles from './styles';
-import {Images, Colors} from 'src/utils';
+import { Images, Colors } from 'src/utils';
 
 const ButtonWithIcon = props => {
   return (
