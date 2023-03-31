@@ -7,9 +7,11 @@ export default {
     yellow: "#ddfc14",
     blue: "#4981cc",
     blueGrey: "#21364F",
+    darkGrey: "#171F2A",
     buttonGreen: "#50813A",
     buttonBlue: "#014EBD",
     greenText: "#69A833",
     greyText: "#676C71",
     orange: "#fe9d0d",
+    green: "#50813A",
 }
