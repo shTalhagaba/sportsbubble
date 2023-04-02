@@ -1,18 +1,48 @@
-import React from 'react';
-import {ImageBackground, Text, View, Image, FlatList} from 'react-native';
+import React, { useState } from 'react';
+import { ImageBackground, Text, View, Image, FlatList, TouchableOpacity } from 'react-native';
 import styles from './styles';
-import {Images, Colors, Fonts} from 'src/utils';
+import { Images, Colors, Fonts } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
 
 const data = [
-    { id: 1, img: Images.NBALogo, companyName: "NCAA Women's Soccer", title: "Oregon at Washington", day: "Thu. 2/9", time: "5:00pm - 7:30pm", live: true, percentage: '25%' },
-    { id: 2, img: Images.NBALogo, companyName: "NCAA Women's Soccer", title: "Oregon at Washington", day: "Thu. 2/9", time: "5:00pm - 7:30pm", live: true, percentage: '35%' },
-    { id: 3, img: Images.NBALogo, companyName: "NCAA Women's Soccer", title: "Oregon at Washington", day: "Thu. 2/9", time: "5:00pm - 7:30pm", live: true, percentage: '45%' },
-    { id: 4, img: Images.NBALogo, companyName: "NCAA Women's Soccer", title: "Oregon at Washington", day: "Thu. 2/9", time: "5:00pm - 7:30pm", live: false, percentage: '55%' },
-    { id: 5, img: Images.NBALogo, companyName: "NCAA Women's Soccer", title: "Oregon at Washington", day: "Thu. 2/9", time: "5:00pm - 7:30pm", live: false, percentage: '65%'},
-  ]
+  { id: 1, img: Images.NBALogo, companyName: "NCAA Women's Soccer", title: "Oregon at Washington", day: "Thu. 2/9", time: "5:00pm - 7:30pm", live: true, percentage: '25%' },
+  { id: 2, img: Images.NBALogo, companyName: "NCAA Women's Soccer", title: "Oregon at Washington", day: "Thu. 2/9", time: "5:00pm - 7:30pm", live: true, percentage: '35%' },
+  { id: 3, img: Images.NBALogo, companyName: "NCAA Women's Soccer", title: "Oregon at Washington", day: "Thu. 2/9", time: "5:00pm - 7:30pm", live: true, percentage: '45%' },
+  { id: 4, img: Images.NBALogo, companyName: "NCAA Women's Soccer", title: "Oregon at Washington", day: "Thu. 2/9", time: "5:00pm - 7:30pm", live: false, percentage: '55%' },
+  { id: 5, img: Images.NBALogo, companyName: "NCAA Women's Soccer", title: "Oregon at Washington", day: "Thu. 2/9", time: "5:00pm - 7:30pm", live: false, percentage: '65%' },
+]
 
 export default function Guide() {
+
+  const [allFlag, setAllFlag] = useState(true)
+  const [proFlag, setProFlag] = useState(false)
+  const [collegeFlag, setCollegeFlag] = useState(false)
+  const [sportFlag, setSportFlag] = useState(false)
+
+  const handleAll = () => {
+    setAllFlag(true)
+    setProFlag(false)
+    setCollegeFlag(false)
+    setSportFlag(false)
+  }
+  const handlePro = () => {
+    setAllFlag(false)
+    setProFlag(true)
+    setCollegeFlag(false)
+    setSportFlag(false)
+  }
+  const handleCollege = () => {
+    setAllFlag(false)
+    setProFlag(false)
+    setCollegeFlag(true)
+    setSportFlag(false)
+  }
+  const handleSport = () => {
+    setAllFlag(false)
+    setProFlag(false)
+    setCollegeFlag(false)
+    setSportFlag(true)
+  }
   return (
     <ImageBackground
       source={Images.Background2}
@@ -21,93 +51,64 @@ export default function Guide() {
       <AppHeader centerImage={Images.Logo} />
       {/* Slider all pro  */}
       <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-          marginTop: 1,
-          backgroundColor: Colors.blueGrey,
-          padding: 10,
-        }}>
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: 'red',
-            alignItems: 'center',
-            paddingVertical: 12,
-            borderColor: 'black',
-            borderWidth: 2,
-            marginHorizontal: 8,
-            borderRadius: 20,
-          }}>
+        style={styles.sliderContainer}>
+        <TouchableOpacity onPress={() => handleAll()}
+          activeOpacity={0.8}
+          style={[styles.sliderInnerContainer,
+          {
+            borderColor: allFlag ? "#094db1" : '#152232',
+            backgroundColor: allFlag ? "#072971" : '#21334b',
+          }]}>
           <Image
-            source={Images.Search}
-            style={{height: 20, width: 20, paddingVertical: 15}}
-            resizeMode={'contain'}
-          />
-          <Text style={{marginTop: 5}}>ALL</Text>
-        </View>
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: 'green',
-            alignItems: 'center',
-            paddingVertical: 12,
-            borderColor: 'black',
-            borderWidth: 2,
-            marginHorizontal: 8,
-            borderRadius: 20,
-          }}>
+            source={Images.Trophy}
+            style={styles.sliderIcon}
+            resizeMode={'contain'} />
+          <Text style={styles.sliderTxt}>ALL</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => handlePro()}
+          activeOpacity={0.8}
+          style={[styles.sliderInnerContainer,
+          {
+            borderColor: proFlag ? "#094db1" : '#152232',
+            backgroundColor: proFlag ? "#072971" : '#21334b',
+          }]}>
           <Image
-            source={Images.Search}
-            style={{height: 20, width: 20, paddingVertical: 15}}
-            resizeMode={'contain'}
-          />
-
-          <Text>PRO</Text>
-        </View>
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: 'red',
-            alignItems: 'center',
-            paddingVertical: 12,
-            borderColor: 'black',
-            borderWidth: 2,
-            marginHorizontal: 8,
-            borderRadius: 20,
-          }}>
+            source={Images.Crown}
+            style={styles.sliderIcon}
+            resizeMode={'contain'} />
+          <Text style={styles.sliderTxt}>PRO</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => handleCollege()}
+          activeOpacity={0.8}
+          style={[styles.sliderInnerContainer,
+          {
+            borderColor: collegeFlag ? "#094db1" : '#152232',
+            backgroundColor: collegeFlag ? "#072971" : '#21334b',
+          }]}>
           <Image
-            source={Images.Search}
-            style={{height: 20, width: 20, paddingVertical: 15}}
-            resizeMode={'contain'}
-          />
-
-          <Text>COLLEGE</Text>
-        </View>
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: 'green',
-            alignItems: 'center',
-            paddingVertical: 12,
-            borderColor: 'black',
-            borderWidth: 2,
-            marginHorizontal: 8,
-            borderRadius: 20,
-          }}>
+            source={Images.College}
+            style={styles.sliderIcon}
+            resizeMode={'contain'} />
+          <Text style={styles.sliderTxt}>COLLEGE</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => handleSport()}
+          activeOpacity={0.8}
+          style={[styles.sliderInnerContainer,
+          {
+            borderColor: sportFlag ? "#094db1" : '#152232',
+            backgroundColor: sportFlag ? "#072971" : '#21334b',
+          }]}>
           <Image
-            source={Images.Search}
-            style={{height: 20, width: 20, paddingVertical: 15}}
-            resizeMode={'contain'}
-          />
-
-          <Text>ESPORTS</Text>
-        </View>
+            source={Images.Game}
+            style={styles.sliderIcon}
+            resizeMode={'contain'} />
+          <Text style={styles.sliderTxt}>ESPORTS</Text>
+        </TouchableOpacity>
       </View>
       {/* time slider */}
-      <View style={{height: 40,backgroundColor:'red'}}></View>
-      <View style={{flex: 1,}}>
-      <FlatList
+      <View style={{ height: 40, backgroundColor: Colors.darkGrey }}></View>
+      <View style={{ flex: 1, }}>
+        <FlatList
           data={data}
           showsVerticalScrollIndicator={false}
           renderItem={({ item, index }) => (
@@ -116,13 +117,21 @@ export default function Guide() {
                 <View style={styles.imageContainer}>
                   <Image source={item?.img} style={styles.imageIcon} resizeMode={"contain"} />
                 </View>
-                <View style={item.live? {  width: item.percentage,
-        backgroundColor: Colors.green,}:{ width: item.percentage,
-            backgroundColor: Colors.darkGrey,}}>
+                <View style={item.live ? {
+                  width: item.percentage,
+                  backgroundColor: Colors.green,
+                } : {
+                  width: item.percentage,
+                  backgroundColor: Colors.darkGrey,
+                }}>
                 </View>
-                <View style={item.live? {  flex: 1,
-        backgroundColor: Colors.darkGrey,}:{ flex: 1,
-            backgroundColor: Colors.blueGrey,}}>
+                <View style={item.live ? {
+                  flex: 1,
+                  backgroundColor: Colors.darkGrey,
+                } : {
+                  flex: 1,
+                  backgroundColor: Colors.blueGrey,
+                }}>
                 </View>
                 <View style={styles.userNameContainer}>
                   <Text style={{ color: 'white' }}>{item?.companyName}</Text>
@@ -137,6 +146,6 @@ export default function Guide() {
           )} />
 
       </View>
-    </ImageBackground>
+    </ImageBackground >
   );
 }

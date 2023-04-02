@@ -16,6 +16,10 @@ const images = {
     Sports: require("src/assets/images/Sports.png"),
     PoweredSB: require("src/assets/images/PoweredSB.png"),
     Cross: require("src/assets/images/Cross.png"),
+    Game: require("src/assets/images/Game.png"),
+    College: require("src/assets/images/College.png"),
+    Trophy: require("src/assets/images/Trophy.png"),
+    Crown: require("src/assets/images/Crown.png"),
 
 }
 
