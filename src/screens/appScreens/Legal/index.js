@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Button, Image, ImageBackground, ScrollView, Text, View } from 'react-native';
+import { Button, Image, ImageBackground, StatusBar, Text, View } from 'react-native';
 import styles from './styles';
 import { Images, Colors, Fonts } from 'src/utils';
 import { useNavigation } from '@react-navigation/native';
@@ -16,6 +16,8 @@ export default function Legal() {
       source={Images.Background2}
       resizeMode="cover"
       style={styles.container}>
+      <StatusBar
+        backgroundColor={Colors.darkGrey} />
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}

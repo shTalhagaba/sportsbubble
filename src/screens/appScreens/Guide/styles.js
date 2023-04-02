@@ -15,6 +15,35 @@ export default StyleSheet.create({
   innerContainer: {
     flexDirection: "row"
   },
+  timeContainer: {
+    backgroundColor: "#213651",
+    paddingHorizontal: 20,
+    marginHorizontal: 15,
+    borderRadius: 20,
+    height: 30,
+    justifyContent: "center",
+    alignSelf: "center",
+  },
+  timeSliderContainer: {
+    flexDirection: "row",
+    paddingVertical: 10,
+  },
+  timeSliderInnerContainer: {
+    width: "75%"
+  },
+  nextContainer: {
+    backgroundColor: Colors.buttonBlue,
+    paddingHorizontal: 20,
+    marginHorizontal: 20,
+    borderRadius: 20,
+    height: 30,
+    justifyContent: "center",
+    alignSelf: "center"
+  },
+  rightIcon: {
+    height: 15,
+    width: 22
+  },
   imageContainer: {
     height: 80,
     width: 80,

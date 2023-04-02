@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, ImageBackground, View, Image, Text } from 'react-native';
+import { FlatList, ImageBackground, View, Image, Text, StatusBar } from 'react-native';
 import styles from './styles';
 import { Images, Colors, Fonts } from 'src/utils';
 import AppHeader from 'src/components/AppHeader'
@@ -19,6 +19,8 @@ export default function Search() {
     <ImageBackground source={Images.Background2}
       resizeMode="cover"
       style={styles.container}>
+      <StatusBar
+        backgroundColor={Colors.darkGrey} />
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}

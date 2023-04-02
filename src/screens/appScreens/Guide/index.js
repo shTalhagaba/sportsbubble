@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { ImageBackground, Text, View, Image, FlatList, TouchableOpacity } from 'react-native';
+import { ImageBackground, Text, View, Image, FlatList, TouchableOpacity, StatusBar } from 'react-native';
 import styles from './styles';
-import { Images, Colors, Fonts } from 'src/utils';
+import { Images, Colors } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
 
 const data = [
@@ -11,6 +11,13 @@ const data = [
   { id: 4, img: Images.NBALogo, companyName: "NCAA Women's Soccer", title: "Oregon at Washington", day: "Thu. 2/9", time: "5:00pm - 7:30pm", live: false, percentage: '55%' },
   { id: 5, img: Images.NBALogo, companyName: "NCAA Women's Soccer", title: "Oregon at Washington", day: "Thu. 2/9", time: "5:00pm - 7:30pm", live: false, percentage: '65%' },
 ]
+const timeArr = [
+  { id: 1, title: "Live", selected: true },
+  { id: 2, title: "5 pm", selected: false },
+  { id: 3, title: "6 pm", selected: false },
+  { id: 4, title: "7 pm", selected: false },
+  { id: 5, title: "8 pm", selected: false },
+]
 
 export default function Guide() {
 
@@ -18,6 +25,7 @@ export default function Guide() {
   const [proFlag, setProFlag] = useState(false)
   const [collegeFlag, setCollegeFlag] = useState(false)
   const [sportFlag, setSportFlag] = useState(false)
+  const [timeData, setTimeData] = useState(timeArr)
 
   const handleAll = () => {
     setAllFlag(true)
@@ -43,11 +51,24 @@ export default function Guide() {
     setCollegeFlag(false)
     setSportFlag(true)
   }
+  const handleSelectTime = (item, index) => {
+    let list = [...timeData]
+    list.map((element) => {
+      element.selected = false
+    })
+    list[index].selected = !list[index].selected
+    setTimeData(list)
+
+
+
+  }
   return (
     <ImageBackground
       source={Images.Background2}
       resizeMode="cover"
       style={styles.container}>
+      <StatusBar
+        backgroundColor={Colors.darkGrey} />
       <AppHeader centerImage={Images.Logo} />
       {/* Slider all pro  */}
       <View
@@ -56,8 +77,8 @@ export default function Guide() {
           activeOpacity={0.8}
           style={[styles.sliderInnerContainer,
           {
-            borderColor: allFlag ? "#094db1" : '#152232',
-            backgroundColor: allFlag ? "#072971" : '#21334b',
+            borderColor: allFlag ? Colors.buttonBlue : Colors.darkGrey,
+            backgroundColor: allFlag ? Colors.darkBlue : Colors.blueGrey,
           }]}>
           <Image
             source={Images.Trophy}
@@ -69,8 +90,8 @@ export default function Guide() {
           activeOpacity={0.8}
           style={[styles.sliderInnerContainer,
           {
-            borderColor: proFlag ? "#094db1" : '#152232',
-            backgroundColor: proFlag ? "#072971" : '#21334b',
+            borderColor: proFlag ? Colors.buttonBlue : Colors.darkGrey,
+            backgroundColor: proFlag ? Colors.darkBlue : Colors.blueGrey,
           }]}>
           <Image
             source={Images.Crown}
@@ -82,8 +103,8 @@ export default function Guide() {
           activeOpacity={0.8}
           style={[styles.sliderInnerContainer,
           {
-            borderColor: collegeFlag ? "#094db1" : '#152232',
-            backgroundColor: collegeFlag ? "#072971" : '#21334b',
+            borderColor: collegeFlag ? Colors.buttonBlue : Colors.darkGrey,
+            backgroundColor: collegeFlag ? Colors.darkBlue : Colors.blueGrey,
           }]}>
           <Image
             source={Images.College}
@@ -95,8 +116,8 @@ export default function Guide() {
           activeOpacity={0.8}
           style={[styles.sliderInnerContainer,
           {
-            borderColor: sportFlag ? "#094db1" : '#152232',
-            backgroundColor: sportFlag ? "#072971" : '#21334b',
+            borderColor: sportFlag ? Colors.buttonBlue : Colors.darkGrey,
+            backgroundColor: sportFlag ? Colors.darkBlue : Colors.blueGrey,
           }]}>
           <Image
             source={Images.Game}
@@ -106,46 +127,62 @@ export default function Guide() {
         </TouchableOpacity>
       </View>
       {/* time slider */}
-      <View style={{ height: 40, backgroundColor: Colors.darkGrey }}></View>
-      <View style={{ flex: 1, }}>
-        <FlatList
-          data={data}
-          showsVerticalScrollIndicator={false}
-          renderItem={({ item, index }) => (
-            <View style={styles.listContiner}>
-              <View style={styles.innerContainer}>
-                <View style={styles.imageContainer}>
-                  <Image source={item?.img} style={styles.imageIcon} resizeMode={"contain"} />
-                </View>
-                <View style={item.live ? {
-                  width: item.percentage,
-                  backgroundColor: Colors.green,
-                } : {
-                  width: item.percentage,
-                  backgroundColor: Colors.darkGrey,
-                }}>
-                </View>
-                <View style={item.live ? {
-                  flex: 1,
-                  backgroundColor: Colors.darkGrey,
-                } : {
-                  flex: 1,
-                  backgroundColor: Colors.blueGrey,
-                }}>
-                </View>
-                <View style={styles.userNameContainer}>
-                  <Text style={{ color: 'white' }}>{item?.companyName}</Text>
-                  <Text style={styles.titleTxt}>{item?.title}</Text>
-                  <View style={{ flexDirection: "row" }}>
-                    <Text style={{ color: 'white' }}>{item?.day}</Text>
-                    <Text style={{ color: 'white' }}>{" " + item?.time}</Text>
-                  </View>
+      <View style={styles.timeSliderContainer}>
+        <View style={styles.timeSliderInnerContainer}>
+          <FlatList
+            horizontal
+            data={timeData}
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item, index }) => (
+              <TouchableOpacity onPress={() => handleSelectTime(item, index)}
+                style={[styles.timeContainer, { backgroundColor: item?.selected ? Colors?.green : Colors.blueGrey }]}>
+                <Text style={styles.titleTxt}>{item?.title}</Text>
+              </TouchableOpacity>
+            )}
+          />
+        </View>
+        <TouchableOpacity style={styles.nextContainer}>
+          <Image source={Images.RightArrow} style={styles.rightIcon} resizeMode={"contain"} />
+        </TouchableOpacity>
+      </View>
+      <FlatList
+        data={data}
+        showsVerticalScrollIndicator={false}
+        renderItem={({ item, index }) => (
+          <View style={styles.listContiner}>
+            <View style={styles.innerContainer}>
+              <View style={styles.imageContainer}>
+                <Image source={item?.img} style={styles.imageIcon} resizeMode={"contain"} />
+              </View>
+              <View style={item.live ? {
+                width: item.percentage,
+                backgroundColor: Colors.green,
+              } : {
+                width: item.percentage,
+                backgroundColor: Colors.darkGrey,
+              }}>
+              </View>
+              <View style={item.live ? {
+                flex: 1,
+                backgroundColor: Colors.darkGrey,
+              } : {
+                flex: 1,
+                backgroundColor: Colors.blueGrey,
+              }}>
+              </View>
+              <View style={styles.userNameContainer}>
+                <Text style={{ color: 'white' }}>{item?.companyName}</Text>
+                <Text style={styles.titleTxt}>{item?.title}</Text>
+                <View style={{ flexDirection: "row" }}>
+                  <Text style={{ color: 'white' }}>{item?.day}</Text>
+                  <Text style={{ color: 'white' }}>{" " + item?.time}</Text>
                 </View>
               </View>
             </View>
-          )} />
+          </View>
+        )} />
 
-      </View>
+
     </ImageBackground >
   );
 }
