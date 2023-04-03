@@ -1,66 +1,68 @@
 import { StyleSheet } from 'react-native';
 import { Colors, Fonts } from 'src/utils';
+import { moderateScale, ScaledSheet } from "react-native-size-matters";
 
 
-export default StyleSheet.create({
+
+export default ScaledSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.appColorBackground
   },
   listContiner: {
-    paddingRight: 0,
-    marginVertical: 6,
-    paddingVertical: 5,
+    paddingRight: "0@ms0.3",
+    marginVertical: "1@ms0.3",
+    paddingVertical: "5@ms0.3",
   },
   innerContainer: {
     flexDirection: "row"
   },
   timeContainer: {
     backgroundColor: "#213651",
-    paddingHorizontal: 20,
-    marginHorizontal: 15,
-    borderRadius: 20,
-    height: 30,
+    paddingHorizontal: "20@ms0.3",
+    marginHorizontal: "15@ms0.3",
+    borderRadius: "20@ms0.3",
+    height: "30@ms0.3",
     justifyContent: "center",
     alignSelf: "center",
   },
   timeSliderContainer: {
     flexDirection: "row",
-    paddingVertical: 10,
+    paddingVertical: "10@ms0.3",
   },
   timeSliderInnerContainer: {
     width: "75%"
   },
   nextContainer: {
-    backgroundColor: Colors.buttonBlue,
-    paddingHorizontal: 20,
-    marginHorizontal: 20,
-    borderRadius: 20,
-    height: 30,
+    backgroundColor: Colors.brandBlue,
+    paddingHorizontal: "20@ms0.3",
+    marginHorizontal: "20@ms0.3",
+    borderRadius: "20@ms0.3",
+    height: "30@ms0.3",
     justifyContent: "center",
     alignSelf: "center"
   },
   rightIcon: {
-    height: 15,
-    width: 22
+    height: "10@ms0.3",
+    width: "16@ms0.3",
   },
   imageContainer: {
-    height: 80,
-    width: 80,
-    backgroundColor: "#22364f",
+    height: "80@ms0.3",
+    width: "80@ms0.3",
+    backgroundColor: Colors.mediumBlue,
     justifyContent: "center",
     alignItems: "center"
   },
   imageIcon: {
-    height: 50,
-    width: 50
+    height: "48@ms0.3",
+    width: "48@ms0.3",
   },
   userNameContainer: {
-    paddingStart: 13,
-    height: 80,
+    paddingStart: "13@ms0.3",
+    height: "80@ms0.3",
     justifyContent: "center",
     position: 'absolute',
-    left: 80
+    left: "80@ms0.3",
   },
   leftContainer: {
     flex: 1,
@@ -70,39 +72,62 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.blueGrey,
   },
+  sliderActiveTimeTxt: {
+    fontSize: "14@ms0.3",
+    fontWeight: "800",
+    lineHeight: "25@ms0.3",
+    color: Colors.white,
+    fontFamily: Fonts.Regular,
+    fontStyle: 'italic'
+
+  },
+  sliderInactiveTimeTxt: {
+    fontSize: "14@ms0.3",
+    fontWeight: "500",
+    lineHeight: "25@ms0.3",
+    color: Colors.white,
+    fontFamily: Fonts.Regular,
+  },
   titleTxt: {
-    fontSize: 16,
-    fontWeight: "700",
-    lineHeight: 24,
+    fontSize: "18@ms0.3",
+    fontWeight: "800",
+    lineHeight: "25@ms0.3",
+    color: Colors.white,
+    fontFamily: Fonts.Regular,
+  },
+  eventTxt: {
+    fontSize: "13@ms0.3",
+    fontWeight: "400",
+    lineHeight: "20@ms0.3",
     color: Colors.white,
     fontFamily: Fonts.Regular,
   },
   sliderContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginTop: 1,
-    backgroundColor: Colors.blueGrey,
-    padding: 10,
+    backgroundColor: Colors.mediumBlue,
+    height: "120@ms0.3",
+
   },
   sliderInnerContainer: {
     flex: 1,
-    backgroundColor: '#21334b',
-    alignItems: 'center',
-    paddingVertical: 12,
-    borderWidth: 2,
-    marginHorizontal: 6,
-    borderRadius: 20,
+    marginHorizontal: "5@ms0.3",
+  },
+  sliderImageBackground: {
+    height: "100%",
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center"
   },
   sliderIcon: {
-    height: 35,
-    width: 35,
-    paddingVertical: 15,
+    height: "32@ms0.3",
+    width: "32@ms0.3",
+    paddingVertical: "15@ms0.3",
     tintColor: Colors.white
   },
   sliderTxt: {
-    fontSize: 14,
+    fontSize: "14@ms0.3",
     fontWeight: "600",
-    lineHeight: 24,
+    lineHeight: "24@ms0.3",
     color: Colors.white,
     fontFamily: Fonts.Regular,
   },

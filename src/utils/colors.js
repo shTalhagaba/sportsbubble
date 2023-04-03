@@ -14,5 +14,9 @@ export default {
     greyText: "#676C71",
     orange: "#fe9d0d",
     green: "#50813A",
-    darkBlue: "#072971",
+    darkBlue: "#161F2A",
+    mediumBlue: "#21354F",
+    brandBlue: "#004EBC",
+    lightGreen: "#69A833",
+    mediumGreen: "#50813B",
 }

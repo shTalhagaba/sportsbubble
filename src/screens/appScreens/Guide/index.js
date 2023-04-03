@@ -68,62 +68,58 @@ export default function Guide() {
       resizeMode="cover"
       style={styles.container}>
       <StatusBar
-        backgroundColor={Colors.darkGrey} />
+        backgroundColor={Colors.mediumBlue} />
       <AppHeader centerImage={Images.Logo} />
       {/* Slider all pro  */}
       <View
         style={styles.sliderContainer}>
-        <TouchableOpacity onPress={() => handleAll()}
+        <TouchableOpacity
           activeOpacity={0.8}
-          style={[styles.sliderInnerContainer,
-          {
-            borderColor: allFlag ? Colors.buttonBlue : Colors.darkGrey,
-            backgroundColor: allFlag ? Colors.darkBlue : Colors.blueGrey,
-          }]}>
-          <Image
-            source={Images.Trophy}
-            style={styles.sliderIcon}
-            resizeMode={'contain'} />
-          <Text style={styles.sliderTxt}>ALL</Text>
+          onPress={() => handleAll()}
+          style={styles.sliderInnerContainer}>
+          <ImageBackground source={allFlag ? Images.ActiveSliderBack : Images.InActiveSliderBorder} style={styles.sliderImageBackground} resizeMode={"contain"}>
+            <Image
+              source={Images.Trophy}
+              style={styles.sliderIcon}
+              resizeMode={'contain'} />
+            <Text style={styles.sliderTxt}>ALL</Text>
+          </ImageBackground>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => handlePro()}
+        <TouchableOpacity
           activeOpacity={0.8}
-          style={[styles.sliderInnerContainer,
-          {
-            borderColor: proFlag ? Colors.buttonBlue : Colors.darkGrey,
-            backgroundColor: proFlag ? Colors.darkBlue : Colors.blueGrey,
-          }]}>
-          <Image
-            source={Images.Crown}
-            style={styles.sliderIcon}
-            resizeMode={'contain'} />
-          <Text style={styles.sliderTxt}>PRO</Text>
+          onPress={() => handlePro()}
+          style={styles.sliderInnerContainer}>
+          <ImageBackground source={proFlag ? Images.ActiveSliderBack : Images.InActiveSliderBorder} style={styles.sliderImageBackground} resizeMode={"contain"}>
+            <Image
+              source={Images.Crown}
+              style={styles.sliderIcon}
+              resizeMode={'contain'} />
+            <Text style={styles.sliderTxt}>PRO</Text>
+          </ImageBackground>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleCollege()}
+        <TouchableOpacity
           activeOpacity={0.8}
-          style={[styles.sliderInnerContainer,
-          {
-            borderColor: collegeFlag ? Colors.buttonBlue : Colors.darkGrey,
-            backgroundColor: collegeFlag ? Colors.darkBlue : Colors.blueGrey,
-          }]}>
-          <Image
-            source={Images.College}
-            style={styles.sliderIcon}
-            resizeMode={'contain'} />
-          <Text style={styles.sliderTxt}>COLLEGE</Text>
+          onPress={() => handleCollege()}
+          style={styles.sliderInnerContainer}>
+          <ImageBackground source={collegeFlag ? Images.ActiveSliderBack : Images.InActiveSliderBorder} style={styles.sliderImageBackground} resizeMode={"contain"}>
+            <Image
+              source={Images.College}
+              style={styles.sliderIcon}
+              resizeMode={'contain'} />
+            <Text style={styles.sliderTxt}>COLLEGE</Text>
+          </ImageBackground>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleSport()}
+        <TouchableOpacity
           activeOpacity={0.8}
-          style={[styles.sliderInnerContainer,
-          {
-            borderColor: sportFlag ? Colors.buttonBlue : Colors.darkGrey,
-            backgroundColor: sportFlag ? Colors.darkBlue : Colors.blueGrey,
-          }]}>
-          <Image
-            source={Images.Game}
-            style={styles.sliderIcon}
-            resizeMode={'contain'} />
-          <Text style={styles.sliderTxt}>ESPORTS</Text>
+          onPress={() => handleSport()}
+          style={styles.sliderInnerContainer}>
+          <ImageBackground source={sportFlag ? Images.ActiveSliderBack : Images.InActiveSliderBorder} style={styles.sliderImageBackground} resizeMode={"contain"}>
+            <Image
+              source={Images.Game}
+              style={styles.sliderIcon}
+              resizeMode={'contain'} />
+            <Text style={styles.sliderTxt}>ESPORTS</Text>
+          </ImageBackground>
         </TouchableOpacity>
       </View>
       {/* time slider */}
@@ -135,14 +131,18 @@ export default function Guide() {
             showsHorizontalScrollIndicator={false}
             renderItem={({ item, index }) => (
               <TouchableOpacity onPress={() => handleSelectTime(item, index)}
-                style={[styles.timeContainer, { backgroundColor: item?.selected ? Colors?.green : Colors.blueGrey }]}>
-                <Text style={styles.titleTxt}>{item?.title}</Text>
+                style={[styles.timeContainer, { backgroundColor: item?.selected ? Colors?.mediumGreen : Colors.mediumBlue }]}>
+                <Text style={
+                  item?.selected ?
+                    styles.sliderActiveTimeTxt :
+                    styles.sliderInactiveTimeTxt
+                }>{item?.title}</Text>
               </TouchableOpacity>
             )}
           />
         </View>
         <TouchableOpacity style={styles.nextContainer}>
-          <Image source={Images.RightArrow} style={styles.rightIcon} resizeMode={"contain"} />
+          <Image source={Images.Arrow} style={styles.rightIcon} resizeMode={"contain"} />
         </TouchableOpacity>
       </View>
       <FlatList
@@ -156,26 +156,26 @@ export default function Guide() {
               </View>
               <View style={item.live ? {
                 width: item.percentage,
-                backgroundColor: Colors.green,
+                backgroundColor: Colors.mediumGreen,
               } : {
                 width: item.percentage,
-                backgroundColor: Colors.darkGrey,
+                backgroundColor: Colors.darkBlue,
               }}>
               </View>
               <View style={item.live ? {
                 flex: 1,
-                backgroundColor: Colors.darkGrey,
+                backgroundColor: Colors.darkBlue,
               } : {
                 flex: 1,
-                backgroundColor: Colors.blueGrey,
+                backgroundColor: Colors.mediumBlue,
               }}>
               </View>
               <View style={styles.userNameContainer}>
-                <Text style={{ color: 'white' }}>{item?.companyName}</Text>
+                <Text style={styles.eventTxt}>{item?.companyName}</Text>
                 <Text style={styles.titleTxt}>{item?.title}</Text>
                 <View style={{ flexDirection: "row" }}>
-                  <Text style={{ color: 'white' }}>{item?.day}</Text>
-                  <Text style={{ color: 'white' }}>{" " + item?.time}</Text>
+                  <Text style={[styles.eventTxt, { opacity: item.live ? 1 : 0.5 }]}>{item?.day}</Text>
+                  <Text style={[styles.eventTxt, { opacity: item.live ? 1 : 0.5 }]}>{" " + item?.time}</Text>
                 </View>
               </View>
             </View>

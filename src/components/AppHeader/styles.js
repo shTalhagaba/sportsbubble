@@ -1,21 +1,23 @@
 import { Platform, StyleSheet } from 'react-native'
 import { Colors, Fonts } from 'src/utils'
-const styles = StyleSheet.create({
+import { moderateScale, ScaledSheet } from "react-native-size-matters";
+
+const styles = ScaledSheet.create({
     headerContainer: {
-        height: 70,
+        height: "70@ms0.3",
         flexDirection: "row",
         alignItems: "center",
         backgroundColor: Colors.transparent,
-        marginTop: Platform.OS === 'ios' ? 25 : 1,
+        marginTop: Platform.OS === 'ios' ? "25@ms0.3" : "1@ms0.3",
     },
     leftArrowIcon: {
-        width: 25,
-        height: 25,
+        width: "25@ms0.3",
+        height: "25@ms0.3",
         resizeMode: "cover",
     },
     rightIcon: {
-        width: 20,
-        height: 20,
+        width: "20@ms0.3",
+        height: "20@ms0.3",
         resizeMode: "cover",
     },
 
@@ -24,8 +26,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     centerImage: {
-        height: 36,
-        width: 161,
+        height: "28@ms0.3",
+        width: "142@ms0.3",
     },
     iconContainer: {
         width: "15%",

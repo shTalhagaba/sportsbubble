@@ -1,12 +1,13 @@
 import React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Images, Colors, Fonts} from 'src/utils';
-import {Image, View, StyleSheet, Text} from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Images, Colors, Fonts } from 'src/utils';
+import { Image, View, StyleSheet, Text } from 'react-native';
 
 import Guide from 'src/screens/appScreens/Guide';
 import Search from 'src/screens/appScreens/Search';
 import Setting from 'src/screens/appScreens/Setting';
 import Legal from 'src/screens/appScreens/Legal';
+import { moderateScale, ScaledSheet } from "react-native-size-matters";
 
 const Tab = createBottomTabNavigator();
 
@@ -23,33 +24,23 @@ const bottomTab = () => {
         headerShown: false,
         tabBarStyle: {
           backgroundColor: Colors.appColorBackground,
-          height: 90,
-          paddingTop: 10,
+          height: moderateScale(80, 0.3),
+          paddingTop: moderateScale(10, 0.3),
         },
       }}>
       <Tab.Screen
         name="Guide"
         component={Guide}
         options={{
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <View style={styles.bottomContainer}>
               <Image
                 source={Images.Guide}
-                style={{
-                  height: 22,
-                  width: 22,
-                  tintColor: focused ? Colors.buttonGreen : Colors.greyText,
-                }}
+                style={[styles.iconImage, {
+                  tintColor: focused ? Colors.lightGreen : Colors.greyText
+                }]}
                 resizeMode={'contain'}
-              />
-              <Text
-                style={[
-                  styles.txt,
-                  {color: focused ? Colors.buttonGreen : Colors.greyText},
-                ]}>
-                Guide
-              </Text>
-            </View>
+              /></View>
           ),
         }}
       />
@@ -57,24 +48,15 @@ const bottomTab = () => {
         name="Search"
         component={Search}
         options={{
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <View style={styles.bottomContainer}>
               <Image
-                source={Images.Search}
-                style={{
-                  height: 22,
-                  width: 22,
-                  tintColor: focused ? Colors.buttonGreen : Colors.greyText,
-                }}
+                source={Images.SearchBottom}
+                style={[styles.iconImage, {
+                  tintColor: focused ? Colors.lightGreen : Colors.greyText
+                }]}
                 resizeMode={'contain'}
               />
-              <Text
-                style={[
-                  styles.txt,
-                  {color: focused ? Colors.buttonGreen : Colors.greyText},
-                ]}>
-                Search
-              </Text>
             </View>
           ),
         }}
@@ -84,24 +66,15 @@ const bottomTab = () => {
         name="Setting"
         component={Legal}
         options={{
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <View style={styles.bottomContainer}>
               <Image
-                source={Images.Settings}
-                style={{
-                  height: 22,
-                  width: 22,
-                  tintColor: focused ? Colors.buttonGreen : Colors.greyText,
-                }}
+                source={Images.SettingBottom}
+                style={[styles.iconImage, {
+                  tintColor: focused ? Colors.lightGreen : Colors.greyText
+                }]}
                 resizeMode={'contain'}
               />
-              <Text
-                style={[
-                  styles.txt,
-                  {color: focused ? Colors.buttonGreen : Colors.greyText},
-                ]}>
-                Settings
-              </Text>
             </View>
           ),
         }}
@@ -111,32 +84,20 @@ const bottomTab = () => {
 };
 
 export default bottomTab;
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   txt: {
-    fontSize: 14,
+    fontSize: "12@ms0.3",
     fontWeight: '700',
-    lineHeight: 16,
-    marginTop: 5,
+    lineHeight: "16@ms0.3",
+    marginTop: "5@ms0.3",
     textTransform: 'uppercase',
   },
   bottomContainer: {
     alignItems: 'center',
   },
-  notificationContainer: {
-    height: 14,
-    width: 14,
-    backgroundColor: Colors.appColor,
-    borderRadius: 14,
-    position: 'absolute',
-    right: 14,
-    top: -3,
-  },
-  notificationCount: {
-    fontSize: 8,
-    fontWeight: '600',
-    lineHeight: 12,
-    color: Colors.white,
-    fontFamily: Fonts.Regular,
-    textAlign: 'center',
-  },
+  iconImage: {
+    height: "47@ms0.3",
+    width: "80@ms0.3",
+  }
+  ,
 });

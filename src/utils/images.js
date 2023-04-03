@@ -20,6 +20,13 @@ const images = {
     College: require("src/assets/images/College.png"),
     Trophy: require("src/assets/images/Trophy.png"),
     Crown: require("src/assets/images/Crown.png"),
+    ActiveSliderBack: require("src/assets/images/ActiveSliderBack.png"),
+    InActiveSliderBorder: require("src/assets/images/InActiveSliderBorder.png"),
+    ActiveSliderBorder: require("src/assets/images/ActiveSliderBorder.png"),
+    Arrow: require("src/assets/images/Arrow.png"),
+    SearchBottom: require("src/assets/images/SearchBottom.png"),
+    SettingBottom: require("src/assets/images/SettingBottom.png"),
+
 
 }
 
