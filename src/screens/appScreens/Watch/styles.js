@@ -13,6 +13,7 @@ export default ScaledSheet.create({
     paddingRight: "5@ms0.3",
     marginVertical: "10@ms0.3",
     paddingVertical: "5@ms0.3",
+    alignItems: "center"
   },
   itemListContiner: {
     paddingRight: "0@ms0.3",
@@ -22,9 +23,7 @@ export default ScaledSheet.create({
   itemInnerContainer: {
     flexDirection: "row"
   },
-  innerContainer: {
-    flexDirection: "row"
-  },
+
   timeContainer: {
     backgroundColor: "#213651",
     paddingHorizontal: "20@ms0.3",
@@ -68,11 +67,11 @@ export default ScaledSheet.create({
     justifyContent: "center",
     alignItems: "center",
     margin: 5,
-    borderRadius: 10,
+    borderRadius: 16,
   },
   imageIcon: {
-    height: "48@ms0.3",
-    width: "48@ms0.3",
+    height: "47@ms0.3",
+    width: "47@ms0.3",
   },
   userNameContainer: {
     paddingStart: "13@ms0.3",
@@ -88,6 +87,15 @@ export default ScaledSheet.create({
   rightContainer: {
     flex: 1,
     backgroundColor: Colors.blueGrey,
+  },
+  listTitleTxt: {
+    fontSize: "14@ms0.3",
+    fontWeight: "500",
+    lineHeight: "20@ms0.3",
+    color: Colors.white,
+    fontFamily: Fonts.Regular,
+    marginTop: 8
+
   },
   sliderActiveTimeTxt: {
     fontSize: "14@ms0.3",
@@ -119,10 +127,31 @@ export default ScaledSheet.create({
     color: Colors.white,
     fontFamily: Fonts.Regular,
   },
+  watchOptions: {
+    fontSize: "22@ms0.3",
+    fontWeight: "800",
+    lineHeight: "30@ms0.3",
+    color: Colors.lightGreen,
+    fontFamily: Fonts.Regular,
+    textTransform: "uppercase",
+    marginTop: 40,
+    textAlign: "center"
+  },
+  conectTxt: {
+    fontSize: "18@ms0.3",
+    fontWeight: "800",
+    lineHeight: "24@ms0.3",
+    color: Colors.white,
+    fontFamily: Fonts.Regular,
+    marginTop: 20,
+    textAlign: "center",
+    maxWidth: "70%",
+    alignSelf: "center",
+    fontStyle: 'italic'
+  },
   sliderContainer: {
     flexDirection: 'row',
     backgroundColor: Colors.mediumBlue,
-    height: "120@ms0.3",
 
   },
   sliderInnerContainer: {

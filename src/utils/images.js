@@ -26,6 +26,7 @@ const images = {
     Arrow: require("src/assets/images/Arrow.png"),
     SearchBottom: require("src/assets/images/SearchBottom.png"),
     SettingBottom: require("src/assets/images/SettingBottom.png"),
+    Menu: require("src/assets/images/Menu.png"),
 
 
 }

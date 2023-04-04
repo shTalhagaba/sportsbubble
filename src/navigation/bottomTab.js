@@ -18,26 +18,26 @@ const GuideNavigator = createNativeStackNavigator();
 
 const guideNavigation = () => {
   return (
-      <GuideNavigator.Navigator
-          screenOptions={{
-              headerShown: false
-          }} >
-          <GuideNavigator.Screen name="Guide" component={Guide} />
-          <GuideNavigator.Screen name="Watch" component={Watch} />
-      </GuideNavigator.Navigator>
+    <GuideNavigator.Navigator
+      screenOptions={{
+        headerShown: false
+      }} >
+      <GuideNavigator.Screen name="Guide" component={Guide} />
+      <GuideNavigator.Screen name="Watch" component={Watch} />
+    </GuideNavigator.Navigator>
   );
 }
 
 const settingNavigation = () => {
-    return (
-        <SettingNavigator.Navigator
-            screenOptions={{
-                headerShown: false
-            }} >
-            <SettingNavigator.Screen name="Setting" component={Setting} />
-            <SettingNavigator.Screen name="Legal" component={Legal} />
-        </SettingNavigator.Navigator>
-    );
+  return (
+    <SettingNavigator.Navigator
+      screenOptions={{
+        headerShown: false
+      }} >
+      <SettingNavigator.Screen name="Setting" component={Setting} />
+      <SettingNavigator.Screen name="Legal" component={Legal} />
+    </SettingNavigator.Navigator>
+  );
 }
 
 

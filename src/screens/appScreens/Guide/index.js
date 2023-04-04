@@ -139,6 +139,7 @@ export default function Guide() {
                     styles.sliderActiveTimeTxt :
                     styles.sliderInactiveTimeTxt
                 }>{item?.title}</Text>
+
               </TouchableOpacity>
             )}
           />
@@ -152,7 +153,7 @@ export default function Guide() {
         data={data}
         showsVerticalScrollIndicator={false}
         renderItem={({ item, index }) => (
-          <TouchableOpacity style={styles.listContiner} onPress={()=>navigation.navigate('Watch',{item:item})}>
+          <TouchableOpacity style={styles.listContiner} onPress={() => navigation.navigate('Watch', { item: item })}>
             <View style={styles.innerContainer}>
               <View style={styles.imageContainer}>
                 <Image source={item?.img} style={styles.imageIcon} resizeMode={"contain"} />
