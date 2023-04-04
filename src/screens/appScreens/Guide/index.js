@@ -3,6 +3,7 @@ import { ImageBackground, Text, View, Image, FlatList, TouchableOpacity, StatusB
 import styles from './styles';
 import { Images, Colors } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
+import { useNavigation } from '@react-navigation/native';
 
 const data = [
   { id: 1, img: Images.NBALogo, companyName: "NCAA Women's Soccer", title: "Oregon at Washington", day: "Thu. 2/9", time: "5:00pm - 7:30pm", live: true, percentage: '25%' },
@@ -20,6 +21,7 @@ const timeArr = [
 ]
 
 export default function Guide() {
+  const navigation = useNavigation();
 
   const [allFlag, setAllFlag] = useState(true)
   const [proFlag, setProFlag] = useState(false)
@@ -145,11 +147,12 @@ export default function Guide() {
           <Image source={Images.Arrow} style={styles.rightIcon} resizeMode={"contain"} />
         </TouchableOpacity>
       </View>
+      {/* main list  */}
       <FlatList
         data={data}
         showsVerticalScrollIndicator={false}
         renderItem={({ item, index }) => (
-          <View style={styles.listContiner}>
+          <TouchableOpacity style={styles.listContiner} onPress={()=>navigation.navigate('Watch',{item:item})}>
             <View style={styles.innerContainer}>
               <View style={styles.imageContainer}>
                 <Image source={item?.img} style={styles.imageIcon} resizeMode={"contain"} />
@@ -179,7 +182,7 @@ export default function Guide() {
                 </View>
               </View>
             </View>
-          </View>
+          </TouchableOpacity>
         )} />
 
 

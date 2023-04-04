@@ -26,7 +26,7 @@ export default function Setting() {
       />
       <View style={{ marginHorizontal: 20, flex: 1 }}>
         <Text style={styles.loginTxt}>Settings</Text>
-        <ButtonWithIcon title={'Legal'} />
+        <ButtonWithIcon title={'Legal'} onpress={()=>navigation.navigate('Legal')} />
         <ButtonWithIcon title={'Report a Problem'} />
       </View>
       <View style={{ height: '25%', alignItems: 'center' }}>

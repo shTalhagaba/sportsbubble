@@ -4,12 +4,42 @@ import { Images, Colors, Fonts } from 'src/utils';
 import { Image, View, StyleSheet, Text } from 'react-native';
 
 import Guide from 'src/screens/appScreens/Guide';
+import Watch from 'src/screens/appScreens/Watch';
 import Search from 'src/screens/appScreens/Search';
 import Setting from 'src/screens/appScreens/Setting';
 import Legal from 'src/screens/appScreens/Legal';
 import { moderateScale, ScaledSheet } from "react-native-size-matters";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Tab = createBottomTabNavigator();
+
+const SettingNavigator = createNativeStackNavigator();
+const GuideNavigator = createNativeStackNavigator();
+
+const guideNavigation = () => {
+  return (
+      <GuideNavigator.Navigator
+          screenOptions={{
+              headerShown: false
+          }} >
+          <GuideNavigator.Screen name="Guide" component={Guide} />
+          <GuideNavigator.Screen name="Watch" component={Watch} />
+      </GuideNavigator.Navigator>
+  );
+}
+
+const settingNavigation = () => {
+    return (
+        <SettingNavigator.Navigator
+            screenOptions={{
+                headerShown: false
+            }} >
+            <SettingNavigator.Screen name="Setting" component={Setting} />
+            <SettingNavigator.Screen name="Legal" component={Legal} />
+        </SettingNavigator.Navigator>
+    );
+}
+
 
 const bottomTab = () => {
   return (
@@ -30,7 +60,7 @@ const bottomTab = () => {
       }}>
       <Tab.Screen
         name="Guide"
-        component={Guide}
+        component={guideNavigation}
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={styles.bottomContainer}>
@@ -64,7 +94,7 @@ const bottomTab = () => {
 
       <Tab.Screen
         name="Setting"
-        component={Legal}
+        component={settingNavigation}
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={styles.bottomContainer}>
