@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { Colors, Fonts } from 'src/utils';
 
-
 export default StyleSheet.create({
   container: {
     flex: 1,
@@ -37,5 +36,12 @@ export default StyleSheet.create({
     lineHeight: 24,
     color: Colors.white,
     fontFamily: Fonts.Regular,
+  },
+  mainContainer: {
+    flex: 1, 
+    marginHorizontal: 20 
+  },
+  textWhite: {
+    color: 'white'
   }
 });

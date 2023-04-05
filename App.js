@@ -8,7 +8,6 @@ import Navigation from 'src/navigation';
 import SplashScreen from 'react-native-splash-screen'
 import { NavigationContainer } from '@react-navigation/native';
 
-
 const sagaMiddleware = createSagaMiddleware();
 export const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
 sagaMiddleware.run(mySaga);
@@ -27,7 +26,6 @@ export default function App() {
         <Navigation />
       </Provider>
     </NavigationContainer>
-
   );
 }
 

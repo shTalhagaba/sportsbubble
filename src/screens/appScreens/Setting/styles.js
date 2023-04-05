@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { Colors } from 'src/utils';
 
-
 export default StyleSheet.create({
     container: {
         flex: 1,
@@ -30,4 +29,12 @@ export default StyleSheet.create({
         textAlign: "center",
         color: Colors.white
     },
+    sbContainer: {
+        height: '25%', 
+        alignItems: 'center'
+    },
+    mainTabContainer: {
+        marginHorizontal: 20, 
+        flex: 1 
+    }
 });

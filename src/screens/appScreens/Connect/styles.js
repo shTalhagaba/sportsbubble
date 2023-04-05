@@ -1,8 +1,5 @@
-import { StyleSheet } from 'react-native';
 import { Colors, Fonts } from 'src/utils';
-import { moderateScale, ScaledSheet } from "react-native-size-matters";
-
-
+import { ScaledSheet } from "react-native-size-matters";
 
 export default ScaledSheet.create({
   container: {
@@ -22,32 +19,6 @@ export default ScaledSheet.create({
   },
   itemInnerContainer: {
     flexDirection: "row"
-  },
-
-  timeContainer: {
-    backgroundColor: "#213651",
-    paddingHorizontal: "20@ms0.3",
-    marginHorizontal: "15@ms0.3",
-    borderRadius: "20@ms0.3",
-    height: "30@ms0.3",
-    justifyContent: "center",
-    alignSelf: "center",
-  },
-  timeSliderContainer: {
-    flexDirection: "row",
-    paddingVertical: "10@ms0.3",
-  },
-  timeSliderInnerContainer: {
-    width: "75%"
-  },
-  nextContainer: {
-    backgroundColor: Colors.brandBlue,
-    paddingHorizontal: "20@ms0.3",
-    marginHorizontal: "20@ms0.3",
-    borderRadius: "20@ms0.3",
-    height: "30@ms0.3",
-    justifyContent: "center",
-    alignSelf: "center"
   },
   rightIcon: {
     height: "10@ms0.3",
@@ -72,46 +43,6 @@ export default ScaledSheet.create({
   imageIcon: {
     height: "47@ms0.3",
     width: "47@ms0.3",
-  },
-  userNameContainer: {
-    paddingStart: "13@ms0.3",
-    height: "80@ms0.3",
-    justifyContent: "center",
-    position: 'absolute',
-    left: "80@ms0.3",
-  },
-  leftContainer: {
-    flex: 1,
-    backgroundColor: Colors.darkGrey,
-  },
-  rightContainer: {
-    flex: 1,
-    backgroundColor: Colors.blueGrey,
-  },
-  listTitleTxt: {
-    fontSize: "14@ms0.3",
-    fontWeight: "500",
-    lineHeight: "20@ms0.3",
-    color: Colors.white,
-    fontFamily: Fonts.Regular,
-    marginTop: 8
-
-  },
-  sliderActiveTimeTxt: {
-    fontSize: "14@ms0.3",
-    fontWeight: "800",
-    lineHeight: "25@ms0.3",
-    color: Colors.white,
-    fontFamily: Fonts.Regular,
-    fontStyle: 'italic'
-
-  },
-  sliderInactiveTimeTxt: {
-    fontSize: "14@ms0.3",
-    fontWeight: "500",
-    lineHeight: "25@ms0.3",
-    color: Colors.white,
-    fontFamily: Fonts.Regular,
   },
   titleTxt: {
     fontSize: "18@ms0.3",
@@ -186,4 +117,32 @@ export default ScaledSheet.create({
     color: Colors.white,
     fontFamily: Fonts.Regular,
   },
+  sbContainer: {
+    alignItems: "center",
+    justifyContent:'center',
+  },
+  sbImage: {
+    height:150, 
+    alignItems: "center",
+    justifyContent:'center', 
+    paddingTop: 20,
+  },
+  flexOnly: {
+    flex: 1
+  },
+  imageContainer: {
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  buttonContainer: {
+    marginTop: 40, 
+    marginHorizontal: 20
+  },
+  imageStyle: {
+    height: 100, 
+    marginTop: 40
+  },
+  flexRow: {
+    flexDirection: 'row'
+  }
 });

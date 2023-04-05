@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ImageBackground, Text, View, Image, FlatList, TouchableOpacity, StatusBar } from 'react-native';
 import styles from './styles';
-import { Images, Colors } from 'src/utils';
+import { Images, Colors, Strings } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
 import { useNavigation } from '@react-navigation/native';
 
@@ -60,17 +60,15 @@ export default function Guide() {
     })
     list[index].selected = !list[index].selected
     setTimeData(list)
-
-
-
   }
+
   return (
     <ImageBackground
       source={Images.Background2}
       resizeMode="cover"
       style={styles.container}>
-      <StatusBar
-        backgroundColor={Colors.mediumBlue} />
+      <StatusBar backgroundColor={Colors.mediumBlue} />
+      {/* Header with Logo only  */}
       <AppHeader centerImage={Images.Logo} />
       {/* Slider all pro  */}
       <View
@@ -84,7 +82,7 @@ export default function Guide() {
               source={Images.Trophy}
               style={styles.sliderIcon}
               resizeMode={'contain'} />
-            <Text style={styles.sliderTxt}>ALL</Text>
+            <Text style={styles.sliderTxt}>{Strings.all}</Text>
           </ImageBackground>
         </TouchableOpacity>
         <TouchableOpacity
@@ -96,7 +94,7 @@ export default function Guide() {
               source={Images.Crown}
               style={styles.sliderIcon}
               resizeMode={'contain'} />
-            <Text style={styles.sliderTxt}>PRO</Text>
+            <Text style={styles.sliderTxt}>{Strings.pro}</Text>
           </ImageBackground>
         </TouchableOpacity>
         <TouchableOpacity
@@ -108,7 +106,7 @@ export default function Guide() {
               source={Images.College}
               style={styles.sliderIcon}
               resizeMode={'contain'} />
-            <Text style={styles.sliderTxt}>COLLEGE</Text>
+            <Text style={styles.sliderTxt}>{Strings.college}</Text>
           </ImageBackground>
         </TouchableOpacity>
         <TouchableOpacity
@@ -120,7 +118,7 @@ export default function Guide() {
               source={Images.Game}
               style={styles.sliderIcon}
               resizeMode={'contain'} />
-            <Text style={styles.sliderTxt}>ESPORTS</Text>
+            <Text style={styles.sliderTxt}>{Strings.esports}</Text>
           </ImageBackground>
         </TouchableOpacity>
       </View>
@@ -185,8 +183,6 @@ export default function Guide() {
             </View>
           </TouchableOpacity>
         )} />
-
-
     </ImageBackground >
   );
 }

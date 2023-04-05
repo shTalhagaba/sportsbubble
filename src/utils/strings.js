@@ -1,0 +1,17 @@
+export default {
+  connecting: 'Connecting You To:',
+  all: 'ALL',
+  pro: 'PRO',
+  college: 'COLLEGE',
+  esports: 'ESPORTS',
+  watchOptions: 'Watch Options',
+  connectToWatch: 'Connect to Watch on These Apps or Services',
+  otherWays: 'Other ways to watch...',
+  settings: 'Settings',
+  legal: 'Legal',
+  reportProblem: 'Report a Problem',
+  termUse: 'Terms of Use',
+  privacyPolicy: 'Privacy Policy/Info We Collect',
+  californiaPolicy: 'California Policy',
+  watchNow: 'Watch Now',
+};

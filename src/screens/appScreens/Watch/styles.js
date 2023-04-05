@@ -1,8 +1,5 @@
-import { StyleSheet } from 'react-native';
 import { Colors, Fonts } from 'src/utils';
-import { moderateScale, ScaledSheet } from "react-native-size-matters";
-
-
+import { ScaledSheet } from "react-native-size-matters";
 
 export default ScaledSheet.create({
   container: {
@@ -23,7 +20,6 @@ export default ScaledSheet.create({
   itemInnerContainer: {
     flexDirection: "row"
   },
-
   timeContainer: {
     backgroundColor: "#213651",
     paddingHorizontal: "20@ms0.3",
@@ -95,7 +91,6 @@ export default ScaledSheet.create({
     color: Colors.white,
     fontFamily: Fonts.Regular,
     marginTop: 8
-
   },
   sliderActiveTimeTxt: {
     fontSize: "14@ms0.3",
@@ -104,7 +99,6 @@ export default ScaledSheet.create({
     color: Colors.white,
     fontFamily: Fonts.Regular,
     fontStyle: 'italic'
-
   },
   sliderInactiveTimeTxt: {
     fontSize: "14@ms0.3",
@@ -144,8 +138,9 @@ export default ScaledSheet.create({
     color: Colors.lightGreen,
     fontFamily: Fonts.Regular,
     textTransform: "uppercase",
-    marginTop: 40,
-    textAlign: "center"
+    textAlign: "center",
+    color: 'white', 
+    marginTop: 12
   },
   conectTxt: {
     fontSize: "18@ms0.3",
@@ -162,7 +157,6 @@ export default ScaledSheet.create({
   sliderContainer: {
     flexDirection: 'row',
     backgroundColor: Colors.mediumBlue,
-
   },
   sliderInnerContainer: {
     flex: 1,
@@ -187,4 +181,24 @@ export default ScaledSheet.create({
     color: Colors.white,
     fontFamily: Fonts.Regular,
   },
+  flatlistContainer: {
+    marginTop: 40, 
+    marginHorizontal: 20
+  },
+  largeMenuImage: {
+    width: '100%',
+    height: 250,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingTop: 20,
+  },
+  smallMenuImage: {
+    width: '100%',
+    height: 80,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  flexOnly:{
+    flex: 1
+  }
 });
