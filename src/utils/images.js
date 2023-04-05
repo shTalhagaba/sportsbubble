@@ -27,7 +27,10 @@ const images = {
     SearchBottom: require("src/assets/images/SearchBottom.png"),
     SettingBottom: require("src/assets/images/SettingBottom.png"),
     Menu: require("src/assets/images/Menu.png"),
-
+    CircleBG: require("src/assets/images/CircleBG.png"),
+    CircleBGLarge: require("src/assets/images/CircleBGLarge.png"),
+    PoweredBySB: require("src/assets/images/PoweredBySB.png"),
+    PlayIcon: require("src/assets/images/PlayIcon.png"),
 
 }
 

@@ -147,10 +147,10 @@ export default ScaledSheet.create({
     marginTop: 40,
     textAlign: "center"
   },
-  conectTxt: {
-    fontSize: "18@ms0.3",
-    fontWeight: "800",
-    lineHeight: "24@ms0.3",
+  connectingText: {
+    fontSize: "16@ms0.3",
+    fontWeight: "500",
+    lineHeight: "22@ms0.3",
     color: Colors.white,
     fontFamily: Fonts.Regular,
     marginTop: 20,
@@ -162,7 +162,6 @@ export default ScaledSheet.create({
   sliderContainer: {
     flexDirection: 'row',
     backgroundColor: Colors.mediumBlue,
-
   },
   sliderInnerContainer: {
     flex: 1,

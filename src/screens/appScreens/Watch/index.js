@@ -3,6 +3,7 @@ import { ImageBackground, Text, View, Image, FlatList, TouchableOpacity, StatusB
 import styles from './styles';
 import { Images, Colors } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
+import { useNavigation } from '@react-navigation/native';
 
 const data = [
   { id: 1, img: Images.NBALogo, title: "Fubo" },
@@ -12,7 +13,9 @@ const data = [
 ]
 
 export default function Watch(props) {
-  const [item, setItem] = useState(props?.route?.params?.item)
+  const navigation = useNavigation()
+  const [itemSelected, setItemSelected] = useState(props?.route?.params?.item)
+  const [bottomMenu, setBottomMenu] = useState(false)
 
 
   return (
@@ -36,14 +39,14 @@ export default function Watch(props) {
           <View style={styles.itemListContiner}>
             <View style={styles.itemInnerContainer}>
               <View style={styles.itemContainer}>
-                <Image source={item?.img} style={styles.imageIcon} resizeMode={"contain"} />
+                <Image source={itemSelected?.img} style={styles.imageIcon} resizeMode={"contain"} />
               </View>
               <View style={styles.userNameContainer}>
-                <Text style={styles.eventTxt}>{item?.companyName}</Text>
-                <Text style={styles.titleTxt}>{item?.title}</Text>
+                <Text style={styles.eventTxt}>{itemSelected?.companyName}</Text>
+                <Text style={styles.titleTxt}>{itemSelected?.title}</Text>
                 <View style={{ flexDirection: "row" }}>
-                  <Text style={[styles.eventTxt, { opacity: item.live ? 1 : 0.5 }]}>{item?.day}</Text>
-                  <Text style={[styles.eventTxt, { opacity: item.live ? 1 : 0.5 }]}>{" " + item?.time}</Text>
+                  <Text style={[styles.eventTxt, { opacity: itemSelected.live ? 1 : 0.5 }]}>{itemSelected?.day}</Text>
+                  <Text style={[styles.eventTxt, { opacity: itemSelected.live ? 1 : 0.5 }]}>{" " + itemSelected?.time}</Text>
                 </View>
               </View>
             </View>
@@ -57,21 +60,52 @@ export default function Watch(props) {
             showsVerticalScrollIndicator={false}
             horizontal
             renderItem={({ item, index }) => (
-              <View style={[styles.listContiner]}>
+              <TouchableOpacity onPress={()=>navigation.navigate('Connect',{item:itemSelected})} style={[styles.listContiner]}>
                 <ImageBackground source={Images.InActiveSliderBorder}
                   style={styles.imageContainer}>
                   <Image source={item?.img} style={styles.imageIcon} resizeMode={"contain"} />
                 </ImageBackground>
                 <Text style={styles.listTitleTxt}>{item?.title}</Text>
 
-              </View>
+              </TouchableOpacity>
             )} />
         </View>
       </View>
-      <View style={{ height: 80, backgroundColor: "#1B55CF", borderTopWidth: 4, borderTopColor: Colors.lightGreen, justifyContent: "center", alignItems: "center", borderTopEndRadius: 120, borderTopStartRadius: 100 }}>
+      {bottomMenu?
+      <ImageBackground 
+      source={Images.CircleBGLarge}
+      resizeMode={'stretch'}
+      style={{width:'100%',height:250, alignItems: "center",justifyContent:'flex-start', paddingTop: 20}}>
+        <TouchableOpacity onPress={()=>setBottomMenu(false)}>
         <Image source={Images.Menu} style={{ width: 32, height: 12 }} />
-        <Text style={[styles.watchOptions, { color: "white", marginTop: 12 }]}>Other ways to watch...</Text>
-      </View>
+        </TouchableOpacity>
+        <Text style={[styles.wayToWatch, { color: "white", marginTop: 12 }]}>Other ways to watch...</Text>
+        <View style={{ marginTop: 1, marginHorizontal: 1 }}>
+          <FlatList
+            data={data}
+            showsVerticalScrollIndicator={false}
+            horizontal
+            renderItem={({ item, index }) => (
+              <TouchableOpacity onPress={()=>navigation.navigate('Connect',{item:itemSelected})} style={[styles.listContiner]}>
+                <ImageBackground source={Images.InActiveSliderBorder}
+                  style={styles.imageContainer}>
+                  <Image source={item?.img} style={styles.imageIcon} resizeMode={"contain"} />
+                </ImageBackground>
+                <Text style={styles.listTitleTxt}>{item?.title}</Text>
+              </TouchableOpacity>
+            )} />
+        </View>
+      </ImageBackground>
+      :
+      <ImageBackground 
+      source={Images.CircleBG}
+      resizeMode={'stretch'}
+      style={{width:'100%',height: 80, justifyContent: "center", alignItems: "center",}}>
+        <TouchableOpacity onPress={()=>setBottomMenu(true)}>
+        <Image source={Images.Menu} style={{ width: 32, height: 12 }} />
+        </TouchableOpacity>
+        <Text style={[styles.wayToWatch, { color: "white", marginTop: 12 }]}>Other ways to watch...</Text>
+      </ImageBackground>}
     </ImageBackground>
   );
 }

@@ -5,6 +5,7 @@ import { Image, View, StyleSheet, Text } from 'react-native';
 
 import Guide from 'src/screens/appScreens/Guide';
 import Watch from 'src/screens/appScreens/Watch';
+import Connect from 'src/screens/appScreens/Connect';
 import Search from 'src/screens/appScreens/Search';
 import Setting from 'src/screens/appScreens/Setting';
 import Legal from 'src/screens/appScreens/Legal';
@@ -16,7 +17,7 @@ const Tab = createBottomTabNavigator();
 const SettingNavigator = createNativeStackNavigator();
 const GuideNavigator = createNativeStackNavigator();
 
-const guideNavigation = () => {
+const GuideNavigation = () => {
   return (
     <GuideNavigator.Navigator
       screenOptions={{
@@ -24,11 +25,12 @@ const guideNavigation = () => {
       }} >
       <GuideNavigator.Screen name="Guide" component={Guide} />
       <GuideNavigator.Screen name="Watch" component={Watch} />
+      <GuideNavigator.Screen name="Connect" component={Connect} />
     </GuideNavigator.Navigator>
   );
 }
 
-const settingNavigation = () => {
+const SettingNavigation = () => {
   return (
     <SettingNavigator.Navigator
       screenOptions={{
@@ -60,7 +62,7 @@ const bottomTab = () => {
       }}>
       <Tab.Screen
         name="Guide"
-        component={guideNavigation}
+        component={GuideNavigation}
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={styles.bottomContainer}>
@@ -94,7 +96,7 @@ const bottomTab = () => {
 
       <Tab.Screen
         name="Setting"
-        component={settingNavigation}
+        component={SettingNavigation}
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={styles.bottomContainer}>

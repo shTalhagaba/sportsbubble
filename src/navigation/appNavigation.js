@@ -1,18 +1,18 @@
-// import * as React from 'react';
-// import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// import Home from '@app/screens/appScreens/Search';
+import * as React from 'react';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Connect from 'src/screens/appScreens/Connect';
 
-// const AppNavigator = createNativeStackNavigator();
+const AppNavigator = createNativeStackNavigator();
 
-// const authNavigation = () => {
-//     return (
-//         <AppNavigator.Navigator
-//             screenOptions={{
-//                 headerShown: false
-//             }} >
-//             <AppNavigator.Screen name="Home" component={Home} />
-//         </AppNavigator.Navigator>
-//     );
-// }
+const appNavigation = () => {
+    return (
+        <AppNavigator.Navigator
+            screenOptions={{
+                headerShown: false
+            }} >
+            {/* <AppNavigator.Screen name="Connect" component={Connect} /> */}
+        </AppNavigator.Navigator>
+    );
+}
 
-// export default authNavigation;
+export default appNavigation;
