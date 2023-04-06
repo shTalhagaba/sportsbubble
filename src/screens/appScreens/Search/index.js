@@ -18,9 +18,8 @@ export default function Search() {
     <ImageBackground source={Images.Background2}
       resizeMode="cover"
       style={styles.container}>
-      <StatusBar
-        backgroundColor={Colors.darkGrey} />
-        {/* Header with Logo and back icon  */}
+      <StatusBar backgroundColor={Colors.mediumBlue} />
+      {/* Header with Logo and back icon  */}
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
@@ -33,7 +32,7 @@ export default function Search() {
           placeHolderColor={Colors.white}
           placeHolder={"Search..."}
           closeImage={Images.Cross} />
-          {/* list showing after search */}
+        {/* list showing after search */}
         <FlatList
           data={data}
           showsVerticalScrollIndicator={false}
@@ -44,11 +43,11 @@ export default function Search() {
                   <Image source={item?.img} style={styles.imageIcon} resizeMode={"contain"} />
                 </View>
                 <View style={styles.userNameContainer}>
-                  <Text style={styles.textWhite}>{item?.companyName}</Text>
+                  <Text style={styles.eventTxt}>{item?.companyName}</Text>
                   <Text style={styles.titleTxt}>{item?.title}</Text>
                   <View style={styles.innerContainer}>
-                    <Text style={styles.textWhite}>{item?.day}</Text>
-                    <Text style={styles.textWhite}>{" " + item?.time}</Text>
+                    <Text style={styles.eventTxt}>{item?.day}</Text>
+                    <Text style={styles.eventTxt}>{" " + item?.time}</Text>
                   </View>
                 </View>
               </View>

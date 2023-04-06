@@ -1,69 +1,32 @@
 import { Colors, Fonts } from 'src/utils'
-import { StyleSheet } from 'react-native'
-
-
-const styles = StyleSheet.create({
-
+import { ScaledSheet } from "react-native-size-matters";
+const styles = ScaledSheet.create({
     container: {
         backgroundColor: Colors.blueGrey,
-        paddingStart: 10,
-        marginTop: 10,
-        borderRadius: 15,
-        height: 55,
+        paddingStart: "10@ms0.3",
+        marginTop: "10@ms0.3",
+        borderRadius: "16@ms0.3",
+        height: "58@ms0.3",
     },
     innerContainer: {
-        height: 30,
         flex: 1,
         flexDirection: "row",
-        borderRadius: 12
-
-
+        alignItems: "center"
     },
     headingTxt: {
-        fontSize: 14,
-        fontWeight: "400",
-        lineHeight: 24,
-        color: Colors.blackGrey,
-        fontFamily: Fonts.Regular,
-    },
-    inputContainer: {
-        borderRadius: 38,
-        height: 48,
-        flexDirection: "row",
-        alignItems: "center",
-        borderColor: Colors.lightGrey,
-        borderWidth: 1,
-    },
-    inputField: {
         flex: 1,
         fontFamily: Fonts.Regular,
-        fontSize: 16,
-        fontWeight: "400",
-        lineHeight: 21,
-        padding: 8,
+        fontSize: "18@ms0.3",
+        fontWeight: "500",
+        lineHeight: "21@ms0.3",
         color: Colors.white,
-        alignContent:'center',
-        alignItems:'center',
-        justifyContent:'center',
-        alignSelf:'center'
+        marginStart: "15@ms0.3",
     },
-    iconContainer: {
-        justifyContent: "center",
-
+    rightArrowIcon: {
+        height: "9@ms0.3",
+        width: "16@ms0.3",
+        marginRight: "17@ms0.3",
     },
-    eyeIcon: {
-        height: 16,
-        width: 16,
-        marginRight: 17,
-        // tintColor: Colors.white,
-    },
-
-
-
-
-
-
-
 })
 
 export default styles

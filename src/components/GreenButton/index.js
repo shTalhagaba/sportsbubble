@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import styles from './styles';
-import { Images, Colors } from 'src/utils';
+import { Images } from 'src/utils';
 
 const GreenButton = props => {
   return (
@@ -9,15 +9,15 @@ const GreenButton = props => {
       onPress={props.onpress}
       style={[styles.container, props.Contianer]}>
       <View style={[styles.innerContainer, props.innerContainer]}>
-        <Text style={[styles.inputField]}>{props.title}</Text>
-        {props.rightIcon&&
-        <View style={styles.iconContainer}>
-          <Image
-            source={Images.PlayIcon}
-            style={styles.eyeIcon}
-            resizeMode={'contain'}
-          />
-        </View>}
+        <Text style={[styles.btnTxt]}>{props.title}</Text>
+        {props.rightIcon &&
+          <View style={styles.iconContainer}>
+            <Image
+              source={Images.PlayIcon}
+              style={styles.eyeIcon}
+              resizeMode={'contain'}
+            />
+          </View>}
       </View>
     </TouchableOpacity>
   );

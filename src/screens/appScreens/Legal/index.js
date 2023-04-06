@@ -28,9 +28,11 @@ export default function Legal() {
       {/* Main tabs  */}
       <View style={styles.mainTabContainer}>
         <Text style={styles.loginTxt}>{Strings.legal}</Text>
-        <ButtonWithIcon title={Strings.termUse} />
-        <ButtonWithIcon title={Strings.privacyPolicy} />
-        <ButtonWithIcon title={Strings.californiaPolicy} />
+        <View style={styles.btnContainer}>
+          <ButtonWithIcon title={Strings.termUse} />
+          <ButtonWithIcon title={Strings.privacyPolicy} />
+          <ButtonWithIcon title={Strings.californiaPolicy} />
+        </View>
       </View>
       {/* Powered by sports bubble */}
       <View style={styles.sbContainer}>

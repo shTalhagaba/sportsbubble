@@ -1,6 +1,5 @@
 import { Colors, Fonts } from 'src/utils';
 import { ScaledSheet } from "react-native-size-matters";
-
 export default ScaledSheet.create({
   container: {
     flex: 1,
@@ -84,7 +83,7 @@ export default ScaledSheet.create({
     lineHeight: "22@ms0.3",
     color: Colors.white,
     fontFamily: Fonts.Regular,
-    marginTop: 20,
+    marginTop: "20@ms0.3",
     textAlign: "center",
     maxWidth: "70%",
     alignSelf: "center",
@@ -119,28 +118,39 @@ export default ScaledSheet.create({
   },
   sbContainer: {
     alignItems: "center",
-    justifyContent:'center',
+    justifyContent: 'center',
   },
   sbImage: {
-    height:150, 
+    height: "150@ms0.3",
     alignItems: "center",
-    justifyContent:'center', 
-    paddingTop: 20,
+    justifyContent: 'center',
+    paddingTop: "20@ms0.3",
   },
   flexOnly: {
     flex: 1
+  },
+  leftArrowIcon: {
+    width: "45@ms0.3",
+    height: "45@ms0.3",
+    resizeMode: "cover",
+  },
+  powerImage: {
+    width: "165@ms0.3",
+    height: "75@ms0.3",
+    resizeMode: "cover",
+    tintColor: Colors.white
   },
   imageContainer: {
     alignItems: 'center',
     justifyContent: 'center'
   },
   buttonContainer: {
-    marginTop: 40, 
-    marginHorizontal: 20
+    marginTop: "40@ms0.3",
+    marginHorizontal: "20@ms0.3",
   },
   imageStyle: {
-    height: 100, 
-    marginTop: 40
+    height: "100@ms0.3",
+    marginTop: "40@ms0.3",
   },
   flexRow: {
     flexDirection: 'row'

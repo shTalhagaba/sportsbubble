@@ -17,8 +17,7 @@ export default function Setting() {
       source={Images.Background2}
       resizeMode="cover"
       style={styles.container}>
-      <StatusBar
-        backgroundColor={Colors.darkGrey} />
+      <StatusBar backgroundColor={Colors.mediumBlue} />
       {/* Header with Logo and back icon  */}
       <AppHeader
         centerImage={Images.Logo}
@@ -29,8 +28,11 @@ export default function Setting() {
       {/* Main tabs  */}
       <View style={styles.mainTabContainer}>
         <Text style={styles.loginTxt}>{Strings.settings}</Text>
-        <ButtonWithIcon title={Strings.legal} onpress={()=>navigation.navigate('Legal')} />
-        <ButtonWithIcon title={Strings.reportProblem} />
+        <View style={styles.btnContainer}>
+          <ButtonWithIcon title={Strings.legal} onpress={() => navigation.navigate('Legal')} />
+          <ButtonWithIcon title={Strings.reportProblem} />
+        </View>
+
       </View>
       {/* Powered by sports bubble */}
       <View style={styles.sbContainer}>

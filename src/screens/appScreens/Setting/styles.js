@@ -1,40 +1,43 @@
-import { StyleSheet } from 'react-native';
+import { ScaledSheet } from "react-native-size-matters";
 import { Colors } from 'src/utils';
 
-export default StyleSheet.create({
+export default ScaledSheet.create({
     container: {
         flex: 1,
         backgroundColor: Colors.appColorBackground
     },
     loginTxt: {
-        fontSize: 20,
+        fontSize: "20@ms0.3",
         fontWeight: "bold",
         textAlign: "center",
         color: Colors.white
     },
     leftArrowIcon: {
-        width: 45,
-        height: 45,
+        width: "45@ms0.3",
+        height: "45@ms0.3",
         resizeMode: "cover",
     },
     powerImage: {
-        width: 165,
-        height: 75,
+        width: "165@ms0.3",
+        height: "75@ms0.3",
         resizeMode: "cover",
         tintColor: Colors.white
     },
     versionTxt: {
-        fontSize: 16,
+        fontSize: "16@ms0.3",
         fontWeight: "bold",
         textAlign: "center",
         color: Colors.white
     },
     sbContainer: {
-        height: '25%', 
+        height: '25%',
         alignItems: 'center'
     },
     mainTabContainer: {
-        marginHorizontal: 20, 
-        flex: 1 
+        marginHorizontal: "20@ms0.3",
+        flex: 1,
+    },
+    btnContainer: {
+        marginTop: "24@ms0.3",
     }
 });

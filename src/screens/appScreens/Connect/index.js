@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
-import {ImageBackground, Text, View, Image, StatusBar} from 'react-native';
+import React, { useState } from 'react';
+import { ImageBackground, Text, View, Image, StatusBar } from 'react-native';
 import styles from './styles';
-import {Images, Colors, Strings} from 'src/utils';
+import { Images, Colors, Strings } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
 import GreenButton from 'src/components/GreenButton';
 
@@ -17,7 +17,7 @@ export default function Connect(props) {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        customLeftImage={{tintColor: Colors.orange}}
+        customLeftImage={{ tintColor: Colors.orange }}
         SimpleView
       />
       <View style={styles.flexOnly}>
@@ -36,11 +36,11 @@ export default function Connect(props) {
                 <Text style={styles.titleTxt}>{item?.title}</Text>
                 <View style={styles.flexRow}>
                   <Text
-                    style={[styles.eventTxt, {opacity: item.live ? 1 : 0.5}]}>
+                    style={[styles.eventTxt]}>
                     {item?.day}
                   </Text>
                   <Text
-                    style={[styles.eventTxt, {opacity: item.live ? 1 : 0.5}]}>
+                    style={[styles.eventTxt]}>
                     {' ' + item?.time}
                   </Text>
                 </View>
@@ -62,7 +62,8 @@ export default function Connect(props) {
       </View>
       {/* Powered by sports bubble */}
       <View style={styles.sbContainer}>
-        <Image source={Images.PoweredBySB} style={styles.sbImage} />
+        <Image source={Images.Sports} style={styles.leftArrowIcon} resizeMode={"contain"} />
+        <Image source={Images.PoweredSB} style={styles.powerImage} resizeMode={"contain"} />
       </View>
     </ImageBackground>
   );

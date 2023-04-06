@@ -1,6 +1,6 @@
-import { Platform, StyleSheet } from 'react-native'
-import { Colors, Fonts } from 'src/utils'
-import { moderateScale, ScaledSheet } from "react-native-size-matters";
+import { Platform } from 'react-native'
+import { Colors } from 'src/utils'
+import { ScaledSheet } from "react-native-size-matters";
 
 const styles = ScaledSheet.create({
     headerContainer: {

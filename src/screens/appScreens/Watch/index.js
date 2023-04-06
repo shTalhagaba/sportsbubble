@@ -1,23 +1,15 @@
-import React, {useState} from 'react';
-import {
-  ImageBackground,
-  Text,
-  View,
-  Image,
-  FlatList,
-  TouchableOpacity,
-  StatusBar,
-} from 'react-native';
+import React, { useState } from 'react';
+import { ImageBackground, Text, View, Image, FlatList, TouchableOpacity, StatusBar, } from 'react-native';
 import styles from './styles';
-import {Images, Colors, Strings} from 'src/utils';
+import { Images, Colors, Strings } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 const data = [
-  {id: 1, img: Images.NBALogo, title: 'Fubo'},
-  {id: 2, img: Images.NBALogo, title: 'ESPN'},
-  {id: 3, img: Images.NBALogo, title: 'Sling'},
-  {id: 4, img: Images.NBALogo, title: 'DAZN'},
+  { id: 1, img: Images.NBALogo, title: 'Fubo' },
+  { id: 2, img: Images.NBALogo, title: 'ESPN' },
+  { id: 3, img: Images.NBALogo, title: 'Sling' },
+  { id: 4, img: Images.NBALogo, title: 'DAZN' },
 ];
 
 export default function Watch(props) {
@@ -35,7 +27,7 @@ export default function Watch(props) {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        customLeftImage={{tintColor: Colors.orange}}
+        customLeftImage={{ tintColor: Colors.orange }}
         SimpleView
       />
       {/* Main View */}
@@ -57,14 +49,14 @@ export default function Watch(props) {
                   <Text
                     style={[
                       styles.eventTxt,
-                      {opacity: itemSelected.live ? 1 : 0.5},
+                      { opacity: itemSelected.live ? 1 : 0.5 },
                     ]}>
                     {itemSelected?.day}
                   </Text>
                   <Text
                     style={[
                       styles.eventTxt,
-                      {opacity: itemSelected.live ? 1 : 0.5},
+                      { opacity: itemSelected.live ? 1 : 0.5 },
                     ]}>
                     {' ' + itemSelected?.time}
                   </Text>
@@ -80,10 +72,10 @@ export default function Watch(props) {
             data={data}
             showsVerticalScrollIndicator={false}
             horizontal
-            renderItem={({item, index}) => (
+            renderItem={({ item, index }) => (
               <TouchableOpacity
                 onPress={() =>
-                  navigation.navigate('Connect', {item: itemSelected})
+                  navigation.navigate('Connect', { item: itemSelected })
                 }
                 style={[styles.listContiner]}>
                 <ImageBackground
@@ -108,20 +100,20 @@ export default function Watch(props) {
           resizeMode={'stretch'}
           style={styles.largeMenuImage}>
           <TouchableOpacity onPress={() => setBottomMenu(false)}>
-            <Image source={Images.Menu} style={{width: 32, height: 12}} />
+            <Image source={Images.Menu} style={styles.menuBtn} />
           </TouchableOpacity>
           <Text style={styles.wayToWatch}>
             {Strings.otherWays}
           </Text>
-          <View style={{marginTop: 1, marginHorizontal: 1}}>
+          <View style={{ marginTop: 1, marginHorizontal: 1 }}>
             <FlatList
               data={data}
               showsVerticalScrollIndicator={false}
               horizontal
-              renderItem={({item, index}) => (
+              renderItem={({ item, index }) => (
                 <TouchableOpacity
                   onPress={() =>
-                    navigation.navigate('Connect', {item: itemSelected})
+                    navigation.navigate('Connect', { item: itemSelected })
                   }
                   style={styles.listContiner}>
                   <ImageBackground
@@ -145,7 +137,7 @@ export default function Watch(props) {
           resizeMode={'stretch'}
           style={styles.smallMenuImage}>
           <TouchableOpacity onPress={() => setBottomMenu(true)}>
-            <Image source={Images.Menu} style={{width: 32, height: 12}} />
+            <Image source={Images.Menu} style={styles.menuBtn} />
           </TouchableOpacity>
           <Text style={styles.wayToWatch}>
             {Strings.otherWays}

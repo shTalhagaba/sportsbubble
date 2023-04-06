@@ -10,7 +10,10 @@ export default ScaledSheet.create({
     paddingRight: "5@ms0.3",
     marginVertical: "10@ms0.3",
     paddingVertical: "5@ms0.3",
-    alignItems: "center"
+    alignItems: "center",
+
+    // flex: 1,
+    // marginHorizontal: "5@ms0.3",
   },
   itemListContiner: {
     paddingRight: "0@ms0.3",
@@ -139,8 +142,8 @@ export default ScaledSheet.create({
     fontFamily: Fonts.Regular,
     textTransform: "uppercase",
     textAlign: "center",
-    color: 'white', 
-    marginTop: 12
+    color: 'white',
+    marginTop: "12@ms0.3",
   },
   conectTxt: {
     fontSize: "18@ms0.3",
@@ -148,7 +151,7 @@ export default ScaledSheet.create({
     lineHeight: "24@ms0.3",
     color: Colors.white,
     fontFamily: Fonts.Regular,
-    marginTop: 20,
+    marginTop: "20@ms0.3",
     textAlign: "center",
     maxWidth: "70%",
     alignSelf: "center",
@@ -182,23 +185,27 @@ export default ScaledSheet.create({
     fontFamily: Fonts.Regular,
   },
   flatlistContainer: {
-    marginTop: 40, 
-    marginHorizontal: 20
+    marginTop: "40@ms0.3",
+    marginHorizontal: "20@ms0.3"
+  },
+  menuBtn: {
+    width: "32@ms0.3",
+    height: "12@ms0.3"
   },
   largeMenuImage: {
     width: '100%',
-    height: 250,
+    height: "220@ms0.3",
     alignItems: 'center',
     justifyContent: 'flex-start',
-    paddingTop: 20,
+    paddingTop: "20@ms0.3",
   },
   smallMenuImage: {
     width: '100%',
-    height: 80,
+    height: "80@ms0.3",
     justifyContent: 'center',
     alignItems: 'center',
   },
-  flexOnly:{
+  flexOnly: {
     flex: 1
   }
 });

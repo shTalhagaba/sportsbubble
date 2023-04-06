@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import styles from './styles';
-import { Images, Colors } from 'src/utils';
+import { Images } from 'src/utils';
 
 const ButtonWithIcon = props => {
   return (
@@ -9,14 +9,12 @@ const ButtonWithIcon = props => {
       onPress={props.onpress}
       style={[styles.container, props.Contianer]}>
       <View style={[styles.innerContainer, props.innerContainer]}>
-        <Text style={[styles.inputField]}>{props.title}</Text>
-        <View style={styles.iconContainer}>
-          <Image
-            source={Images.RightArrow}
-            style={styles.eyeIcon}
-            resizeMode={'contain'}
-          />
-        </View>
+        <Text style={[styles.headingTxt]}>{props.title}</Text>
+        <Image
+          source={Images.RightArrow}
+          style={styles.rightArrowIcon}
+          resizeMode={'contain'}
+        />
       </View>
     </TouchableOpacity>
   );
