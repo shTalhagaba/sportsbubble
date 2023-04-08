@@ -1,32 +1,33 @@
 import { Colors, Fonts } from 'src/utils'
-import { StyleSheet } from 'react-native'
+import { ScaledSheet } from "react-native-size-matters";
 
 
-const styles = StyleSheet.create({
+
+const styles = ScaledSheet.create({
 
     container: {
         backgroundColor: Colors.buttonGreen,
-        marginTop: 20,
-        marginHorizontal: 5,
-        borderRadius: 15,
-        height: 55,
+        marginTop: "20@ms0.3",
+        marginHorizontal: "5@ms0.3",
+        borderRadius: "15@ms0.3",
+        height: "55@ms0.3",
     },
     innerContainer: {
-        height: 30,
+        height: "30@ms0.3",
         flex: 1,
         flexDirection: "row",
-        borderRadius: 12,
+        borderRadius: "12@ms0.3",
     },
     txt: {
-        fontSize: 15,
+        fontSize: "15@ms0.3",
         fontWeight: "bold",
         textAlign: "center",
         color: Colors.white,
-        alignSelf:'center',
-        justifyContent:'center',
-        alignContent:'center',
-        alignItems:"center",
-        width:'100%'
+        alignSelf: 'center',
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: "center",
+        width: '100%'
     }
 
 })

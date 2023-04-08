@@ -9,7 +9,7 @@ const ContactTextInput = (props) => {
     return (
         <View style={[styles.container, props.Contianer]}>
             <View style={[styles.innerContainer, props.innerContainer]}>
-                <Image source={props.leftImage} style={{ height: 18, width: 18, alignSelf: "center", tintColor: Colors.white, marginHorizontal: 10 }} />
+                <Image source={props.leftImage} style={styles.leftIcon} />
                 <TextInput
                     {...props}
                     style={[styles.inputField, props.customInputStyle]}

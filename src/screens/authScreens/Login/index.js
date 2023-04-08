@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { View, Text, ScrollView, ImageBackground, StatusBar, TouchableOpacity } from 'react-native';
 import styles from './styles';
 import ContactTextInput from 'src/components/ContactTextInput'
@@ -23,13 +23,14 @@ export default function Login() {
         <ImageBackground source={Images.Background2}
             resizeMode="cover"
             style={styles.container}>
+            <StatusBar backgroundColor={Colors.mediumBlue} />
             <AppHeader
                 centerImage={Images.Logo}
                 LeftImage={Images.LeftIcon}
                 customLeftImage={{ tintColor: Colors.yellow }}
                 SimpleView />
             <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={{ marginHorizontal: 20 }}>
+                <View style={styles.innerContainer}>
                     <Text style={styles.loginTxt}>Login</Text>
                     <ContactTextInput
                         leftImage={Images.EmailIcon}
@@ -66,16 +67,16 @@ export default function Login() {
                         eyeOpen={displayPassword}
                         onPress={() => setDisplayPassword(!displayPassword)}
                     />
-                    <CustomButton 
+                    <CustomButton
                         blue={true}
                         title={"Sign In"} />
-                    <TouchableOpacity onPress={()=>navigation.navigate("ForgotPassword")}>
-                    <Text style={styles.forgotTxt}>Forgot Password?</Text> 
+                    <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
+                        <Text style={styles.forgotTxt}>Forgot Password?</Text>
                     </TouchableOpacity>
 
-                    <Text style={styles.accountTxt}>Don't have an account?</Text> 
-                    <TouchableOpacity onPress={()=>navigation.navigate("Signup")}>
-                    <Text style={styles.signupTxt}>Sign Up</Text> 
+                    <Text style={styles.accountTxt}>Don't have an account?</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
+                        <Text style={styles.signupTxt}>Sign Up</Text>
                     </TouchableOpacity>
                 </View>
 

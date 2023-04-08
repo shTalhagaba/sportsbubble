@@ -30,13 +30,15 @@ export default function Signup() {
         <ImageBackground source={Images.Background2}
             resizeMode="cover"
             style={styles.container}>
+            <StatusBar backgroundColor={Colors.mediumBlue} />
+
             <AppHeader
                 centerImage={Images.Logo}
                 LeftImage={Images.LeftIcon}
                 customLeftImage={{ tintColor: Colors.yellow }}
                 SimpleView />
             <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={{ marginHorizontal: 20 }}>
+                <View style={styles.innerContainer}>
                     <Text style={styles.signupTxt}>Sign Up</Text>
                     <ContactTextInput
                         leftImage={Images.UserIcon}
@@ -128,10 +130,10 @@ export default function Signup() {
                         eyeOpen={displayConfirmPassword}
                         onPress={() => setDisplayConfirmPassword(!displayConfirmPassword)}
                     />
-                    <CustomButton  
+                    <CustomButton
                         title={"Continue"}
-                        onpress={()=>navigation.navigate('WelcomeAccount')} />
-                  
+                        onpress={() => navigation.navigate('WelcomeAccount')} />
+
                 </View>
 
             </ScrollView>

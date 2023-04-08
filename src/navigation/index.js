@@ -21,7 +21,7 @@ const AppStackNavigator = () => {
 
 const MainNavigator = () => {
   const user = null
-  if (user === null) {
+  if (user !== null) {
     return <AppStackNavigator />
   }
   else {
