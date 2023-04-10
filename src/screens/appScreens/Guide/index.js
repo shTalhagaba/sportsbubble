@@ -4,6 +4,7 @@ import styles from './styles';
 import { Images, Colors, Strings } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
 import { useNavigation } from '@react-navigation/native';
+import LiveMatchView from 'src/components/Modal/LiveMatchModal';
 
 const data = [
   { id: 1, img: Images.NBALogo, companyName: "NCAA Women's Soccer", title: "Oregon at Washington", day: "Thu. 2/9", time: "5:00pm - 7:30pm", live: true, percentage: '25%' },
@@ -27,7 +28,9 @@ export default function Guide() {
   const [proFlag, setProFlag] = useState(false)
   const [collegeFlag, setCollegeFlag] = useState(false)
   const [sportFlag, setSportFlag] = useState(false)
+  const [liveMatchModal, setLiveMatchModal] = useState(true)
   const [timeData, setTimeData] = useState(timeArr)
+
 
   const handleAll = () => {
     setAllFlag(true)
@@ -183,6 +186,11 @@ export default function Guide() {
             </View>
           </TouchableOpacity>
         )} />
+      <LiveMatchView
+        setLiveMatchModal={setLiveMatchModal}
+        liveMatchModal={liveMatchModal} />
     </ImageBackground >
+
+
   );
 }

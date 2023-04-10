@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, ScrollView, ImageBackground, StatusBar, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, ImageBackground, StatusBar, TouchableOpacity, Image } from 'react-native';
 import styles from './styles';
 import ContactTextInput from 'src/components/ContactTextInput'
 import AppHeader from 'src/components/AppHeader'
-import { Images, Colors, Fonts } from 'src/utils';
+import { Images, Colors } from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
+import SignupVerifyView from 'src/components/Modal/SingupVeifyModal'
 
 
 export default function Signup() {
@@ -15,6 +16,9 @@ export default function Signup() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
+    const [emailOptCheck, setEmailOptCheck] = useState(false)
+    const [termsCheck, setTermsCheck] = useState(false)
+    const [verifyModal, setVerifyModal] = useState(false)
 
     const [displayPassword, setDisplayPassword] = useState(true);
     const [displayConfirmPassword, setDisplayConfirmPassword] = useState(true);
@@ -25,6 +29,15 @@ export default function Signup() {
     const emailRef = useRef()
     const passwordRef = useRef()
     const confirmPasswordRef = useRef()
+
+    useEffect(() => {
+        if (verifyModal) {
+            setTimeout(() => {
+                setVerifyModal(false)
+                navigation.navigate('WelcomeAccount')
+            }, 2000)
+        }
+    })
 
     return (
         <ImageBackground source={Images.Background2}
@@ -45,7 +58,7 @@ export default function Signup() {
                         refInner={fullNameRef}
                         Contianer={{ marginTop: 40 }}
                         placeholderTextColor={Colors.white}
-                        placeholder={"Full Name"}
+                        placeholder={"First Name"}
                         multiline={false}
                         value={fullName}
                         maxLength={50}
@@ -130,10 +143,38 @@ export default function Signup() {
                         eyeOpen={displayConfirmPassword}
                         onPress={() => setDisplayConfirmPassword(!displayConfirmPassword)}
                     />
+                    <View style={styles.chekboxContainer}>
+                        <TouchableOpacity onPress={() => setEmailOptCheck(!emailOptCheck)}
+                            style={styles.uncheckBox}>
+                            {emailOptCheck && <Image source={Images.Tick} style={{ tintColor: Colors.white, height: 10, width: 10 }} />}
+                        </TouchableOpacity>
+                        <Text style={[styles.checkBoxTxt, { marginStart: 10 }]}>Email Opt-in lorem ipsum dolor sit amet consecteur.</Text>
+                    </View>
+                    <View style={styles.chekboxContainer}>
+                        <TouchableOpacity onPress={() => setTermsCheck(!termsCheck)}
+                            style={styles.uncheckBox}>
+                            {termsCheck && <Image source={Images.Tick} style={{ tintColor: Colors.white, height: 10, width: 10 }} />}
+                        </TouchableOpacity>
+
+                        <View style={styles.termConditionContainer}>
+                            <Text style={styles.checkBoxTxt}>I have read and agree to the</Text>
+                            <TouchableOpacity>
+                                <Text style={[styles.checkBoxGreenTxt]}>{' '}Terms of Service</Text>
+                            </TouchableOpacity>
+                            <Text style={[styles.checkBoxTxt]}>{' '}and{' '}</Text>
+                            <TouchableOpacity>
+                                <Text style={[styles.checkBoxGreenTxt]}>Privacy Policy</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
                     <CustomButton
                         title={"Continue"}
-                        onpress={() => navigation.navigate('WelcomeAccount')} />
+                        onpress={() => setVerifyModal(!verifyModal)} />
+                    {/* onpress={() => navigation.navigate('WelcomeAccount')} /> */}
 
+                    <SignupVerifyView
+                        setVerifyModal={setVerifyModal}
+                        verifyModal={verifyModal} />
                 </View>
 
             </ScrollView>

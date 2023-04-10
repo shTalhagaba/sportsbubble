@@ -31,7 +31,14 @@ const images = {
     CircleBGLarge: require("src/assets/images/CircleBGLarge.png"),
     PoweredBySB: require("src/assets/images/PoweredBySB.png"),
     PlayIcon: require("src/assets/images/PlayIcon.png"),
-
+    HomeScreen: require("src/assets/images/HomeScreen.png"),
+    Tick: require("src/assets/images/Tick.png"),
+    Location: require("src/assets/images/Location.png"),
+    Birthday: require("src/assets/images/Birthday.png"),
+    Pronouns: require("src/assets/images/Pronouns.png"),
+    Calendar: require("src/assets/images/Calendar.png"),
+    DownArrow: require("src/assets/images/DownArrow.png"),
+    MatchTeam: require("src/assets/images/MatchTeam.png"),
 }
 
 export default images

@@ -19,15 +19,16 @@ const styles = ScaledSheet.create({
         borderRadius: "12@ms0.3",
     },
     txt: {
-        fontSize: "15@ms0.3",
-        fontWeight: "bold",
+        fontSize: "16@ms0.3",
+        fontWeight: "800",
         textAlign: "center",
         color: Colors.white,
         alignSelf: 'center',
         justifyContent: 'center',
         alignContent: 'center',
         alignItems: "center",
-        width: '100%'
+        width: '100%',
+        fontStyle: "italic"
     }
 
 })

@@ -1,8 +1,6 @@
 import React from "react"
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
 import AuthNavigator from './authNavigation'
-import AppNavigation from './appNavigation'
 import MyTabs from './bottomTab'
 
 const StackNavigator = createNativeStackNavigator()
@@ -21,7 +19,7 @@ const AppStackNavigator = () => {
 
 const MainNavigator = () => {
   const user = null
-  if (user !== null) {
+  if (user === null) {
     return <AppStackNavigator />
   }
   else {

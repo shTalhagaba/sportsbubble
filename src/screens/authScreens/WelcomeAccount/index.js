@@ -8,21 +8,16 @@ import CustomButton from 'src/components/CustomButton';
 
 
 export default function WelcomeAccount() {
-    const [fullName, setFullName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
-
-    const [displayPassword, setDisplayPassword] = useState(true);
-    const [displayConfirmPassword, setDisplayConfirmPassword] = useState(true);
+    const [zipCode, setZipCode] = useState('')
+    const [birthday, setBirthday] = useState('')
+    const [pronouns, setPronouns] = useState('')
 
 
-    const fullNameRef = useRef()
-    const lastNameRef = useRef()
-    const emailRef = useRef()
-    const passwordRef = useRef()
-    const confirmPasswordRef = useRef()
+
+    const zipCodeRef = useRef()
+    const birthdayRef = useRef()
+    const pronounsRef = useRef()
+
 
     return (
         <ImageBackground source={Images.Background2}
@@ -34,73 +29,69 @@ export default function WelcomeAccount() {
                 customLeftImage={{ tintColor: Colors.yellow }}
                 SimpleView />
             <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={{ marginHorizontal: 20 }}>
-                    <Text style={styles.signupTxt}>Welcome, FirstName!</Text>
-                    <Text style={styles.accountTxt}>We just need a few more details to configure your account</Text> 
+                <View style={styles.innerContainer}>
+                    <Text style={styles.welcomeTxt}>Welcome, FirstName!</Text>
+                    <Text style={styles.accountTxt}>We just need a few more details to configure your account</Text>
                     <ContactTextInput
-                        leftImage={Images.UserIcon}
-                        refInner={fullNameRef}
+                        leftImage={Images.Location}
+                        refInner={zipCodeRef}
                         Contianer={{ marginTop: 40 }}
                         placeholderTextColor={Colors.white}
                         placeholder={"Zip Code"}
                         multiline={false}
-                        value={fullName}
-                        maxLength={50}
-                        onChangeText={(txt) => setFullName(txt)}
+                        value={zipCode}
+                        maxLength={6}
+                        onChangeText={(txt) => setZipCode(txt)}
                         keyboardType={"default"}
                         autoCapitalize="none"
                         returnKeyType={"next"}
                         blurOnSubmit={false}
                         onSubmitEditing={() => {
-                            lastNameRef.current.focus();
+                            birthdayRef.current.focus();
                         }}
                     />
-                    <Text style={styles.sideTxt}>Sharing your location allows us to surface the most relevant event listings in your area</Text> 
+                    <Text style={styles.sideTxt}>Sharing your location allows us to surface the most relevant event listings in your area</Text>
                     <ContactTextInput
-                        leftImage={Images.LockIcon}
-                        refInner={passwordRef}
+                        leftImage={Images.Birthday}
+                        refInner={birthdayRef}
                         placeholderTextColor={Colors.white}
                         placeholder={"Birthdate"}
                         multiline={false}
-                        value={password}
+                        value={birthday}
                         maxLength={50}
-                        onChangeText={(txt) => setPassword(txt)}
+                        onChangeText={(txt) => setBirthday(txt)}
                         keyboardType={"default"}
                         autoCapitalize="none"
                         returnKeyType={"next"}
                         blurOnSubmit={false}
-                        secureText
-                        secureTextEntry={displayPassword}
-                        eyeOpen={displayPassword}
-                        onPress={() => setDisplayPassword(!displayPassword)}
+                        rightImage={Images.Calendar}
+                        pressRightImage={() => console.log("Calendar")}
                         onSubmitEditing={() => {
-                            confirmPasswordRef.current.focus();
+                            pronounsRef.current.focus();
                         }}
                     />
-                    <Text style={styles.sideTxt}>You must be at least 14 years of age of register.</Text> 
+                    <Text style={styles.sideTxt}>You must be at least 14 years of age of register.</Text>
                     <ContactTextInput
-                        leftImage={Images.LockIcon}
-                        refInner={confirmPasswordRef}
+                        leftImage={Images.Pronouns}
+                        refInner={pronounsRef}
                         placeholderTextColor={Colors.white}
-                        placeholder={"Confrim Password"}
+                        placeholder={"Pronouns"}
                         multiline={false}
-                        value={confirmPassword}
+                        value={pronouns}
                         maxLength={50}
-                        onChangeText={(txt) => setConfirmPassword(txt)}
+                        onChangeText={(txt) => setPronouns(txt)}
                         keyboardType={"default"}
                         autoCapitalize="none"
                         returnKeyType={"done"}
-                        secureText
-                        secureTextEntry={displayConfirmPassword}
-                        eyeOpen={displayConfirmPassword}
-                        onPress={() => setDisplayConfirmPassword(!displayConfirmPassword)}
+                        rightImage={Images.DownArrow}
+                        pressRightImage={() => console.log("pronouns")}
                     />
-                     <Text style={styles.sideTxt}>Wording for this tk</Text> 
-                    <View style={{marginTop: 55}}>
-                    <CustomButton  
-                        title={"Continue"} />
+                    <Text style={styles.sideTxt}>Wording for this tk</Text>
+                    <View style={styles.btnContainer}>
+                        <CustomButton
+                            title={"Continue"} />
                     </View>
-                  
+
                 </View>
 
             </ScrollView>

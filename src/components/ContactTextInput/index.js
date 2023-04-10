@@ -36,11 +36,11 @@ const ContactTextInput = (props) => {
                         <Image source={props.eyeOpen ? Images.EyeOpen : Images.EyeClose} style={styles.eyeIcon} resizeMode={"contain"} />
                     </TouchableOpacity>
                 )}
-                {/*{props.rightImage && (
-                    <TouchableOpacity onPress={props.pressRightImage}>
+                {props.rightImage && (
+                    <TouchableOpacity onPress={props.pressRightImage} style={styles.iconContainer}>
                         <Image source={props.rightImage} style={[styles.eyeIcon, props.iconStyle]} resizeMode={"contain"} />
                     </TouchableOpacity>
-                )} */}
+                )}
             </View>
 
         </View>
