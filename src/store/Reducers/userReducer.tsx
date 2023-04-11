@@ -6,9 +6,10 @@ const initialState = {
   firstName: '',
   lastName: '',
   id: '',
+  user: false,
 };
 
-const user = (state = initialState, action) => {
+const user = (state = initialState, action: any) => {
   switch (action.type) {
     // Login.
     case 'SIGN_IN_SUCCESS':
@@ -24,6 +25,16 @@ const user = (state = initialState, action) => {
       try {
         alert(action.payload);
         return state;
+      } catch (e) {
+        alert(e);
+        return state;
+      }
+      break;
+    // user data.
+    case 'SIGN_IN_USER':
+      try {
+        action.payload.user = true;
+        return action.payload;
       } catch (e) {
         alert(e);
         return state;

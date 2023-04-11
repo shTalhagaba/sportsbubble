@@ -103,11 +103,11 @@ export default ScaledSheet.create({
     flexDirection: 'row',
     backgroundColor: Colors.mediumBlue,
     height: "120@ms0.3",
-
   },
   sliderInnerContainer: {
     flex: 1,
     marginHorizontal: "5@ms0.3",
+    marginVertical: 5
   },
   sliderImageBackground: {
     height: "100%",

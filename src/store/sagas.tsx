@@ -3,7 +3,7 @@ import {call, put, takeLatest, takeLeading, select} from 'redux-saga/effects';
 // import {logout, fetchSubscription as fetchSubscriptionAction} from './types';
 
 // Handle login request.
-function* signIn(action) {
+function* signIn(action: any) {
   try {
     // const response = yield call(API.Login, action.payload);
     // if (response.success) {

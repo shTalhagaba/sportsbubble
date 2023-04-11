@@ -12,8 +12,8 @@ export default ScaledSheet.create({
     paddingVertical: "5@ms0.3",
     alignItems: "center",
 
-    // flex: 1,
-    // marginHorizontal: "5@ms0.3",
+    flex: 1,
+    marginHorizontal: "5@ms0.3",
   },
   itemListContiner: {
     paddingRight: "0@ms0.3",
@@ -93,7 +93,7 @@ export default ScaledSheet.create({
     lineHeight: "20@ms0.3",
     color: Colors.white,
     fontFamily: Fonts.Regular,
-    marginTop: 8
+    marginTop: 8,
   },
   sliderActiveTimeTxt: {
     fontSize: "14@ms0.3",
@@ -186,7 +186,7 @@ export default ScaledSheet.create({
   },
   flatlistContainer: {
     marginTop: "40@ms0.3",
-    marginHorizontal: "20@ms0.3"
+    marginHorizontal: "20@ms0.3",
   },
   menuBtn: {
     width: "32@ms0.3",

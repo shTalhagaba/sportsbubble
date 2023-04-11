@@ -28,7 +28,7 @@ export default function Guide() {
   const [proFlag, setProFlag] = useState(false)
   const [collegeFlag, setCollegeFlag] = useState(false)
   const [sportFlag, setSportFlag] = useState(false)
-  const [liveMatchModal, setLiveMatchModal] = useState(true)
+  const [liveMatchModal, setLiveMatchModal] = useState(false)
   const [timeData, setTimeData] = useState(timeArr)
 
 

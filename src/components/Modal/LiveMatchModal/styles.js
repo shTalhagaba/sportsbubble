@@ -5,22 +5,21 @@ import { ScaledSheet } from "react-native-size-matters";
 const styles = ScaledSheet.create({
     mainView: {
         flex: 1,
-        justifyContent: "center"
+        justifyContent: "center",
     },
     innerContainer: {
         backgroundColor: Colors.darkBlue,
-
         width: "90%",
         alignSelf: "center",
         borderRadius: "16@ms0.3",
         paddingBottom: "30@ms0.3",
     },
     matchTeam: {
-        height: "240@ms0.3",
+        height: "240@ms0.6",
         width: "100%",
         borderTopRightRadius: "16@ms0.3",
         borderTopLeftRadius: "16@ms0.3",
-
+        resizeMode:'cover'
     },
     liveTxt: {
         fontSize: "24@ms0.3",
