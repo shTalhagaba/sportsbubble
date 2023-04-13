@@ -6,7 +6,7 @@ import AppHeader from 'src/components/AppHeader'
 import { Images, Colors } from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
-import SignupVerifyView from 'src/components/Modal/SingupVeifyModal'
+import CustomModalView from 'src/components/Modal/CustomModal'
 
 
 export default function Signup() {
@@ -172,9 +172,10 @@ export default function Signup() {
                         onpress={() => setVerifyModal(!verifyModal)} />
                     {/* onpress={() => navigation.navigate('WelcomeAccount')} /> */}
 
-                    <SignupVerifyView
-                        setVerifyModal={setVerifyModal}
-                        verifyModal={verifyModal} />
+                    <CustomModalView
+                        visible={verifyModal}
+                        desTxt={"Please check your inbox to verify your account"}
+                        dexTxtStyle={styles.modalContainer} />
                 </View>
 
             </ScrollView>

@@ -39,6 +39,12 @@ const images = {
     Calendar: require("src/assets/images/Calendar.png"),
     DownArrow: require("src/assets/images/DownArrow.png"),
     MatchTeam: require("src/assets/images/MatchTeam.png"),
+    MySports: require("src/assets/images/MySports.png"),
+    BaseBall: require("src/assets/images/BaseBall.png"),
+    BasketBall: require("src/assets/images/BasketBall.png"),
+    Bell: require("src/assets/images/Bell.png"),
+    Favorite: require("src/assets/images/Favorite.png"),
+    FilledFvrt: require("src/assets/images/FilledFvrt.png"),
 }
 
 export default images

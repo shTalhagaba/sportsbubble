@@ -49,4 +49,10 @@ export default ScaledSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
+    modalContainer: {
+        marginTop: "0@ms0.3",
+        paddingVertical: "40@ms0.3"
+
+
+    }
 });
