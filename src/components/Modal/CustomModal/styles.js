@@ -43,6 +43,12 @@ const styles = ScaledSheet.create({
         borderWidth: "2@ms0.3",
         borderColor: Colors.white
     },
+    orangeBtnContainer: {
+        flex: 1,
+        backgroundColor: Colors.black,
+        borderWidth: "2@ms0.3",
+        borderColor: Colors.darkOrange
+    },
     blackBtnContainer2: {
         backgroundColor: Colors.black,
         borderWidth: "2@ms0.3",

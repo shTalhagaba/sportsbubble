@@ -50,7 +50,7 @@ const styles = ScaledSheet.create({
         fontWeight: "400",
         lineHeight: "21@ms0.3",
         padding: "0@ms0.3",
-        color: Colors.blackGrey,
+        color: Colors.white,
     },
     iconContainer: {
         justifyContent: "center",

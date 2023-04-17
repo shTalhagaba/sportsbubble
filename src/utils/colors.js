@@ -19,4 +19,5 @@ export default {
     brandBlue: "#004EBC",
     lightGreen: "#69A833",
     mediumGreen: "#50813B",
+    darkOrange: "#FF9900",
 }

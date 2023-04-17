@@ -2,6 +2,7 @@ import React from "react"
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AuthNavigator from './authNavigation'
 import MyTabs from './bottomTab'
+import withoutBottomtab from './withoutBottomtab'
 
 const StackNavigator = createNativeStackNavigator()
 
@@ -12,7 +13,7 @@ const AppStackNavigator = () => {
       <StackNavigator.Screen name="Root" options={{ headerShown: false }}>
         {props => <MyTabs {...props} />}
       </StackNavigator.Screen>
-      {/* <StackNavigator.Screen name="AppNavigation" component={AppNavigation} options={{ headerShown: false }}/> */}
+      <StackNavigator.Screen name="withoutBottomtab" component={withoutBottomtab} options={{ headerShown: false }} />
     </StackNavigator.Navigator>
   )
 }

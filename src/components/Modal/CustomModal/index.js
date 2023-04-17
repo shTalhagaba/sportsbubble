@@ -21,11 +21,19 @@ const CustomModal = (props) => {
                         <Text style={[styles.desTxt, props.dexTxtStyle]}>{props?.desTxt}</Text>
                         {props.btn &&
                             <View style={props.rowStyle ? styles.rowBtn : styles.columnBtn}>
-                                <CustomButton
-                                    blue={props.blue}
-                                    Contianer={props.rowStyle ? { flex: 1 } : null}
-                                    title={props.otherBtnTxt}
-                                    onpress={props.otherBtnPress} />
+                                {props.orangrBTn ?
+                                    <CustomButton
+                                        title={props.orangeBtnTxt}
+                                        Contianer={props.rowStyle ? styles.orangeBtnContainer : styles.blackBtnContainer2}
+                                        onpress={props.ornageBtnPress}
+                                    />
+                                    :
+                                    <CustomButton
+                                        blue={props.blue}
+                                        Contianer={props.rowStyle ? { flex: 1 } : null}
+                                        title={props.otherBtnTxt}
+                                        onpress={props.otherBtnPress} />
+                                }
                                 <CustomButton
                                     title={props.blackBtnTxt}
                                     Contianer={props.rowStyle ? styles.blackBtnContainer : styles.blackBtnContainer2}

@@ -16,7 +16,7 @@ const styles = ScaledSheet.create({
     headingTxt: {
         flex: 1,
         fontFamily: Fonts.Regular,
-        fontSize: "18@ms0.3",
+        fontSize: "16@ms0.3",
         fontWeight: "500",
         lineHeight: "21@ms0.3",
         color: Colors.white,

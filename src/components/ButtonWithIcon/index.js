@@ -6,6 +6,7 @@ import { Images } from 'src/utils';
 const ButtonWithIcon = props => {
   return (
     <TouchableOpacity
+      activeOpacity={0.8}
       onPress={props.onpress}
       style={[styles.container, props.Contianer]}>
       <View style={[styles.innerContainer, props.innerContainer]}>

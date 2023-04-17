@@ -1,5 +1,5 @@
 import { ScaledSheet } from "react-native-size-matters";
-import { Colors } from 'src/utils';
+import { Colors, Fonts } from 'src/utils';
 
 export default ScaledSheet.create({
     container: {
@@ -10,7 +10,8 @@ export default ScaledSheet.create({
         fontSize: "20@ms0.3",
         fontWeight: "bold",
         textAlign: "center",
-        color: Colors.white
+        color: Colors.white,
+        fontFamily: Fonts.Regular,
     },
     leftArrowIcon: {
         width: "45@ms0.3",
@@ -27,7 +28,15 @@ export default ScaledSheet.create({
         fontSize: "16@ms0.3",
         fontWeight: "bold",
         textAlign: "center",
-        color: Colors.white
+        color: Colors.white,
+        fontFamily: Fonts.Regular,
+    },
+    logoutTxt: {
+        fontSize: "18@ms0.3",
+        fontWeight: "500",
+        color: Colors.darkOrange,
+        fontFamily: Fonts.Regular,
+        marginStart: "16@ms0.3",
     },
     sbContainer: {
         height: '25%',
@@ -37,7 +46,11 @@ export default ScaledSheet.create({
         marginHorizontal: "20@ms0.3",
         flex: 1,
     },
-    btnContainer: {
+    logoutIcon: {
+        height: "9@ms0.3",
+        width: "16@ms0.3",
+    },
+    innerContainer: {
         marginTop: "24@ms0.3",
     }
 });

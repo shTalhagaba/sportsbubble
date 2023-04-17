@@ -14,4 +14,8 @@ export default {
   privacyPolicy: 'Privacy Policy/Info We Collect',
   californiaPolicy: 'California Policy',
   watchNow: 'Watch Now',
+  personalInfo: 'Personal Info',
+  changePassword: 'Change Password',
+  sportsStreamingApps: 'Sports & Streaming Apps',
+  aboutWatchSports: 'About WatchSports',
 };

@@ -45,6 +45,7 @@ const images = {
     Bell: require("src/assets/images/Bell.png"),
     Favorite: require("src/assets/images/Favorite.png"),
     FilledFvrt: require("src/assets/images/FilledFvrt.png"),
+    LeftArrowIcon: require("src/assets/images/LeftArrowIcon.png"),
 }
 
 export default images
