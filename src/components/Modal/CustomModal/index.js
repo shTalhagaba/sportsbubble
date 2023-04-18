@@ -26,6 +26,7 @@ const CustomModal = (props) => {
                                         title={props.orangeBtnTxt}
                                         Contianer={props.rowStyle ? styles.orangeBtnContainer : styles.blackBtnContainer2}
                                         onpress={props.ornageBtnPress}
+                                        txt={styles.orangeTxt}
                                     />
                                     :
                                     <CustomButton

@@ -63,5 +63,8 @@ const styles = ScaledSheet.create({
         marginHorizontal: "10@ms0.3",
         paddingBottom: "30@ms0.3",
     },
+    orangeTxt: {
+        color: Colors.darkOrange
+    }
 });
 export default styles;

@@ -34,4 +34,8 @@ export default {
   confrimNewPassword: 'Confrim New Password',
   saveChanges: 'Save Changes',
   cancel: 'Cancel',
+  alert: 'Alert',
+  sportStreaming: 'Sports & Streaming Apps',
+  sportStreamingDes: 'Please share how you watch to help us improve our service',
+  alertDes: 'Are you sure you want to cancel your account? This will erase your favorites and notification preferences.',
 };

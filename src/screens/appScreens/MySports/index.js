@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   ImageBackground,
   Text,
@@ -9,9 +9,9 @@ import {
   StatusBar,
 } from 'react-native';
 import styles from './styles';
-import {Images, Colors, Strings} from 'src/utils';
+import { Images, Colors, Strings } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import CustomModalView from 'src/components/Modal/CustomModal';
 
 const data = [
@@ -234,7 +234,7 @@ export default function Guide() {
       <FlatList
         data={mySportData}
         showsVerticalScrollIndicator={false}
-        renderItem={({item, index}) => (
+        renderItem={({ item, index }) => (
           <View style={styles.listContiner}>
             <View style={styles.innerContainer}>
               <Image
@@ -268,7 +268,7 @@ export default function Guide() {
           </View>
         )}
       />
-        {/* event reminder pop up  */}
+      {/* event reminder pop up  */}
       <CustomModalView
         visible={reminderModal}
         headerTxt={Strings.eventReminder}
@@ -281,7 +281,7 @@ export default function Guide() {
         blackBtnPress={() => setRemaindarModal(!reminderModal)}
         otherBtnPress={() => handleNotificationAlert()}
       />
-        {/* Access Features pop up  */}
+      {/* Access Features pop up  */}
       <CustomModalView
         visible={fvrtModal}
         desTxt={Strings.accessFeatures}

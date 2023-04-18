@@ -6,7 +6,7 @@ import AppHeader from 'src/components/AppHeader'
 import { Images, Colors } from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
-import Strings from '../../../utils/strings';
+import Strings from 'src/utils/strings';
 
 
 export default function UpdatePassword() {

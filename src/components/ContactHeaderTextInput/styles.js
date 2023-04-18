@@ -8,31 +8,32 @@ const styles = ScaledSheet.create({
     container: {
         backgroundColor: Colors.blueGrey,
         paddingStart: "10@ms0.3",
-        marginTop: "20@ms0.3",
+        marginTop: "16@ms0.3",
         borderRadius: "15@ms0.3",
-        height: "55@ms0.3",
+        height: "60@ms0.3",
+        marginStart: "10@ms0.3",
+        paddingVertical: "5@ms0.3",
+        flexDirection: "row"
     },
     leftIcon: {
-        height: "18@ms0.3",
-        width: "18@ms0.3",
-        alignSelf: "center",
+        height: "12@ms0.3",
+        width: "12@ms0.3",
         tintColor: Colors.white,
-        marginHorizontal: "10@ms0.3",
+    },
+    headerContainer: {
+        flexDirection: "row",
+        alignItems: "center",
     },
     innerContainer: {
-        height: "30@ms0.3",
-        flex: 1,
-        flexDirection: "row",
-        borderRadius: "12@ms0.3",
-
-
+        flex: 1
     },
-    headingTxt: {
-        fontSize: "14@ms0.3",
-        fontWeight: "400",
+    headerTxt: {
+        fontSize: "12@ms0.3",
+        fontWeight: "500",
         lineHeight: "24@ms0.3",
-        color: Colors.blackGrey,
+        color: Colors.white,
         fontFamily: Fonts.Regular,
+        marginStart: "10@ms0.3",
     },
     inputContainer: {
         borderRadius: "38@ms0.3",
@@ -46,9 +47,9 @@ const styles = ScaledSheet.create({
     inputField: {
         flex: 1,
         fontFamily: Fonts.Regular,
-        fontSize: "17@ms0.3",
-        fontWeight: "400",
-        lineHeight: "21@ms0.3",
+        fontSize: "16@ms0.3",
+        fontWeight: "500",
+        lineHeight: "24@ms0.3",
         padding: "0@ms0.3",
         color: Colors.white,
     },
@@ -57,8 +58,8 @@ const styles = ScaledSheet.create({
 
     },
     eyeIcon: {
-        height: "20@ms0.3",
-        width: "20@ms0.3",
+        height: "16@ms0.3",
+        width: "16@ms0.3",
         marginRight: "17@ms0.3",
         tintColor: Colors.white,
     },
