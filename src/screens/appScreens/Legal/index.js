@@ -2,13 +2,11 @@ import React from 'react';
 import { Image, ImageBackground, StatusBar, Text, View } from 'react-native';
 import styles from './styles';
 import { Images, Colors, Strings } from 'src/utils';
-import { useNavigation } from '@react-navigation/native';
 import AppHeader from 'src/components/AppHeader';
 import ButtonWithIcon from 'src/components/ButtonWithIcon';
 import DeviceInfo from 'react-native-device-info';
 
 export default function Legal() {
-  const navigation = useNavigation();
   const version = DeviceInfo.getVersion();
 
   return (

@@ -41,18 +41,18 @@ export default function Setting() {
           <TouchableOpacity onPress={() => setLogoutModal(!logoutModal)}
             style={{ flexDirection: "row", marginTop: 24, alignItems: "center" }}>
             <Image source={Images.LeftArrowIcon} style={styles.logoutIcon} />
-            <Text style={styles.logoutTxt}>Logout</Text>
+            <Text style={styles.logoutTxt}>{Strings.logout}</Text>
           </TouchableOpacity>
         </View>
-
       </ScrollView>
 
+      {/* log out pop up */}
       <CustomModalView
         visible={logoutModal}
-        headerTxt={"Logout"}
-        desTxt={"Are you sure you want to logut?"}
-        blackBtnTxt={"No"}
-        orangeBtnTxt={"Yes"}
+        headerTxt={Strings.logout}
+        desTxt={Strings.wantToLogout}
+        blackBtnTxt={Strings.no}
+        orangeBtnTxt={Strings.yes}
         btn
         orangrBTn
         rowStyle={true}

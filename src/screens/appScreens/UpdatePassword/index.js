@@ -6,6 +6,7 @@ import AppHeader from 'src/components/AppHeader'
 import { Images, Colors } from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
+import Strings from '../../../utils/strings';
 
 
 export default function UpdatePassword() {
@@ -35,12 +36,12 @@ export default function UpdatePassword() {
                 SimpleView />
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={{ marginHorizontal: 20 }}>
-                    <Text style={styles.loginTxt}>Update Password</Text>
+                    <Text style={styles.loginTxt}>{Strings.updatePassword}</Text>
                     <ContactTextInput
                         leftImage={Images.LockIcon}
                         refInner={currentPasswordRef}
                         placeholderTextColor={Colors.white}
-                        placeholder={"Current Password"}
+                        placeholder={Strings.currentPassword}
                         multiline={false}
                         value={currentPassword}
                         maxLength={50}
@@ -62,7 +63,7 @@ export default function UpdatePassword() {
                         leftImage={Images.LockIcon}
                         refInner={newPasswordRef}
                         placeholderTextColor={Colors.white}
-                        placeholder={"New Password"}
+                        placeholder={Strings.newPassword}
                         multiline={false}
                         value={newPassword}
                         maxLength={50}
@@ -84,7 +85,7 @@ export default function UpdatePassword() {
                         leftImage={Images.LockIcon}
                         refInner={newConfirmPasswordRef}
                         placeholderTextColor={Colors.white}
-                        placeholder={"Confrim New Password"}
+                        placeholder={Strings.confrimNewPassword}
                         multiline={false}
                         value={newConfirmPassword}
                         maxLength={50}
@@ -100,11 +101,11 @@ export default function UpdatePassword() {
 
                     />
                     <CustomButton
-                        title={"Save Changes"}
+                        title={Strings.saveChanges}
                         Contianer={styles.saveBtnContainer}
                         onpress={() => navigation.goBack(null)} />
                     <CustomButton
-                        title={"Cancel"}
+                        title={Strings.cancel}
                         Contianer={styles.cancelBtnContainer}
                         txt={styles.btnTxt}
                         onpress={() => navigation.goBack(null)} />
