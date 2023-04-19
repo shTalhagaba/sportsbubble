@@ -56,7 +56,7 @@ export default function Login() {
                             passwordRef.current.focus();
                         }}
                     />
-                    <ContactTextInput
+                    <ContactTextInputs
                         leftImage={Images.LockIcon}
                         refInner={passwordRef}
                         placeholderTextColor={Colors.white}

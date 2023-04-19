@@ -46,6 +46,9 @@ const images = {
     Favorite: require("src/assets/images/Favorite.png"),
     FilledFvrt: require("src/assets/images/FilledFvrt.png"),
     LeftArrowIcon: require("src/assets/images/LeftArrowIcon.png"),
+    Filter: require("src/assets/images/Filter.png"),
+    FilledTick: require("src/assets/images/FilledTick.png"),
+    Mobile: require("src/assets/images/Mobile.png"),
 }
 
 export default images

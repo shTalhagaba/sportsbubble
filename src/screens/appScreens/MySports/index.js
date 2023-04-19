@@ -139,6 +139,8 @@ export default function Guide() {
     list[curremIndex].fvrtFlag = !list[curremIndex].fvrtFlag;
     setSportData(list);
     setFvrtModal(!fvrtModal);
+    navigation.navigate("withoutBottomtab", { screen: "UpgradeAccount" })
+
   };
 
   return (
