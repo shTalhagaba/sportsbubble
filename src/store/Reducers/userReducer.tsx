@@ -11,6 +11,18 @@ const initialState = {
 
 const user = (state = initialState, action: any) => {
   switch (action.type) {
+       // User Info
+       case 'SET_USER':
+        try {
+          return {
+            ...state,
+            user: action.payload,
+          };
+        } catch (e) {
+          alert(e);
+          return state;
+        }
+        break;
     // Login.
     case 'SIGN_IN_SUCCESS':
       try {

@@ -16,10 +16,20 @@ function* signIn(action: any) {
   }
 }
 
+// Handle user info request.
+// function* setUser(action: any) {
+//   try {
+//     yield put({type: 'SET_USER', payload: action.payload});
+//   } catch (e) {
+//     yield put({type: 'SET_USER_ERROR', payload: e});
+//   }
+// }
+
 // Listen to requests.
 function* mySaga() {
   // User
   yield takeLatest('SIGN_IN', signIn);
+  // yield takeLatest('SET_USER', setUser);
 
 }
 

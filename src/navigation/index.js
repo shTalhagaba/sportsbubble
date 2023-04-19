@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AuthNavigator from './authNavigation'
 import MyTabs from './bottomTab'
 import withoutBottomtab from './withoutBottomtab'
+import { useSelector } from "react-redux";
 
 const StackNavigator = createNativeStackNavigator()
 
@@ -19,8 +20,8 @@ const AppStackNavigator = () => {
 }
 
 const MainNavigator = () => {
-  const user = null
-  if (user === null) {
+  const data = useSelector((state) => state.user);
+  if (data?.user) {
     return <AppStackNavigator />
   }
   else {

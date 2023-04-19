@@ -6,9 +6,12 @@ import AppHeader from 'src/components/AppHeader'
 import { Images, Colors, Fonts } from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { setUser } from 'src/store/types';
 
 
 export default function Login() {
+    const dispatch = useDispatch();
     const navigation = useNavigation()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -18,6 +21,10 @@ export default function Login() {
 
     const emailRef = useRef()
     const passwordRef = useRef()
+
+    const buttonSignin = () => {
+        dispatch(setUser(true))
+    }
 
     return (
         <ImageBackground source={Images.Background2}
@@ -68,6 +75,7 @@ export default function Login() {
                         onPress={() => setDisplayPassword(!displayPassword)}
                     />
                     <CustomButton
+                        onpress={buttonSignin}
                         blue={true}
                         title={"Sign In"} />
                     <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>

@@ -4,6 +4,13 @@ export const login = (args: any) => {
       payload: args,
     };
 };
+
+export const setUser = (args: any) => {
+  return {
+    type: 'SET_USER',
+    payload: args,
+  };
+};
   
 export const loginData = (args: any) => {
   return {
