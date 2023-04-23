@@ -49,6 +49,10 @@ const images = {
     Filter: require("src/assets/images/Filter.png"),
     FilledTick: require("src/assets/images/FilledTick.png"),
     Mobile: require("src/assets/images/Mobile.png"),
+    GooglePay: require("src/assets/images/GooglePay.png"),
+    ApplePay: require("src/assets/images/ApplePay.png"),
+    Card: require("src/assets/images/Card.png"),
+    Country: require("src/assets/images/Country.png"),
 }
 
 export default images

@@ -71,7 +71,7 @@ export default function Signup() {
                             lastNameRef.current.focus();
                         }}
                     />
-                    <ContactTextInput ddddddddd
+                    <ContactTextInput
                         leftImage={Images.UserIcon}
                         refInner={lastNameRef}
                         placeholderTextColor={Colors.white}
