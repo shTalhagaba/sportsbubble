@@ -20,8 +20,10 @@ const AppStackNavigator = () => {
 }
 
 const MainNavigator = () => {
-  const data = useSelector((state) => state.user);
-  if (data?.user) {
+  // const data = useSelector((state) => state.user);
+  const data = !null
+  // if (data?.user) {
+  if (data) {
     return <AppStackNavigator />
   }
   else {

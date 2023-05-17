@@ -32,17 +32,17 @@ export default function Setting() {
       <ScrollView style={styles.mainTabContainer}>
         <Text style={styles.loginTxt}>{Strings.settings}</Text>
         <View style={styles.innerContainer}>
-          <ButtonWithIcon title={Strings.personalInfo} onpress={() => navigation.navigate("withoutBottomtab", { screen: "PersonalInfo" })} />
+          {/* <ButtonWithIcon title={Strings.personalInfo} onpress={() => navigation.navigate("withoutBottomtab", { screen: "PersonalInfo" })} />
           <ButtonWithIcon title={Strings.changePassword} onpress={() => navigation.navigate('withoutBottomtab', { screen: "UpdatePassword" })} />
           <ButtonWithIcon title={Strings.sportsStreamingApps} onpress={() => navigation.navigate('withoutBottomtab', { screen: "SportStreaming" })} />
-          <ButtonWithIcon title={Strings.aboutWatchSports} />
+          <ButtonWithIcon title={Strings.aboutWatchSports} /> */}
           <ButtonWithIcon title={Strings.legal} onpress={() => navigation.navigate('Legal')} />
           <ButtonWithIcon title={Strings.reportProblem} />
-          <TouchableOpacity onPress={() => setLogoutModal(!logoutModal)}
+          {/* <TouchableOpacity onPress={() => setLogoutModal(!logoutModal)}
             style={{ flexDirection: "row", marginTop: 24, alignItems: "center" }}>
             <Image source={Images.LeftArrowIcon} style={styles.logoutIcon} />
             <Text style={styles.logoutTxt}>{Strings.logout}</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </ScrollView>
 

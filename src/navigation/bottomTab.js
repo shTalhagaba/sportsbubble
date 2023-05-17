@@ -80,7 +80,7 @@ const bottomTab = () => {
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="MySports"
         component={MySports}
         options={{
@@ -99,7 +99,7 @@ const bottomTab = () => {
             </View>
           ),
         }}
-      />
+      /> */}
       <Tab.Screen
         name="Search"
         component={Search}
