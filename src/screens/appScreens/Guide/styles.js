@@ -8,8 +8,8 @@ export default ScaledSheet.create({
   },
   listContiner: {
     paddingRight: "0@ms0.3",
-    marginVertical: "1@ms0.3",
-    paddingVertical: "5@ms0.3",
+    marginVertical: "0@ms0.3",
+    paddingVertical: "4@ms0.3",
   },
   innerContainer: {
     flexDirection: "row"
@@ -44,8 +44,8 @@ export default ScaledSheet.create({
     width: "16@ms0.3",
   },
   imageContainer: {
-    height: "80@ms0.3",
-    width: "80@ms0.3",
+    height: "67@ms0.3",
+    width: "67@ms0.3",
     backgroundColor: Colors.mediumBlue,
     justifyContent: "center",
     alignItems: "center"
@@ -56,10 +56,8 @@ export default ScaledSheet.create({
   },
   userNameContainer: {
     paddingStart: "13@ms0.3",
-    height: "80@ms0.3",
-    justifyContent: "center",
     position: 'absolute',
-    left: "80@ms0.3",
+    left: "60@ms0.3",
   },
   leftContainer: {
     flex: 1,
@@ -88,7 +86,7 @@ export default ScaledSheet.create({
   titleTxt: {
     fontSize: "18@ms0.3",
     fontWeight: "800",
-    lineHeight: "25@ms0.3",
+    lineHeight: "21@ms0.3",
     color: Colors.white,
     fontFamily: Fonts.Regular,
   },
@@ -107,13 +105,23 @@ export default ScaledSheet.create({
   sliderInnerContainer: {
     flex: 1,
     marginHorizontal: "5@ms0.3",
-    marginVertical: 5
+    marginVertical: 5,
+    justifyContent: "center"
   },
   sliderImageBackground: {
     height: "100%",
     width: "100%",
     justifyContent: "center",
     alignItems: "center"
+  },
+  sliderInnerMainContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: "2@ms0.3",
+    borderColor: "#004EBC",
+    height: "90@ms0.3",
+    borderRadius: "16@ms0.3",
+    width: "90@ms0.3",
   },
   sliderIcon: {
     height: "32@ms0.3",

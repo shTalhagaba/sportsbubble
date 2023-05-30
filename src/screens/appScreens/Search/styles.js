@@ -9,15 +9,15 @@ export default ScaledSheet.create({
   },
   listContiner: {
     paddingRight: "0@ms0.3",
-    marginVertical: "6@ms0.3",
-    paddingVertical: "5@ms0.3",
+    marginVertical: "0@ms0.3",
+    paddingVertical: "4@ms0.3",
   },
   innerContainer: {
     flexDirection: "row"
   },
   imageContainer: {
-    height: "80@ms0.3",
-    width: "80@ms0.3",
+    height: "78@ms0.3",
+    width: "78@ms0.3",
     backgroundColor: "#22364f",
     justifyContent: "center",
     alignItems: "center"

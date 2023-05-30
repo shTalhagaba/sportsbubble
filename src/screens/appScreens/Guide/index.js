@@ -80,50 +80,61 @@ export default function Guide() {
           activeOpacity={0.8}
           onPress={() => handleAll()}
           style={styles.sliderInnerContainer}>
-          <ImageBackground source={allFlag ? Images.ActiveSliderBack : Images.InActiveSliderBorder} style={styles.sliderImageBackground} resizeMode={"contain"}>
-            <Image
-              source={Images.Trophy}
-              style={styles.sliderIcon}
-              resizeMode={'contain'} />
-            <Text style={styles.sliderTxt}>{Strings.all}</Text>
-          </ImageBackground>
+          <View style={[styles.sliderInnerMainContainer, { borderWidth: allFlag ? 2 : 0, }]} >
+            <ImageBackground source={allFlag ? Images.ActiveSliderBack : Images.InActiveSliderBorder} style={styles.sliderImageBackground} resizeMode={"contain"}>
+              <Image
+                source={Images.Trophy}
+                style={styles.sliderIcon}
+                resizeMode={'contain'} />
+              <Text style={styles.sliderTxt}>{Strings.all}</Text>
+            </ImageBackground>
+          </View>
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={() => handlePro()}
           style={styles.sliderInnerContainer}>
-          <ImageBackground source={proFlag ? Images.ActiveSliderBack : Images.InActiveSliderBorder} style={styles.sliderImageBackground} resizeMode={"contain"}>
-            <Image
-              source={Images.Crown}
-              style={styles.sliderIcon}
-              resizeMode={'contain'} />
-            <Text style={styles.sliderTxt}>{Strings.pro}</Text>
-          </ImageBackground>
+          <View style={[styles.sliderInnerMainContainer, { borderWidth: proFlag ? 2 : 0, }]}>
+            <ImageBackground source={proFlag ? Images.ActiveSliderBack : Images.InActiveSliderBorder} style={styles.sliderImageBackground} resizeMode={"contain"}>
+              <Image
+                source={Images.Crown}
+                style={styles.sliderIcon}
+                resizeMode={'contain'} />
+              <Text style={styles.sliderTxt}>{Strings.pro}</Text>
+            </ImageBackground>
+          </View>
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={() => handleCollege()}
           style={styles.sliderInnerContainer}>
-          <ImageBackground source={collegeFlag ? Images.ActiveSliderBack : Images.InActiveSliderBorder} style={styles.sliderImageBackground} resizeMode={"contain"}>
-            <Image
-              source={Images.College}
-              style={styles.sliderIcon}
-              resizeMode={'contain'} />
-            <Text style={styles.sliderTxt}>{Strings.college}</Text>
-          </ImageBackground>
+          <View style={[styles.sliderInnerMainContainer, { borderWidth: collegeFlag ? 2 : 0, }]}>
+
+            <ImageBackground source={collegeFlag ? Images.ActiveSliderBack : Images.InActiveSliderBorder} style={styles.sliderImageBackground} resizeMode={"contain"}>
+              <Image
+                source={Images.College}
+                style={styles.sliderIcon}
+                resizeMode={'contain'} />
+              <Text style={styles.sliderTxt}>{Strings.college}</Text>
+            </ImageBackground>
+          </View>
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={() => handleSport()}
           style={styles.sliderInnerContainer}>
-          <ImageBackground source={sportFlag ? Images.ActiveSliderBack : Images.InActiveSliderBorder} style={styles.sliderImageBackground} resizeMode={"contain"}>
-            <Image
-              source={Images.Game}
-              style={styles.sliderIcon}
-              resizeMode={'contain'} />
-            <Text style={styles.sliderTxt}>{Strings.esports}</Text>
-          </ImageBackground>
+          <View style={[styles.sliderInnerMainContainer, { borderWidth: sportFlag ? 2 : 0, }]}>
+
+            <ImageBackground source={sportFlag ? Images.ActiveSliderBack : Images.InActiveSliderBorder} style={styles.sliderImageBackground} resizeMode={"contain"}>
+              <Image
+                source={Images.Game}
+                style={styles.sliderIcon}
+                resizeMode={'contain'} />
+              <Text style={styles.sliderTxt}>{Strings.esports}</Text>
+            </ImageBackground>
+          </View>
         </TouchableOpacity>
+
       </View>
       {/* time slider */}
       <View style={styles.timeSliderContainer}>
@@ -176,7 +187,7 @@ export default function Guide() {
               }}>
               </View>
               <View style={styles.userNameContainer}>
-                <Text style={styles.eventTxt}>{item?.companyName}</Text>
+                <Text style={[styles.eventTxt, { marginTop: 0 }]}>{item?.companyName}</Text>
                 <Text style={styles.titleTxt}>{item?.title}</Text>
                 <View style={{ flexDirection: "row" }}>
                   <Text style={[styles.eventTxt, { opacity: item.live ? 1 : 0.5 }]}>{item?.day}</Text>

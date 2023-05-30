@@ -1,20 +1,13 @@
 import { Colors, Fonts } from 'src/utils';
 import { ScaledSheet } from "react-native-size-matters";
+import { Platform } from 'react-native';
 
 export default ScaledSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.appColorBackground
   },
-  listContiner: {
-    paddingRight: "5@ms0.3",
-    marginVertical: "10@ms0.3",
-    paddingVertical: "5@ms0.3",
-    alignItems: "center",
 
-    flex: 1,
-    marginHorizontal: "5@ms0.3",
-  },
   itemListContiner: {
     paddingRight: "0@ms0.3",
     marginVertical: "1@ms0.3",
@@ -60,13 +53,13 @@ export default ScaledSheet.create({
     alignItems: "center"
   },
   imageContainer: {
-    height: "75@ms0.3",
-    width: "75@ms0.3",
     backgroundColor: Colors.mediumBlue,
     justifyContent: "center",
     alignItems: "center",
-    margin: 5,
     borderRadius: 16,
+    marginRight: 16,
+    paddingVertical: 20,
+    paddingHorizontal: Platform.OS === "android" ? 15 : 18
   },
   imageIcon: {
     height: "47@ms0.3",
@@ -94,6 +87,7 @@ export default ScaledSheet.create({
     color: Colors.white,
     fontFamily: Fonts.Regular,
     marginTop: 8,
+    marginStart: -16
   },
   sliderActiveTimeTxt: {
     fontSize: "14@ms0.3",
@@ -186,7 +180,7 @@ export default ScaledSheet.create({
   },
   flatlistContainer: {
     marginTop: "40@ms0.3",
-    marginHorizontal: "20@ms0.3",
+    marginHorizontal: "15@ms0.3",
   },
   menuBtn: {
     width: "32@ms0.3",

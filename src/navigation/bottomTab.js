@@ -56,7 +56,7 @@ const bottomTab = () => {
         headerShown: false,
         tabBarStyle: {
           backgroundColor: Colors.appColorBackground,
-          height: moderateScale(80, 0.3),
+          height: moderateScale(90, 0.3),
           paddingTop: moderateScale(10, 0.3),
         },
       }}>

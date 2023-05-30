@@ -74,20 +74,19 @@ export default function Watch(props) {
             horizontal
             renderItem={({ item, index }) => (
               <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate('Connect', { item: itemSelected })
-                }
-                style={[styles.listContiner]}>
-                <ImageBackground
-                  source={Images.InActiveSliderBorder}
-                  style={styles.imageContainer}>
-                  <Image
-                    source={item?.img}
-                    style={styles.imageIcon}
-                    resizeMode={'contain'}
-                  />
-                </ImageBackground>
-                <Text style={styles.listTitleTxt}>{item?.title}</Text>
+                onPress={() => navigation.navigate('Connect', { item: itemSelected })}>
+                <View style={{ alignItems: "center" }}>
+                  <ImageBackground
+                    source={Images.InActiveSliderBorder}
+                    style={styles.imageContainer}>
+                    <Image
+                      source={item?.img}
+                      style={styles.imageIcon}
+                      resizeMode={'contain'}
+                    />
+                  </ImageBackground>
+                  <Text style={styles.listTitleTxt}>{item?.title}</Text>
+                </View>
               </TouchableOpacity>
             )}
           />
