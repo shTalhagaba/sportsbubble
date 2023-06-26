@@ -4,7 +4,7 @@ import Connect from 'src/screens/appScreens/Connect';
 
 const AppNavigator = createNativeStackNavigator();
 
-const appNavigation = () => {
+const AppNavigation = () => {
     return (
         <AppNavigator.Navigator
             screenOptions={{
@@ -15,4 +15,4 @@ const appNavigation = () => {
     );
 }
 
-export default appNavigation;
+export default AppNavigation;

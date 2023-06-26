@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { Provider, useSelector } from 'react-redux';
@@ -45,11 +45,11 @@ export default function App() {
 
   return (
     <ApolloProvider client={client}>
-    <NavigationContainer>
-      <Provider store={store}>
-        <Navigation />
-      </Provider>
-    </NavigationContainer>
+      <NavigationContainer>
+        <Provider store={store}>
+          <Navigation />
+        </Provider>
+      </NavigationContainer>
     </ApolloProvider>
   );
 }

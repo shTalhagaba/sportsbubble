@@ -8,7 +8,7 @@ import WelcomeScreen from 'src/screens/authScreens/WelcomeScreen';
 
 const AuthNavigator = createNativeStackNavigator();
 
-const authNavigation = () => {
+const AuthNavigation = () => {
     return (
         <AuthNavigator.Navigator
             screenOptions={{
@@ -23,4 +23,4 @@ const authNavigation = () => {
     );
 }
 
-export default authNavigation;
+export default AuthNavigation;

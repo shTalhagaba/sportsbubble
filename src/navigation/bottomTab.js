@@ -43,7 +43,7 @@ const SettingNavigation = () => {
   );
 };
 
-const bottomTab = () => {
+const BottomTab = () => {
   return (
     <Tab.Navigator
       initialRouteName={'Guide'}
@@ -145,7 +145,7 @@ const bottomTab = () => {
   );
 };
 
-export default bottomTab;
+export default BottomTab;
 const styles = ScaledSheet.create({
   txt: {
     fontSize: '12@ms0.3',

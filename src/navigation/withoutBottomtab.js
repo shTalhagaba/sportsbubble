@@ -9,7 +9,7 @@ import Payment from 'src/screens/appScreens/Payment'
 
 const AppNavigator = createNativeStackNavigator()
 
-const authNavigation = () => {
+const WithoutBottomnavigation = () => {
     return (
 
         <AppNavigator.Navigator
@@ -26,4 +26,4 @@ const authNavigation = () => {
         </AppNavigator.Navigator>
     )
 }
-export default authNavigation
+export default WithoutBottomnavigation
