@@ -43,7 +43,13 @@ target 'sportsbubble' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'sportsbubbleTests' do
+
+  target 'sportsbubble-Dev' do
+    inherit! :complete
+    # Pods for testing
+  end
+
+  target 'sportsbubble-Stage' do
     inherit! :complete
     # Pods for testing
   end
