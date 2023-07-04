@@ -1,5 +1,5 @@
 import React from "react";
-import { View, TextInput, Image } from "react-native";
+import { View, TextInput, Image, TouchableOpacity } from "react-native";
 import styles from "./styles";
 
 const AppSearch = (props) => {
@@ -31,11 +31,13 @@ const AppSearch = (props) => {
         ref={props.refInner}
       />
       {props.closeImage ? (
+        <TouchableOpacity onPress={props.onPressCloseImage}>
         <Image
           source={props.closeImage}
           style={styles.crossImage}
           resizeMode={"contain"}
         />
+        </TouchableOpacity>
       ) : null}
 
     </View>
