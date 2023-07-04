@@ -3,7 +3,7 @@ import {call, put, takeLatest, takeLeading, select} from 'redux-saga/effects';
 // import {logout, fetchSubscription as fetchSubscriptionAction} from './types';
 
 // Handle login request.
-function* signIn(action) {
+function* signIn(action: any) {
   try {
     // const response = yield call(API.Login, action.payload);
     // if (response.success) {
@@ -16,10 +16,20 @@ function* signIn(action) {
   }
 }
 
+// Handle user info request.
+// function* setUser(action: any) {
+//   try {
+//     yield put({type: 'SET_USER', payload: action.payload});
+//   } catch (e) {
+//     yield put({type: 'SET_USER_ERROR', payload: e});
+//   }
+// }
+
 // Listen to requests.
 function* mySaga() {
   // User
   yield takeLatest('SIGN_IN', signIn);
+  // yield takeLatest('SET_USER', setUser);
 
 }
 
