@@ -1,4 +1,4 @@
-import {gql} from 'graphql-tag';
+import { gql } from 'graphql-tag';
 
 export const GET_SORTED_EVENTS = gql`
   query SortedEvents($endTime: DateTime!, $startTime: DateTime!) {

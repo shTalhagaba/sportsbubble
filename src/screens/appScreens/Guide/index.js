@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ImageBackground,
   Text,
@@ -10,13 +10,13 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import styles from './styles';
-import {Images, Colors, Strings} from 'src/utils';
+import { Images, Colors, Strings } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import LiveMatchView from 'src/components/Modal/LiveMatchModal';
-import {useQuery} from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import dayjs from 'dayjs';
-import {GET_SORTED_EVENTS} from './queries';
+import { GET_SORTED_EVENTS } from './queries';
 
 const list = [
   {
@@ -166,7 +166,7 @@ export default function Guide() {
     setTimeData(hoursList);
   };
 
-  const {loading, refetch, error} = useQuery(GET_SORTED_EVENTS, {
+  const { loading, refetch, error } = useQuery(GET_SORTED_EVENTS, {
     variables: {
       // startTime: startTime,
       // endTime: endTime,
@@ -218,7 +218,7 @@ export default function Guide() {
     setSelectedTimeIndex(index)
     const selectedTime = timeData[index].datetime;
     const formattedTime = dayjs(selectedTime).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
-  
+
     let filteredEvents;
     if (index === 0) {
       // For the first index (index === 0), filter events after the selected time
@@ -234,18 +234,18 @@ export default function Guide() {
           dayjs(event.startTime).isAfter(formattedTime)
       );
     }
-  
+
     const updatedTimeData = timeData.map((element, i) => ({
       ...element,
       selected: i === index,
     }));
-  
+
     setStartTime(selectedTime);
     setTimeData(updatedTimeData);
     setFilteredEventList(filteredEvents);
   };
-  
-  
+
+
 
   const durationTwoTimes = (start, end) => {
     // Example date times
@@ -282,14 +282,14 @@ export default function Guide() {
           horizontal
           data={categoryData}
           showsHorizontalScrollIndicator={false}
-          renderItem={({item, index}) => (
+          renderItem={({ item, index }) => (
             <TouchableOpacity
               onPress={() => handleSelectedCategory(item, index)}
               style={styles.sliderInnerContainer}>
               <View
                 style={[
                   styles.sliderInnerMainContainer,
-                  {borderWidth: item?.selected ? 2 : 0},
+                  { borderWidth: item?.selected ? 2 : 0 },
                 ]}>
                 <ImageBackground
                   source={
@@ -304,10 +304,10 @@ export default function Guide() {
                       index === 0
                         ? Images.Trophy
                         : index === 1
-                        ? Images.Crown
-                        : index === 2
-                        ? Images.College
-                        : Images.Game
+                          ? Images.Crown
+                          : index === 2
+                            ? Images.College
+                            : Images.Game
                     }
                     style={styles.sliderIcon}
                     resizeMode={'contain'}
@@ -328,7 +328,7 @@ export default function Guide() {
             horizontal
             data={timeData}
             showsHorizontalScrollIndicator={false}
-            renderItem={({item, index}) => (
+            renderItem={({ item, index }) => (
               <TouchableOpacity
                 onPress={() => handleSelectTime(item, index)}
                 style={[
@@ -366,18 +366,18 @@ export default function Guide() {
             selectedCategory === 'all' && selectedTimeIndex === 0
               ? eventList && eventList.length > 0
                 ? eventList
-                : selectedTimeIndex > 0 ? filteredEventList :list
+                : selectedTimeIndex > 0 ? filteredEventList : list
               : filteredEventList
           }
           showsVerticalScrollIndicator={false}
-          renderItem={({item, index}) => (
+          renderItem={({ item, index }) => (
             <TouchableOpacity
               style={styles.listContiner}
-              onPress={() => navigation.navigate('Watch', {item: item})}>
+              onPress={() => navigation.navigate('Watch', { item: item })}>
               <View style={styles.innerContainer}>
                 <View style={styles.imageContainer}>
                   <Image
-                    source={item?.logo1 ? {uri: item?.logo1} : item?.img}
+                    source={item?.logo1 ? { uri: item?.logo1 } : item?.img}
                     style={styles.imageIcon}
                     resizeMode={'contain'}
                   />
@@ -386,42 +386,42 @@ export default function Guide() {
                   style={
                     liveTimeProgress(item?.startTime, item?.endTime)
                       ? {
-                          width: durationTwoTimes(
-                            item?.startTime,
-                            item?.endTime,
-                          ),
-                          backgroundColor: Colors.mediumGreen,
-                        }
+                        width: durationTwoTimes(
+                          item?.startTime,
+                          item?.endTime,
+                        ),
+                        backgroundColor: Colors.mediumGreen,
+                      }
                       : {
-                          width: durationTwoTimes(
-                            item?.startTime,
-                            item?.endTime,
-                          ),
-                          backgroundColor: Colors.darkBlue,
-                        }
+                        width: durationTwoTimes(
+                          item?.startTime,
+                          item?.endTime,
+                        ),
+                        backgroundColor: Colors.darkBlue,
+                      }
                   }></View>
                 <View
                   style={
                     liveTimeProgress(item?.startTime, item?.endTime)
                       ? {
-                          flex: 1,
-                          backgroundColor: Colors.darkBlue,
-                        }
+                        flex: 1,
+                        backgroundColor: Colors.darkBlue,
+                      }
                       : {
-                          flex: 1,
-                          backgroundColor: Colors.mediumBlue,
-                        }
+                        flex: 1,
+                        backgroundColor: Colors.mediumBlue,
+                      }
                   }></View>
                 <View style={styles.userNameContainer}>
                   <Text
-                    style={[styles.eventTxt, {marginTop: 5}]}
+                    style={[styles.eventTxt, { marginTop: 5 }]}
                     numberOfLines={1}>
                     {item?.line1 ? item?.line1 : item?.companyName}
                   </Text>
                   <Text style={styles.titleTxt} numberOfLines={1}>
                     {item?.line2 ? item?.line2 : item?.title}
                   </Text>
-                  <View style={{flexDirection: 'row'}}>
+                  <View style={{ flexDirection: 'row' }}>
                     <Text
                       style={[
                         styles.eventTxt,
@@ -448,8 +448,8 @@ export default function Guide() {
                       ]}>
                       {' ' + item?.startTime
                         ? dayjs(item?.startTime).format('h:mm A') +
-                          ' - ' +
-                          dayjs(item?.endTime).format('h:mm A')
+                        ' - ' +
+                        dayjs(item?.endTime).format('h:mm A')
                         : item?.time}
                     </Text>
                   </View>

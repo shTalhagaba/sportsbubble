@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
    LastUpgradeVersion = "1430"
-   version = "1.7">
+   version = "1.8">
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
@@ -10,16 +10,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "# Type a script or drag a script file from your workspace to insert its path.&#10;cp &quot;${PROJECT_DIR}/../.env.development&quot; &quot;${PROJECT_DIR}/../.env.development&quot;&#10;">
-               <EnvironmentBuildable>
-                  <BuildableReference
-                     BuildableIdentifier = "primary"
-                     BlueprintIdentifier = "8A23767D2A544DEE00F2EA20"
-                     BuildableName = "sportsbubbleDevelopment.app"
-                     BlueprintName = "sportsbubbleDevelopment"
-                     ReferencedContainer = "container:sportsbubble.xcodeproj">
-                  </BuildableReference>
-               </EnvironmentBuildable>
+               scriptText = "# Type a script or drag a script file from your workspace to insert its path.&#10;echo &quot;.env.development&quot; &gt; /tmp/envfile&#10;">
             </ActionContent>
          </ExecutionAction>
       </PreActions>
@@ -46,6 +37,8 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
       shouldAutocreateTestPlan = "YES">
+      <Testables>
+      </Testables>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
