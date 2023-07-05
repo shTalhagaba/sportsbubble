@@ -1,15 +1,24 @@
-import React, { useState } from 'react';
-import { ImageBackground, Text, View, Image, FlatList, TouchableOpacity, StatusBar, } from 'react-native';
+import React, {useState} from 'react';
+import {
+  ImageBackground,
+  Text,
+  View,
+  Image,
+  FlatList,
+  TouchableOpacity,
+  StatusBar,
+} from 'react-native';
 import styles from './styles';
-import { Images, Colors, Strings } from 'src/utils';
+import {Images, Colors, Strings} from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
+import dayjs from 'dayjs';
 
 const data = [
-  { id: 1, img: Images.NBALogo, title: 'Fubo' },
-  { id: 2, img: Images.NBALogo, title: 'ESPN' },
-  { id: 3, img: Images.NBALogo, title: 'Sling' },
-  { id: 4, img: Images.NBALogo, title: 'DAZN' },
+  {id: 1, img: Images.NBALogo, title: 'Fubo'},
+  {id: 2, img: Images.NBALogo, title: 'ESPN'},
+  {id: 3, img: Images.NBALogo, title: 'Sling'},
+  {id: 4, img: Images.NBALogo, title: 'DAZN'},
 ];
 
 export default function Watch(props) {
@@ -27,7 +36,7 @@ export default function Watch(props) {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        customLeftImage={{ tintColor: Colors.orange }}
+        customLeftImage={{tintColor: Colors.orange}}
         SimpleView
       />
       {/* Main View */}
@@ -37,28 +46,46 @@ export default function Watch(props) {
             <View style={styles.itemInnerContainer}>
               <View style={styles.itemContainer}>
                 <Image
-                  source={itemSelected?.img}
+                  source={
+                    itemSelected?.logo1
+                      ? {uri: itemSelected?.logo1}
+                      : itemSelected?.img
+                  }
                   style={styles.imageIcon}
                   resizeMode={'contain'}
                 />
               </View>
               <View style={styles.userNameContainer}>
-                <Text style={styles.eventTxt}>{itemSelected?.companyName}</Text>
-                <Text style={styles.titleTxt}>{itemSelected?.title}</Text>
+                <Text style={styles.eventTxt}>
+                  {itemSelected?.line1
+                    ? itemSelected?.line1
+                    : itemSelected?.companyName}
+                </Text>
+                <Text style={styles.titleTxt}>
+                  {itemSelected?.line2
+                    ? itemSelected?.line2
+                    : itemSelected?.title}
+                </Text>
                 <View style={styles.itemInnerContainer}>
                   <Text
                     style={[
                       styles.eventTxt,
-                      { opacity: itemSelected.live ? 1 : 0.5 },
+                      {opacity: itemSelected.live ? 1 : 0.5},
                     ]}>
-                    {itemSelected?.day}
+                    {' ' + itemSelected?.startTime
+                      ? dayjs(itemSelected?.startTime).format('ddd. MM/D')
+                      : itemSelected?.day}{' '}
                   </Text>
                   <Text
                     style={[
                       styles.eventTxt,
-                      { opacity: itemSelected.live ? 1 : 0.5 },
+                      {opacity: itemSelected.live ? 1 : 0.5},
                     ]}>
-                    {' ' + itemSelected?.time}
+                    {' ' + itemSelected?.startTime
+                      ? dayjs(itemSelected?.startTime).format('h:mm A') +
+                        ' - ' +
+                        dayjs(itemSelected?.endTime).format('h:mm A')
+                      : itemSelected?.time}
                   </Text>
                 </View>
               </View>
@@ -72,10 +99,12 @@ export default function Watch(props) {
             data={data}
             showsVerticalScrollIndicator={false}
             horizontal
-            renderItem={({ item, index }) => (
+            renderItem={({item, index}) => (
               <TouchableOpacity
-                onPress={() => navigation.navigate('Connect', { item: itemSelected })}>
-                <View style={{ alignItems: "center" }}>
+                onPress={() =>
+                  navigation.navigate('Connect', {item: itemSelected})
+                }>
+                <View style={{alignItems: 'center'}}>
                   <ImageBackground
                     source={Images.InActiveSliderBorder}
                     style={styles.imageContainer}>
@@ -101,18 +130,16 @@ export default function Watch(props) {
           <TouchableOpacity onPress={() => setBottomMenu(false)}>
             <Image source={Images.Menu} style={styles.menuBtn} />
           </TouchableOpacity>
-          <Text style={styles.wayToWatch}>
-            {Strings.otherWays}
-          </Text>
-          <View style={{ marginTop: 1, marginHorizontal: 1 }}>
+          <Text style={styles.wayToWatch}>{Strings.otherWays}</Text>
+          <View style={{marginTop: 1, marginHorizontal: 1}}>
             <FlatList
               data={data}
               showsVerticalScrollIndicator={false}
               horizontal
-              renderItem={({ item, index }) => (
+              renderItem={({item, index}) => (
                 <TouchableOpacity
                   onPress={() =>
-                    navigation.navigate('Connect', { item: itemSelected })
+                    navigation.navigate('Connect', {item: itemSelected})
                   }
                   style={styles.listContiner}>
                   <ImageBackground
@@ -138,9 +165,7 @@ export default function Watch(props) {
           <TouchableOpacity onPress={() => setBottomMenu(true)}>
             <Image source={Images.Menu} style={styles.menuBtn} />
           </TouchableOpacity>
-          <Text style={styles.wayToWatch}>
-            {Strings.otherWays}
-          </Text>
+          <Text style={styles.wayToWatch}>{Strings.otherWays}</Text>
         </ImageBackground>
       )}
     </ImageBackground>

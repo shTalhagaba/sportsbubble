@@ -110,6 +110,7 @@ export default ScaledSheet.create({
     lineHeight: "25@ms0.3",
     color: Colors.white,
     fontFamily: Fonts.Regular,
+    width:'98%',
   },
   eventTxt: {
     fontSize: "13@ms0.3",

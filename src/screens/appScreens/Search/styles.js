@@ -52,4 +52,20 @@ export default ScaledSheet.create({
     color: Colors.white,
     fontFamily: Fonts.Regular,
   },
+  emptyTxt: {
+    letterSpacing: 0.75,
+    color: Colors.white,
+    fontSize: "20@ms0.3",
+    flex: 1,
+    fontWeight: "600",
+    padding: "0@ms0.3",
+    fontFamily: Fonts.Regular,
+    alignContent:'center',
+    textAlign:'center',
+    width:'80%',
+    justifyContent:'center',
+    alignItems:'center',
+    alignSelf:'center',
+    marginTop: "40@ms0.3",
+  }
 });

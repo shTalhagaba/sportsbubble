@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ImageBackground,
   Text,
@@ -10,14 +10,15 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import styles from './styles';
-import { Images, Colors, Strings } from 'src/utils';
+import {Images, Colors, Strings} from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import LiveMatchView from 'src/components/Modal/LiveMatchModal';
-import { useQuery } from '@apollo/client';
+import {useQuery} from '@apollo/client';
 import dayjs from 'dayjs';
-import { GET_SORTED_EVENTS } from './queries';
+import {GET_SORTED_EVENTS} from './queries';
 
+// Sample data for the list
 const list = [
   {
     id: 1,
@@ -70,14 +71,18 @@ const list = [
     percentage: '65%',
   },
 ];
+
+// Sample data for the time slider
 const timeArr = [
   {
     id: 1,
     title: 'Live',
     selected: true,
     datetime: dayjs(new Date()).toISOString(),
-  }
+  },
 ];
+
+// Sample data for the category slider
 const categoryArr = [
   {
     id: 1,
@@ -105,6 +110,7 @@ const categoryArr = [
 export default function Guide() {
   const navigation = useNavigation();
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [categoryFlag, setCategoryFlag] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [liveMatchModal, setLiveMatchModal] = useState(false);
   const [timeData, setTimeData] = useState(timeArr);
@@ -112,22 +118,27 @@ export default function Guide() {
   const [selectedTimeIndex, setSelectedTimeIndex] = useState(0);
   const [eventList, setEventList] = useState();
   const [filteredEventList, setFilteredEventList] = useState([]);
-  const [startTime, setStartTime] = useState(
-    dayjs(new Date()).subtract(1, 'day').toISOString(),
-  );
+  const [startTime, setStartTime] = useState(dayjs(new Date()).toISOString());
   const [endTime, setEndTime] = useState(
     dayjs(new Date()).add(1, 'day').toISOString(),
   );
 
-  useEffect(() => {
-    getTimeList();
-  }, []);
-
-  useEffect(() => {
-    if (eventList && eventList.length > 0) {
-      getCategoryList();
-    }
-  }, [eventList]);
+  // Fetch data from API using Apollo useQuery hook
+  const {loading, refetch, error} = useQuery(GET_SORTED_EVENTS, {
+    variables: {
+      startTime: startTime,
+      endTime: endTime,
+    },
+    fetchPolicy: 'network-only',
+    notifyOnNetworkStatusChange: true,
+    onCompleted: data => {
+      setEventList(data?.sortedEvents);
+      setIsRefreshing(false);
+    },
+    onError: error => {
+      console.log('error : ', error);
+    },
+  });
 
   const getCategoryList = () => {
     const categorySet = new Set(eventList.map(item => item.category.name));
@@ -146,6 +157,7 @@ export default function Guide() {
       })),
     ];
     setCategoryData(list);
+    setCategoryFlag(false);
   };
 
   const getTimeList = () => {
@@ -166,106 +178,100 @@ export default function Guide() {
     setTimeData(hoursList);
   };
 
-  const { loading, refetch, error } = useQuery(GET_SORTED_EVENTS, {
-    variables: {
-      // startTime: startTime,
-      // endTime: endTime,
-      startTime: '2023-06-04T20:30:00.000Z',
-      endTime: '2023-06-04T22:30:00.000Z',
-    },
-    fetchPolicy: 'network-only',
-    notifyOnNetworkStatusChange: true,
-    onCompleted: data => {
-      setEventList(data?.sortedEvents);
-      setIsRefreshing(false);
-    },
-    onError: error => {
-      console.log('error : ', error);
-    },
-  });
+  useEffect(() => {
+    getTimeList();
+  }, []);
+
+  useEffect(() => {
+    if (eventList && eventList.length > 0) {
+      let filteredEvents;
+      if (selectedTimeIndex >= 0 && selectedCategory != 'all') {
+        filteredEvents = eventList.filter(
+          event => event.category.name === selectedCategory,
+        );
+      }
+      setFilteredEventList(filteredEvents);
+      if (categoryFlag) {
+        getCategoryList();
+      }
+    }
+  }, [eventList]);
 
   const handleSelectedCategory = (e, index) => {
     let list = [...categoryData];
     const selectedTime = timeData[selectedTimeIndex].datetime;
-    const formattedTime = dayjs(selectedTime).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
+    const formattedTime = dayjs(selectedTime).format(
+      'YYYY-MM-DDTHH:mm:ss.SSSZ',
+    );
     let filteredEvents;
 
     list.map(element => {
       element.selected = false;
     });
     list[index].selected = !list[index].selected;
-    setCategoryData(list);
-    setSelectedCategory(e?.value);
-
     if (selectedTimeIndex === 0) {
       // For the first index (index === 0), filter events after the selected time
       filteredEvents = eventList.filter(
-        event =>
-          (event.category.name === e?.value)
+        event => event.category.name === e?.value,
       );
     } else {
       // For other indices, filter events that have the same start time as the selected time
       filteredEvents = eventList.filter(
         event =>
-          (event.category.name === e?.value) &&
-          dayjs(event.startTime).isAfter(formattedTime)
+          event.category.name === e?.value &&
+          dayjs(event.startTime).isAfter(formattedTime),
       );
     }
+    setCategoryData(list);
+    setSelectedCategory(e?.value);
     setFilteredEventList(filteredEvents);
   };
 
   const handleSelectTime = (item, index) => {
-    setSelectedTimeIndex(index)
     const selectedTime = timeData[index].datetime;
-    const formattedTime = dayjs(selectedTime).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
-
-    let filteredEvents;
     if (index === 0) {
-      // For the first index (index === 0), filter events after the selected time
-      filteredEvents = eventList.filter(
-        event =>
-          (event.category.name === selectedCategory)
-      );
+      setStartTime(dayjs(new Date()).toISOString());
     } else {
-      // For other indices, filter events that have the same start time as the selected time
-      filteredEvents = eventList.filter(
-        event =>
-          (event.category.name === selectedCategory) &&
-          dayjs(event.startTime).isAfter(formattedTime)
-      );
+      setStartTime(selectedTime);
     }
 
     const updatedTimeData = timeData.map((element, i) => ({
       ...element,
       selected: i === index,
     }));
-
-    setStartTime(selectedTime);
     setTimeData(updatedTimeData);
-    setFilteredEventList(filteredEvents);
-  };
-
-
-
-  const durationTwoTimes = (start, end) => {
-    // Example date times
-    const startTime = new Date(start);
-    const endTime = new Date(end);
-    // Calculate the duration in minutes
-    const durationInMinutes = Math.round((endTime - startTime) / (1000 * 60));
-    // Calculate the percentage of the duration
-    const percentage = (durationInMinutes / (24 * 60)) * 100; // Assuming the duration is within a day
-    return (percentage || 0) * 20;
+    setSelectedTimeIndex(index);
   };
 
   const liveTimeProgress = (start, end) => {
-    const currentTime = dayjs(); // Get the current time
+    const currentTime = dayjs();
     const startTime = dayjs(start);
     const endTime = dayjs(end);
-    const timeDifference = endTime.diff(startTime); // Calculate the total time difference
-    const timeProgress = currentTime.diff(startTime); // Calculate the current time progress
-    const progressPercentage = (timeProgress / timeDifference) * 100; // Calculate the progress percentage
-    return -progressPercentage || false;
+    const isLive =
+      currentTime.isAfter(startTime) && currentTime.isBefore(endTime);
+    const timeDifference = endTime.diff(startTime); // Calculate the total time difference in milliseconds
+    const timeProgress = currentTime.diff(startTime); // Calculate the current time progress in milliseconds
+    const progressPercentage = Math.round(
+      (timeProgress / timeDifference) * 100,
+    ); // Calculate the progress percentage
+    return {
+      isLive: isLive,
+      progressPercentage: progressPercentage || 0,
+    };
+  };
+
+  const waitTimeProgress = (start, end) => {
+    const currentTime = dayjs();
+    const startTime = dayjs(start);
+    const endTime = dayjs(end);
+    const isWaiting = currentTime.isBefore(startTime); // Check if current time is before the start time
+    const timeDifference = endTime.diff(startTime); // Calculate the total time difference in milliseconds
+    const timeRemaining = endTime.diff(currentTime); // Calculate the remaining time in milliseconds
+    const waitPercentage = Math.round((timeRemaining / timeDifference) * 100); // Calculate the wait percentage
+    return {
+      isWaiting: isWaiting,
+      waitPercentage: waitPercentage || 0,
+    };
   };
 
   return (
@@ -282,14 +288,14 @@ export default function Guide() {
           horizontal
           data={categoryData}
           showsHorizontalScrollIndicator={false}
-          renderItem={({ item, index }) => (
+          renderItem={({item, index}) => (
             <TouchableOpacity
               onPress={() => handleSelectedCategory(item, index)}
               style={styles.sliderInnerContainer}>
               <View
                 style={[
                   styles.sliderInnerMainContainer,
-                  { borderWidth: item?.selected ? 2 : 0 },
+                  {borderWidth: item?.selected ? 2 : 0},
                 ]}>
                 <ImageBackground
                   source={
@@ -304,10 +310,10 @@ export default function Guide() {
                       index === 0
                         ? Images.Trophy
                         : index === 1
-                          ? Images.Crown
-                          : index === 2
-                            ? Images.College
-                            : Images.Game
+                        ? Images.Crown
+                        : index === 2
+                        ? Images.College
+                        : Images.Game
                     }
                     style={styles.sliderIcon}
                     resizeMode={'contain'}
@@ -328,7 +334,7 @@ export default function Guide() {
             horizontal
             data={timeData}
             showsHorizontalScrollIndicator={false}
-            renderItem={({ item, index }) => (
+            renderItem={({item, index}) => (
               <TouchableOpacity
                 onPress={() => handleSelectTime(item, index)}
                 style={[
@@ -363,103 +369,120 @@ export default function Guide() {
       {!loading ? (
         <FlatList
           data={
-            selectedCategory === 'all' && selectedTimeIndex === 0
+            selectedCategory === 'all' && selectedTimeIndex >= 0
               ? eventList && eventList.length > 0
                 ? eventList
-                : selectedTimeIndex > 0 ? filteredEventList : list
+                : selectedTimeIndex > 0
+                ? filteredEventList
+                : list
               : filteredEventList
           }
-          showsVerticalScrollIndicator={false}
-          renderItem={({ item, index }) => (
-            <TouchableOpacity
-              style={styles.listContiner}
-              onPress={() => navigation.navigate('Watch', { item: item })}>
-              <View style={styles.innerContainer}>
-                <View style={styles.imageContainer}>
-                  <Image
-                    source={item?.logo1 ? { uri: item?.logo1 } : item?.img}
-                    style={styles.imageIcon}
-                    resizeMode={'contain'}
-                  />
-                </View>
-                <View
-                  style={
-                    liveTimeProgress(item?.startTime, item?.endTime)
-                      ? {
-                        width: durationTwoTimes(
-                          item?.startTime,
-                          item?.endTime,
-                        ),
-                        backgroundColor: Colors.mediumGreen,
-                      }
-                      : {
-                        width: durationTwoTimes(
-                          item?.startTime,
-                          item?.endTime,
-                        ),
-                        backgroundColor: Colors.darkBlue,
-                      }
-                  }></View>
-                <View
-                  style={
-                    liveTimeProgress(item?.startTime, item?.endTime)
-                      ? {
-                        flex: 1,
-                        backgroundColor: Colors.darkBlue,
-                      }
-                      : {
-                        flex: 1,
-                        backgroundColor: Colors.mediumBlue,
-                      }
-                  }></View>
-                <View style={styles.userNameContainer}>
-                  <Text
-                    style={[styles.eventTxt, { marginTop: 5 }]}
-                    numberOfLines={1}>
-                    {item?.line1 ? item?.line1 : item?.companyName}
-                  </Text>
-                  <Text style={styles.titleTxt} numberOfLines={1}>
-                    {item?.line2 ? item?.line2 : item?.title}
-                  </Text>
-                  <View style={{ flexDirection: 'row' }}>
-                    <Text
-                      style={[
-                        styles.eventTxt,
+          showsVerticalScrollIndicator={true}
+          renderItem={({item, index}) =>
+            selectedCategory === 'all' ||
+            item?.category?.name === selectedCategory ? (
+              <TouchableOpacity
+                style={styles.listContiner}
+                onPress={() => navigation.navigate('Watch', {item: item})}>
+                <View style={styles.innerContainer}>
+                  <View style={styles.imageContainer}>
+                    <Image
+                      source={item?.logo1 ? {uri: item?.logo1} : item?.img}
+                      style={styles.imageIcon}
+                      resizeMode={'contain'}
+                    />
+                  </View>
+                  <View
+                    style={
+                      liveTimeProgress(item?.startTime, item?.endTime)?.isLive
+                        ? {
+                            width: liveTimeProgress(
+                              item?.startTime,
+                              item?.endTime,
+                            )?.progressPercentage,
+                            backgroundColor: Colors.mediumGreen,
+                          }
+                        : {
+                            width: waitTimeProgress(
+                              item?.startTime,
+                              item?.endTime,
+                            )?.waitPercentage,
+                            backgroundColor: Colors.darkBlue,
+                          }
+                    }></View>
+                  <View
+                    style={
+                      // waitTimeProgress(item.startTime, item.endTime)?.isWaiting
+                      //   ? {
+                      //       flex: 1,
+                      //       backgroundColor: Colors.darkBlue,
+                      //       width: waitTimeProgress(
+                      //         item?.startTime,
+                      //         item?.endTime,
+                      //       )?.waitPercentage,
+                      //     }
+                      //   : 
                         {
-                          opacity:
-                            dayjs(item?.startTime).format('yyyy') === '2023'
-                              ? 1
-                              : 0.5,
-                        },
-                      ]}>
-                      {' ' + item?.startTime
-                        ? dayjs(item?.startTime).format('ddd. MM/D')
-                        : item?.day}{' '}
-                    </Text>
+                            flex: 1,
+                            backgroundColor: Colors.mediumBlue,
+                          }
+                    }></View>
+                  <View style={styles.userNameContainer}>
                     <Text
-                      style={[
-                        styles.eventTxt,
-                        {
-                          opacity:
-                            dayjs(item?.startTime).format('yyyy') === '2023'
-                              ? 1
-                              : 0.5,
-                        },
-                      ]}>
-                      {' ' + item?.startTime
-                        ? dayjs(item?.startTime).format('h:mm A') +
-                        ' - ' +
-                        dayjs(item?.endTime).format('h:mm A')
-                        : item?.time}
+                      style={[styles.eventTxt, {marginTop: 5}]}
+                      numberOfLines={1}>
+                      {/* {
+                        waitTimeProgress(item.startTime, item.endTime)
+                          ?.isWaiting?'acv':'sss'
+                      }
+                      {' - '} */}
+                      {item?.line1 ? item?.line1 : item?.companyName}
                     </Text>
+                    <Text style={styles.titleTxt} numberOfLines={1}>
+                      {item?.line2 ? item?.line2 : item?.title}
+                    </Text>
+                    <View style={{flexDirection: 'row'}}>
+                      <Text
+                        style={[
+                          styles.eventTxt,
+                          {
+                            opacity:
+                              dayjs(item?.startTime).format('yyyy') === '2023'
+                                ? 1
+                                : 0.5,
+                          },
+                        ]}>
+                        {' ' + item?.startTime
+                          ? dayjs(item?.startTime).format('ddd. MM/D')
+                          : item?.day}{' '}
+                      </Text>
+                      <Text
+                        style={[
+                          styles.eventTxt,
+                          {
+                            opacity:
+                              dayjs(item?.startTime).format('yyyy') === '2023'
+                                ? 1
+                                : 0.5,
+                          },
+                        ]}>
+                        {' ' + item?.startTime
+                          ? dayjs(item?.startTime).format('h:mm A') +
+                            ' - ' +
+                            dayjs(item?.endTime).format('h:mm A')
+                          : item?.time}
+                      </Text>
+                    </View>
                   </View>
                 </View>
-              </View>
-            </TouchableOpacity>
-          )}
+              </TouchableOpacity>
+            ) : null
+          }
         />
       ) : (
-        <ActivityIndicator />
+        <View style={{flex: 1, justifyContent: 'center'}}>
+          <ActivityIndicator color={'#fff'} size={'large'} />
+        </View>
       )}
       <LiveMatchView
         setLiveMatchModal={setLiveMatchModal}
