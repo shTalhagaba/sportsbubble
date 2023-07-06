@@ -123,6 +123,7 @@ export default function Guide() {
     dayjs(new Date()).add(1, 'day').toISOString(),
   );
 
+  
   // Fetch data from API using Apollo useQuery hook
   const {loading, refetch, error} = useQuery(GET_SORTED_EVENTS, {
     variables: {
@@ -200,32 +201,52 @@ export default function Guide() {
   const handleSelectedCategory = (e, index) => {
     let list = [...categoryData];
     const selectedTime = timeData[selectedTimeIndex].datetime;
-    const formattedTime = dayjs(selectedTime).format(
-      'YYYY-MM-DDTHH:mm:ss.SSSZ',
-    );
-    let filteredEvents;
-
-    list.map(element => {
-      element.selected = false;
-    });
-    list[index].selected = !list[index].selected;
-    if (selectedTimeIndex === 0) {
-      // For the first index (index === 0), filter events after the selected time
-      filteredEvents = eventList.filter(
-        event => event.category.name === e?.value,
-      );
+    const formattedTime = dayjs(selectedTime).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
+  
+    if (index === 0) {
+      // Toggle the selected category
+      list[index].selected = !list[index].selected;
+  
+      // Deselect all other categories
+      list.forEach((element, idx) => {
+        if (idx !== 0) {
+          element.selected = false;
+        }
+      });
     } else {
-      // For other indices, filter events that have the same start time as the selected time
-      filteredEvents = eventList.filter(
-        event =>
-          event.category.name === e?.value &&
-          dayjs(event.startTime).isAfter(formattedTime),
-      );
+      // Toggle the selected category
+      list[index].selected = !list[index].selected;
+  
+      // Check if all other categories are deselected
+      const otherSelected = list.slice(1).some((element) => element.selected);
+      if (!otherSelected) {
+        list[0].selected = true;
+      } else {
+        list[0].selected = false;
+      }
     }
+  
+    // Filter events based on selected categories and time
+    let filteredEvents = [];
+    if (list[0].selected) {
+      filteredEvents = selectedTimeIndex === 0
+        ? eventList
+        : eventList.filter((event) => dayjs(event.startTime).isAfter(formattedTime));
+    } else {
+      filteredEvents = selectedTimeIndex === 0
+        ? eventList.filter((event) => list.some((category) => category.selected && category.value === event.category.name))
+        : eventList.filter((event) =>
+            list.some((category) => category.selected && category.value === event.category.name) &&
+            dayjs(event.startTime).isAfter(formattedTime)
+          );
+    }
+  
     setCategoryData(list);
     setSelectedCategory(e?.value);
     setFilteredEventList(filteredEvents);
   };
+  
+  
 
   const handleSelectTime = (item, index) => {
     const selectedTime = timeData[index].datetime;
@@ -412,16 +433,12 @@ export default function Guide() {
                     }></View>
                   <View
                     style={
-                      // waitTimeProgress(item.startTime, item.endTime)?.isWaiting
-                      //   ? {
-                      //       flex: 1,
-                      //       backgroundColor: Colors.darkBlue,
-                      //       width: waitTimeProgress(
-                      //         item?.startTime,
-                      //         item?.endTime,
-                      //       )?.waitPercentage,
-                      //     }
-                      //   : 
+                      liveTimeProgress(item?.startTime, item?.endTime)?.isLive
+                        ? {
+                            flex: 1,
+                            backgroundColor: Colors.darkBlue,
+                          }
+                        : 
                         {
                             flex: 1,
                             backgroundColor: Colors.mediumBlue,
