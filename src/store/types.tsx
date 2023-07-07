@@ -12,6 +12,20 @@ export const setUser = (args: any) => {
   };
 };
 
+export const setStoreEventList = (args: any) => {
+  return {
+    type: 'SET_EVENT_LIST',
+    payload: args,
+  };
+};
+
+export const setExpire = (args: any) => {
+  return {
+    type: 'SET_EXPIRE',
+    payload: args,
+  };
+};
+
 export const loginData = (args: any) => {
   return {
     type: 'SIGN_IN_USER',

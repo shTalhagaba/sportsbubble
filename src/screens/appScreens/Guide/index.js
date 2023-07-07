@@ -17,6 +17,8 @@ import LiveMatchView from 'src/components/Modal/LiveMatchModal';
 import {useQuery} from '@apollo/client';
 import dayjs from 'dayjs';
 import {GET_SORTED_EVENTS} from './queries';
+import { useDispatch, useSelector } from 'react-redux';
+import { setExpire, setStoreEventList } from 'src/store/types';
 
 // Sample data for the list
 const list = [
@@ -107,8 +109,12 @@ const categoryArr = [
   },
 ];
 
+const expireTime = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+
 export default function Guide() {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const reduxData = useSelector(state => state.user);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [categoryFlag, setCategoryFlag] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -120,10 +126,9 @@ export default function Guide() {
   const [filteredEventList, setFilteredEventList] = useState([]);
   const [startTime, setStartTime] = useState(dayjs(new Date()).toISOString());
   const [endTime, setEndTime] = useState(
-    dayjs(new Date()).add(1, 'day').toISOString(),
+    dayjs(new Date()).add(7, 'day').toISOString(),
   );
 
-  
   // Fetch data from API using Apollo useQuery hook
   const {loading, refetch, error} = useQuery(GET_SORTED_EVENTS, {
     variables: {
@@ -135,6 +140,11 @@ export default function Guide() {
     onCompleted: data => {
       setEventList(data?.sortedEvents);
       setIsRefreshing(false);
+      const currentTime = Date.now();
+      if((reduxData && reduxData?.expire === currentTime || (reduxData && reduxData?.eventList && reduxData?.eventList.length<=0))&& data && data?.sortedEvents.length>0){
+      dispatch(setStoreEventList(data?.sortedEvents))
+      dispatch(setExpire(expireTime));
+      }
     },
     onError: error => {
       console.log('error : ', error);
@@ -268,18 +278,17 @@ export default function Guide() {
     const currentTime = dayjs();
     const startTime = dayjs(start);
     const endTime = dayjs(end);
-    const isLive =
-      currentTime.isAfter(startTime) && currentTime.isBefore(endTime);
+    const isLive = currentTime.isAfter(startTime) && currentTime.isBefore(endTime);
     const timeDifference = endTime.diff(startTime); // Calculate the total time difference in milliseconds
-    const timeProgress = currentTime.diff(startTime); // Calculate the current time progress in milliseconds
-    const progressPercentage = Math.round(
-      (timeProgress / timeDifference) * 100,
-    ); // Calculate the progress percentage
+    const timeProgress = Math.max(currentTime.diff(startTime), 0); // Calculate the current time progress in milliseconds, ensuring a minimum value of 0
+    const progressPercentage = Math.round((timeProgress / timeDifference) * 100); // Calculate the progress percentage
+  
     return {
       isLive: isLive,
-      progressPercentage: progressPercentage || 0,
+      progressPercentage: isNaN(progressPercentage) ? 0 : progressPercentage, // Ensure a valid progress percentage value
     };
   };
+  
 
   const waitTimeProgress = (start, end) => {
     const currentTime = dayjs();
@@ -420,14 +429,14 @@ export default function Guide() {
                             width: liveTimeProgress(
                               item?.startTime,
                               item?.endTime,
-                            )?.progressPercentage,
+                            )?.progressPercentage || 0,
                             backgroundColor: Colors.mediumGreen,
                           }
                         : {
-                            width: waitTimeProgress(
+                            width: `${waitTimeProgress(
                               item?.startTime,
                               item?.endTime,
-                            )?.waitPercentage,
+                            )?.waitPercentage || 0}%`,
                             backgroundColor: Colors.darkBlue,
                           }
                     }></View>
@@ -448,11 +457,6 @@ export default function Guide() {
                     <Text
                       style={[styles.eventTxt, {marginTop: 5}]}
                       numberOfLines={1}>
-                      {/* {
-                        waitTimeProgress(item.startTime, item.endTime)
-                          ?.isWaiting?'acv':'sss'
-                      }
-                      {' - '} */}
                       {item?.line1 ? item?.line1 : item?.companyName}
                     </Text>
                     <Text style={styles.titleTxt} numberOfLines={1}>

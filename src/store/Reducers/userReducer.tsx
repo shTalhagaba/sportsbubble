@@ -7,10 +7,37 @@ const initialState = {
   lastName: '',
   id: '',
   user: false,
+  eventList: [],
+  expire: '',
 };
 
 const user = (state = initialState, action: any) => {
   switch (action.type) {
+           // event list
+           case 'SET_EVENT_LIST':
+            console.log('SET_EVENT_LIST : ',action.payload)
+            try {
+              return {
+                ...state,
+                eventList: action.payload,
+              };
+            } catch (e) {
+              alert(e);
+              return state;
+            }
+            break;
+          // expire
+           case 'SET_EXPIRE':
+            try {
+              return {
+                ...state,
+                expire: action.payload,
+              };
+            } catch (e) {
+              alert(e);
+              return state;
+            }
+            break;
        // User Info
        case 'SET_USER':
         try {

@@ -1,94 +1,124 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Navigation from 'src/navigation';
 import SplashScreen from 'react-native-splash-screen';
 import { NavigationContainer } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// apollo
 import { ApolloClient, InMemoryCache, createHttpLink, ApolloProvider } from '@apollo/client';
 import { persistCache } from 'apollo3-cache-persist';
-import Config from "react-native-config";
-
-//Redux persist 
-import { persistStore, persistReducer } from 'redux-persist';
+import Config from 'react-native-config';
+import { persistStore, persistReducer, createTransform } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import { createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import { Provider, useSelector } from 'react-redux';
+import { Provider } from 'react-redux';
 import rootReducer from 'src/store/Reducers/rootReducer';
 import mySaga from 'src/store/sagas';
+import { LogBox } from 'react-native';
 
+const expireTime = 20 * 1000; // 20 seconds * 1000 in milliseconds
 
+const expireCacheTransform = createTransform(
+  // Modify the data on its way to being stored
+  (inboundState, key) => ({
+    data: inboundState,
+    expire: Date.now() + expireTime, // Add expiration timestamp to the data
+  }),
+
+  // Modify the data on its way out of storage
+  (outboundState, key) => {
+    const currentTime = Date.now();
+    if (currentTime > outboundState.expire) {
+      console.log('outboundState:', currentTime, outboundState.expire);
+      // The data has expired, return null to trigger a refresh
+      return null;
+    }
+    // The data is still valid, remove the expiration timestamp
+    const { expire, ...data } = outboundState;
+    return data;
+  },
+);
 
 const sagaMiddleware = createSagaMiddleware();
 const persistConfig = {
-  // Root
   key: 'root',
-  // Storage Method (React Native)
   storage: AsyncStorage,
-  // Whitelist (Save Specific Reducers)
-  whitelist: ['user'],
-  // For Merging the data upgradation
+  // whitelist: ['user'],
   version: 1,
+  // transforms: [expireCacheTransform],
 };
 
-// Middleware: Redux Persist Persisted Reducer
 const persistedReducer = persistReducer(persistConfig, rootReducer);
-export const store = createStore(persistedReducer,
-  applyMiddleware(
-    sagaMiddleware,
-  ))
-// Middleware: Redux Saga
+const store = createStore(persistedReducer, applyMiddleware(sagaMiddleware));
 sagaMiddleware.run(mySaga);
-
-// Middleware: Redux Persist Persister
 const persistor = persistStore(store);
-
-
 
 const httpLink = createHttpLink({
   uri: 'https://6953ptqg3b.execute-api.us-west-2.amazonaws.com/dev/graphql',
   // uri: Config.BASE_URL
 });
 
-export const client = new ApolloClient({
+const client = new ApolloClient({
   link: httpLink,
   cache: new InMemoryCache(),
   defaultOptions: { watchQuery: { fetchPolicy: 'cache-and-network' } },
 });
 
+const App = () => {
+  LogBox.ignoreLogs(['Warning: ...']);
+  LogBox.ignoreAllLogs();
 
+  const handleAppReload = async () => {
+    const isCacheExpired = await checkCacheExpiration();
+    console.log('isCacheExpired: before', isCacheExpired);
+    if (isCacheExpired) {
+      console.log('isCacheExpired: after', isCacheExpired);
+      // Fetch new data or perform any necessary operations to get the updated data
+      // You can use Redux actions and middleware to handle this
 
+      // Once you have the new data, you can update the cache by dispatching an action
+      // For example:
+      // await dispatch(updateCacheDataAction(newData));
+    }
+  };
 
-export default function App() {
-  // const [loadingCache, setLoadingCache] = useState(true)
+  const checkCacheExpiration = async () => {
+    const cachedData = await AsyncStorage.getItem('persist:root');
 
-  // useEffect(() => {
-  //   persistCache({
-  //     cache,
-  //     storage: AsyncStorage,
-  //   }).then(() => setLoadingCache(false))
-  // }, [])
+    if (cachedData) {
+      const parsedData = JSON.parse(cachedData);
+      const currentTime = Date.now();
+      const expireTime = parsedData.expire;
+      return currentTime > expireTime;
+    }
 
-  // if (loadingCache) {
-  //   return <AppLoading />
-  // }
+    return true;
+  };
 
   useEffect(() => {
-    console.log("URL TESTING => ", Config.BASE_URL)
-    setTimeout(() => {
-      SplashScreen.hide();
-    }, 1000);
+    persistCache({
+      cache: client.cache,
+      storage: AsyncStorage,
+    }).then(() => {
+      handleAppReload();
+    });
+  }, []);
+
+  useEffect(() => {
+    console.log('URL TESTING => ', Config.BASE_URL);
+    SplashScreen.hide();
   }, []);
 
   return (
     <ApolloProvider client={client}>
       <NavigationContainer>
         <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
+          <PersistGate loading={null} persistor={persistor} onBeforeLift={handleAppReload}>
             <Navigation />
           </PersistGate>
         </Provider>
       </NavigationContainer>
     </ApolloProvider>
   );
-}
+};
+
+export default App;
