@@ -22,6 +22,7 @@ export default ScaledSheet.create({
     height: "30@ms0.3",
     justifyContent: "center",
     alignSelf: "center",
+    elevation: 3
   },
   timeSliderContainer: {
     flexDirection: "row",
@@ -58,7 +59,7 @@ export default ScaledSheet.create({
     paddingStart: "13@ms0.3",
     position: 'absolute',
     left: "60@ms0.3",
-    width:'82%',
+    width: '82%',
   },
   leftContainer: {
     flex: 1,
@@ -79,10 +80,10 @@ export default ScaledSheet.create({
   },
   sliderInactiveTimeTxt: {
     fontSize: "14@ms0.3",
-    fontWeight: "500",
+    // fontWeight: "500",
     lineHeight: "25@ms0.3",
     color: Colors.white,
-    fontFamily: Fonts.Regular,
+    // fontFamily: Fonts.Regular,
   },
   titleTxt: {
     fontSize: "18@ms0.3",
@@ -121,7 +122,7 @@ export default ScaledSheet.create({
     borderWidth: "2@ms0.3",
     borderColor: "#004EBC",
     height: "90@ms0.3",
-    borderRadius: "16@ms0.3",
+    borderRadius: "20@ms0.3",
     width: "90@ms0.3",
   },
   sliderIcon: {
@@ -132,9 +133,10 @@ export default ScaledSheet.create({
   },
   sliderTxt: {
     fontSize: "14@ms0.3",
-    fontWeight: "600",
+    fontWeight: "800",
     lineHeight: "24@ms0.3",
     color: Colors.white,
-    fontFamily: Fonts.Regular,
+    fontFamily: Fonts.Bold,
+    fontStyle: "italic"
   },
 });

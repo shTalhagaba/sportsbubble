@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ImageBackground,
   Text,
@@ -10,16 +10,16 @@ import {
   FlatList,
 } from 'react-native';
 import styles from './styles';
-import {Images, Colors, Strings} from 'src/utils';
+import { Images, Colors, Strings } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import LiveMatchView from 'src/components/Modal/LiveMatchModal';
-import {useQuery} from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import dayjs from 'dayjs';
-import {GET_SORTED_EVENTS} from './queries';
-import {useDispatch, useSelector} from 'react-redux';
-import {setExpire, setStoreEventList} from 'src/store/types';
-import {FlashList} from '@shopify/flash-list';
+import { GET_SORTED_EVENTS } from './queries';
+import { useDispatch, useSelector } from 'react-redux';
+import { setExpire, setStoreEventList } from 'src/store/types';
+import { FlashList } from '@shopify/flash-list';
 
 // Sample data for the list
 const list = [
@@ -131,7 +131,7 @@ export default function Guide() {
   );
 
   // Fetch data from API using Apollo useQuery hook
-  const {loading, refetch, error} = useQuery(GET_SORTED_EVENTS, {
+  const { loading, refetch, error } = useQuery(GET_SORTED_EVENTS, {
     variables: {
       startTime: startTime,
       endTime: endTime,
@@ -188,7 +188,7 @@ export default function Guide() {
       const hourDatetime = dayjs().hour(hour).toISOString();
       const hourObject = {
         id: i + 1,
-        title: dayjs().hour(hour).format('h A'),
+        title: dayjs().hour(hour).format('h a').toLowerCase(),
         selected: false,
         datetime: hourDatetime,
       };
@@ -253,24 +253,24 @@ export default function Guide() {
         selectedTimeIndex === 0
           ? eventList
           : eventList.filter(event =>
-              dayjs(event.startTime).isAfter(formattedTime),
-            );
+            dayjs(event.startTime).isAfter(formattedTime),
+          );
     } else {
       filteredEvents =
         selectedTimeIndex === 0
           ? eventList.filter(event =>
+            list.some(
+              category =>
+                category.selected && category.value === event.category.name,
+            ),
+          )
+          : eventList.filter(
+            event =>
               list.some(
                 category =>
                   category.selected && category.value === event.category.name,
-              ),
-            )
-          : eventList.filter(
-              event =>
-                list.some(
-                  category =>
-                    category.selected && category.value === event.category.name,
-                ) && dayjs(event.startTime).isAfter(formattedTime),
-            );
+              ) && dayjs(event.startTime).isAfter(formattedTime),
+          );
     }
 
     setCategoryData(list);
@@ -326,28 +326,28 @@ export default function Guide() {
     };
   };
 
-  const ItemComponent = React.memo(({item}) => {
+  const ItemComponent = React.memo(({ item }) => {
     return (
       // Render your item component here
       selectedCategory === 'all' ||
         item?.category?.name === selectedCategory ? (
         <TouchableOpacity
-          style={styles.listContainer}
+          style={styles.listContiner}
           onPress={() => {
             if (
               item &&
               item?.rightsHoldersConnection &&
-              item?.rightsHoldersConnection?.totalCount
+              item?.rightsHoldersConnection?.totalCount <= 1
             ) {
-              navigation.navigate('Connect', {item: item, eventFlag: true});
+              navigation.navigate('Connect', { item: item, eventFlag: true });
             } else {
-              navigation.navigate('Watch', {item: item});
+              navigation.navigate('Watch', { item: item });
             }
           }}>
           <View style={styles.innerContainer}>
             <View style={styles.imageContainer}>
               <Image
-                source={item?.logo1 ? {uri: item?.logo1} : item?.img}
+                source={item?.logo1 ? { uri: item?.logo1 } : item?.img}
                 style={styles.imageIcon}
                 resizeMode="contain"
               />
@@ -356,38 +356,38 @@ export default function Guide() {
               style={
                 liveTimeProgress(item?.startTime, item?.endTime)?.isLive
                   ? {
-                      width:
-                        liveTimeProgress(item?.startTime, item?.endTime)
-                          ?.progressPercentage || 0,
-                      backgroundColor: Colors.mediumGreen,
-                    }
+                    width:
+                      liveTimeProgress(item?.startTime, item?.endTime)
+                        ?.progressPercentage || 0,
+                    backgroundColor: Colors.mediumGreen,
+                  }
                   : {
-                      width:
-                        waitTimeProgress(item?.startTime, item?.endTime)
-                          ?.waitPercentage || 0,
-                      backgroundColor: Colors.darkBlue,
-                    }
+                    width:
+                      waitTimeProgress(item?.startTime, item?.endTime)
+                        ?.waitPercentage || 0,
+                    backgroundColor: Colors.darkBlue,
+                  }
               }></View>
             <View
               style={
                 liveTimeProgress(item?.startTime, item?.endTime)?.isLive
                   ? {
-                      flex: 1,
-                      backgroundColor: Colors.darkBlue,
-                    }
+                    flex: 1,
+                    backgroundColor: Colors.darkBlue,
+                  }
                   : {
-                      flex: 1,
-                      backgroundColor: Colors.mediumBlue,
-                    }
+                    flex: 1,
+                    backgroundColor: Colors.mediumBlue,
+                  }
               }></View>
             <View style={styles.userNameContainer}>
-              <Text style={[styles.eventTxt, {marginTop: 5}]} numberOfLines={1}>
-                {item?.line1 ? item?.line1 : item?.companyName}
+              <Text style={[styles.eventTxt, { marginTop: 5 }]} numberOfLines={1}>
+                {item?.line1 ? item?.line1 : item?.companyName} {item?.rightsHoldersConnection?.totalCount}
               </Text>
               <Text style={styles.titleTxt} numberOfLines={1}>
                 {item?.line2 ? item?.line2 : item?.title}
               </Text>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 <Text
                   style={[
                     styles.eventTxt,
@@ -416,8 +416,8 @@ export default function Guide() {
                   {' '}
                   {item?.startTime
                     ? `${dayjs(item?.startTime).format('h:mm A')} - ${dayjs(
-                        item?.endTime,
-                      ).format('h:mm A')}`
+                      item?.endTime,
+                    ).format('h:mm A')}`
                     : item?.time}
                 </Text>
               </View>
@@ -442,14 +442,14 @@ export default function Guide() {
           horizontal
           data={categoryData}
           showsHorizontalScrollIndicator={false}
-          renderItem={({item, index}) => (
+          renderItem={({ item, index }) => (
             <TouchableOpacity
               onPress={() => handleSelectedCategory(item, index)}
               style={styles.sliderInnerContainer}>
               <View
                 style={[
                   styles.sliderInnerMainContainer,
-                  {borderWidth: item?.selected ? 2 : 0},
+                  { borderWidth: item?.selected ? 2 : 0 },
                 ]}>
                 <ImageBackground
                   source={
@@ -458,16 +458,16 @@ export default function Guide() {
                       : Images.InActiveSliderBorder
                   }
                   style={styles.sliderImageBackground}
-                  resizeMode={'contain'}>
+                  resizeMode={"stretch"}>
                   <Image
                     source={
                       index === 0
                         ? Images.Trophy
                         : index === 1
-                        ? Images.Crown
-                        : index === 2
-                        ? Images.College
-                        : Images.Game
+                          ? Images.Crown
+                          : index === 2
+                            ? Images.College
+                            : Images.Game
                     }
                     style={styles.sliderIcon}
                     resizeMode={'contain'}
@@ -488,7 +488,7 @@ export default function Guide() {
             horizontal
             data={timeData}
             showsHorizontalScrollIndicator={false}
-            renderItem={({item, index}) => (
+            renderItem={({ item, index }) => (
               <TouchableOpacity
                 onPress={() => handleSelectTime(item, index)}
                 style={[
@@ -527,12 +527,12 @@ export default function Guide() {
               ? eventList && eventList.length > 0
                 ? eventList
                 : selectedTimeIndex > 0
-                ? filteredEventList
-                : list
+                  ? filteredEventList
+                  : list
               : filteredEventList
           }
           showsVerticalScrollIndicator={true}
-          renderItem={({item}) => <ItemComponent item={item} />}
+          renderItem={({ item }) => <ItemComponent item={item} />}
           keyExtractor={item => item?.id}
           removeClippedSubviews={true} // Unmount components when outside of window
           initialNumToRender={50} // Reduce initial render amount
@@ -541,7 +541,7 @@ export default function Guide() {
           windowSize={20} // Reduce the window size
         />
       ) : (
-        <View style={{flex: 1, justifyContent: 'center'}}>
+        <View style={{ flex: 1, justifyContent: 'center' }}>
           <ActivityIndicator color={'#fff'} size={'large'} />
         </View>
       )}
