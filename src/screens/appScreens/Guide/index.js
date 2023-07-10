@@ -4,10 +4,10 @@ import {
   Text,
   View,
   Image,
-  FlatList,
   TouchableOpacity,
   StatusBar,
   ActivityIndicator,
+  FlatList,
 } from 'react-native';
 import styles from './styles';
 import {Images, Colors, Strings} from 'src/utils';
@@ -17,8 +17,9 @@ import LiveMatchView from 'src/components/Modal/LiveMatchModal';
 import {useQuery} from '@apollo/client';
 import dayjs from 'dayjs';
 import {GET_SORTED_EVENTS} from './queries';
-import { useDispatch, useSelector } from 'react-redux';
-import { setExpire, setStoreEventList } from 'src/store/types';
+import {useDispatch, useSelector} from 'react-redux';
+import {setExpire, setStoreEventList} from 'src/store/types';
+import {FlashList} from '@shopify/flash-list';
 
 // Sample data for the list
 const list = [
@@ -141,9 +142,16 @@ export default function Guide() {
       setEventList(data?.sortedEvents);
       setIsRefreshing(false);
       const currentTime = Date.now();
-      if((reduxData && reduxData?.expire === currentTime || (reduxData && reduxData?.eventList && reduxData?.eventList.length<=0))&& data && data?.sortedEvents.length>0){
-      dispatch(setStoreEventList(data?.sortedEvents))
-      dispatch(setExpire(expireTime));
+      if (
+        ((reduxData && reduxData?.expire === currentTime) ||
+          (reduxData &&
+            reduxData?.eventList &&
+            reduxData?.eventList.length <= 0)) &&
+        data &&
+        data?.sortedEvents.length > 0
+      ) {
+        dispatch(setStoreEventList(data?.sortedEvents));
+        dispatch(setExpire(expireTime));
       }
     },
     onError: error => {
@@ -211,12 +219,14 @@ export default function Guide() {
   const handleSelectedCategory = (e, index) => {
     let list = [...categoryData];
     const selectedTime = timeData[selectedTimeIndex].datetime;
-    const formattedTime = dayjs(selectedTime).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
-  
+    const formattedTime = dayjs(selectedTime).format(
+      'YYYY-MM-DDTHH:mm:ss.SSSZ',
+    );
+
     if (index === 0) {
       // Toggle the selected category
       list[index].selected = !list[index].selected;
-  
+
       // Deselect all other categories
       list.forEach((element, idx) => {
         if (idx !== 0) {
@@ -226,37 +236,47 @@ export default function Guide() {
     } else {
       // Toggle the selected category
       list[index].selected = !list[index].selected;
-  
+
       // Check if all other categories are deselected
-      const otherSelected = list.slice(1).some((element) => element.selected);
+      const otherSelected = list.slice(1).some(element => element.selected);
       if (!otherSelected) {
         list[0].selected = true;
       } else {
         list[0].selected = false;
       }
     }
-  
+
     // Filter events based on selected categories and time
     let filteredEvents = [];
     if (list[0].selected) {
-      filteredEvents = selectedTimeIndex === 0
-        ? eventList
-        : eventList.filter((event) => dayjs(event.startTime).isAfter(formattedTime));
+      filteredEvents =
+        selectedTimeIndex === 0
+          ? eventList
+          : eventList.filter(event =>
+              dayjs(event.startTime).isAfter(formattedTime),
+            );
     } else {
-      filteredEvents = selectedTimeIndex === 0
-        ? eventList.filter((event) => list.some((category) => category.selected && category.value === event.category.name))
-        : eventList.filter((event) =>
-            list.some((category) => category.selected && category.value === event.category.name) &&
-            dayjs(event.startTime).isAfter(formattedTime)
-          );
+      filteredEvents =
+        selectedTimeIndex === 0
+          ? eventList.filter(event =>
+              list.some(
+                category =>
+                  category.selected && category.value === event.category.name,
+              ),
+            )
+          : eventList.filter(
+              event =>
+                list.some(
+                  category =>
+                    category.selected && category.value === event.category.name,
+                ) && dayjs(event.startTime).isAfter(formattedTime),
+            );
     }
-  
+
     setCategoryData(list);
     setSelectedCategory(e?.value);
     setFilteredEventList(filteredEvents);
   };
-  
-  
 
   const handleSelectTime = (item, index) => {
     const selectedTime = timeData[index].datetime;
@@ -278,17 +298,19 @@ export default function Guide() {
     const currentTime = dayjs();
     const startTime = dayjs(start);
     const endTime = dayjs(end);
-    const isLive = currentTime.isAfter(startTime) && currentTime.isBefore(endTime);
+    const isLive =
+      currentTime.isAfter(startTime) && currentTime.isBefore(endTime);
     const timeDifference = endTime.diff(startTime); // Calculate the total time difference in milliseconds
     const timeProgress = Math.max(currentTime.diff(startTime), 0); // Calculate the current time progress in milliseconds, ensuring a minimum value of 0
-    const progressPercentage = Math.round((timeProgress / timeDifference) * 100); // Calculate the progress percentage
-  
+    const progressPercentage = Math.round(
+      (timeProgress / timeDifference) * 100,
+    ); // Calculate the progress percentage
+
     return {
       isLive: isLive,
       progressPercentage: isNaN(progressPercentage) ? 0 : progressPercentage, // Ensure a valid progress percentage value
     };
   };
-  
 
   const waitTimeProgress = (start, end) => {
     const currentTime = dayjs();
@@ -303,6 +325,108 @@ export default function Guide() {
       waitPercentage: waitPercentage || 0,
     };
   };
+
+  const ItemComponent = React.memo(({item}) => {
+    return (
+      // Render your item component here
+      selectedCategory === 'all' ||
+        item?.category?.name === selectedCategory ? (
+        <TouchableOpacity
+          style={styles.listContainer}
+          onPress={() => {
+            if (
+              item &&
+              item?.rightsHoldersConnection &&
+              item?.rightsHoldersConnection?.totalCount
+            ) {
+              navigation.navigate('Connect', {item: item, eventFlag: true});
+            } else {
+              navigation.navigate('Watch', {item: item});
+            }
+          }}>
+          <View style={styles.innerContainer}>
+            <View style={styles.imageContainer}>
+              <Image
+                source={item?.logo1 ? {uri: item?.logo1} : item?.img}
+                style={styles.imageIcon}
+                resizeMode="contain"
+              />
+            </View>
+            <View
+              style={
+                liveTimeProgress(item?.startTime, item?.endTime)?.isLive
+                  ? {
+                      width:
+                        liveTimeProgress(item?.startTime, item?.endTime)
+                          ?.progressPercentage || 0,
+                      backgroundColor: Colors.mediumGreen,
+                    }
+                  : {
+                      width:
+                        waitTimeProgress(item?.startTime, item?.endTime)
+                          ?.waitPercentage || 0,
+                      backgroundColor: Colors.darkBlue,
+                    }
+              }></View>
+            <View
+              style={
+                liveTimeProgress(item?.startTime, item?.endTime)?.isLive
+                  ? {
+                      flex: 1,
+                      backgroundColor: Colors.darkBlue,
+                    }
+                  : {
+                      flex: 1,
+                      backgroundColor: Colors.mediumBlue,
+                    }
+              }></View>
+            <View style={styles.userNameContainer}>
+              <Text style={[styles.eventTxt, {marginTop: 5}]} numberOfLines={1}>
+                {item?.line1 ? item?.line1 : item?.companyName}
+              </Text>
+              <Text style={styles.titleTxt} numberOfLines={1}>
+                {item?.line2 ? item?.line2 : item?.title}
+              </Text>
+              <View style={{flexDirection: 'row'}}>
+                <Text
+                  style={[
+                    styles.eventTxt,
+                    {
+                      opacity:
+                        dayjs(item?.startTime).format('yyyy') === '2023'
+                          ? 1
+                          : 0.5,
+                    },
+                  ]}>
+                  {' '}
+                  {item?.startTime
+                    ? dayjs(item?.startTime).format('ddd. MM/D')
+                    : item?.day}{' '}
+                </Text>
+                <Text
+                  style={[
+                    styles.eventTxt,
+                    {
+                      opacity:
+                        dayjs(item?.startTime).format('yyyy') === '2023'
+                          ? 1
+                          : 0.5,
+                    },
+                  ]}>
+                  {' '}
+                  {item?.startTime
+                    ? `${dayjs(item?.startTime).format('h:mm A')} - ${dayjs(
+                        item?.endTime,
+                      ).format('h:mm A')}`
+                    : item?.time}
+                </Text>
+              </View>
+            </View>
+          </View>
+        </TouchableOpacity>
+      ) : null
+    );
+  });
 
   return (
     <ImageBackground
@@ -408,97 +532,13 @@ export default function Guide() {
               : filteredEventList
           }
           showsVerticalScrollIndicator={true}
-          renderItem={({item, index}) =>
-            selectedCategory === 'all' ||
-            item?.category?.name === selectedCategory ? (
-              <TouchableOpacity
-                style={styles.listContiner}
-                onPress={() => navigation.navigate('Watch', {item: item})}>
-                <View style={styles.innerContainer}>
-                  <View style={styles.imageContainer}>
-                    <Image
-                      source={item?.logo1 ? {uri: item?.logo1} : item?.img}
-                      style={styles.imageIcon}
-                      resizeMode={'contain'}
-                    />
-                  </View>
-                  <View
-                    style={
-                      liveTimeProgress(item?.startTime, item?.endTime)?.isLive
-                        ? {
-                            width: liveTimeProgress(
-                              item?.startTime,
-                              item?.endTime,
-                            )?.progressPercentage || 0,
-                            backgroundColor: Colors.mediumGreen,
-                          }
-                        : {
-                            width: `${waitTimeProgress(
-                              item?.startTime,
-                              item?.endTime,
-                            )?.waitPercentage || 0}%`,
-                            backgroundColor: Colors.darkBlue,
-                          }
-                    }></View>
-                  <View
-                    style={
-                      liveTimeProgress(item?.startTime, item?.endTime)?.isLive
-                        ? {
-                            flex: 1,
-                            backgroundColor: Colors.darkBlue,
-                          }
-                        : 
-                        {
-                            flex: 1,
-                            backgroundColor: Colors.mediumBlue,
-                          }
-                    }></View>
-                  <View style={styles.userNameContainer}>
-                    <Text
-                      style={[styles.eventTxt, {marginTop: 5}]}
-                      numberOfLines={1}>
-                      {item?.line1 ? item?.line1 : item?.companyName}
-                    </Text>
-                    <Text style={styles.titleTxt} numberOfLines={1}>
-                      {item?.line2 ? item?.line2 : item?.title}
-                    </Text>
-                    <View style={{flexDirection: 'row'}}>
-                      <Text
-                        style={[
-                          styles.eventTxt,
-                          {
-                            opacity:
-                              dayjs(item?.startTime).format('yyyy') === '2023'
-                                ? 1
-                                : 0.5,
-                          },
-                        ]}>
-                        {' ' + item?.startTime
-                          ? dayjs(item?.startTime).format('ddd. MM/D')
-                          : item?.day}{' '}
-                      </Text>
-                      <Text
-                        style={[
-                          styles.eventTxt,
-                          {
-                            opacity:
-                              dayjs(item?.startTime).format('yyyy') === '2023'
-                                ? 1
-                                : 0.5,
-                          },
-                        ]}>
-                        {' ' + item?.startTime
-                          ? dayjs(item?.startTime).format('h:mm A') +
-                            ' - ' +
-                            dayjs(item?.endTime).format('h:mm A')
-                          : item?.time}
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            ) : null
-          }
+          renderItem={({item}) => <ItemComponent item={item} />}
+          keyExtractor={item => item?.id}
+          removeClippedSubviews={true} // Unmount components when outside of window
+          initialNumToRender={50} // Reduce initial render amount
+          maxToRenderPerBatch={20} // Reduce number in each render batch
+          updateCellsBatchingPeriod={20} // Increase time between renders
+          windowSize={20} // Reduce the window size
         />
       ) : (
         <View style={{flex: 1, justifyContent: 'center'}}>

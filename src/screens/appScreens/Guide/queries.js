@@ -23,6 +23,18 @@ export const GET_SORTED_EVENTS = gql`
         id
         name
       }
+      rightsHoldersConnection {
+        totalCount
+        edges {
+          rhVideoUrl
+          node {
+            id
+            name
+            logoUrl
+            weight
+          }
+        }
+      }
     }
   }
 `;
