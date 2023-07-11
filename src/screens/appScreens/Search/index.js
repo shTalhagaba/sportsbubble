@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   FlatList,
   ImageBackground,
@@ -10,14 +10,14 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import styles from './styles';
-import { Images, Colors } from 'src/utils';
+import {Images, Colors} from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
 import AppSearch from 'src/components/AppSearch';
-import { useQuery } from '@apollo/client';
-import { SEARCH_EVENTS_QUERY } from './queries';
+import {useQuery} from '@apollo/client';
+import {SEARCH_EVENTS_QUERY} from './queries';
 import dayjs from 'dayjs';
-import { useNavigation } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 
 const expireTime = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
@@ -43,8 +43,11 @@ export default function Search() {
 
   useEffect(() => {
     const currentTime = Date.now();
-    if (reduxData && reduxData?.expire === currentTime || (reduxData && reduxData?.eventList && reduxData?.eventList.length <= 0)) {
-      const { loading, refetch, error, data } = useQuery(SEARCH_EVENTS_QUERY, {
+    if (
+      (reduxData && reduxData?.expire === currentTime) ||
+      (reduxData && reduxData?.eventList && reduxData?.eventList.length <= 0)
+    ) {
+      const {loading, refetch, error, data} = useQuery(SEARCH_EVENTS_QUERY, {
         variables: {
           searchString: searchText,
           startTime: startTime,
@@ -66,7 +69,7 @@ export default function Search() {
     }
   }, [navigation]);
 
-  const handleInputChange = (text) => {
+  const handleInputChange = text => {
     setSearchText(text);
     console.log('eventList: ', reduxData?.eventList.length);
     if (
@@ -76,10 +79,14 @@ export default function Search() {
       reduxData.eventList &&
       reduxData.eventList.length > 0
     ) {
-      const filtered = reduxData.eventList.filter((item) => {
+      const filtered = reduxData.eventList.filter(item => {
         for (const key in item) {
           const value = item[key];
-          if (value !== null && typeof value === 'string' && value.toLowerCase().includes(text.toLowerCase())) {
+          if (
+            value !== null &&
+            typeof value === 'string' &&
+            value.toLowerCase().includes(text.toLowerCase())
+          ) {
             return true;
           }
         }
@@ -89,7 +96,6 @@ export default function Search() {
       setList(filtered);
     }
   };
-
 
   return (
     <ImageBackground
@@ -101,7 +107,7 @@ export default function Search() {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        customLeftImage={{ tintColor: Colors.orange }}
+        customLeftImage={{tintColor: Colors.orange}}
         SimpleView
       />
       <View style={styles.mainContainer}>
@@ -138,14 +144,14 @@ export default function Search() {
               </Text>
             </View>
           }
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <TouchableOpacity
               style={styles.listContiner}
-              onPress={() => navigation.navigate('Watch', { item: item })}>
+              onPress={() => navigation.navigate('Watch', {item: item})}>
               <View style={styles.innerContainer}>
                 <View style={styles.imageContainer}>
                   <Image
-                    source={item?.logo1 ? { uri: item?.logo1 } : item?.img}
+                    source={item?.logo1 ? {uri: item?.logo1} : item?.img}
                     style={styles.imageIcon}
                     resizeMode={'contain'}
                   />
@@ -167,8 +173,8 @@ export default function Search() {
                       {' '}
                       {' ' + item?.startTime
                         ? dayjs(item?.startTime).format('h:mm A') +
-                        ' - ' +
-                        dayjs(item?.endTime).format('h:mm A')
+                          ' - ' +
+                          dayjs(item?.endTime).format('h:mm A')
                         : item?.time}
                     </Text>
                   </View>

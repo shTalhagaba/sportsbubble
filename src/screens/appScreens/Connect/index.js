@@ -1,25 +1,25 @@
-import React, { useState } from 'react';
-import { ImageBackground, Text, View, Image, StatusBar, Linking } from 'react-native';
+import React, {useState} from 'react';
+import {
+  ImageBackground,
+  Text,
+  View,
+  Image,
+  StatusBar,
+  Linking,
+} from 'react-native';
 import styles from './styles';
-import { Images, Colors, Strings } from 'src/utils';
+import {Images, Colors, Strings} from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
 import GreenButton from 'src/components/GreenButton';
 import dayjs from 'dayjs';
 
 export default function Connect(props) {
   const [item, setItem] = useState(props?.route?.params?.item);
-  // const {eventFlag} = props?.route?.params
 
-  const handleClick = (url) => {
+  const handleClick = url => {
+    if(url){
     Linking.openURL(url);
-
-    // Linking.canOpenURL(url).then(supported => {
-    //   if (supported) {
-    //     Linking.openURL(url);
-    //   } else {
-    //     console.log("Don't know how to open URI: " + url);
-
-    // });
+    }
   };
 
   return (
@@ -32,7 +32,7 @@ export default function Connect(props) {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        customLeftImage={{ tintColor: Colors.orange }}
+        customLeftImage={{tintColor: Colors.orange}}
         SimpleView
       />
       <View style={styles.flexOnly}>
@@ -41,7 +41,7 @@ export default function Connect(props) {
             <View style={styles.itemInnerContainer}>
               <View style={styles.itemContainer}>
                 <Image
-                  source={item?.logo1 ? { uri: item?.logo1 } : item?.img}
+                  source={item?.logo1 ? {uri: item?.logo1} : item?.img}
                   style={styles.imageIcon}
                   resizeMode={'contain'}
                 />
@@ -65,8 +65,8 @@ export default function Connect(props) {
                   <Text style={[styles.eventTxt]}>
                     {' ' + item?.startTime
                       ? dayjs(item?.startTime).format('h:mm A') +
-                      ' - ' +
-                      dayjs(item?.endTime).format('h:mm A')
+                        ' - ' +
+                        dayjs(item?.endTime).format('h:mm A')
                       : item?.time}
                   </Text>
                 </View>
@@ -82,8 +82,21 @@ export default function Connect(props) {
           />
         </View>
         <Text style={styles.connectingText}>{Strings.connecting}</Text>
+        <View style={styles.logoImageContainer}>
+          <Image
+            source={Images.NBALogo}
+            resizeMode={'contain'}
+            style={styles.logoImageStyle}
+          />
+        </View>
         <View style={styles.buttonContainer}>
-          <GreenButton title={Strings.watchNow} rightIcon={true} onpress={() => handleClick(item?.rightsHoldersConnection?.edges?.[0]?.rhVideoUrl)} />
+          <GreenButton
+            title={Strings.watchNow}
+            rightIcon={true}
+            onpress={() =>
+              handleClick(item?.rightsHoldersConnection?.edges?.[0]?.rhVideoUrl)
+            }
+          />
         </View>
       </View>
       {/* Powered by sports bubble */}

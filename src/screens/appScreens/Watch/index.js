@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   ImageBackground,
   Text,
@@ -9,24 +9,22 @@ import {
   StatusBar,
 } from 'react-native';
 import styles from './styles';
-import { Images, Colors, Strings } from 'src/utils';
+import {Images, Colors, Strings} from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import dayjs from 'dayjs';
 
 const data = [
-  { id: 1, img: Images.NBALogo, title: 'Fubo' },
-  { id: 2, img: Images.NBALogo, title: 'ESPN' },
-  { id: 3, img: Images.NBALogo, title: 'Sling' },
-  { id: 4, img: Images.NBALogo, title: 'DAZN' },
+  {id: 1, img: Images.NBALogo, title: 'Fubo'},
+  {id: 2, img: Images.NBALogo, title: 'ESPN'},
+  {id: 3, img: Images.NBALogo, title: 'Sling'},
+  {id: 4, img: Images.NBALogo, title: 'DAZN'},
 ];
 
 export default function Watch(props) {
   const navigation = useNavigation();
   const [itemSelected, setItemSelected] = useState(props?.route?.params?.item);
   const [bottomMenu, setBottomMenu] = useState(false);
-
-  console.log(itemSelected?.rightsHoldersConnection?.edges[0]?.node?.logoUrl)
 
   return (
     <ImageBackground
@@ -38,7 +36,7 @@ export default function Watch(props) {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        customLeftImage={{ tintColor: Colors.orange }}
+        customLeftImage={{tintColor: Colors.orange}}
         SimpleView
       />
       {/* Main View */}
@@ -50,7 +48,7 @@ export default function Watch(props) {
                 <Image
                   source={
                     itemSelected?.logo1
-                      ? { uri: itemSelected?.logo1 }
+                      ? {uri: itemSelected?.logo1}
                       : itemSelected?.img
                   }
                   style={styles.imageIcon}
@@ -69,24 +67,16 @@ export default function Watch(props) {
                     : itemSelected?.title}
                 </Text>
                 <View style={styles.itemInnerContainer}>
-                  <Text
-                    style={[
-                      styles.eventTxt,
-                      { opacity: itemSelected.live ? 1 : 0.5 },
-                    ]}>
+                  <Text style={[styles.eventTxt]}>
                     {' ' + itemSelected?.startTime
                       ? dayjs(itemSelected?.startTime).format('ddd. MM/D')
                       : itemSelected?.day}{' '}
                   </Text>
-                  <Text
-                    style={[
-                      styles.eventTxt,
-                      { opacity: itemSelected.live ? 1 : 0.5 },
-                    ]}>
+                  <Text style={[styles.eventTxt]}>
                     {' ' + itemSelected?.startTime
                       ? dayjs(itemSelected?.startTime).format('h:mm A') +
-                      ' - ' +
-                      dayjs(itemSelected?.endTime).format('h:mm A')
+                        ' - ' +
+                        dayjs(itemSelected?.endTime).format('h:mm A')
                       : itemSelected?.time}
                   </Text>
                 </View>
@@ -95,34 +85,46 @@ export default function Watch(props) {
           </View>
         </View>
         <Text style={styles.watchOptions}>{Strings.watchOptions}</Text>
-        <Text style={styles.conectTxt}>{Strings.connectToWatch}</Text>
-        <View style={styles.flatlistContainer}>
-          <FlatList
-            data={itemSelected?.rightsHoldersConnection?.edges || data}
-            showsVerticalScrollIndicator={false}
-            horizontal
-            renderItem={({ item, index }) => (
-              console.log("itee", item?.node?.logoUrl),
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate('Connect', { item: itemSelected })
-                }>
-                <View style={{ alignItems: 'center' }}>
-                  <ImageBackground
-                    source={Images.InActiveSliderBorder}
-                    style={styles.imageContainer}>
-                    <Image
-                      source={item?.node?.logoUrl ? { uri: item?.node?.logoUrl } : Images.NBALogo}
-                      style={styles.imageIcon}
-                      resizeMode={'contain'}
-                    />
-                  </ImageBackground>
-                  <Text style={styles.listTitleTxt}>{item?.node?.name || item?.title}</Text>
-                </View>
-              </TouchableOpacity>
-            )}
-          />
-        </View>
+        {itemSelected &&
+        itemSelected?.rightsHoldersConnection?.edges &&
+        itemSelected?.rightsHoldersConnection?.totalCount > 1 ? (
+          <View style={styles.flatlistContainer}>
+            <Text style={styles.conectTxt}>{Strings.connectToWatch}</Text>
+            <FlatList
+              data={itemSelected?.rightsHoldersConnection?.edges || data}
+              showsVerticalScrollIndicator={false}
+              horizontal
+              renderItem={({item, index}) => (
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate('Connect', {item: itemSelected})
+                  }>
+                  <View style={{alignItems: 'center'}}>
+                    <ImageBackground
+                      source={Images.InActiveSliderBorder}
+                      resizeMode="cover"
+                      style={styles.imageContainer}>
+                      <Image
+                        source={
+                          item?.node?.logoUrl
+                            ? {uri: item?.node?.logoUrl}
+                            : Images.NBALogo
+                        }
+                        style={styles.imageIcon}
+                        resizeMode={'contain'}
+                      />
+                    </ImageBackground>
+                    <Text style={styles.listTitleTxt}>
+                      {item?.node?.name || item?.title}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              )}
+            />
+          </View>
+        ) : (
+          <Text style={styles.orangeTxt}>{Strings.connectToWatchEmpty}</Text>
+        )}
       </View>
       {/* Bottom Menu circle */}
       {bottomMenu ? (
@@ -134,27 +136,31 @@ export default function Watch(props) {
             <Image source={Images.Menu} style={styles.menuBtn} />
           </TouchableOpacity>
           <Text style={styles.wayToWatch}>{Strings.otherWays}</Text>
-          <View style={{ marginTop: 1, marginHorizontal: 1 }}>
+          <View style={{marginTop: 1, marginHorizontal: 1}}>
             <FlatList
-              data={data}
+              data={itemSelected?.rightsHolders || data}
               showsVerticalScrollIndicator={false}
               horizontal
-              renderItem={({ item, index }) => (
+              renderItem={({item, index}) => (
                 <TouchableOpacity
                   onPress={() =>
-                    navigation.navigate('Connect', { item: itemSelected })
+                    navigation.navigate('Connect', {item: itemSelected})
                   }
                   style={styles.listContiner}>
                   <ImageBackground
                     source={Images.InActiveSliderBorder}
-                    style={styles.imageContainer}>
+                    style={styles.image2Container}>
                     <Image
-                      source={item?.img}
+                      source={
+                        item?.logoUrl ? {uri: item?.logoUrl} : Images.NBALogo
+                      }
                       style={styles.imageIcon}
                       resizeMode={'contain'}
                     />
                   </ImageBackground>
-                  <Text style={styles.listTitleTxt}>{item?.title}</Text>
+                  <Text style={styles.listTitleTxt}>
+                    {item?.name || item?.title}
+                  </Text>
                 </TouchableOpacity>
               )}
             />

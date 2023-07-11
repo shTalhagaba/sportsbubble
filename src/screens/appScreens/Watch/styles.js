@@ -13,6 +13,11 @@ export default ScaledSheet.create({
     marginVertical: "1@ms0.3",
     paddingVertical: "5@ms0.3",
   },
+  listContiner: {
+    paddingRight: "0@ms0.3",
+    marginVertical: "1@ms0.3",
+    paddingVertical: "5@ms0.3",
+  },
   itemInnerContainer: {
     flexDirection: "row"
   },
@@ -61,9 +66,18 @@ export default ScaledSheet.create({
     paddingVertical: 20,
     paddingHorizontal: Platform.OS === "android" ? 15 : 18
   },
+  image2Container: {
+    backgroundColor: Colors.mediumBlue,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 16,
+    marginRight: 16,
+    paddingVertical: 18,
+    paddingHorizontal: Platform.OS === "android" ? 15 : 18
+  },
   imageIcon: {
-    height: "47@ms0.3",
-    width: "47@ms0.3",
+    height: "46@ms0.3",
+    width: "46@ms0.3",
   },
   userNameContainer: {
     paddingStart: "13@ms0.3",
@@ -86,6 +100,7 @@ export default ScaledSheet.create({
     lineHeight: "20@ms0.3",
     color: Colors.white,
     fontFamily: Fonts.Regular,
+    textAlign:'center',
     marginTop: 8,
     marginStart: -16
   },
@@ -146,7 +161,19 @@ export default ScaledSheet.create({
     lineHeight: "24@ms0.3",
     color: Colors.white,
     fontFamily: Fonts.Regular,
-    marginTop: "20@ms0.3",
+    marginTop: "16@ms0.3",
+    textAlign: "center",
+    maxWidth: "70%",
+    alignSelf: "center",
+    fontStyle: 'italic'
+  },
+  orangeTxt: {
+    fontSize: "18@ms0.3",
+    fontWeight: "500",
+    lineHeight: "24@ms0.3",
+    color: Colors.darkOrange,
+    fontFamily: Fonts.Regular,
+    marginTop: "36@ms0.3",
     textAlign: "center",
     maxWidth: "70%",
     alignSelf: "center",

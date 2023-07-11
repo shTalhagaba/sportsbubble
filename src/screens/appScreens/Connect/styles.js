@@ -30,6 +30,14 @@ export default ScaledSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
+  logoImageContainer: {
+    height: "75@ms0.3",
+    // width: "75@ms0.3",
+    justifyContent: "center",
+    alignSelf: "center",
+    margin: 20,
+    borderRadius: 16,
+  },
   imageContainer: {
     height: "75@ms0.3",
     width: "75@ms0.3",
@@ -149,6 +157,10 @@ export default ScaledSheet.create({
     marginHorizontal: "20@ms0.3",
   },
   imageStyle: {
+    height: "100@ms0.3",
+    marginTop: "40@ms0.3",
+  },
+  logoImageStyle: {
     height: "100@ms0.3",
     marginTop: "40@ms0.3",
   },

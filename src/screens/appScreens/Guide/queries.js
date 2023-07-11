@@ -14,24 +14,17 @@ export const GET_SORTED_EVENTS = gql`
       category {
         name
       }
-      league {
-        id
+      rightsHolders {
         name
-        partner
-      }
-      sport {
-        id
-        name
+        logoUrl
       }
       rightsHoldersConnection {
         totalCount
         edges {
           rhVideoUrl
           node {
-            id
             name
             logoUrl
-            weight
           }
         }
       }
