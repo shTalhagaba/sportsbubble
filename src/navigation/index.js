@@ -23,7 +23,7 @@ const MainNavigator = () => {
   // const data = useSelector((state) => state.user);
   const data = !null
   // if (data?.user) {
-  if (data) {
+  if (!data) {
     return <AppStackNavigator />
   }
   else {

@@ -53,6 +53,9 @@ const images = {
     ApplePay: require("src/assets/images/ApplePay.png"),
     Card: require("src/assets/images/Card.png"),
     Country: require("src/assets/images/Country.png"),
+    SplashBack: require("src/assets/images/SplashBack.png"),
+    SplahBackTop: require("src/assets/images/SplahBackTop.png"),
+    LogoText: require("src/assets/images/LogoText.png"),
 }
 
 export default images
