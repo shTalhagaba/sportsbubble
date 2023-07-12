@@ -1,30 +1,77 @@
-import React, { useRef, useState } from 'react';
-import { ImageBackground, StatusBar, TouchableOpacity, View, Image, Text } from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {
+  ImageBackground,
+  StatusBar,
+  Dimensions,
+  View,
+  Image,
+  Text,
+} from 'react-native';
 import styles from './styles';
-import AppHeader from 'src/components/AppHeader'
-import { Images, Colors, Fonts } from 'src/utils';
-import { useNavigation } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
-
+import {Images, Colors} from 'src/utils';
+import {useNavigation} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
 
 export default function Splash() {
-    const dispatch = useDispatch();
-    const navigation = useNavigation()
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const height = Dimensions.get('window').height;
 
-    return (
+  useEffect(() => {
+    setTimeout(() => {
+    //    navigation.replace('Login')
+    }, 1000);
+  }, []);
 
-        <View style={styles.container}>
-            <ImageBackground source={Images.SplahBackTop} style={{ height: 400, }} resizeMode={"cover"}>
-                <StatusBar backgroundColor={Colors.transparent} translucent />
-
-            </ImageBackground>
-            <View style={{ flex: 1, alignSelf: "center", position: "absolute", justifyContent: "center", alignItems: "center" }}>
-
-                <Image source={Images.LogoText} style={{ height: 200, width: 200, alignSelf: "center" }} resizeMode={"contain"} />
-            </View>
-
-
-        </View>
-
-    );
+  return (
+    <View style={styles.container}>
+      <ImageBackground
+        source={Images.Background2}
+        style={{ height: '100%', width: '100%' }}
+        resizeMode="cover"
+      >
+        <ImageBackground
+          source={Images.SplashBackTop}
+          style={{ height:height/2.5,}}
+          resizeMode="cover"
+        >
+          <StatusBar
+            backgroundColor={Colors.transparent}
+            translucent
+            barStyle="light-content"
+          />
+                  </ImageBackground>
+          <View
+            style={{
+              flex: 1,
+              alignSelf: 'center',
+              position: 'absolute',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: height / 4,
+            }}
+          >
+            <Image
+              source={Images.LogoText}
+              style={{ height: 230, width: 230, alignSelf: 'center' }}
+              resizeMode="contain"
+            />
+          </View>
+          {/* Powered by sports bubble */}
+          <View style={styles.sbContainer}>
+            <Image
+              source={Images.Sports}
+              style={styles.leftArrowIcon}
+              resizeMode="contain"
+            />
+            <Image
+              source={Images.PoweredSB}
+              style={styles.powerImage}
+              resizeMode="contain"
+            />
+          </View>
+      </ImageBackground>
+    </View>
+  );
+  
 }
