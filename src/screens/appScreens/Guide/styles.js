@@ -1,5 +1,7 @@
 import {Colors, Fonts} from 'src/utils';
 import {ScaledSheet} from 'react-native-size-matters';
+import { Dimensions } from 'react-native';
+const width = Dimensions.get('window').width;
 
 export default ScaledSheet.create({
   container: {
@@ -104,7 +106,7 @@ export default ScaledSheet.create({
     height: '120@ms0.3',
   },
   sliderInnerContainer: {
-    flex: 1,
+    // flex: 1,
     marginHorizontal: '5@ms0.3',
     marginVertical: 5,
     justifyContent: 'center',
@@ -122,7 +124,7 @@ export default ScaledSheet.create({
     borderColor: '#004EBC',
     height: '90@ms0.3',
     borderRadius: '20@ms0.3',
-    width: '90@ms0.3',
+    width: width/4-11,
   },
   sliderIcon: {
     height: '32@ms0.3',

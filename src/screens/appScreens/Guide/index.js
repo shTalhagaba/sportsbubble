@@ -127,7 +127,7 @@ export default function Guide() {
   const [filteredEventList, setFilteredEventList] = useState([]);
   const [startTime, setStartTime] = useState(dayjs(new Date()).toISOString());
   const [endTime, setEndTime] = useState(
-    dayjs(new Date()).add(7, 'day').toISOString(),
+    dayjs(new Date()).add(1, 'day').toISOString(),
   );
 
   // Fetch data from API using Apollo useQuery hook
@@ -162,6 +162,7 @@ export default function Guide() {
   const getCategoryList = () => {
     const categorySet = new Set(eventList.map(item => item.category.name));
     const categoryList = Array.from(categorySet);
+    console.log('categoryList ; ',categoryList)
     let list = [
       {
         id: 1,
@@ -175,7 +176,7 @@ export default function Guide() {
         value: element,
       })),
     ];
-    setCategoryData(list);
+    // setCategoryData(list);
     setCategoryFlag(false);
   };
 
@@ -444,6 +445,7 @@ export default function Guide() {
           horizontal
           data={categoryData}
           showsHorizontalScrollIndicator={false}
+          scrollEnabled={false}
           renderItem={({item, index}) => (
             <TouchableOpacity
               onPress={() => handleSelectedCategory(item, index)}

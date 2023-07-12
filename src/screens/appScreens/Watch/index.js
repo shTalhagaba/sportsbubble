@@ -158,9 +158,9 @@ export default function Watch(props) {
                       resizeMode={'contain'}
                     />
                   </ImageBackground>
-                  <Text style={styles.listTitleTxt}>
+                  {/* <Text style={styles.listTitleTxt}>
                     {item?.name || item?.title}
-                  </Text>
+                  </Text> */}
                 </TouchableOpacity>
               )}
             />
