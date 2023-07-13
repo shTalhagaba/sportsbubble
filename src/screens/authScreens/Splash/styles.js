@@ -1,5 +1,5 @@
-import {Colors} from 'src/utils';
-import {ScaledSheet} from 'react-native-size-matters';
+import { Colors, Fonts } from 'src/utils';
+import { ScaledSheet } from 'react-native-size-matters';
 
 export default ScaledSheet.create({
   container: {
@@ -11,9 +11,17 @@ export default ScaledSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
-    bottom: 100,
+    bottom: 50,
     alignContent: 'center',
     alignSelf: 'center',
+  },
+  versionTxt: {
+    fontSize: "18@ms0.3",
+    fontWeight: "bold",
+    textAlign: "center",
+    color: Colors.white,
+    fontFamily: Fonts.Regular,
+    fontStyle: "italic"
   },
   leftArrowIcon: {
     width: '45@ms0.3',

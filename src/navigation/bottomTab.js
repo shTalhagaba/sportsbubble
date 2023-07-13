@@ -26,7 +26,6 @@ const GuideNavigation = () => {
       }}>
       <GuideNavigator.Screen name="Guide" component={Guide} />
       <GuideNavigator.Screen name="Watch" component={Watch} />
-      <GuideNavigator.Screen name="Connect" component={Connect} />
     </GuideNavigator.Navigator>
   );
 };

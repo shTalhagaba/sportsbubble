@@ -127,6 +127,7 @@ export default ScaledSheet.create({
   sbContainer: {
     alignItems: "center",
     justifyContent: 'center',
+    marginBottom: 20
   },
   sbImage: {
     height: "150@ms0.3",
@@ -162,7 +163,9 @@ export default ScaledSheet.create({
   },
   logoImageStyle: {
     height: "100@ms0.3",
+    backgroundColor: "red",
     marginTop: "40@ms0.3",
+    width: "143@ms0.3"
   },
   flexRow: {
     flexDirection: 'row'

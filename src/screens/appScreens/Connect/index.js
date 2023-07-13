@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   ImageBackground,
   Text,
@@ -8,7 +8,7 @@ import {
   Linking,
 } from 'react-native';
 import styles from './styles';
-import {Images, Colors, Strings} from 'src/utils';
+import { Images, Colors, Strings } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
 import GreenButton from 'src/components/GreenButton';
 import dayjs from 'dayjs';
@@ -16,9 +16,11 @@ import dayjs from 'dayjs';
 export default function Connect(props) {
   const [item, setItem] = useState(props?.route?.params?.item);
 
+  console.log("Itee, => ", item?.logo1)
+
   const handleClick = url => {
-    if(url){
-    Linking.openURL(url);
+    if (url) {
+      Linking.openURL(url);
     }
   };
 
@@ -32,7 +34,7 @@ export default function Connect(props) {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        customLeftImage={{tintColor: Colors.orange}}
+        customLeftImage={{ tintColor: Colors.orange }}
         SimpleView
       />
       <View style={styles.flexOnly}>
@@ -41,7 +43,7 @@ export default function Connect(props) {
             <View style={styles.itemInnerContainer}>
               <View style={styles.itemContainer}>
                 <Image
-                  source={item?.logo1 ? {uri: item?.logo1} : item?.img}
+                  source={item?.logo1 ? { uri: item?.logo1 } : item?.img}
                   style={styles.imageIcon}
                   resizeMode={'contain'}
                 />
@@ -65,8 +67,8 @@ export default function Connect(props) {
                   <Text style={[styles.eventTxt]}>
                     {' ' + item?.startTime
                       ? dayjs(item?.startTime).format('h:mm A') +
-                        ' - ' +
-                        dayjs(item?.endTime).format('h:mm A')
+                      ' - ' +
+                      dayjs(item?.endTime).format('h:mm A')
                       : item?.time}
                   </Text>
                 </View>
@@ -83,11 +85,20 @@ export default function Connect(props) {
         </View>
         <Text style={styles.connectingText}>{Strings.connecting}</Text>
         <View style={styles.logoImageContainer}>
-          <Image
-            source={Images.NBALogo}
-            resizeMode={'contain'}
-            style={styles.logoImageStyle}
-          />
+          {item?.logo1 ?
+            <Image
+              source={{ uri: item?.logo1 }}
+              resizeMode={'cover'}
+              style={styles.logoImageStyle}
+            />
+            :
+            <Image
+              source={Images.NBALogo}
+              resizeMode={'contain'}
+              style={styles.logoImageStyle}
+            />
+          }
+
         </View>
         <View style={styles.buttonContainer}>
           <GreenButton
