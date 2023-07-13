@@ -56,7 +56,7 @@ export default ScaledSheet.create({
     lineHeight: "25@ms0.3",
     color: Colors.white,
     fontFamily: Fonts.Regular,
-    width:'85%',
+    width: '85%',
   },
   eventTxt: {
     fontSize: "14@ms0.3",
@@ -64,7 +64,7 @@ export default ScaledSheet.create({
     lineHeight: "20@ms0.3",
     color: Colors.white,
     fontFamily: Fonts.Regular,
-    width:'85%',
+    width: '85%',
   },
   dateEventTxt: {
     fontSize: "14@ms0.3",
@@ -109,8 +109,8 @@ export default ScaledSheet.create({
     flexDirection: 'row',
     backgroundColor: Colors.mediumBlue,
     height: "110@ms0.3",
-    alignItems:'center',
-    paddingHorizontal:"15@ms0.3",
+    alignItems: 'center',
+    paddingHorizontal: "15@ms0.3",
   },
   sliderInnerContainer: {
     flex: 1,
@@ -174,7 +174,6 @@ export default ScaledSheet.create({
   },
   logoImageStyle: {
     height: "100@ms0.3",
-    backgroundColor: "red",
     marginTop: "40@ms0.3",
     width: "163@ms0.3"
   },

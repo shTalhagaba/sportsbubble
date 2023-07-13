@@ -62,17 +62,21 @@ export default ScaledSheet.create({
     alignItems: "center"
   },
   backImageContainer: {
-    marginRight: 16,
-    borderRadius: 16,
+    marginRight: "16@ms0.3",
+    borderRadius: "22@ms0.3",
+    borderWidth: "2@ms0.3",
+    overflow: "hidden",
+
   },
   imageContainer: {
     backgroundColor: Colors.mediumBlue,
     justifyContent: "center",
     alignItems: "center",
-    margin:"0.3@ms0.3",
-    borderRadius: 16,
-    paddingVertical: 20,
-    paddingHorizontal: Platform.OS === "android" ? 15 : 18
+    margin: "0.3@ms0.3",
+    paddingVertical: "20@ms0.3",
+    paddingHorizontal: Platform.OS === "android" ? 15 : 18,
+    overflow: "hidden",
+    borderRadius: "16@ms0.3"
   },
   bottomImageContainer: {
     marginRight: 16,
@@ -82,7 +86,7 @@ export default ScaledSheet.create({
     backgroundColor: Colors.mediumBlue,
     justifyContent: "center",
     alignItems: "center",
-    margin:"2@ms0.3",
+    margin: "2@ms0.3",
     borderRadius: 16,
     paddingVertical: 18,
     paddingHorizontal: Platform.OS === "android" ? 15 : 18
@@ -120,10 +124,10 @@ export default ScaledSheet.create({
     lineHeight: "20@ms0.3",
     color: Colors.white,
     fontFamily: Fonts.Regular,
-    textAlign:'center',
+    textAlign: 'center',
     marginTop: 8,
     marginStart: -10,
-    width:'80%',
+    width: '80%',
   },
   sliderActiveTimeTxt: {
     fontSize: "14@ms0.3",
@@ -146,7 +150,7 @@ export default ScaledSheet.create({
     lineHeight: "25@ms0.3",
     color: Colors.white,
     fontFamily: Fonts.Regular,
-    width:'85%',
+    width: '85%',
   },
   eventTxt: {
     fontSize: "14@ms0.3",
@@ -154,7 +158,7 @@ export default ScaledSheet.create({
     lineHeight: "20@ms0.3",
     color: Colors.white,
     fontFamily: Fonts.Regular,
-    width:'85%',
+    width: '85%',
   },
   dateEventTxt: {
     fontSize: "14@ms0.3",
@@ -214,8 +218,8 @@ export default ScaledSheet.create({
     flexDirection: 'row',
     backgroundColor: Colors.mediumBlue,
     height: "110@ms0.3",
-    alignItems:'center',
-    paddingHorizontal:"15@ms0.3",
+    alignItems: 'center',
+    paddingHorizontal: "15@ms0.3",
   },
   sliderInnerContainer: {
     flex: 1,
