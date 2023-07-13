@@ -107,7 +107,6 @@ export default function Search() {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        customLeftImage={{tintColor: Colors.orange}}
         SimpleView
       />
       <View style={styles.mainContainer}>
@@ -123,16 +122,9 @@ export default function Search() {
           onChangeText={text => handleInputChange(text)}
         />
         {/* list showing after search */}
-        {/* {!loading ? ( */}
         <FlatList
           data={
             searchText.length > 0 ? list : []
-            // searchText.length > 0 &&
-            // data &&
-            // data?.searchEvent &&
-            // data?.searchEvent.length > 0
-            //   ? data?.searchEvent
-            //   : []
           }
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={
@@ -160,21 +152,21 @@ export default function Search() {
                   <Text style={styles.eventTxt}>
                     {item?.line1 ? item?.line1 : item?.companyName}
                   </Text>
-                  <Text style={styles.titleTxt}>
+                  <Text style={styles.titleTxt} numberOfLines={1}>
                     {item?.line2 ? item?.line2 : item?.title}
                   </Text>
                   <View style={styles.innerContainer}>
                     <Text style={styles.eventTxt}>
                       {' ' + item?.startTime
                         ? dayjs(item?.startTime).format('ddd. MM/D')
-                        : item?.day}{' '}
+                        : item?.day}{'  l '}
                     </Text>
                     <Text style={styles.eventTxt}>
                       {' '}
                       {' ' + item?.startTime
-                        ? dayjs(item?.startTime).format('h:mm A') +
+                        ? dayjs(item?.startTime).format('h:mma') +
                           ' - ' +
-                          dayjs(item?.endTime).format('h:mm A')
+                          dayjs(item?.endTime).format('h:mma')
                         : item?.time}
                     </Text>
                   </View>

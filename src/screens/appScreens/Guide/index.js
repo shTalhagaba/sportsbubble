@@ -19,7 +19,6 @@ import dayjs from 'dayjs';
 import {GET_SORTED_EVENTS} from './queries';
 import {useDispatch, useSelector} from 'react-redux';
 import {setExpire, setStoreEventList} from 'src/store/types';
-import {FlashList} from '@shopify/flash-list';
 
 // Sample data for the list
 const list = [
@@ -139,7 +138,23 @@ export default function Guide() {
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
     onCompleted: data => {
-      setEventList(data?.sortedEvents);
+      if(data && data?.sortedEvents){
+        const filteredEvents = data?.sortedEvents.filter(event => {
+          const { line1, line2, startTime, endTime, logo1, rightsHolders } = event;
+          // Check if all required properties exist
+          if (!line1 || !line2 || !startTime || !endTime || !logo1 || !rightsHolders) {
+            return false;
+          }
+          // Check if at least one rightsholder has a logoUrl
+          const hasLogoUrl = rightsHolders.some(rightsholder => rightsholder.logoUrl);
+          if (!hasLogoUrl) {
+            return false;
+          }
+        
+          return true;
+        }); 
+        setEventList(filteredEvents);
+      }
       setIsRefreshing(false);
       const currentTime = Date.now();
       if (
@@ -162,7 +177,7 @@ export default function Guide() {
   const getCategoryList = () => {
     const categorySet = new Set(eventList.map(item => item.category.name));
     const categoryList = Array.from(categorySet);
-    console.log('categoryList ; ',categoryList)
+    console.log('categoryList ; ', categoryList);
     let list = [
       {
         id: 1,
@@ -189,7 +204,7 @@ export default function Guide() {
       const hourDatetime = dayjs().hour(hour).toISOString();
       const hourObject = {
         id: i + 1,
-        title: dayjs().hour(hour).format('h A').toLowerCase(),
+        title: dayjs().hour(hour).format('h a'),
         selected: false,
         datetime: hourDatetime,
       };
@@ -211,9 +226,10 @@ export default function Guide() {
         );
       }
       setFilteredEventList(filteredEvents);
-      if (categoryFlag) {
-        getCategoryList();
-      }
+      // static list required only
+      // if (categoryFlag) {
+      //   getCategoryList();
+      // }
     }
   }, [eventList]);
 
@@ -340,7 +356,10 @@ export default function Guide() {
               item?.rightsHoldersConnection &&
               item?.rightsHoldersConnection?.totalCount === 1
             ) {
-              navigation.navigate('Connect', {item: item, eventFlag: true});
+              navigation.navigate('withoutBottomtab', {
+                screen: 'Connect',
+                params: {item: item,eventFlag:true},
+              })
             } else {
               navigation.navigate('Watch', {item: item});
             }
@@ -391,36 +410,19 @@ export default function Guide() {
                 {item?.line2 ? item?.line2 : item?.title}
               </Text>
               <View style={{flexDirection: 'row'}}>
-                <Text
-                  style={[
-                    styles.eventTxt,
-                    {
-                      opacity:
-                        dayjs(item?.startTime).format('yyyy') === '2023'
-                          ? 1
-                          : 0.5,
-                    },
-                  ]}>
+                <Text style={[styles.eventDateTxt]}>
                   {' '}
                   {item?.startTime
                     ? dayjs(item?.startTime).format('ddd. MM/D')
-                    : item?.day}{' '}
+                    : item?.day}
+                  {'  l '}
                 </Text>
-                <Text
-                  style={[
-                    styles.eventTxt,
-                    {
-                      opacity:
-                        dayjs(item?.startTime).format('yyyy') === '2023'
-                          ? 1
-                          : 0.5,
-                    },
-                  ]}>
+                <Text style={[styles.eventDateTxt]}>
                   {' '}
                   {item?.startTime
-                    ? `${dayjs(item?.startTime).format('h:mm A')} - ${dayjs(
+                    ? `${dayjs(item?.startTime).format('h:mma')} - ${dayjs(
                         item?.endTime,
-                      ).format('h:mm A')}`
+                      ).format('h:mma')}`
                     : item?.time}
                 </Text>
               </View>

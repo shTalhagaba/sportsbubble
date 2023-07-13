@@ -16,15 +16,15 @@ export default ScaledSheet.create({
     flexDirection: "row"
   },
   imageContainer: {
-    height: "78@ms0.3",
-    width: "78@ms0.3",
-    backgroundColor: "#22364f",
+    height: "80@ms0.3",
+    width: "80@ms0.3",
+    backgroundColor: Colors.mediumBlue,
     justifyContent: "center",
     alignItems: "center"
   },
   imageIcon: {
-    height: "50@ms0.3",
-    width: "50@ms0.3",
+    height: "65@ms0.3",
+    width: "65@ms0.3",
   },
   userNameContainer: {
     flex: 1,
@@ -46,7 +46,7 @@ export default ScaledSheet.create({
     color: Colors.white
   },
   eventTxt: {
-    fontSize: "13@ms0.3",
+    fontSize: "14@ms0.3",
     fontWeight: "400",
     lineHeight: "20@ms0.3",
     color: Colors.white,

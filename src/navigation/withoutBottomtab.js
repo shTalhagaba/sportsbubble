@@ -6,6 +6,7 @@ import SportStreaming from 'src/screens/appScreens/SportStreaming'
 import UpgradeAccount from 'src/screens/appScreens/UpgradeAccount'
 import Payment from 'src/screens/appScreens/Payment'
 import Connect from 'src/screens/appScreens/Connect'
+import Term from 'src/screens/appScreens/Term'
 
 
 
@@ -24,7 +25,7 @@ const WithoutBottomnavigation = () => {
             <AppNavigator.Screen name="UpgradeAccount" component={UpgradeAccount} />
             <AppNavigator.Screen name="Payment" component={Payment} />
             <AppNavigator.Screen name="Connect" component={Connect} />
-
+            <AppNavigator.Screen name="Term" component={Term} />
 
         </AppNavigator.Navigator>
     )

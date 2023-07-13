@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   ImageBackground,
   Text,
@@ -9,16 +9,16 @@ import {
   StatusBar,
 } from 'react-native';
 import styles from './styles';
-import { Images, Colors, Strings } from 'src/utils';
+import {Images, Colors, Strings} from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import dayjs from 'dayjs';
 
 const data = [
-  { id: 1, img: Images.NBALogo, title: 'Fubo' },
-  { id: 2, img: Images.NBALogo, title: 'ESPN' },
-  { id: 3, img: Images.NBALogo, title: 'Sling' },
-  { id: 4, img: Images.NBALogo, title: 'DAZN' },
+  {id: 1, img: Images.NBALogo, title: 'Fubo'},
+  {id: 2, img: Images.NBALogo, title: 'ESPN'},
+  {id: 3, img: Images.NBALogo, title: 'Sling'},
+  {id: 4, img: Images.NBALogo, title: 'DAZN'},
 ];
 
 export default function Watch(props) {
@@ -36,19 +36,20 @@ export default function Watch(props) {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        customLeftImage={{ tintColor: Colors.orange }}
+        // customLeftImage={{tintColor: Colors.orange}}
         SimpleView
       />
       {/* Main View */}
       <View style={styles.flexOnly}>
+        {/* after header card */}
         <View style={styles.sliderContainer}>
-          <View style={styles.itemListContiner}>
+          <View style={styles.itemListContainer}>
             <View style={styles.itemInnerContainer}>
               <View style={styles.itemContainer}>
                 <Image
                   source={
                     itemSelected?.logo1
-                      ? { uri: itemSelected?.logo1 }
+                      ? {uri: itemSelected?.logo1}
                       : itemSelected?.img
                   }
                   style={styles.imageIcon}
@@ -67,16 +68,17 @@ export default function Watch(props) {
                     : itemSelected?.title}
                 </Text>
                 <View style={styles.itemInnerContainer}>
-                  <Text style={[styles.eventTxt]}>
+                  <Text style={[styles.dateEventTxt]}>
                     {' ' + itemSelected?.startTime
                       ? dayjs(itemSelected?.startTime).format('ddd. MM/D')
-                      : itemSelected?.day}{' '}
+                      : itemSelected?.day}
+                    {'  l '}
                   </Text>
-                  <Text style={[styles.eventTxt]}>
+                  <Text style={[styles.dateEventTxt]}>
                     {' ' + itemSelected?.startTime
-                      ? dayjs(itemSelected?.startTime).format('h:mm A') +
-                      ' - ' +
-                      dayjs(itemSelected?.endTime).format('h:mm A')
+                      ? dayjs(itemSelected?.startTime).format('h:mma') +
+                        ' - ' +
+                        dayjs(itemSelected?.endTime).format('h:mma')
                       : itemSelected?.time}
                   </Text>
                 </View>
@@ -84,38 +86,45 @@ export default function Watch(props) {
             </View>
           </View>
         </View>
+        {/* Watch option text */}
         <Text style={styles.watchOptions}>{Strings.watchOptions}</Text>
+        {/* right holder connection list */}
         {itemSelected &&
-          itemSelected?.rightsHoldersConnection?.edges &&
-          itemSelected?.rightsHoldersConnection?.totalCount > 1 ? (
+        itemSelected?.rightsHoldersConnection?.edges &&
+        itemSelected?.rightsHoldersConnection?.totalCount > 1 ? (
           <View style={styles.flatlistContainer}>
             <Text style={styles.conectTxt}>{Strings.connectToWatch}</Text>
             <FlatList
               data={itemSelected?.rightsHoldersConnection?.edges || data}
               showsVerticalScrollIndicator={false}
               horizontal
-              renderItem={({ item, index }) => (
+              contentContainerStyle={{flex: 1, justifyContent: 'center'}}
+              renderItem={({item, index}) => (
                 <TouchableOpacity
                   onPress={() =>
-                    // navigation.navigate('Connect', {item: itemSelected}),
-                    navigation.navigate("withoutBottomtab", { screen: "Connect", params: { item: itemSelected } })
+                    navigation.navigate('withoutBottomtab', {
+                      screen: 'Connect',
+                      params: {item: itemSelected},
+                    })
                   }>
-                  <View style={{ alignItems: 'center' }}>
+                  <View style={{alignItems: 'center', marginTop: 25}}>
                     <ImageBackground
                       source={Images.InActiveSliderBorder}
                       resizeMode="cover"
-                      style={styles.imageContainer}>
-                      <Image
-                        source={
-                          item?.node?.logoUrl
-                            ? { uri: item?.node?.logoUrl }
-                            : Images.NBALogo
-                        }
-                        style={styles.imageIcon}
-                        resizeMode={'contain'}
-                      />
+                      style={styles.backImageContainer}>
+                      <View style={styles.imageContainer}>
+                        <Image
+                          source={
+                            item?.node?.logoUrl
+                              ? {uri: item?.node?.logoUrl}
+                              : Images.NBALogo
+                          }
+                          style={styles.imageRightsIcon}
+                          resizeMode={'contain'}
+                        />
+                      </View>
                     </ImageBackground>
-                    <Text style={styles.listTitleTxt}>
+                    <Text style={styles.listTitleTxt} numberOfLines={1}>
                       {item?.node?.name || item?.title}
                     </Text>
                   </View>
@@ -137,27 +146,32 @@ export default function Watch(props) {
             <Image source={Images.Menu} style={styles.menuBtn} />
           </TouchableOpacity>
           <Text style={styles.wayToWatch}>{Strings.otherWays}</Text>
-          <View style={{ marginTop: 1, marginHorizontal: 1 }}>
+          <View style={{marginTop: 1, marginHorizontal: 1}}>
             <FlatList
               data={itemSelected?.rightsHolders || data}
               showsVerticalScrollIndicator={false}
               horizontal
-              renderItem={({ item, index }) => (
+              renderItem={({item, index}) => (
                 <TouchableOpacity
                   onPress={() =>
-                    navigation.navigate('Connect', { item: itemSelected })
+                    navigation.navigate('withoutBottomtab', {
+                      screen: 'Connect',
+                      params: {item: itemSelected},
+                    })
                   }
-                  style={styles.listContiner}>
+                  style={styles.listBottomContainer}>
                   <ImageBackground
                     source={Images.InActiveSliderBorder}
-                    style={styles.image2Container}>
-                    <Image
-                      source={
-                        item?.logoUrl ? { uri: item?.logoUrl } : Images.NBALogo
-                      }
-                      style={styles.imageIcon}
-                      resizeMode={'contain'}
-                    />
+                    style={styles.bottomImageContainer}>
+                    <View style={styles.image2Container}>
+                      <Image
+                        source={
+                          item?.logoUrl ? {uri: item?.logoUrl} : Images.NBALogo
+                        }
+                        style={styles.imageBottomIcon}
+                        resizeMode={'contain'}
+                      />
+                    </View>
                   </ImageBackground>
                   {/* <Text style={styles.listTitleTxt}>
                     {item?.name || item?.title}

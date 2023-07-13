@@ -32,6 +32,7 @@ export default function Setting() {
       <ScrollView style={styles.mainTabContainer}>
         <Text style={styles.loginTxt}>{Strings.settings}</Text>
         <View style={styles.innerContainer}>
+          {/* changes for next version */}
           {/* <ButtonWithIcon title={Strings.personalInfo} onpress={() => navigation.navigate("withoutBottomtab", { screen: "PersonalInfo" })} />
           <ButtonWithIcon title={Strings.changePassword} onpress={() => navigation.navigate('withoutBottomtab', { screen: "UpdatePassword" })} />
           <ButtonWithIcon title={Strings.sportsStreamingApps} onpress={() => navigation.navigate('withoutBottomtab', { screen: "SportStreaming" })} />
@@ -61,11 +62,11 @@ export default function Setting() {
         Contianer={{ backgroundColor: Colors.black }}
       />
       {/* Powered by sports bubble */}
-      {/* <View style={styles.sbContainer}>
+      <View style={styles.sbContainer}>
         <Image source={Images.Sports} style={styles.leftArrowIcon} resizeMode={"contain"} />
         <Image source={Images.PoweredSB} style={styles.powerImage} resizeMode={"contain"} />
         <Text style={styles.versionTxt}>v {version}</Text>
-      </View> */}
+      </View>
     </ImageBackground>
   );
 }

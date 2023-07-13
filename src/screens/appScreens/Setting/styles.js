@@ -7,8 +7,8 @@ export default ScaledSheet.create({
         backgroundColor: Colors.appColorBackground
     },
     loginTxt: {
-        fontSize: "20@ms0.3",
-        fontWeight: "bold",
+        fontSize: "22@ms0.3",
+        fontWeight: "800",
         textAlign: "center",
         color: Colors.white,
         fontFamily: Fonts.Regular,
@@ -25,11 +25,12 @@ export default ScaledSheet.create({
         tintColor: Colors.white
     },
     versionTxt: {
-        fontSize: "16@ms0.3",
+        fontSize: "18@ms0.3",
         fontWeight: "bold",
         textAlign: "center",
         color: Colors.white,
         fontFamily: Fonts.Regular,
+        fontStyle: "italic"
     },
     logoutTxt: {
         fontSize: "18@ms0.3",

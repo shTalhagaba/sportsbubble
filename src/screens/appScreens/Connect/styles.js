@@ -11,7 +11,7 @@ export default ScaledSheet.create({
     paddingVertical: "5@ms0.3",
     alignItems: "center"
   },
-  itemListContiner: {
+  itemListContainer: {
     paddingRight: "0@ms0.3",
     marginVertical: "1@ms0.3",
     paddingVertical: "5@ms0.3",
@@ -26,7 +26,6 @@ export default ScaledSheet.create({
   itemContainer: {
     height: "80@ms0.3",
     width: "80@ms0.3",
-    backgroundColor: Colors.mediumBlue,
     justifyContent: "center",
     alignItems: "center"
   },
@@ -48,8 +47,8 @@ export default ScaledSheet.create({
     borderRadius: 16,
   },
   imageIcon: {
-    height: "47@ms0.3",
-    width: "47@ms0.3",
+    height: "65@ms0.3",
+    width: "65@ms0.3",
   },
   titleTxt: {
     fontSize: "18@ms0.3",
@@ -57,9 +56,18 @@ export default ScaledSheet.create({
     lineHeight: "25@ms0.3",
     color: Colors.white,
     fontFamily: Fonts.Regular,
+    width:'85%',
   },
   eventTxt: {
-    fontSize: "13@ms0.3",
+    fontSize: "14@ms0.3",
+    fontWeight: "400",
+    lineHeight: "20@ms0.3",
+    color: Colors.white,
+    fontFamily: Fonts.Regular,
+    width:'85%',
+  },
+  dateEventTxt: {
+    fontSize: "14@ms0.3",
     fontWeight: "400",
     lineHeight: "20@ms0.3",
     color: Colors.white,
@@ -86,7 +94,7 @@ export default ScaledSheet.create({
     textAlign: "center"
   },
   connectingText: {
-    fontSize: "16@ms0.3",
+    fontSize: "18@ms0.3",
     fontWeight: "500",
     lineHeight: "22@ms0.3",
     color: Colors.white,
@@ -100,6 +108,9 @@ export default ScaledSheet.create({
   sliderContainer: {
     flexDirection: 'row',
     backgroundColor: Colors.mediumBlue,
+    height: "110@ms0.3",
+    alignItems:'center',
+    paddingHorizontal:"15@ms0.3",
   },
   sliderInnerContainer: {
     flex: 1,
@@ -158,16 +169,23 @@ export default ScaledSheet.create({
     marginHorizontal: "20@ms0.3",
   },
   imageStyle: {
-    height: "100@ms0.3",
-    marginTop: "40@ms0.3",
+    height: "60@ms0.3",
+    marginTop: "30@ms0.3",
   },
   logoImageStyle: {
     height: "100@ms0.3",
     backgroundColor: "red",
     marginTop: "40@ms0.3",
-    width: "143@ms0.3"
+    width: "163@ms0.3"
   },
   flexRow: {
     flexDirection: 'row'
-  }
+  },
+  userNameContainer: {
+    paddingStart: "13@ms0.3",
+    height: "80@ms0.3",
+    justifyContent: "center",
+    position: 'absolute',
+    left: "80@ms0.3",
+  },
 });

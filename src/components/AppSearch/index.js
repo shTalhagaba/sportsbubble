@@ -1,15 +1,29 @@
-import React from "react";
-import { View, TextInput, Image, TouchableOpacity } from "react-native";
-import styles from "./styles";
+import React, {useState} from 'react';
+import {View, TextInput, Image, TouchableOpacity} from 'react-native';
+import styles from './styles';
 
-const AppSearch = (props) => {
+const AppSearch = props => {
+  const [isFocused, setIsFocused] = useState(false);
+
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+  };
   return (
-    <View style={[styles.container, props.customContainer]}>
+    <View
+      style={[
+        styles.container,
+        props.customContainer,
+        isFocused ? styles.focus : styles.blur,
+      ]}>
       {props.searchImage ? (
         <Image
           source={props.searchImage}
           style={styles.searchImage}
-          resizeMode={"contain"}
+          resizeMode={'contain'}
         />
       ) : null}
       <TextInput
@@ -29,17 +43,18 @@ const AppSearch = (props) => {
         onSubmitEditing={props.onSubmitEditing}
         blurOnSubmit={props.blurOnSubmit}
         ref={props.refInner}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
       />
       {props.closeImage ? (
         <TouchableOpacity onPress={props.onPressCloseImage}>
-        <Image
-          source={props.closeImage}
-          style={styles.crossImage}
-          resizeMode={"contain"}
-        />
+          <Image
+            source={props.closeImage}
+            style={styles.crossImage}
+            resizeMode={'contain'}
+          />
         </TouchableOpacity>
       ) : null}
-
     </View>
   );
 };

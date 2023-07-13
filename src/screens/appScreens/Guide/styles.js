@@ -15,6 +15,12 @@ export default ScaledSheet.create({
   },
   innerContainer: {
     flexDirection: 'row',
+    height: '69@ms0.3',
+    // elevation:3,
+    // shadowOffset: { width: 1, height: 2 },
+    // shadowOpacity: 0.15,
+    // shadowRadius: 3,
+    // shadowColor: 'rgba(0, 0, 0, 0.15)',
   },
   timeContainer: {
     backgroundColor: '#213651',
@@ -25,6 +31,10 @@ export default ScaledSheet.create({
     justifyContent: 'center',
     alignSelf: 'center',
     elevation: 3,
+    shadowColor: 'rgba(0, 0, 0, 0.15)',
+    shadowOffset: { width: 0, height: 1 },
+    shadowRadius: 3,
+    shadowOpacity: 1,
   },
   timeSliderContainer: {
     flexDirection: 'row',
@@ -47,8 +57,8 @@ export default ScaledSheet.create({
     width: '16@ms0.3',
   },
   imageContainer: {
-    height: '67@ms0.3',
-    width: '67@ms0.3',
+    height: '69@ms0.3',
+    width: '69@ms0.3',
     backgroundColor: Colors.mediumBlue,
     justifyContent: 'center',
     alignItems: 'center',
@@ -94,7 +104,14 @@ export default ScaledSheet.create({
     fontFamily: Fonts.Regular,
   },
   eventTxt: {
-    fontSize: '13@ms0.3',
+    fontSize: '14@ms0.3',
+    fontWeight: '400',
+    lineHeight: '20@ms0.3',
+    color: Colors.white,
+    fontFamily: Fonts.Regular,
+  },
+  eventDateTxt: {
+    fontSize: '14@ms0.3',
     fontWeight: '400',
     lineHeight: '20@ms0.3',
     color: Colors.white,
@@ -127,9 +144,9 @@ export default ScaledSheet.create({
     width: width/4-11,
   },
   sliderIcon: {
-    height: '32@ms0.3',
-    width: '32@ms0.3',
-    paddingVertical: '15@ms0.3',
+    height: '35@ms0.3',
+    width: '35@ms0.3',
+    paddingVertical: '12@ms0.3',
     tintColor: Colors.white,
   },
   sliderTxt: {
@@ -139,5 +156,9 @@ export default ScaledSheet.create({
     color: Colors.white,
     fontFamily: Fonts.Bold,
     fontStyle: 'italic',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 8,
+    textShadowColor: '#000000',
+    marginTop: '4@ms0.3',
   },
 });

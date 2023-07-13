@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   ImageBackground,
   Text,
@@ -8,7 +8,7 @@ import {
   Linking,
 } from 'react-native';
 import styles from './styles';
-import { Images, Colors, Strings } from 'src/utils';
+import {Images, Colors, Strings} from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
 import GreenButton from 'src/components/GreenButton';
 import dayjs from 'dayjs';
@@ -16,7 +16,7 @@ import dayjs from 'dayjs';
 export default function Connect(props) {
   const [item, setItem] = useState(props?.route?.params?.item);
 
-  console.log("Itee, => ", item?.logo1)
+  console.log('Itee, => ', item?.logo1);
 
   const handleClick = url => {
     if (url) {
@@ -34,16 +34,18 @@ export default function Connect(props) {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        customLeftImage={{ tintColor: Colors.orange }}
+        customLeftImage={{tintColor: Colors.orange}}
         SimpleView
       />
+      {/* Main View */}
       <View style={styles.flexOnly}>
+        {/* after header card */}
         <View style={styles.sliderContainer}>
-          <View style={styles.itemListContiner}>
+          <View style={styles.itemListContainer}>
             <View style={styles.itemInnerContainer}>
               <View style={styles.itemContainer}>
                 <Image
-                  source={item?.logo1 ? { uri: item?.logo1 } : item?.img}
+                  source={item?.logo1 ? {uri: item?.logo1} : item?.img}
                   style={styles.imageIcon}
                   resizeMode={'contain'}
                 />
@@ -58,17 +60,18 @@ export default function Connect(props) {
                   {item?.line2 ? item?.line2 : item?.title}
                 </Text>
                 <View style={styles.flexRow}>
-                  <Text style={[styles.eventTxt]}>
+                  <Text style={[styles.dateEventTxt]}>
                     {' '}
                     {' ' + item?.startTime
                       ? dayjs(item?.startTime).format('ddd. MM/D')
                       : item?.day}{' '}
+                    {'  l  '}
                   </Text>
-                  <Text style={[styles.eventTxt]}>
+                  <Text style={[styles.dateEventTxt]}>
                     {' ' + item?.startTime
-                      ? dayjs(item?.startTime).format('h:mm A') +
-                      ' - ' +
-                      dayjs(item?.endTime).format('h:mm A')
+                      ? dayjs(item?.startTime).format('h:mma') +
+                        ' - ' +
+                        dayjs(item?.endTime).format('h:mma')
                       : item?.time}
                   </Text>
                 </View>
@@ -76,6 +79,7 @@ export default function Connect(props) {
             </View>
           </View>
         </View>
+        {/* Detail logo */}
         <View style={styles.imageContainer}>
           <Image
             source={Images.Logo}
@@ -85,20 +89,19 @@ export default function Connect(props) {
         </View>
         <Text style={styles.connectingText}>{Strings.connecting}</Text>
         <View style={styles.logoImageContainer}>
-          {item?.logo1 ?
+          {item?.logo1 ? (
             <Image
-              source={{ uri: item?.logo1 }}
-              resizeMode={'cover'}
+              source={{uri: item?.logo1}}
+              resizeMode={'contain'}
               style={styles.logoImageStyle}
             />
-            :
+          ) : (
             <Image
               source={Images.NBALogo}
               resizeMode={'contain'}
               style={styles.logoImageStyle}
             />
-          }
-
+          )}
         </View>
         <View style={styles.buttonContainer}>
           <GreenButton

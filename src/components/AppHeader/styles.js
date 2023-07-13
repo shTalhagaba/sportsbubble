@@ -4,15 +4,15 @@ import { ScaledSheet } from "react-native-size-matters";
 
 const styles = ScaledSheet.create({
     headerContainer: {
-        height: "70@ms0.3",
+        height: "80@ms0.3",
         flexDirection: "row",
         alignItems: "center",
         backgroundColor: Colors.transparent,
         marginTop: Platform.OS === 'ios' ? "25@ms0.3" : "1@ms0.3",
     },
     leftArrowIcon: {
-        width: "25@ms0.3",
-        height: "25@ms0.3",
+        width: "27@ms0.3",
+        height: "27@ms0.3",
         resizeMode: "cover",
     },
     rightIcon: {
@@ -26,11 +26,11 @@ const styles = ScaledSheet.create({
         alignItems: "center",
     },
     centerImage: {
-        height: "28@ms0.3",
-        width: "142@ms0.3",
+        height: "30@ms0.3",
+        width: "148@ms0.3",
     },
     iconContainer: {
-        width: "15%",
+        width: "25%",
         height: "100%",
         justifyContent: "center",
         alignItems: "center",

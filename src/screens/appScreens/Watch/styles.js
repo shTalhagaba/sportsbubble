@@ -8,12 +8,17 @@ export default ScaledSheet.create({
     backgroundColor: Colors.appColorBackground
   },
 
-  itemListContiner: {
+  itemListContainer: {
     paddingRight: "0@ms0.3",
     marginVertical: "1@ms0.3",
     paddingVertical: "5@ms0.3",
   },
-  listContiner: {
+  listContainer: {
+    paddingRight: "0@ms0.3",
+    marginVertical: "1@ms0.3",
+    paddingVertical: "5@ms0.3",
+  },
+  listBottomContainer: {
     paddingRight: "0@ms0.3",
     marginVertical: "1@ms0.3",
     paddingVertical: "5@ms0.3",
@@ -53,31 +58,46 @@ export default ScaledSheet.create({
   itemContainer: {
     height: "80@ms0.3",
     width: "80@ms0.3",
-    backgroundColor: Colors.mediumBlue,
     justifyContent: "center",
     alignItems: "center"
+  },
+  backImageContainer: {
+    marginRight: 16,
+    borderRadius: 16,
   },
   imageContainer: {
     backgroundColor: Colors.mediumBlue,
     justifyContent: "center",
     alignItems: "center",
+    margin:"0.3@ms0.3",
     borderRadius: 16,
-    marginRight: 16,
     paddingVertical: 20,
     paddingHorizontal: Platform.OS === "android" ? 15 : 18
+  },
+  bottomImageContainer: {
+    marginRight: 16,
+    borderRadius: 16,
   },
   image2Container: {
     backgroundColor: Colors.mediumBlue,
     justifyContent: "center",
     alignItems: "center",
+    margin:"2@ms0.3",
     borderRadius: 16,
-    marginRight: 16,
     paddingVertical: 18,
     paddingHorizontal: Platform.OS === "android" ? 15 : 18
   },
   imageIcon: {
-    height: "46@ms0.3",
-    width: "46@ms0.3",
+    height: "65@ms0.3",
+    width: "65@ms0.3",
+  },
+  imageRightsIcon: {
+    height: "47@ms0.3",
+    width: "47@ms0.3",
+  },
+  imageBottomIcon: {
+    height: "47@ms0.3",
+    width: "47@ms0.3",
   },
   userNameContainer: {
     paddingStart: "13@ms0.3",
@@ -95,14 +115,15 @@ export default ScaledSheet.create({
     backgroundColor: Colors.blueGrey,
   },
   listTitleTxt: {
-    fontSize: "14@ms0.3",
+    fontSize: "13@ms0.3",
     fontWeight: "500",
     lineHeight: "20@ms0.3",
     color: Colors.white,
     fontFamily: Fonts.Regular,
     textAlign:'center',
     marginTop: 8,
-    marginStart: -16
+    marginStart: -10,
+    width:'80%',
   },
   sliderActiveTimeTxt: {
     fontSize: "14@ms0.3",
@@ -125,10 +146,18 @@ export default ScaledSheet.create({
     lineHeight: "25@ms0.3",
     color: Colors.white,
     fontFamily: Fonts.Regular,
-    width:'98%',
+    width:'85%',
   },
   eventTxt: {
-    fontSize: "13@ms0.3",
+    fontSize: "14@ms0.3",
+    fontWeight: "400",
+    lineHeight: "20@ms0.3",
+    color: Colors.white,
+    fontFamily: Fonts.Regular,
+    width:'85%',
+  },
+  dateEventTxt: {
+    fontSize: "14@ms0.3",
     fontWeight: "400",
     lineHeight: "20@ms0.3",
     color: Colors.white,
@@ -141,11 +170,11 @@ export default ScaledSheet.create({
     color: Colors.lightGreen,
     fontFamily: Fonts.Regular,
     textTransform: "uppercase",
-    marginTop: 40,
+    marginTop: "40@ms0.3",
     textAlign: "center"
   },
   wayToWatch: {
-    fontSize: "20@ms0.3",
+    fontSize: "22@ms0.3",
     fontWeight: "800",
     lineHeight: "30@ms0.3",
     color: Colors.lightGreen,
@@ -154,6 +183,8 @@ export default ScaledSheet.create({
     textAlign: "center",
     color: 'white',
     marginTop: "12@ms0.3",
+    marginBottom: "12@ms0.3",
+    fontStyle: 'italic'
   },
   conectTxt: {
     fontSize: "18@ms0.3",
@@ -161,7 +192,7 @@ export default ScaledSheet.create({
     lineHeight: "24@ms0.3",
     color: Colors.white,
     fontFamily: Fonts.Regular,
-    marginTop: "16@ms0.3",
+    marginVertical: "16@ms0.3",
     textAlign: "center",
     maxWidth: "70%",
     alignSelf: "center",
@@ -182,6 +213,9 @@ export default ScaledSheet.create({
   sliderContainer: {
     flexDirection: 'row',
     backgroundColor: Colors.mediumBlue,
+    height: "110@ms0.3",
+    alignItems:'center',
+    paddingHorizontal:"15@ms0.3",
   },
   sliderInnerContainer: {
     flex: 1,
@@ -207,7 +241,7 @@ export default ScaledSheet.create({
     fontFamily: Fonts.Regular,
   },
   flatlistContainer: {
-    marginTop: "40@ms0.3",
+    marginTop: "10@ms0.3",
     marginHorizontal: "15@ms0.3",
   },
   menuBtn: {

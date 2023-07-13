@@ -8,9 +8,7 @@ export const GET_SORTED_EVENTS = gql`
       id
       startTime
       endTime
-      videoUrl
       logo1
-      logo2
       category {
         name
       }
