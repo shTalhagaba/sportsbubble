@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Connect from 'src/screens/appScreens/Connect';
+import Splash from 'src/screens/authScreens/Splash';
+
 
 const AppNavigator = createNativeStackNavigator();
 
@@ -10,7 +11,7 @@ const AppNavigation = () => {
             screenOptions={{
                 headerShown: false
             }} >
-            {/* <AppNavigator.Screen name="Connect" component={Connect} /> */}
+            <AppNavigator.Screen name="Splash" component={Splash} />
         </AppNavigator.Navigator>
     );
 }

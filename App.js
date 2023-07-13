@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import Navigation from 'src/navigation';
-import SplashScreen from 'react-native-splash-screen';
 import { NavigationContainer } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ApolloClient, InMemoryCache, createHttpLink, ApolloProvider } from '@apollo/client';
@@ -44,10 +43,10 @@ const App = () => {
   LogBox.ignoreAllLogs();
 
 
-  useEffect(() => {
-    console.log('URL TESTING => ', Config.BASE_URL);
-    SplashScreen.hide();
-  }, []);
+  // useEffect(() => {
+  //   console.log('URL TESTING => ', Config.BASE_URL);
+  //   SplashScreen.hide();
+  // }, []);
 
   return (
     <ApolloProvider client={client}>

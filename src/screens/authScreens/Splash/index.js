@@ -12,6 +12,7 @@ import { Images, Colors } from 'src/utils';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import DeviceInfo from 'react-native-device-info';
+import { setUser } from 'src/store/types';
 
 
 export default function Splash() {
@@ -22,9 +23,11 @@ export default function Splash() {
 
   useEffect(() => {
     setTimeout(() => {
-      navigation.replace('WelcomeScreen')
-    }, 1000);
-  }, []);
+      dispatch(setUser(true))
+      // navigation.replace('WelcomeScreen')
+    }, 2000);
+  },
+    []);
 
   return (
     <View style={styles.container}>
