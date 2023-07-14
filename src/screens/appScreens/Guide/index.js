@@ -126,7 +126,7 @@ export default function Guide() {
   const [filteredEventList, setFilteredEventList] = useState([]);
   const [startTime, setStartTime] = useState(dayjs(new Date()).toISOString());
   const [endTime, setEndTime] = useState(
-    dayjs(new Date()).add(1, 'day').toISOString(),
+    dayjs(new Date()).add(7, 'day').toISOString(),
   );
 
   // Fetch data from API using Apollo useQuery hook
@@ -138,21 +138,31 @@ export default function Guide() {
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
     onCompleted: data => {
-      if(data && data?.sortedEvents){
+      if (data && data?.sortedEvents) {
         const filteredEvents = data?.sortedEvents.filter(event => {
-          const { line1, line2, startTime, endTime, logo1, rightsHolders } = event;
+          const {line1, line2, startTime, endTime, logo1, rightsHolders} =
+            event;
           // Check if all required properties exist
-          if (!line1 || !line2 || !startTime || !endTime || !logo1 || !rightsHolders) {
+          if (
+            !line1 ||
+            !line2 ||
+            !startTime ||
+            !endTime ||
+            !logo1 ||
+            !rightsHolders
+          ) {
             return false;
           }
           // Check if at least one rightsholder has a logoUrl
-          const hasLogoUrl = rightsHolders.some(rightsholder => rightsholder.logoUrl);
+          const hasLogoUrl = rightsHolders.some(
+            rightsholder => rightsholder.logoUrl,
+          );
           if (!hasLogoUrl) {
             return false;
           }
-        
+
           return true;
-        }); 
+        });
         setEventList(filteredEvents);
       }
       setIsRefreshing(false);
@@ -165,7 +175,31 @@ export default function Guide() {
         data &&
         data?.sortedEvents.length > 0
       ) {
-        dispatch(setStoreEventList(data?.sortedEvents));
+        const filteredEvents = data?.sortedEvents.filter(event => {
+          const {line1, line2, startTime, endTime, logo1, rightsHolders} =
+            event;
+          // Check if all required properties exist
+          if (
+            !line1 ||
+            !line2 ||
+            !startTime ||
+            !endTime ||
+            !logo1 ||
+            !rightsHolders
+          ) {
+            return false;
+          }
+          // Check if at least one rightsholder has a logoUrl
+          const hasLogoUrl = rightsHolders.some(
+            rightsholder => rightsholder.logoUrl,
+          );
+          if (!hasLogoUrl) {
+            return false;
+          }
+
+          return true;
+        });
+        dispatch(setStoreEventList(filteredEvents));
         dispatch(setExpire(expireTime));
       }
     },
@@ -173,44 +207,30 @@ export default function Guide() {
       console.log('error : ', error);
     },
   });
-
-  const getCategoryList = () => {
-    const categorySet = new Set(eventList.map(item => item.category.name));
-    const categoryList = Array.from(categorySet);
-    console.log('categoryList ; ', categoryList);
-    let list = [
-      {
-        id: 1,
-        title: 'all',
-        value: 'all',
-        selected: true,
-      },
-      ...categoryList.map((element, index) => ({
-        id: index + 2,
-        title: element,
-        value: element,
-      })),
-    ];
-    // setCategoryData(list);
-    setCategoryFlag(false);
-  };
-
   const getTimeList = () => {
-    const currentHour = dayjs().hour(); // Get the current hour
-    const hoursList = [...timeArr];
+    const currentDate = dayjs(); // Get the current date and time
+    const daysList = [];
 
-    for (let i = 1; i < 6; i++) {
-      const hour = currentHour + i;
-      const hourDatetime = dayjs().hour(hour).toISOString();
-      const hourObject = {
-        id: i + 1,
-        title: dayjs().hour(hour).format('h a'),
-        selected: false,
-        datetime: hourDatetime,
-      };
-      hoursList.push(hourObject);
+    for (let i = 0; i < 7; i++) {
+      const currentDay = currentDate.add(i, 'day');
+      const hoursList = [...timeArr];
+
+      for (let j = 0; j < 24; j++) {
+        const hour = currentDay.hour(j);
+        const hourDatetime = hour.toISOString();
+        const hourObject = {
+          id: i * 24 + j + 1,
+          title: hour.format('h a'),
+          selected: false,
+          datetime: hourDatetime,
+        };
+        hoursList.push(hourObject);
+      }
+
+      daysList.push(hoursList);
     }
-    setTimeData(hoursList);
+
+    setTimeData(daysList.flat());
   };
 
   useEffect(() => {
@@ -226,10 +246,6 @@ export default function Guide() {
         );
       }
       setFilteredEventList(filteredEvents);
-      // static list required only
-      // if (categoryFlag) {
-      //   getCategoryList();
-      // }
     }
   }, [eventList]);
 
@@ -358,8 +374,8 @@ export default function Guide() {
             ) {
               navigation.navigate('withoutBottomtab', {
                 screen: 'Connect',
-                params: {item: item,eventFlag:true},
-              })
+                params: {item: item, eventFlag: true},
+              });
             } else {
               navigation.navigate('Watch', {item: item});
             }
@@ -498,7 +514,9 @@ export default function Guide() {
               <TouchableOpacity
                 onPress={() => handleSelectTime(item, index)}
                 style={[
-                  styles.timeContainer,
+                  item?.title === 'Live'
+                    ? styles.liveTimeContainer
+                    : styles.timeContainer,
                   {
                     backgroundColor: item?.selected
                       ? Colors?.mediumGreen

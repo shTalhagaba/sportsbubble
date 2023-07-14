@@ -43,10 +43,6 @@ const App = () => {
   LogBox.ignoreAllLogs();
 
 
-  // useEffect(() => {
-  //   console.log('URL TESTING => ', Config.BASE_URL);
-  //   SplashScreen.hide();
-  // }, []);
 
   return (
     <ApolloProvider client={client}>
