@@ -13,6 +13,7 @@ import { Provider } from 'react-redux';
 import rootReducer from 'src/store/Reducers/rootReducer';
 import mySaga from 'src/store/sagas';
 import { LogBox } from 'react-native';
+import Instabug from 'instabug-reactnative';
 
 const sagaMiddleware = createSagaMiddleware();
 const persistConfig = {
@@ -42,7 +43,15 @@ const App = () => {
   LogBox.ignoreLogs(['Warning: ...']);
   LogBox.ignoreAllLogs();
 
-
+  useEffect(()=>{
+    Instabug.isRunningLive(function (isLive) {
+      if (isLive) {
+        Instabug.start('02e02ab36f08bb8372ad6966cd83bf8a', [Instabug.invocationEvent.shake, Instabug.invocationEvent.screenshot]);
+      } else {
+        Instabug.start('02e02ab36f08bb8372ad6966cd83bf8a', [Instabug.invocationEvent.shake, Instabug.invocationEvent.screenshot]);
+      }
+    });
+  },[])
 
   return (
     <ApolloProvider client={client}>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   ImageBackground,
   StatusBar,
@@ -8,39 +8,33 @@ import {
   Text,
 } from 'react-native';
 import styles from './styles';
-import { Images, Colors } from 'src/utils';
-import { useNavigation } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
+import {Images, Colors} from 'src/utils';
+import {useNavigation} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
 import DeviceInfo from 'react-native-device-info';
-import { setUser } from 'src/store/types';
-
+import {setUser} from 'src/store/types';
 
 export default function Splash() {
-  const dispatch = useDispatch();
   const navigation = useNavigation();
   const height = Dimensions.get('window').height;
   const version = DeviceInfo.getVersion();
 
   useEffect(() => {
     setTimeout(() => {
-      dispatch(setUser(true))
-      // navigation.replace('WelcomeScreen')
-    }, 2000);
-  },
-    []);
+            navigation.replace('Root')
+    }, 500);
+  }, []);
 
   return (
     <View style={styles.container}>
       <ImageBackground
         source={Images.Background2}
-        style={{ height: '100%', width: '100%' }}
-        resizeMode="cover"
-      >
+        style={{height: '100%', width: '100%'}}
+        resizeMode="cover">
         <ImageBackground
           source={Images.SplashBackTop}
-          style={{ height: height / 2.5, }}
-          resizeMode="cover"
-        >
+          style={{height: height / 2.5}}
+          resizeMode="cover">
           <StatusBar
             backgroundColor={Colors.transparent}
             translucent
@@ -55,11 +49,10 @@ export default function Splash() {
             justifyContent: 'center',
             alignItems: 'center',
             marginTop: height / 4,
-          }}
-        >
+          }}>
           <Image
             source={Images.LogoText}
-            style={{ height: 230, width: 230, alignSelf: 'center' }}
+            style={{height: 230, width: 230, alignSelf: 'center'}}
             resizeMode="contain"
           />
         </View>
@@ -81,5 +74,4 @@ export default function Splash() {
       </ImageBackground>
     </View>
   );
-
 }

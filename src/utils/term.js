@@ -215,7 +215,7 @@ Nothing contained in this Agreement limits SportsBubble’s right to comply with
 export const privacyPolicy = `
 <!doctype html>
 <html lang="en-US">
-<span style="color: #999999; font-size: 16px; font-family: Arial, Helvetica, sans-serif;">
+<span style="color: #ffffff; font-size: 16px; font-family: Arial, Helvetica, sans-serif;">
 <p><strong>PRIVACY POLICY
 </strong></p><p>
   Effective 2/3/2022</p>
@@ -509,7 +509,7 @@ We may update this Privacy Notice from time to time. The most recent version of 
 export const privacyPolicyCA = `
     <!doctype html>
     <html lang="en-US">
-    <span style="color: #999999; font-size: 16px; font-family: Arial, Helvetica, sans-serif;">
+    <span style="color: #ffffff; font-size: 16px; font-family: Arial, Helvetica, sans-serif;">
     <p><strong>CALIFORNIA CONSUMER PRIVACY ACT NOTICE</strong></p><p>
     This California Consumer Privacy Act Notice provides information for California residents in connection with the California Consumer Privacy Act ("CCPA").  Under the CCPA, and for purposes of this Section, "Personal Information" generally means information that identifies, relates to, or describes a particular California resident and includes the categories listed below.  This Section provides details about the categories of Personal Information of California residents that we may collect, disclose, or "sell,” as well as the rights California residents have under California law, and how to exercise those rights.   </p><p>
       <strong>Categories of Personal Information Collected, Disclosed and/or Sold:</strong></p><p>

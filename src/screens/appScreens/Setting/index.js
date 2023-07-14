@@ -1,27 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { Image, ImageBackground, ScrollView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  Image,
+  ImageBackground,
+  ScrollView,
+  StatusBar,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import styles from './styles';
-import { Images, Colors } from 'src/utils';
-import { useNavigation } from '@react-navigation/native';
+import {Images, Colors} from 'src/utils';
+import {useNavigation} from '@react-navigation/native';
 import AppHeader from 'src/components/AppHeader';
 import ButtonWithIcon from 'src/components/ButtonWithIcon';
 import DeviceInfo from 'react-native-device-info';
 import Strings from 'src/utils/strings';
-import CustomModalView from 'src/components/Modal/CustomModal'
+import CustomModalView from 'src/components/Modal/CustomModal';
 import Instabug from 'instabug-reactnative';
 
 export default function Setting() {
   const navigation = useNavigation();
   const version = DeviceInfo.getVersion();
-  const [logoutModal, setLogoutModal] = useState(false)
-
-  useEffect(()=>{
-    Instabug.init({
-      token: '02e02ab36f08bb8372ad6966cd83bf8a',
-      invocationEvents: [Instabug.invocationEvent.shake],
-    });
-    Instabug.start('02e02ab36f08bb8372ad6966cd83bf8a', [Instabug.invocationEvent.shake, Instabug.invocationEvent.screenshot]);
-  },[])
+  const [logoutModal, setLogoutModal] = useState(false);
 
   return (
     <ImageBackground
@@ -33,7 +33,7 @@ export default function Setting() {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        customLeftImage={{ tintColor: Colors.orange }}
+        customLeftImage={{tintColor: Colors.orange}}
         SimpleView
       />
       {/* Main tabs  */}
@@ -45,8 +45,14 @@ export default function Setting() {
           <ButtonWithIcon title={Strings.changePassword} onpress={() => navigation.navigate('withoutBottomtab', { screen: "UpdatePassword" })} />
           <ButtonWithIcon title={Strings.sportsStreamingApps} onpress={() => navigation.navigate('withoutBottomtab', { screen: "SportStreaming" })} />
           <ButtonWithIcon title={Strings.aboutWatchSports} /> */}
-          <ButtonWithIcon title={Strings.legal} onpress={() => navigation.navigate('Legal')} />
-          <ButtonWithIcon title={Strings.reportProblem} />
+          <ButtonWithIcon
+            title={Strings.legal}
+            onpress={() => navigation.navigate('Legal')}
+          />
+          <ButtonWithIcon
+            title={Strings.reportProblem}
+            onpress={() => Instabug.show()}
+          />
           {/* <TouchableOpacity onPress={() => setLogoutModal(!logoutModal)}
             style={{ flexDirection: "row", marginTop: 24, alignItems: "center" }}>
             <Image source={Images.LeftArrowIcon} style={styles.logoutIcon} />
@@ -67,12 +73,20 @@ export default function Setting() {
         rowStyle={true}
         blackBtnPress={() => setLogoutModal(!logoutModal)}
         ornageBtnPress={() => setLogoutModal(!logoutModal)}
-        Contianer={{ backgroundColor: Colors.black }}
+        Contianer={{backgroundColor: Colors.black}}
       />
       {/* Powered by sports bubble */}
       <View style={styles.sbContainer}>
-        <Image source={Images.Sports} style={styles.leftArrowIcon} resizeMode={"contain"} />
-        <Image source={Images.PoweredSB} style={styles.powerImage} resizeMode={"contain"} />
+        <Image
+          source={Images.Sports}
+          style={styles.leftArrowIcon}
+          resizeMode={'contain'}
+        />
+        <Image
+          source={Images.PoweredSB}
+          style={styles.powerImage}
+          resizeMode={'contain'}
+        />
         <Text style={styles.versionTxt}>v {version}</Text>
       </View>
     </ImageBackground>

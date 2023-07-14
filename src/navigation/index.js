@@ -5,6 +5,7 @@ import SplashNavigator from './splashNavigation'
 import MyTabs from './bottomTab'
 import withoutBottomtab from './withoutBottomtab'
 import { useSelector } from "react-redux";
+import Splash from "src/screens/authScreens/Splash";
 
 const StackNavigator = createNativeStackNavigator()
 
@@ -12,6 +13,7 @@ const StackNavigator = createNativeStackNavigator()
 const AppStackNavigator = () => {
   return (
     <StackNavigator.Navigator>
+      <StackNavigator.Screen name="Splash" component={Splash} options={{ headerShown: false }} />
       <StackNavigator.Screen name="Root" options={{ headerShown: false }}>
         {props => <MyTabs {...props} />}
       </StackNavigator.Screen>
@@ -21,10 +23,10 @@ const AppStackNavigator = () => {
 }
 
 const MainNavigator = () => {
-  const data = useSelector((state) => state.user);
-  // const data = !null
+  // const data = useSelector((state) => state.user);
+  const data = !null
   // if (data?.user) {
-  if (data?.user) {
+  if (data) {
     return <AppStackNavigator />
   }
   else {
