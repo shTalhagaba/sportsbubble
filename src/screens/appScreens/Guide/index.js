@@ -207,14 +207,15 @@ export default function Guide() {
       console.log('error : ', error);
     },
   });
+
   const getTimeList = () => {
     const currentDate = dayjs(); // Get the current date and time
     const daysList = [];
-
+    const hoursList = [...timeArr];
+  
     for (let i = 0; i < 7; i++) {
       const currentDay = currentDate.add(i, 'day');
-      const hoursList = [...timeArr];
-
+  
       for (let j = 0; j < 24; j++) {
         const hour = currentDay.hour(j);
         const hourDatetime = hour.toISOString();
@@ -226,11 +227,14 @@ export default function Guide() {
         };
         hoursList.push(hourObject);
       }
-
+  
       daysList.push(hoursList);
     }
-
-    setTimeData(daysList.flat());
+  
+    const timeData = daysList.flat();
+    setTimeData(timeData);
+  
+    return timeData;
   };
 
   useEffect(() => {
