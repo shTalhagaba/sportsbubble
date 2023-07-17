@@ -10,9 +10,7 @@ import {
 import styles from './styles';
 import {Images, Colors} from 'src/utils';
 import {useNavigation} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
 import DeviceInfo from 'react-native-device-info';
-import {setUser} from 'src/store/types';
 
 export default function Splash() {
   const navigation = useNavigation();

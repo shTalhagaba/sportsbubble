@@ -42,6 +42,11 @@ const SettingNavigation = () => {
   );
 };
 
+//listener addeed for Dashboard
+const tabBarGuideListeners = ({navigation, route}) => ({
+  tabPress: () => navigation.navigate("Guide"),
+});
+
 const BottomTab = () => {
   return (
     <Tab.Navigator
@@ -62,6 +67,7 @@ const BottomTab = () => {
       <Tab.Screen
         name="Guide"
         component={GuideNavigation}
+        listeners={tabBarGuideListeners}
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={styles.bottomContainer}>

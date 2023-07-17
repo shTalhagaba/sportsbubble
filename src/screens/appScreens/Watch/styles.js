@@ -19,7 +19,7 @@ export default ScaledSheet.create({
     paddingVertical: "5@ms0.3",
   },
   listBottomContainer: {
-    paddingRight: "0@ms0.3",
+    paddingRight: "10@ms0.3",
     marginVertical: "1@ms0.3",
     paddingVertical: "5@ms0.3",
   },
@@ -66,10 +66,11 @@ export default ScaledSheet.create({
     borderRadius: "22@ms0.3",
     borderWidth: "2@ms0.3",
     overflow: "hidden",
-
+    borderColor: Colors.mediumBlue,
+    borderWidth: "2@ms0.3",
   },
   imageContainer: {
-    backgroundColor: Colors.mediumBlue,
+    // backgroundColor: Colors.mediumBlue,
     justifyContent: "center",
     alignItems: "center",
     margin: "0.3@ms0.3",
@@ -127,7 +128,19 @@ export default ScaledSheet.create({
     textAlign: 'center',
     marginTop: 8,
     marginStart: -10,
-    width: '80%',
+    width: '60%',
+  },
+  listTitleTxt2: {
+    fontSize: "13@ms0.3",
+    fontWeight: "500",
+    lineHeight: "20@ms0.3",
+    color: Colors.white,
+    fontFamily: Fonts.Regular,
+    textAlign: 'center',
+    alignSelf:'center',
+    marginTop: 8,
+    marginStart: -10,
+    width: '60%',
   },
   sliderActiveTimeTxt: {
     fontSize: "14@ms0.3",
@@ -178,15 +191,15 @@ export default ScaledSheet.create({
     textAlign: "center"
   },
   wayToWatch: {
-    fontSize: "22@ms0.3",
-    fontWeight: "800",
+    fontSize: "24@ms0.3",
+    fontWeight: "900",
     lineHeight: "30@ms0.3",
     color: Colors.lightGreen,
     fontFamily: Fonts.Regular,
-    textTransform: "uppercase",
+    // textTransform: "uppercase",
     textAlign: "center",
     color: 'white',
-    marginTop: "12@ms0.3",
+    marginTop: "8@ms0.3",
     marginBottom: "12@ms0.3",
     fontStyle: 'italic'
   },
@@ -250,7 +263,12 @@ export default ScaledSheet.create({
   },
   menuBtn: {
     width: "32@ms0.3",
-    height: "12@ms0.3"
+    height: "12@ms0.3",
+    marginTop: "20@ms0.3",
+  },
+  menuBtn2: {
+    width: "32@ms0.3",
+    height: "12@ms0.3",
   },
   largeMenuImage: {
     width: '100%',

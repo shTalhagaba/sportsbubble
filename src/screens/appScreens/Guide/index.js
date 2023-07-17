@@ -74,16 +74,6 @@ const list = [
   },
 ];
 
-// Sample data for the time slider
-const timeArr = [
-  {
-    id: 1,
-    title: 'Live',
-    selected: true,
-    datetime: dayjs(new Date()).toISOString(),
-  },
-];
-
 // Sample data for the category slider
 const categoryArr = [
   {
@@ -115,17 +105,22 @@ export default function Guide() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const reduxData = useSelector(state => state.user);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [categoryFlag, setCategoryFlag] = useState(true);
+  const [isLive, setIsLive] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [liveMatchModal, setLiveMatchModal] = useState(false);
-  const [timeData, setTimeData] = useState(timeArr);
+  const [timeData, setTimeData] = useState([]);
   const [categoryData, setCategoryData] = useState(categoryArr);
   const [selectedTimeIndex, setSelectedTimeIndex] = useState(0);
   const [eventList, setEventList] = useState();
   const [filteredEventList, setFilteredEventList] = useState([]);
   const [startTime, setStartTime] = useState(dayjs(new Date()).toISOString());
-  const [endTime, setEndTime] = useState(
+  const [startSearchTime, setStartSearchTime] = useState(
+    dayjs(new Date()).toISOString(),
+  );
+  const [endSearchTime, setEndSearchTime] = useState(
     dayjs(new Date()).add(7, 'day').toISOString(),
   );
 
@@ -133,7 +128,7 @@ export default function Guide() {
   const {loading, refetch, error} = useQuery(GET_SORTED_EVENTS, {
     variables: {
       startTime: startTime,
-      endTime: endTime,
+      endTime: dayjs(startTime).add(1, 'hours').toISOString(),
     },
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
@@ -208,32 +203,99 @@ export default function Guide() {
     },
   });
 
+  useQuery(GET_SORTED_EVENTS, {
+    variables: {
+      startTime: startSearchTime,
+      endTime: endSearchTime,
+    },
+    fetchPolicy: 'network-only',
+    notifyOnNetworkStatusChange: true,
+    onCompleted: data => {
+      const currentTime = Date.now();
+      if (
+        ((reduxData && reduxData?.expire === currentTime) ||
+          (reduxData &&
+            reduxData?.eventList &&
+            reduxData?.eventList.length <= 0)) &&
+        data &&
+        data?.sortedEvents.length > 0
+      ) {
+        const filteredEvents = data?.sortedEvents.filter(event => {
+          const {line1, line2, startTime, endTime, logo1, rightsHolders} =
+            event;
+          // Check if all required properties exist
+          if (
+            !line1 ||
+            !line2 ||
+            !startTime ||
+            !endTime ||
+            !logo1 ||
+            !rightsHolders
+          ) {
+            return false;
+          }
+          // Check if at least one rightsholder has a logoUrl
+          const hasLogoUrl = rightsHolders.some(
+            rightsholder => rightsholder.logoUrl,
+          );
+          if (!hasLogoUrl) {
+            return false;
+          }
+
+          return true;
+        });
+        dispatch(setStoreEventList(filteredEvents));
+        dispatch(setExpire(expireTime));
+      }
+    },
+    onError: error => {
+      console.log('error : ', error);
+    },
+  });
+
   const getTimeList = () => {
     const currentDate = dayjs(); // Get the current date and time
     const daysList = [];
-    const hoursList = [...timeArr];
-  
+
+    const currentHour = currentDate.hour(); // Get the current hour
+    const currentDay = currentDate.startOf('day'); // Start from the beginning of the current day
+    const hoursList = [];
+
     for (let i = 0; i < 7; i++) {
-      const currentDay = currentDate.add(i, 'day');
-  
-      for (let j = 0; j < 24; j++) {
-        const hour = currentDay.hour(j);
-        const hourDatetime = hour.toISOString();
-        const hourObject = {
-          id: i * 24 + j + 1,
-          title: hour.format('h a'),
-          selected: false,
-          datetime: hourDatetime,
-        };
-        hoursList.push(hourObject);
+      const day = currentDay.add(i, 'day');
+
+      if (i === 0) {
+        for (let j = currentHour + 1; j < 24; j++) {
+          const hour = day.hour(j);
+          const hourDatetime = hour.toISOString();
+          const hourObject = {
+            id: i * 24 + j + 1,
+            title: hour.format('h a'),
+            selected: false,
+            datetime: hourDatetime,
+          };
+          hoursList.push(hourObject);
+        }
+      } else {
+        for (let j = 0; j < 24; j++) {
+          const hour = day.hour(j);
+          const hourDatetime = hour.toISOString();
+          const hourObject = {
+            id: i * 24 + j + 1,
+            title: hour.format('h a'),
+            selected: false,
+            datetime: hourDatetime,
+          };
+          hoursList.push(hourObject);
+        }
       }
-  
+
       daysList.push(hoursList);
     }
-  
+
     const timeData = daysList.flat();
     setTimeData(timeData);
-  
+
     return timeData;
   };
 
@@ -315,7 +377,7 @@ export default function Guide() {
     setFilteredEventList(filteredEvents);
   };
 
-  const handleSelectTime = (item, index) => {
+  const handleSelectTime = index => {
     const selectedTime = timeData[index].datetime;
     if (index === 0) {
       setStartTime(dayjs(new Date()).toISOString());
@@ -331,36 +393,59 @@ export default function Guide() {
     setSelectedTimeIndex(index);
   };
 
-  const liveTimeProgress = (start, end) => {
-    const currentTime = dayjs();
-    const startTime = dayjs(start);
+  const endTimeWidth = end => {
+    const startTime = dayjs(timeData[currentIndex].datetime);
     const endTime = dayjs(end);
-    const isLive =
-      currentTime.isAfter(startTime) && currentTime.isBefore(endTime);
     const timeDifference = endTime.diff(startTime); // Calculate the total time difference in milliseconds
-    const timeProgress = Math.max(currentTime.diff(startTime), 0); // Calculate the current time progress in milliseconds, ensuring a minimum value of 0
-    const progressPercentage = Math.round(
-      (timeProgress / timeDifference) * 100,
-    ); // Calculate the progress percentage
-
-    return {
-      isLive: isLive,
-      progressPercentage: isNaN(progressPercentage) ? 0 : progressPercentage, // Ensure a valid progress percentage value
-    };
+    const minutesDiffference = Math.round(timeDifference / (1000 * 60));
+    if (minutesDiffference <= 0) {
+      let w =
+        minutesDiffference < 0 ? 60 + minutesDiffference : minutesDiffference;
+      return w === 0 ? '26%' : `${w / 2 - 4}%`;
+    } else {
+      let wid = minutesDiffference / 2 + 22;
+      return `${wid}%`;
+    }
   };
 
-  const waitTimeProgress = (start, end) => {
+  const startTimeWidth = start => {
     const currentTime = dayjs();
+    const matchTime = dayjs(timeData[currentIndex].datetime);
     const startTime = dayjs(start);
-    const endTime = dayjs(end);
-    const isWaiting = currentTime.isBefore(startTime); // Check if current time is before the start time
-    const timeDifference = endTime.diff(startTime); // Calculate the total time difference in milliseconds
-    const timeRemaining = endTime.diff(currentTime); // Calculate the remaining time in milliseconds
-    const waitPercentage = Math.round((timeRemaining / timeDifference) * 100); // Calculate the wait percentage
-    return {
-      isWaiting: isWaiting,
-      waitPercentage: isNaN(waitPercentage) ? 0 : waitPercentage, // Ensure a valid progress percentage value
-    };
+    const timeDifference = startTime.diff(matchTime); // Calculate the total time difference in milliseconds
+    const minutesDifference = Math.round(timeDifference / (1000 * 60));
+    if (isLive && minutesDifference<=0) {
+      let w = minutesDifference * - 1
+      if(w === 0){
+        return `26%`
+      }else if(w<60){
+        return `${w/2}%`
+      }else{
+      return 0; // Return 0 for the live match time
+      }
+    } else if (minutesDifference>0) {
+      let wid = minutesDifference / 2 + 22;
+      return `${wid}%`;
+    } else {
+      return 0; // Return 0 for any other cases
+    }
+  };
+
+  const handleNext = () => {
+    if (isLive) {
+      handleSelectTime(currentIndex);
+      setIsLive(false);
+    } else {
+      handleSelectTime(currentIndex + 1);
+      setCurrentIndex(prevIndex => prevIndex + 1);
+      setIsLive(false);
+    }
+  };
+
+  const handleLive = () => {
+    handleSelectTime(0);
+    setCurrentIndex(0);
+    setIsLive(true);
   };
 
   const ItemComponent = React.memo(({item}) => {
@@ -378,7 +463,11 @@ export default function Guide() {
             ) {
               navigation.navigate('withoutBottomtab', {
                 screen: 'Connect',
-                params: {item: item, eventFlag: true},
+                params: {
+                  item: item,
+                  holderItem: item?.rightsHoldersConnection,
+                  eventFlag: true,
+                },
               });
             } else {
               navigation.navigate('Watch', {item: item});
@@ -393,38 +482,31 @@ export default function Guide() {
               />
             </View>
             <View
-              style={
-                liveTimeProgress(item?.startTime, item?.endTime)?.isLive
-                  ? {
-                      width: item?.startTime
-                        ? liveTimeProgress(item?.startTime, item?.endTime)
-                            ?.progressPercentage || 0
-                        : 0,
-                      backgroundColor: Colors.mediumGreen,
-                    }
-                  : {
-                      width: item?.startTime
-                        ? waitTimeProgress(item?.startTime, item?.endTime)
-                            ?.waitPercentage || 0
-                        : 0,
-                      backgroundColor: Colors.darkBlue,
-                    }
-              }></View>
+              style={{
+                width: item?.startTime ? startTimeWidth(item?.startTime) : 0,
+                backgroundColor: Colors.darkBlue,
+              }}></View>
+            <View
+              style={{
+                width: endTimeWidth(item?.endTime),
+                backgroundColor: Colors.mediumGreen,
+              }}></View>
             <View
               style={
-                liveTimeProgress(item?.startTime, item?.endTime)?.isLive
-                  ? {
+                // startTimeWidth(item?.startTime)
+                //   ? {
+                //       flex: 1,
+                //       backgroundColor: Colors.mediumBlue,
+                //     }
+                //   :
+                   {
                       flex: 1,
                       backgroundColor: Colors.darkBlue,
-                    }
-                  : {
-                      flex: 1,
-                      backgroundColor: Colors.mediumBlue,
                     }
               }></View>
             <View style={styles.userNameContainer}>
               <Text style={[styles.eventTxt, {marginTop: 5}]} numberOfLines={1}>
-                {item?.line1 ? item?.line1 : item?.companyName}{' '}
+                {item?.line1 ? item?.line1 : item?.companyName}
               </Text>
               <Text style={styles.titleTxt} numberOfLines={1}>
                 {item?.line2 ? item?.line2 : item?.title}
@@ -458,7 +540,7 @@ export default function Guide() {
       source={Images.Background2}
       resizeMode="cover"
       style={styles.container}>
-      <StatusBar backgroundColor={Colors.mediumBlue} />
+      <StatusBar backgroundColor={Colors.mediumBlue} barStyle="light-content" />
       {/* Header with Logo only  */}
       <AppHeader centerImage={Images.Logo} />
       {/* Slider all pro  */}
@@ -477,6 +559,7 @@ export default function Guide() {
                   styles.sliderInnerMainContainer,
                   {borderWidth: item?.selected ? 2 : 0},
                 ]}>
+                {item?.selected && <View style={styles.rectangle2} />}
                 <ImageBackground
                   source={
                     item?.selected
@@ -509,37 +592,56 @@ export default function Guide() {
       </View>
       {/* time slider */}
       <View style={styles.timeSliderContainer}>
+        <TouchableOpacity
+          onPress={() => handleLive()}
+          style={[
+            styles.liveTimeContainer,
+            {
+              backgroundColor: isLive ? Colors?.mediumGreen : Colors.mediumBlue,
+            },
+          ]}>
+          <Text
+            style={
+              isLive ? styles.sliderActiveTimeTxt : styles.sliderInactiveTimeTxt
+            }>
+            {'Live'}
+          </Text>
+        </TouchableOpacity>
         <View style={styles.timeSliderInnerContainer}>
           <FlatList
             horizontal
             data={timeData}
             showsHorizontalScrollIndicator={false}
-            renderItem={({item, index}) => (
-              <TouchableOpacity
-                onPress={() => handleSelectTime(item, index)}
-                style={[
-                  item?.title === 'Live'
-                    ? styles.liveTimeContainer
-                    : styles.timeContainer,
-                  {
-                    backgroundColor: item?.selected
-                      ? Colors?.mediumGreen
-                      : Colors.mediumBlue,
-                  },
-                ]}>
-                <Text
-                  style={
-                    item?.selected
-                      ? styles.sliderActiveTimeTxt
-                      : styles.sliderInactiveTimeTxt
-                  }>
-                  {item?.title}
-                </Text>
-              </TouchableOpacity>
-            )}
+            scrollEnabled={false}
+            contentContainerStyle={[styles.timeSliderInnerContainer]}
+            renderItem={({item, index}) => {
+              const adjustedIndex = index + currentIndex; // Calculate the adjusted index based on the current index
+              return (
+                <View
+                  style={{
+                    width: '60%',
+                    flexGrow: 1,
+                  }}>
+                  <TouchableOpacity
+                    // onPress={() => handleSelectTime(item, index)}
+                    style={[
+                      styles.timeContainer,
+                      {
+                        backgroundColor: Colors.mediumBlue,
+                      },
+                    ]}>
+                    <Text style={styles.sliderInactiveTimeTxt}>
+                      {timeData[adjustedIndex]?.title}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              );
+            }}
           />
         </View>
-        <TouchableOpacity style={styles.nextContainer}>
+        <TouchableOpacity
+          onPress={() => handleNext()}
+          style={styles.nextContainer}>
           <Image
             source={Images.Arrow}
             style={styles.rightIcon}

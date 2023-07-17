@@ -15,9 +15,7 @@ import dayjs from 'dayjs';
 
 export default function Connect(props) {
   const [item, setItem] = useState(props?.route?.params?.item);
-
-  console.log('Itee, => ', item?.logo1);
-
+  const {holderItem,eventFlag} = props?.route?.params
   const handleClick = url => {
     if (url) {
       Linking.openURL(url);
@@ -91,7 +89,7 @@ export default function Connect(props) {
         <View style={styles.logoImageContainer}>
           {item?.logo1 ? (
             <Image
-              source={{uri: item?.logo1}}
+              source={{uri: eventFlag && holderItem?.edges?.[0]?.node?.logoUrl ? holderItem?.edges?.[0]?.node?.logoUrl : holderItem?.logoUrl || item?.logo1}}
               resizeMode={'contain'}
               style={styles.logoImageStyle}
             />

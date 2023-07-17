@@ -139,7 +139,24 @@ export default function Search() {
           renderItem={({item}) => (
             <TouchableOpacity
               style={styles.listContiner}
-              onPress={() => navigation.navigate('Watch', {item: item})}>
+              onPress={() => {
+                if (
+                  item &&
+                  item?.rightsHoldersConnection &&
+                  item?.rightsHoldersConnection?.totalCount === 1
+                ) {
+                  navigation.navigate('withoutBottomtab', {
+                    screen: 'Connect',
+                    params: {
+                      item: item,
+                      holderItem: item?.rightsHoldersConnection,
+                      eventFlag: true,
+                    },
+                  });
+                } else {
+                  navigation.navigate('Watch', {item: item,searchFlag:true});
+                }
+              }}>
               <View style={styles.innerContainer}>
                 <View style={styles.imageContainer}>
                   <Image
