@@ -12,11 +12,24 @@ import Legal from 'src/screens/appScreens/Legal';
 import MySports from 'src/screens/appScreens/MySports';
 import { moderateScale, ScaledSheet } from 'react-native-size-matters';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {
+  useNavigation,
+  useIsFocused,
+  useFocusEffect,
+  StackActions,
+} from "@react-navigation/native";
 
 const Tab = createBottomTabNavigator();
 
 const SettingNavigator = createNativeStackNavigator();
 const GuideNavigator = createNativeStackNavigator();
+
+// const handleSearchStack = ({ navigation }) => ({
+//   tabPress: () => {
+//     navigation.navigate('Search', { searchPressFlag: Math.random() })
+//     navigation.dispatch(StackActions.popToTop())
+//   }
+// });
 
 const GuideNavigation = () => {
   return (
@@ -43,7 +56,7 @@ const SettingNavigation = () => {
 };
 
 //listener addeed for Dashboard
-const tabBarGuideListeners = ({navigation, route}) => ({
+const tabBarGuideListeners = ({ navigation, route }) => ({
   tabPress: () => navigation.navigate("Guide"),
 });
 
@@ -108,6 +121,7 @@ const BottomTab = () => {
       <Tab.Screen
         name="Search"
         component={Search}
+        // listeners={handleSearchStack}
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={styles.bottomContainer}>

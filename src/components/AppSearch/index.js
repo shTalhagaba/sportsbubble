@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {View, TextInput, Image, TouchableOpacity} from 'react-native';
+import React, { useState } from 'react';
+import { View, TextInput, Image, TouchableOpacity } from 'react-native';
 import styles from './styles';
 
 const AppSearch = props => {
@@ -42,9 +42,11 @@ const AppSearch = props => {
         returnKeyType={props.returnKeyType}
         onSubmitEditing={props.onSubmitEditing}
         blurOnSubmit={props.blurOnSubmit}
+        // ref={props.ref}
         ref={props.refInner}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        autoFocus={true}
       />
       {props.closeImage ? (
         <TouchableOpacity onPress={props.onPressCloseImage}>
