@@ -11,17 +11,69 @@ import styles from './styles';
 import {Images, Colors} from 'src/utils';
 import {useNavigation} from '@react-navigation/native';
 import DeviceInfo from 'react-native-device-info';
+import { useQuery } from '@apollo/client';
+import { GET_SORTED_EVENTS } from 'src/screens/appScreens/Guide/queries';
+import dayjs from 'dayjs';
+import { setSplashEventList } from 'src/store/types';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function Splash() {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const reduxData = useSelector(state => state.user);
+  const [startTime, setStartTime] = useState(dayjs(new Date()).toISOString());
   const height = Dimensions.get('window').height;
   const version = DeviceInfo.getVersion();
 
+  const {loading, refetch, error} = useQuery(GET_SORTED_EVENTS, {
+    variables: {
+      startTime: startTime,
+      endTime: dayjs(startTime).add(4, 'hours').toISOString(),
+    },
+    fetchPolicy: 'network-only',
+    notifyOnNetworkStatusChange: true,
+    onCompleted: data => {
+      if (data && data?.sortedEvents) {
+        const filteredEvents = data?.sortedEvents.filter(event => {
+          const {line1, line2, startTime, endTime, logo1, rightsHolders} =
+            event;
+          // Check if all required properties exist
+          if (
+            !line1 ||
+            !line2 ||
+            !startTime ||
+            !endTime ||
+            !logo1 ||
+            !rightsHolders
+          ) {
+            return false;
+          }
+          // Check if at least one rightsholder has a logoUrl
+          const hasLogoUrl = rightsHolders.some(
+            rightsholder => rightsholder.logoUrl,
+          );
+          if (!hasLogoUrl) {
+            return false;
+          }
+
+          return true;
+        });
+        dispatch(setSplashEventList(filteredEvents));
+      }
+    },
+    onError: error => {
+      console.log('error : ', error);
+    },
+  });
+
   useEffect(() => {
+    console.log('reduxData?.splashEventList) : ',reduxData?.splashEventList)
+    if(!loading && reduxData?.splashEventList){
     setTimeout(() => {
-            navigation.replace('Root')
+    navigation.replace('Root')
     }, 500);
-  }, []);
+  }
+  }, [loading,reduxData?.splashEventList]);
 
   return (
     <View style={styles.container}>

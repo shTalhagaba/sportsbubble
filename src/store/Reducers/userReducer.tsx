@@ -8,11 +8,25 @@ const initialState = {
   id: '',
   user: false,
   eventList: [],
+  splashEventList: [],
   expire: '',
 };
 
 const user = (state = initialState, action: any) => {
   switch (action.type) {
+               // splash event list
+               case 'SET_SPLASH_EVENT_LIST':
+                console.log('SET_SPLASH_EVENT_LIST : ',action.payload)
+                try {
+                  return {
+                    ...state,
+                    splashEventList: action.payload,
+                  };
+                } catch (e) {
+                  alert(e);
+                  return state;
+                }
+                break;
            // event list
            case 'SET_EVENT_LIST':
             console.log('SET_EVENT_LIST : ',action.payload)

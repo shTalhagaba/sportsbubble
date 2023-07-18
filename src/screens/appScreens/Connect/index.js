@@ -15,7 +15,7 @@ import dayjs from 'dayjs';
 
 export default function Connect(props) {
   const [item, setItem] = useState(props?.route?.params?.item);
-  const {holderItem,eventFlag} = props?.route?.params
+  const {holderItem, eventFlag} = props?.route?.params;
   const handleClick = url => {
     if (url) {
       Linking.openURL(url);
@@ -49,24 +49,21 @@ export default function Connect(props) {
                 />
               </View>
               <View style={styles.userNameContainer}>
-                <Text style={styles.eventTxt}>
-                  {' '}
+                <Text style={styles.eventTxt} numberOfLines={2}>
                   {item?.line1 ? item?.line1 : item?.companyName}
                 </Text>
                 <Text style={styles.titleTxt}>
-                  {' '}
                   {item?.line2 ? item?.line2 : item?.title}
                 </Text>
                 <View style={styles.flexRow}>
                   <Text style={[styles.dateEventTxt]}>
-                    {' '}
                     {' ' + item?.startTime
                       ? dayjs(item?.startTime).format('ddd. MM/D')
                       : item?.day}{' '}
                     {'  l  '}
                   </Text>
                   <Text style={[styles.dateEventTxt]}>
-                    {' ' + item?.startTime
+                    {item?.startTime
                       ? dayjs(item?.startTime).format('h:mma') +
                         ' - ' +
                         dayjs(item?.endTime).format('h:mma')
@@ -89,7 +86,12 @@ export default function Connect(props) {
         <View style={styles.logoImageContainer}>
           {item?.logo1 ? (
             <Image
-              source={{uri: eventFlag && holderItem?.edges?.[0]?.node?.logoUrl ? holderItem?.edges?.[0]?.node?.logoUrl : holderItem?.logoUrl || item?.logo1}}
+              source={{
+                uri:
+                  eventFlag && holderItem?.edges?.[0]?.node?.logoUrl
+                    ? holderItem?.edges?.[0]?.node?.logoUrl
+                    : holderItem?.logoUrl || item?.logo1,
+              }}
               resizeMode={'contain'}
               style={styles.logoImageStyle}
             />

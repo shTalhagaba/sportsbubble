@@ -182,9 +182,10 @@ export default ScaledSheet.create({
   },
   userNameContainer: {
     paddingStart: "13@ms0.3",
-    height: "80@ms0.3",
+    height: "90@ms0.3",
     justifyContent: "center",
     position: 'absolute',
     left: "80@ms0.3",
+    alignSelf:'center'
   },
 });

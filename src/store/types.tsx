@@ -19,6 +19,13 @@ export const setStoreEventList = (args: any) => {
   };
 };
 
+export const setSplashEventList = (args: any) => {
+  return {
+    type: 'SET_SPLASH_EVENT_LIST',
+    payload: args,
+  };
+};
+
 export const setExpire = (args: any) => {
   return {
     type: 'SET_EXPIRE',
