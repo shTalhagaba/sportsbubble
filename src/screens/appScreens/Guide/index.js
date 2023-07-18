@@ -642,7 +642,7 @@ export default function Guide() {
         </View>
         <View style={{ width: "20%" }}>
           <TouchableOpacity
-            onPress={() => handleLive()}
+            onPress={() => handleNext()}
             style={[
               styles.liveTimeContainer,
               {
