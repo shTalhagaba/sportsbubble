@@ -43,7 +43,7 @@ const App = () => {
   LogBox.ignoreLogs(['Warning: ...']);
   LogBox.ignoreAllLogs();
 
-  useEffect(()=>{
+  useEffect(() => {
     // Instabug.isRunningLive(function (isLive) {
     //   if (isLive) {
     //     Instabug.start('02e02ab36f08bb8372ad6966cd83bf8a', [Instabug.invocationEvent.shake, Instabug.invocationEvent.screenshot]);
@@ -55,7 +55,7 @@ const App = () => {
       token: '02e02ab36f08bb8372ad6966cd83bf8a',
       invocationEvents: [InvocationEvent.shake, InvocationEvent.screenshot],
     });
-  },[])
+  }, [])
 
   return (
     <ApolloProvider client={client}>

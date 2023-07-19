@@ -16,18 +16,27 @@ export default ScaledSheet.create({
     flexDirection: "row"
   },
   searchContainer: {
-    // flexDirection: 'row',
+    flexDirection: 'row',
     height: '58@ms0.3',
     borderRadius: '16@ms0.3',
     justifyContent: 'center',
     backgroundColor: Colors.mediumBlue,
     marginVertical: '10@ms0.3',
+    alignSelf: "center",
+    alignItems: "center"
   },
   searchImage: {
     height: '18@ms0.3',
     width: '18@ms0.3',
-    marginHorizontal: '10@ms0.3',
+    marginStart: '10@ms0.3',
     tintColor: Colors.white,
+  },
+  searchImageTwo: {
+    height: '12@ms0.3',
+    width: '12@ms0.3',
+    marginStart: '5@ms0.3',
+    tintColor: Colors.white,
+    marginStart: 10
   },
   crossImage: {
     height: '12@ms0.3',
@@ -43,15 +52,17 @@ export default ScaledSheet.create({
     fontWeight: '600',
     padding: '0@ms0.3',
     fontFamily: Fonts.Regular,
+    marginStart: '10@ms0.3',
+
   },
   searchTxt: {
     letterSpacing: 0.75,
     color: Colors.white,
-    fontSize: '16@ms0.3',
+    fontSize: '14@ms0.3',
     flex: 1,
-    fontWeight: '600',
-    padding: '0@ms0.3',
+    fontWeight: '500',
     fontFamily: Fonts.Regular,
+    marginStart: 10
   },
   focus: {
     borderWidth: '2@ms0.3',

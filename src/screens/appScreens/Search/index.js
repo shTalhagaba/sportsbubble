@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   FlatList,
   ImageBackground,
@@ -12,15 +12,15 @@ import {
   TextInput,
 } from 'react-native';
 import styles from './styles';
-import {Images, Colors, Constants} from 'src/utils';
+import { Images, Colors, Constants } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
 import AppSearch from 'src/components/AppSearch';
-import {useQuery} from '@apollo/client';
-import {SEARCH_EVENTS_QUERY} from './queries';
+import { useQuery } from '@apollo/client';
+import { SEARCH_EVENTS_QUERY } from './queries';
 import dayjs from 'dayjs';
-import {useNavigation, useIsFocused} from '@react-navigation/native';
-import {useSelector} from 'react-redux';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 const expireTime = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
@@ -45,28 +45,26 @@ export default function Search(props) {
     setIsFocused(false);
   };
 
-  useEffect(() => {
-    if (textInputRef.current) {
-      const unsubscribe = navigation.addListener('focus', () => {
-        textInputRef.current?.focus();
-      });
-      return unsubscribe;
-    }
-  }, [textInputRef.current]);
+  // useEffect(() => {
+  //   if (textInputRef.current) {
+  //     const unsubscribe = navigation.addListener('focus', () => {
+  //       textInputRef.current?.focus();
+  //     });
+  //     return unsubscribe;
+  //   }
+  // }, [textInputRef.current]);
 
   const inputRef = useRef(null);
 
-  useEffect(() => {
-    if (isFocused) {
-      inputRef?.current?.focus();
-      Keyboard.dismiss(); // Open the keyboard immediately after focusing
+  // useEffect(() => {
+  //   inputRef?.current?.focus();
+  //   Keyboard.dismiss(); // Open the keyboard immediately after focusing
 
-      // Optionally, you can add a delay before opening the keyboard
-      // setTimeout(() => {
-      //   Keyboard.dismiss();
-      // }, 2000);
-    }
-  }, [inputRef, isFocused, navigation]);
+  //   // Optionally, you can add a delay before opening the keyboard
+  //   // setTimeout(() => {
+  //   //   Keyboard.dismiss();
+  //   // }, 2000);
+  // }, [inputRef, navigation]);
 
   useEffect(() => {
     const currentTime = Date.now();
@@ -74,7 +72,7 @@ export default function Search(props) {
       (reduxData && reduxData?.expire === currentTime) ||
       (reduxData && reduxData?.eventList && reduxData?.eventList.length <= 0)
     ) {
-      const {loading, refetch, error, data} = useQuery(SEARCH_EVENTS_QUERY, {
+      const { loading, refetch, error, data } = useQuery(SEARCH_EVENTS_QUERY, {
         variables: {
           searchString: searchText,
           startTime: startTime,
@@ -122,15 +120,21 @@ export default function Search(props) {
       setList(filtered);
     }
   };
+  const handleDone = () => {
+    setIsFocused(false)
+  }
 
   useEffect(() => {
     onPressTouch();
-  }, []);
+
+  }, [isFocused]);
   const onPressTouch = () => {
     setTimeout(() => {
       inputRef?.current?.focus();
-      // Keyboard.dismiss();
-    }, 1000); // Delay the focus call to ensure proper rendering
+      // setIsFocused(false)
+
+      Keyboard.dismiss();
+    }, 100); // Delay the focus call to ensure proper rendering
   };
 
   // const onPressTouch = () => {
@@ -157,49 +161,57 @@ export default function Search(props) {
         />
         <View style={styles.mainContainer}>
           {/* Search text box */}
-          {/* <View style={[styles.searchContainer, isFocused ? styles.focus : styles.blur]}>
-            {isFocused ?
+          <View style={[styles.searchContainer, isFocused ? styles.focus : styles.blur]}>
+            <View style={{ flex: 1 }}>
 
-              <View style={{ flexDirection: "row", marginTop: 4 }}>
-                <Image
-                  source={Images.Search}
-                  style={styles.searchImage}
-                  resizeMode={'contain'}
-                />
-                <Text style={styles.searchTxt}>Search</Text>
-              </View>
-              :
-              <View style={{ flexDirection: "row", alignSelf: "center" }}>
+              {isFocused &&
 
-                <Image
-                  source={Images.Search}
-                  style={styles.searchImage}
-                  resizeMode={'contain'}
-                />
+                <View style={{ flexDirection: "row", marginTop: 4, alignItems: "center" }}>
+                  <Image
+                    source={Images.Search}
+                    style={styles.searchImageTwo}
+                    resizeMode={'contain'}
+                  />
+                  <Text style={styles.searchTxt}>Search</Text>
+                </View>
+              }
+              <View style={{ flexDirection: "row", alignSelf: "center", alignItems: "center" }}>
+                {!isFocused &&
+                  <Image
+                    source={Images.Search}
+                    style={styles.searchImage}
+                    resizeMode={'contain'}
+                  />
+                }
                 <TextInput
                   style={[styles.inputField]}
                   onFocus={handleFocus}
                   onBlur={handleBlur}
                   autoFocus={true}
-                  placeholder={"Search"}
+                  placeholder={!isFocused ? "Search" : ''}
                   placeholderTextColor={Colors.white}
-                  ref={textInputRef}
+                  // ref={textInputRef}
+                  // ref={inputRef}
+
                   autoFocus={true}
                   value={searchText}
                   onChangeText={text => handleInputChange(text)}
+                  onSubmitEditing={() => handleDone()}
                 />
-                <TouchableOpacity onPress={() => setSearchText('')}>
-                  <Image
-                    source={Images.Cross}
-                    style={styles.crossImage}
-                    resizeMode={'contain'}
-                  />
-                </TouchableOpacity>
-              </View>
-            }
-          </View> */}
 
-          <AppSearch
+              </View>
+            </View>
+            <TouchableOpacity onPress={() => setSearchText('')}>
+              <Image
+                source={Images.Cross}
+                style={styles.crossImage}
+                resizeMode={'contain'}
+              />
+            </TouchableOpacity>
+
+          </View>
+
+          {/* <AppSearch
             searchImage={Images.Search}
             placeHolderColor={Colors.white}
             placeHolder={'Search...'}
@@ -211,7 +223,7 @@ export default function Search(props) {
             value={searchText}
             onChangeText={text => handleInputChange(text)}
             autoFocus={true}
-          />
+          /> */}
           {/* list showing after search */}
           <FlatList
             data={searchText.length > 0 ? list : []}
@@ -225,7 +237,7 @@ export default function Search(props) {
                 </Text>
               </View>
             }
-            renderItem={({item}) => (
+            renderItem={({ item }) => (
               <TouchableOpacity
                 style={styles.listContiner}
                 onPress={() => {
@@ -276,8 +288,8 @@ export default function Search(props) {
                         {' '}
                         {' ' + item?.startTime
                           ? dayjs(item?.startTime).format('h:mma') +
-                            ' - ' +
-                            dayjs(item?.endTime).format('h:mma')
+                          ' - ' +
+                          dayjs(item?.endTime).format('h:mma')
                           : item?.time}
                       </Text>
                     </View>
