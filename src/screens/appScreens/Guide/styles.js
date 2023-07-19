@@ -33,7 +33,6 @@ export default ScaledSheet.create({
     // height: '26@ms0.3',
     // width: '54@ms0.3',
     alignSelf: 'center',
-
     paddingHorizontal: '18@ms0.3',
     // marginLeft: '8@ms0.3',
     borderRadius: '20@ms0.3',
@@ -43,7 +42,7 @@ export default ScaledSheet.create({
     shadowOffset: { width: 0, height: 1 },
     shadowRadius: 3,
     shadowOpacity: 1,
-    marginLeft: Platform.OS === "android" ? "30@ms0.3" : "36@ms0.3"
+    marginLeft: Platform.OS === "android" ? "31@ms0.3" : "36@ms0.3"
   },
   liveTimeContainer: {
     backgroundColor: '#21365110', // Set a semi-transparent background color
@@ -65,7 +64,6 @@ export default ScaledSheet.create({
   },
   timeSliderInnerContainer: {
     flex: 1,
-    // marginHorizontal: 20,
   },
   nextContainer: {
     backgroundColor: Colors.brandBlue,
@@ -87,6 +85,7 @@ export default ScaledSheet.create({
     backgroundColor: Colors.mediumBlue,
     justifyContent: 'center',
     alignItems: 'center',
+    marginRight: '1@ms0.3',
   },
   imageIcon: {
     height: '48@ms0.3',
@@ -149,7 +148,7 @@ export default ScaledSheet.create({
   },
   sliderInnerContainer: {
     // flex: 1,
-    marginHorizontal: '5@ms0.3',
+    marginHorizontal: '3@ms0.3',
     marginVertical: '5@ms0.3',
     justifyContent: 'center',
   },
@@ -158,6 +157,7 @@ export default ScaledSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
+    // zIndex:999
   },
   sliderInnerMainContainer: {
     justifyContent: 'center',
@@ -165,11 +165,9 @@ export default ScaledSheet.create({
     borderWidth: '2@ms0.3',
     borderColor: '#004EBC',
     height: '90@ms0.3',
-    borderRadius: '20@ms0.3',
-    width: width / 4 - 11,
+    borderRadius: '22@ms0.3',
+    width: width / 4 - 12,
     overflow: "visible"
-
-
   },
   sliderIcon: {
     height: '35@ms0.3',
@@ -201,11 +199,11 @@ export default ScaledSheet.create({
   },
   rectangle2: {
     position: 'absolute',
-    left: Platform.OS === "android" ? -6 : -4,
+    left: Platform.OS === "android" ? -4 : -4,
     top: -4,
     height: '94@ms0.3',
-    width: '94@ms0.3',
-    borderRadius: '20@ms0.3',
+    width: width / 4 - 8,
+    borderRadius: '22@ms0.3',
     borderWidth: 2,
     borderColor: '#004EBC',
     opacity: 0.5,

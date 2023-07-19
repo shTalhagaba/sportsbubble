@@ -11,7 +11,7 @@ export default {
     buttonGreen: "#50813A",
     buttonBlue: "#014EBD",
     greenText: "#69A833",
-    greyText: "#676C71",
+    greyText: "rgba(255, 255, 255, 0.7)",
     orange: "#fe9d0d",
     green: "#50813A",
     darkBlue: "#161F2A",

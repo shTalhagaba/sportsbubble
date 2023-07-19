@@ -10,10 +10,11 @@ import {
   Dimensions,
 } from 'react-native';
 import styles from './styles';
-import {Images, Colors, Strings} from 'src/utils';
+import {Images, Colors, Strings, Constants} from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
 import {useNavigation} from '@react-navigation/native';
 import dayjs from 'dayjs';
+import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 const screenWidth = Dimensions.get('window').width;
 
 const data = [
@@ -27,19 +28,23 @@ export default function Watch(props) {
   const navigation = useNavigation();
   const [itemSelected, setItemSelected] = useState(props?.route?.params?.item);
   const [bottomMenu, setBottomMenu] = useState(false);
-  const {searchFlag} = props?.route?.params
+  const {searchFlag} = props?.route?.params;
 
   return (
     <ImageBackground
       source={Images.Background2}
       resizeMode="cover"
       style={styles.container}>
-      <StatusBar backgroundColor={Colors.mediumBlue} />
+      <StatusBar
+        backgroundColor={Colors.transparent}
+        translucent
+        barStyle="light-content"
+      />
       {/* Header with Logo and back icon  */}
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        onPressBack={searchFlag?()=>navigation.navigate('Search'):null}
+        onPressBack={searchFlag ? () => navigation.navigate('Search') : null}
         // customLeftImage={{tintColor: Colors.orange}}
         SimpleView
       />
@@ -50,17 +55,14 @@ export default function Watch(props) {
           <View style={styles.itemListContainer}>
             <View style={styles.itemInnerContainer}>
               <View style={styles.itemContainer}>
-                <Image
-                  source={
-                    itemSelected?.logo1
-                      ? {uri: itemSelected?.logo1}
-                      : itemSelected?.img
-                  }
+                <ImageWithPlaceHolder
+                  source={itemSelected?.logo1}
+                  placeholderSource={Constants.placeholder_trophy_icon}
                   style={styles.imageIcon}
-                  resizeMode={'contain'}
+                  resizeMode="contain"
                 />
               </View>
-              <View style={styles.userNameContainer}>
+              <View style={[styles.userNameContainer]}>
                 <Text style={styles.eventTxt}>
                   {itemSelected?.line1
                     ? itemSelected?.line1
@@ -134,14 +136,14 @@ export default function Watch(props) {
                         }}
                       />
                       <View style={styles.imageContainer}>
-                        <Image
-                          source={
-                            item?.node?.logoUrl
-                              ? {uri: item?.node?.logoUrl}
-                              : Images.NBALogo
-                          }
+                        <ImageWithPlaceHolder
+                          source={item?.node?.logoUrl}
+                          placeholderSource={Constants.placeholder_trophy_icon}
                           style={styles.imageRightsIcon}
-                          resizeMode={'contain'}
+                          logoUrl={true}
+                          widthLogo={50}
+                          heightLogo={50}
+                          resizeMode="contain"
                         />
                       </View>
                     </View>

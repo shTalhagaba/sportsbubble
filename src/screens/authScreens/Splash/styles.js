@@ -5,7 +5,7 @@ export default ScaledSheet.create({
   container: {
     flex: 1,
     // backgroundColor: Colors.appColorBackground,
-    backgroundColor: '#0D131A',
+    backgroundColor: Colors.mediumBlue,
   },
   sbContainer: {
     alignItems: 'center',

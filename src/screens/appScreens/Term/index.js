@@ -16,7 +16,6 @@ import RenderHTML from 'react-native-render-html';
 
 export default function Term(props) {
   const {width} = useWindowDimensions();
-console.log('props?.route?.params?.selected : ',props?.route)
   let source = {
     html:
       props?.route?.params?.selected === Strings.termUse
@@ -32,7 +31,11 @@ console.log('props?.route?.params?.selected : ',props?.route)
       source={Images.Background2}
       resizeMode="cover"
       style={styles.container}>
-      <StatusBar backgroundColor={Colors.darkGrey} />
+      <StatusBar
+        backgroundColor={Colors.transparent}
+        translucent
+        barStyle="light-content"
+      />
       {/* Header with Logo and back icon  */}
       <AppHeader
         centerImage={Images.Logo}

@@ -28,7 +28,11 @@ export default function Setting() {
       source={Images.Background2}
       resizeMode="cover"
       style={styles.container}>
-      <StatusBar backgroundColor={Colors.mediumBlue} />
+      <StatusBar
+        backgroundColor={Colors.transparent}
+        translucent
+        barStyle="light-content"
+      />
       {/* Header with Logo and back icon  */}
       <AppHeader
         centerImage={Images.Logo}

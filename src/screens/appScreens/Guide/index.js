@@ -8,9 +8,10 @@ import {
   StatusBar,
   ActivityIndicator,
   FlatList,
+  Dimensions,
 } from 'react-native';
 import styles from './styles';
-import {Images, Colors, Strings} from 'src/utils';
+import {Images, Colors, Strings, Constants} from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
 import {useNavigation} from '@react-navigation/native';
 import LiveMatchView from 'src/components/Modal/LiveMatchModal';
@@ -20,6 +21,8 @@ import {GET_SORTED_EVENTS} from './queries';
 import {useDispatch, useSelector} from 'react-redux';
 import {setExpire, setStoreEventList} from 'src/store/types';
 import {moderateScale} from 'react-native-size-matters';
+import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
+const screenWidth = Dimensions.get('window').width;
 
 // Sample data for the list
 const list = [
@@ -105,10 +108,10 @@ const expireTime = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 export default function Guide(props) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const currentDate = dayjs(); // Get the current date and time
   const reduxData = useSelector(state => state.user);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [categoryFlag, setCategoryFlag] = useState(true);
   const [isLive, setIsLive] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [liveMatchModal, setLiveMatchModal] = useState(false);
@@ -261,7 +264,6 @@ export default function Guide(props) {
   });
 
   const getTimeList = () => {
-    const currentDate = dayjs(); // Get the current date and time
     const daysList = [];
 
     const currentHour = currentDate.hour(); // Get the current hour
@@ -416,7 +418,6 @@ export default function Guide(props) {
   };
 
   const startTimeWidth = start => {
-    const currentTime = dayjs();
     const matchTime = dayjs(timeData[currentIndex]?.datetime);
     const startTime = dayjs(start);
     const timeDifference = startTime.diff(matchTime); // Calculate the total time difference in milliseconds
@@ -482,8 +483,9 @@ export default function Guide(props) {
           }}>
           <View style={styles.innerContainer}>
             <View style={styles.imageContainer}>
-              <Image
-                source={item?.logo1 ? {uri: item?.logo1} : item?.img}
+              <ImageWithPlaceHolder
+                source={item?.logo1}
+                placeholderSource={Constants.placeholder_trophy_icon}
                 style={styles.imageIcon}
                 resizeMode="contain"
               />
@@ -496,16 +498,12 @@ export default function Guide(props) {
             <View
               style={{
                 width: endTimeWidth(item?.endTime),
-                backgroundColor: Colors.mediumGreen,
+                backgroundColor: dayjs(item?.startTime).isAfter(currentDate)
+                  ? Colors.mediumBlue
+                  : Colors.mediumGreen,
               }}></View>
             <View
               style={
-                // startTimeWidth(item?.startTime)
-                //   ? {
-                //       flex: 1,
-                //       backgroundColor: Colors.mediumBlue,
-                //     }
-                //   :
                 {
                   flex: 1,
                   backgroundColor: Colors.darkBlue,
@@ -547,7 +545,12 @@ export default function Guide(props) {
       source={Images.Background}
       resizeMode="cover"
       style={styles.container}>
-      <StatusBar backgroundColor={Colors.mediumBlue} barStyle="light-content" />
+      <StatusBar
+        backgroundColor={Colors.transparent}
+        translucent
+        barStyle="light-content"
+      />
+      {/* <StatusBar backgroundColor={Colors.mediumBlue} barStyle="light-content" /> */}
       {/* Header with Logo only  */}
       <AppHeader centerImage={Images.Logo} />
       {/* Slider all pro  */}
@@ -556,6 +559,7 @@ export default function Guide(props) {
           horizontal
           data={categoryData}
           showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{justifyContent: 'center', flex: 1}}
           scrollEnabled={false}
           renderItem={({item, index}) => (
             <TouchableOpacity
@@ -576,9 +580,9 @@ export default function Guide(props) {
                   style={styles.sliderImageBackground}
                   imageStyle={{
                     borderRadius: moderateScale(20, 0.3),
-                    borderWidth: moderateScale(1, 0.3),
+                    borderWidth: moderateScale(2, 0.3),
                   }}
-                  resizeMode={'cover'}>
+                  resizeMode={'stretch'}>
                   <Image
                     source={
                       index === 0
@@ -603,7 +607,7 @@ export default function Guide(props) {
       </View>
       {/* time slider */}
       <View style={styles.timeSliderContainer}>
-        <View style={{width: '20%'}}>
+        <View style={{width: screenWidth / 5}}>
           <TouchableOpacity
             onPress={() => handleLive()}
             style={[
@@ -625,13 +629,13 @@ export default function Guide(props) {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.timeSliderInnerContainer}>
+        <View
+          style={[styles.timeSliderInnerContainer, {width: screenWidth / 3}]}>
           <FlatList
             horizontal
             data={timeData}
             showsHorizontalScrollIndicator={false}
             scrollEnabled={false}
-            contentContainerStyle={[styles.timeSliderInnerContainer]}
             renderItem={({item, index}) => {
               const adjustedIndex = index + currentIndex; // Calculate the adjusted index based on the current index
               return (
@@ -651,7 +655,7 @@ export default function Guide(props) {
             }}
           />
         </View>
-        <View style={{width: '20%'}}>
+        <View style={{width: screenWidth / 5}}>
           <TouchableOpacity
             onPress={() => handleNext()}
             style={[

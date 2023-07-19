@@ -8,10 +8,11 @@ import {
   Linking,
 } from 'react-native';
 import styles from './styles';
-import {Images, Colors, Strings} from 'src/utils';
+import {Images, Colors, Strings, Constants} from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
 import GreenButton from 'src/components/GreenButton';
 import dayjs from 'dayjs';
+import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 
 export default function Connect(props) {
   const [item, setItem] = useState(props?.route?.params?.item);
@@ -27,7 +28,11 @@ export default function Connect(props) {
       source={Images.Background2}
       resizeMode="cover"
       style={styles.container}>
-      <StatusBar backgroundColor={Colors.mediumBlue} />
+      <StatusBar
+        backgroundColor={Colors.transparent}
+        translucent
+        barStyle="light-content"
+      />
       {/* Header with Logo and back icon  */}
       <AppHeader
         centerImage={Images.Logo}
@@ -42,10 +47,11 @@ export default function Connect(props) {
           <View style={styles.itemListContainer}>
             <View style={styles.itemInnerContainer}>
               <View style={styles.itemContainer}>
-                <Image
-                  source={item?.logo1 ? {uri: item?.logo1} : item?.img}
+                <ImageWithPlaceHolder
+                  source={item?.logo1}
+                  placeholderSource={Constants.placeholder_trophy_icon}
                   style={styles.imageIcon}
-                  resizeMode={'contain'}
+                  resizeMode="contain"
                 />
               </View>
               <View style={styles.userNameContainer}>
@@ -63,6 +69,7 @@ export default function Connect(props) {
                     {'  l  '}
                   </Text>
                   <Text style={[styles.dateEventTxt]}>
+                    n
                     {item?.startTime
                       ? dayjs(item?.startTime).format('h:mma') +
                         ' - ' +
@@ -84,24 +91,16 @@ export default function Connect(props) {
         </View>
         <Text style={styles.connectingText}>{Strings.connecting}</Text>
         <View style={styles.logoImageContainer}>
-          {item?.logo1 ? (
-            <Image
-              source={{
-                uri:
-                  eventFlag && holderItem?.edges?.[0]?.node?.logoUrl
-                    ? holderItem?.edges?.[0]?.node?.logoUrl
-                    : holderItem?.logoUrl || item?.logo1,
-              }}
-              resizeMode={'contain'}
-              style={styles.logoImageStyle}
-            />
-          ) : (
-            <Image
-              source={Images.NBALogo}
-              resizeMode={'contain'}
-              style={styles.logoImageStyle}
-            />
-          )}
+          <ImageWithPlaceHolder
+            source={eventFlag && holderItem?.edges?.[0]?.node?.logoUrl
+                  ? holderItem?.edges?.[0]?.node?.logoUrl
+                  : holderItem?.logoUrl
+            }
+            placeholderSource={Constants.placeholder_trophy_icon}
+            style={styles.logoImageStyle}
+            logoUrl={true}
+            resizeMode="contain"
+          />
         </View>
         <View style={styles.buttonContainer}>
           <GreenButton

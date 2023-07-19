@@ -1,6 +1,7 @@
 import { Colors, Fonts } from 'src/utils';
 import { ScaledSheet } from "react-native-size-matters";
-import { Platform } from 'react-native';
+import { Dimensions, Platform } from 'react-native';
+const screenWidth = Dimensions.get('window').width;
 
 export default ScaledSheet.create({
   container: {
@@ -24,7 +25,7 @@ export default ScaledSheet.create({
     paddingVertical: "5@ms0.3",
   },
   itemInnerContainer: {
-    flexDirection: "row"
+    flexDirection: "row",
   },
   timeContainer: {
     backgroundColor: "#213651",
@@ -163,7 +164,7 @@ export default ScaledSheet.create({
     lineHeight: "25@ms0.3",
     color: Colors.white,
     fontFamily: Fonts.Regular,
-    width: '85%',
+    width: Platform.OS ==='android'? screenWidth - 130 :'85%',
   },
   eventTxt: {
     fontSize: "14@ms0.3",
@@ -171,7 +172,7 @@ export default ScaledSheet.create({
     lineHeight: "20@ms0.3",
     color: Colors.white,
     fontFamily: Fonts.Regular,
-    width: '85%',
+    width: Platform.OS ==='android'? screenWidth - 130 :'85%',
   },
   dateEventTxt: {
     fontSize: "14@ms0.3",

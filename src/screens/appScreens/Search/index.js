@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   FlatList,
   ImageBackground,
@@ -9,18 +9,19 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   Keyboard,
-  TextInput
+  TextInput,
 } from 'react-native';
 import styles from './styles';
-import { Images, Colors } from 'src/utils';
+import {Images, Colors, Constants} from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
 import AppSearch from 'src/components/AppSearch';
-import { useQuery } from '@apollo/client';
-import { SEARCH_EVENTS_QUERY } from './queries';
+import {useQuery} from '@apollo/client';
+import {SEARCH_EVENTS_QUERY} from './queries';
 import dayjs from 'dayjs';
-import { useNavigation, useIsFocused } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {useNavigation, useIsFocused} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 const expireTime = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
 export default function Search(props) {
@@ -34,10 +35,9 @@ export default function Search(props) {
     dayjs(new Date()).add(7, 'day').toISOString(),
   );
   const [isFocused, setIsFocused] = useState(true);
-  const [searchFlag, setSearchFlag] = useState(false)
+  const [searchFlag, setSearchFlag] = useState(false);
 
   const handleFocus = () => {
-    console.log("jjjj")
     setIsFocused(true);
   };
 
@@ -46,9 +46,6 @@ export default function Search(props) {
   };
 
   useEffect(() => {
-    console.log(
-      "Enter"
-    )
     if (textInputRef.current) {
       const unsubscribe = navigation.addListener('focus', () => {
         textInputRef.current?.focus();
@@ -61,8 +58,6 @@ export default function Search(props) {
 
   useEffect(() => {
     if (isFocused) {
-      console.log("fff current")
-
       inputRef?.current?.focus();
       Keyboard.dismiss(); // Open the keyboard immediately after focusing
 
@@ -71,9 +66,7 @@ export default function Search(props) {
       //   Keyboard.dismiss();
       // }, 2000);
     }
-
   }, [inputRef, isFocused, navigation]);
-
 
   useEffect(() => {
     const currentTime = Date.now();
@@ -81,7 +74,7 @@ export default function Search(props) {
       (reduxData && reduxData?.expire === currentTime) ||
       (reduxData && reduxData?.eventList && reduxData?.eventList.length <= 0)
     ) {
-      const { loading, refetch, error, data } = useQuery(SEARCH_EVENTS_QUERY, {
+      const {loading, refetch, error, data} = useQuery(SEARCH_EVENTS_QUERY, {
         variables: {
           searchString: searchText,
           startTime: startTime,
@@ -105,7 +98,6 @@ export default function Search(props) {
 
   const handleInputChange = text => {
     setSearchText(text);
-    console.log('eventList: ', reduxData?.eventList.length);
     if (
       text &&
       text.length > 0 &&
@@ -132,8 +124,8 @@ export default function Search(props) {
   };
 
   useEffect(() => {
-    onPressTouch()
-  }, [])
+    onPressTouch();
+  }, []);
   const onPressTouch = () => {
     setTimeout(() => {
       inputRef?.current?.focus();
@@ -142,8 +134,6 @@ export default function Search(props) {
   };
 
   // const onPressTouch = () => {
-  //   console.log("fff current")
-  //   console.log(props?.route?.params?.searchPressFlag)
 
   //   inputRef?.current?.focus();
   //   Keyboard.dismiss(); // Open the keyboard immediately after focusing
@@ -153,10 +143,13 @@ export default function Search(props) {
       source={Images.Background2}
       resizeMode="cover"
       style={styles.container}>
-      <StatusBar backgroundColor={Colors.mediumBlue} />
+      <StatusBar
+        backgroundColor={Colors.transparent}
+        translucent
+        barStyle="light-content"
+      />
       {/* Header with Logo and back icon  */}
       <KeyboardAwareScrollView enableAutomaticScroll={true}>
-
         <AppHeader
           centerImage={Images.Logo}
           LeftImage={Images.LeftIcon}
@@ -206,9 +199,6 @@ export default function Search(props) {
             }
           </View> */}
 
-
-
-
           <AppSearch
             searchImage={Images.Search}
             placeHolderColor={Colors.white}
@@ -224,9 +214,7 @@ export default function Search(props) {
           />
           {/* list showing after search */}
           <FlatList
-            data={
-              searchText.length > 0 ? list : []
-            }
+            data={searchText.length > 0 ? list : []}
             showsVerticalScrollIndicator={false}
             ListEmptyComponent={
               <View>
@@ -237,7 +225,7 @@ export default function Search(props) {
                 </Text>
               </View>
             }
-            renderItem={({ item }) => (
+            renderItem={({item}) => (
               <TouchableOpacity
                 style={styles.listContiner}
                 onPress={() => {
@@ -255,15 +243,19 @@ export default function Search(props) {
                       },
                     });
                   } else {
-                    navigation.navigate('Watch', { item: item, searchFlag: true });
+                    navigation.navigate('Watch', {
+                      item: item,
+                      searchFlag: true,
+                    });
                   }
                 }}>
                 <View style={styles.innerContainer}>
                   <View style={styles.imageContainer}>
-                    <Image
-                      source={item?.logo1 ? { uri: item?.logo1 } : item?.img}
+                    <ImageWithPlaceHolder
+                      source={item?.logo1}
+                      placeholderSource={Constants.placeholder_trophy_icon}
                       style={styles.imageIcon}
-                      resizeMode={'contain'}
+                      resizeMode="contain"
                     />
                   </View>
                   <View style={styles.userNameContainer}>
@@ -277,14 +269,15 @@ export default function Search(props) {
                       <Text style={styles.eventTxt}>
                         {' ' + item?.startTime
                           ? dayjs(item?.startTime).format('ddd. MM/D')
-                          : item?.day}{'  l '}
+                          : item?.day}
+                        {'  l '}
                       </Text>
                       <Text style={styles.eventTxt}>
                         {' '}
                         {' ' + item?.startTime
                           ? dayjs(item?.startTime).format('h:mma') +
-                          ' - ' +
-                          dayjs(item?.endTime).format('h:mma')
+                            ' - ' +
+                            dayjs(item?.endTime).format('h:mma')
                           : item?.time}
                       </Text>
                     </View>
@@ -301,7 +294,6 @@ export default function Search(props) {
         )} */}
         </View>
       </KeyboardAwareScrollView>
-
     </ImageBackground>
   );
 }
