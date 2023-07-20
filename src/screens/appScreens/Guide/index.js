@@ -344,7 +344,7 @@ export default function Guide(props) {
                     category.selected && category.value === event.category.name,
                 ) && dayjs(event.startTime).isAfter(formattedTime),
             );
-            setSelectedCategory(e?.value);
+      setSelectedCategory(e?.value);
     }
 
     setCategoryData(list);
@@ -545,7 +545,10 @@ export default function Guide(props) {
                     Platform.OS === 'android'
                       ? {
                           borderRadius: moderateScale(20, 0.3),
-                          borderWidth: moderateScale(2, 0.3),
+                          borderWidth: item?.selected
+                            ? 0
+                            : moderateScale(2.5, 0.3),
+                          borderColor: Colors.darkBlue,
                         }
                       : {}
                   }

@@ -16,12 +16,27 @@ import ButtonWithIcon from 'src/components/ButtonWithIcon';
 import DeviceInfo from 'react-native-device-info';
 import Strings from 'src/utils/strings';
 import CustomModalView from 'src/components/Modal/CustomModal';
-import Instabug from 'instabug-reactnative';
+import Instabug, { InvocationEvent } from 'instabug-reactnative';
 
 export default function Setting() {
   const navigation = useNavigation();
   const version = DeviceInfo.getVersion();
   const [logoutModal, setLogoutModal] = useState(false);
+
+
+  useEffect(()=>{
+    // Instabug.isRunningLive(function (isLive) {
+    //   if (isLive) {
+    //     Instabug.start('02e02ab36f08bb8372ad6966cd83bf8a', [Instabug.invocationEvent.shake, Instabug.invocationEvent.screenshot]);
+    //   } else {
+    //     Instabug.start('02e02ab36f08bb8372ad6966cd83bf8a', [Instabug.invocationEvent.shake, Instabug.invocationEvent.screenshot]);
+    //   }
+    // });
+    Instabug.init({
+      token: '02e02ab36f08bb8372ad6966cd83bf8a',
+      invocationEvents: [InvocationEvent.shake, InvocationEvent.screenshot],
+    });
+  },[])
 
   return (
     <ImageBackground
