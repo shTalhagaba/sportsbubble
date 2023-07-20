@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   ImageBackground,
@@ -9,8 +9,8 @@ import {
   View,
 } from 'react-native';
 import styles from './styles';
-import { Images, Colors } from 'src/utils';
-import { useNavigation } from '@react-navigation/native';
+import {Images, Colors} from 'src/utils';
+import {useNavigation} from '@react-navigation/native';
 import AppHeader from 'src/components/AppHeader';
 import ButtonWithIcon from 'src/components/ButtonWithIcon';
 import DeviceInfo from 'react-native-device-info';
@@ -37,7 +37,7 @@ export default function Setting() {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        customLeftImage={{ tintColor: Colors.orange }}
+        customLeftImage={{tintColor: Colors.orange}}
         SimpleView
       />
       {/* Main tabs  */}
@@ -77,7 +77,7 @@ export default function Setting() {
         rowStyle={true}
         blackBtnPress={() => setLogoutModal(!logoutModal)}
         ornageBtnPress={() => setLogoutModal(!logoutModal)}
-        Contianer={{ backgroundColor: Colors.black }}
+        Contianer={{backgroundColor: Colors.black}}
       />
       {/* Powered by sports bubble */}
       <View style={styles.sbContainer}>

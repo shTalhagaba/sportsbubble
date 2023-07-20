@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   FlatList,
   ImageBackground,
@@ -10,17 +10,18 @@ import {
   TouchableOpacity,
   Keyboard,
   TextInput,
+  Platform,
 } from 'react-native';
 import styles from './styles';
-import { Images, Colors, Constants } from 'src/utils';
+import {Images, Colors, Constants} from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
 import AppSearch from 'src/components/AppSearch';
-import { useQuery } from '@apollo/client';
-import { SEARCH_EVENTS_QUERY } from './queries';
+import {useQuery} from '@apollo/client';
+import {SEARCH_EVENTS_QUERY} from './queries';
 import dayjs from 'dayjs';
-import { useNavigation, useIsFocused } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {useNavigation, useIsFocused} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 const expireTime = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
@@ -72,7 +73,7 @@ export default function Search(props) {
       (reduxData && reduxData?.expire === currentTime) ||
       (reduxData && reduxData?.eventList && reduxData?.eventList.length <= 0)
     ) {
-      const { loading, refetch, error, data } = useQuery(SEARCH_EVENTS_QUERY, {
+      const {loading, refetch, error, data} = useQuery(SEARCH_EVENTS_QUERY, {
         variables: {
           searchString: searchText,
           startTime: startTime,
@@ -121,12 +122,11 @@ export default function Search(props) {
     }
   };
   const handleDone = () => {
-    setIsFocused(false)
-  }
+    setIsFocused(false);
+  };
 
   useEffect(() => {
     onPressTouch();
-
   }, [isFocused]);
   const onPressTouch = () => {
     setTimeout(() => {
@@ -153,65 +153,80 @@ export default function Search(props) {
         barStyle="light-content"
       />
       {/* Header with Logo and back icon  */}
-      <KeyboardAwareScrollView enableAutomaticScroll={true}>
-        <AppHeader
-          centerImage={Images.Logo}
-          LeftImage={Images.LeftIcon}
-          SimpleView
-        />
-        <View style={styles.mainContainer}>
-          {/* Search text box */}
-          <View style={[styles.searchContainer, isFocused ? styles.focus : styles.blur]}>
-            <View style={{ flex: 1 }}>
-
-              {isFocused &&
-
-                <View style={{ flexDirection: "row", marginTop: 4, alignItems: "center" }}>
-                  <Image
-                    source={Images.Search}
-                    style={styles.searchImageTwo}
-                    resizeMode={'contain'}
-                  />
-                  <Text style={styles.searchTxt}>Search</Text>
-                </View>
-              }
-              <View style={{ flexDirection: "row", alignSelf: "center", alignItems: "center" }}>
-                {!isFocused &&
-                  <Image
-                    source={Images.Search}
-                    style={styles.searchImage}
-                    resizeMode={'contain'}
-                  />
-                }
-                <TextInput
-                  style={[styles.inputField]}
-                  onFocus={handleFocus}
-                  onBlur={handleBlur}
-                  autoFocus={true}
-                  placeholder={!isFocused ? "Search" : ''}
-                  placeholderTextColor={Colors.white}
-                  // ref={textInputRef}
-                  // ref={inputRef}
-
-                  autoFocus={true}
-                  value={searchText}
-                  onChangeText={text => handleInputChange(text)}
-                  onSubmitEditing={() => handleDone()}
+      {/* <KeyboardAwareScrollView enableAutomaticScroll={true}> */}
+      <AppHeader
+        centerImage={Images.Logo}
+        LeftImage={Images.LeftIcon}
+        SimpleView
+      />
+      <View style={styles.mainContainer}>
+        {/* Search text box */}
+        <TouchableOpacity
+          onPress={() => setIsFocused(!isFocused)}
+          style={[
+            styles.searchContainer,
+            isFocused ? styles.focus : styles.blur,
+          ]}>
+          <View style={{flex: 1}}>
+            {isFocused && (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  marginTop: Platform.OS === 'ios' ? -5 : 5,
+                  marginLeft: 15,
+                  alignItems: 'center',
+                }}>
+                <Image
+                  source={Images.Search}
+                  style={styles.searchImageTwo}
+                  resizeMode={'contain'}
                 />
-
+                <Text style={styles.searchTxt}>Search</Text>
               </View>
-            </View>
-            <TouchableOpacity onPress={() => setSearchText('')}>
-              <Image
-                source={Images.Cross}
-                style={styles.crossImage}
-                resizeMode={'contain'}
+            )}
+            <View
+              style={{
+                flexDirection: 'row',
+                alignSelf: 'center',
+                alignItems: 'center',
+                marginLeft: 12,
+              }}>
+              {!isFocused && (
+                <Image
+                  source={Images.Search}
+                  style={styles.searchImage}
+                  resizeMode={'contain'}
+                />
+              )}
+              <TextInput
+                style={[styles.inputField]}
+                onFocus={handleFocus}
+                // onBlur={handleBlur}
+                autoFocus={true}
+                placeholder={!isFocused ? 'Search' : ''}
+                placeholderTextColor={Colors.white}
+                // ref={textInputRef}
+                // ref={inputRef}
+                value={searchText}
+                onChangeText={text => handleInputChange(text)}
+                onSubmitEditing={() => handleDone()}
               />
-            </TouchableOpacity>
-
+            </View>
           </View>
+          <TouchableOpacity
+            onPress={() => {
+              setSearchText('');
+              setIsFocused(false);
+            }}>
+            <Image
+              source={Images.Cross}
+              style={styles.crossImage}
+              resizeMode={'contain'}
+            />
+          </TouchableOpacity>
+        </TouchableOpacity>
 
-          {/* <AppSearch
+        {/* <AppSearch
             searchImage={Images.Search}
             placeHolderColor={Colors.white}
             placeHolder={'Search...'}
@@ -224,88 +239,88 @@ export default function Search(props) {
             onChangeText={text => handleInputChange(text)}
             autoFocus={true}
           /> */}
-          {/* list showing after search */}
-          <FlatList
-            data={searchText.length > 0 ? list : []}
-            showsVerticalScrollIndicator={false}
-            ListEmptyComponent={
-              <View>
-                <Text style={styles.emptyTxt}>
-                  {
-                    'Search by Event, Team, League or Sport to Find Event Watch Information'
-                  }
-                </Text>
-              </View>
-            }
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                style={styles.listContiner}
-                onPress={() => {
-                  if (
-                    item &&
-                    item?.rightsHoldersConnection &&
-                    item?.rightsHoldersConnection?.totalCount === 1
-                  ) {
-                    navigation.navigate('withoutBottomtab', {
-                      screen: 'Connect',
-                      params: {
-                        item: item,
-                        holderItem: item?.rightsHoldersConnection,
-                        eventFlag: true,
-                      },
-                    });
-                  } else {
-                    navigation.navigate('Watch', {
+        {/* list showing after search */}
+        <FlatList
+          data={searchText.length > 0 ? list : []}
+          showsVerticalScrollIndicator={false}
+          ListEmptyComponent={
+            <View>
+              <Text style={styles.emptyTxt}>
+                {
+                  'Search by Event, Team, League or Sport to Find Event Watch Information'
+                }
+              </Text>
+            </View>
+          }
+          renderItem={({item}) => (
+            <TouchableOpacity
+              style={styles.listContiner}
+              onPress={() => {
+                if (
+                  item &&
+                  item?.rightsHoldersConnection &&
+                  item?.rightsHoldersConnection?.totalCount === 1
+                ) {
+                  navigation.navigate('withoutBottomtab', {
+                    screen: 'Connect',
+                    params: {
                       item: item,
-                      searchFlag: true,
-                    });
-                  }
-                }}>
-                <View style={styles.innerContainer}>
-                  <View style={styles.imageContainer}>
-                    <ImageWithPlaceHolder
-                      source={item?.logo1}
-                      placeholderSource={Constants.placeholder_trophy_icon}
-                      style={styles.imageIcon}
-                      resizeMode="contain"
-                    />
-                  </View>
-                  <View style={styles.userNameContainer}>
+                      holderItem: item?.rightsHoldersConnection,
+                      eventFlag: true,
+                    },
+                  });
+                } else {
+                  navigation.navigate('Watch', {
+                    item: item,
+                    searchFlag: true,
+                  });
+                }
+              }}>
+              <View style={styles.innerContainer}>
+                <View style={styles.imageContainer}>
+                  <ImageWithPlaceHolder
+                    source={item?.logo1}
+                    placeholderSource={Constants.placeholder_trophy_icon}
+                    style={styles.imageIcon}
+                    resizeMode="contain"
+                  />
+                </View>
+                <View style={styles.userNameContainer}>
+                  <Text style={styles.eventTxt}>
+                    {item?.line1 ? item?.line1 : item?.companyName}
+                  </Text>
+                  <Text style={styles.titleTxt} numberOfLines={1}>
+                    {item?.line2 ? item?.line2 : item?.title}
+                  </Text>
+                  <View style={styles.innerContainer}>
                     <Text style={styles.eventTxt}>
-                      {item?.line1 ? item?.line1 : item?.companyName}
+                      {' ' + item?.startTime
+                        ? dayjs(item?.startTime).format('ddd. MM/D')
+                        : item?.day}
+                      {'  l '}
                     </Text>
-                    <Text style={styles.titleTxt} numberOfLines={1}>
-                      {item?.line2 ? item?.line2 : item?.title}
-                    </Text>
-                    <View style={styles.innerContainer}>
-                      <Text style={styles.eventTxt}>
-                        {' ' + item?.startTime
-                          ? dayjs(item?.startTime).format('ddd. MM/D')
-                          : item?.day}
-                        {'  l '}
-                      </Text>
-                      <Text style={styles.eventTxt}>
-                        {' '}
-                        {' ' + item?.startTime
-                          ? dayjs(item?.startTime).format('h:mma') +
+                    <Text style={styles.eventTxt}>
+                      {' '}
+                      {' ' + item?.startTime
+                        ? dayjs(item?.startTime).format('h:mma') +
                           ' - ' +
                           dayjs(item?.endTime).format('h:mma')
-                          : item?.time}
-                      </Text>
-                    </View>
+                        : item?.time}
+                    </Text>
                   </View>
                 </View>
-              </TouchableOpacity>
-            )}
-            keyExtractor={(item, index) => item?.id}
-          />
-          {/* ) : (
+              </View>
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item, index) => item?.id}
+        />
+        {/* ) : (
           <View style={{flex: 1, justifyContent: 'center'}}>
             <ActivityIndicator color={'#fff'} size={'large'} />
           </View>
         )} */}
-        </View>
-      </KeyboardAwareScrollView>
+      </View>
+      {/* </KeyboardAwareScrollView> */}
     </ImageBackground>
   );
 }

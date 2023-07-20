@@ -29,7 +29,8 @@ sagaMiddleware.run(mySaga);
 const persistor = persistStore(store);
 
 const httpLink = createHttpLink({
-  uri: 'https://6953ptqg3b.execute-api.us-west-2.amazonaws.com/dev/graphql',
+  uri: 'https://cpbubzqq92.execute-api.us-west-2.amazonaws.com/dev/graphql'
+  //  uri: 'https://6953/ptqg3b.execute-api.us-west-2.amazonaws.com/dev/graphql',
   // uri: Config.BASE_URL
 });
 
@@ -43,7 +44,7 @@ const App = () => {
   LogBox.ignoreLogs(['Warning: ...']);
   LogBox.ignoreAllLogs();
 
-  useEffect(() => {
+  useEffect(()=>{
     // Instabug.isRunningLive(function (isLive) {
     //   if (isLive) {
     //     Instabug.start('02e02ab36f08bb8372ad6966cd83bf8a', [Instabug.invocationEvent.shake, Instabug.invocationEvent.screenshot]);
@@ -55,7 +56,7 @@ const App = () => {
       token: '02e02ab36f08bb8372ad6966cd83bf8a',
       invocationEvents: [InvocationEvent.shake, InvocationEvent.screenshot],
     });
-  }, [])
+  },[])
 
   return (
     <ApolloProvider client={client}>

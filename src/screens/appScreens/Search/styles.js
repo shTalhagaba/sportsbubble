@@ -36,7 +36,7 @@ export default ScaledSheet.create({
     width: '12@ms0.3',
     marginStart: '5@ms0.3',
     tintColor: Colors.white,
-    marginStart: 10
+    opacity: 0.7
   },
   crossImage: {
     height: '12@ms0.3',
@@ -62,7 +62,8 @@ export default ScaledSheet.create({
     flex: 1,
     fontWeight: '500',
     fontFamily: Fonts.Regular,
-    marginStart: 10
+    marginStart: 10,
+    opacity: 0.7
   },
   focus: {
     borderWidth: '2@ms0.3',

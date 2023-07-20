@@ -92,9 +92,10 @@ export default function Connect(props) {
         <Text style={styles.connectingText}>{Strings.connecting}</Text>
         <View style={styles.logoImageContainer}>
           <ImageWithPlaceHolder
-            source={eventFlag && holderItem?.edges?.[0]?.node?.logoUrl
-                  ? holderItem?.edges?.[0]?.node?.logoUrl
-                  : holderItem?.logoUrl
+            source={
+              eventFlag && holderItem?.edges?.[0]?.node?.logoUrl
+                ? holderItem?.edges?.[0]?.node?.logoUrl
+                : holderItem?.node?.logoUrl
             }
             placeholderSource={Constants.placeholder_trophy_icon}
             style={styles.logoImageStyle}
@@ -107,7 +108,11 @@ export default function Connect(props) {
             title={Strings.watchNow}
             rightIcon={true}
             onpress={() =>
-              handleClick(item?.rightsHoldersConnection?.edges?.[0]?.rhVideoUrl)
+              handleClick(
+                eventFlag
+                  ? item?.rightsHoldersConnection?.edges?.[0]?.rhVideoUrl
+                  : holderItem?.rhVideoUrl,
+              )
             }
           />
         </View>

@@ -23,6 +23,7 @@ export const GET_SORTED_EVENTS = gql`
           node {
             name
             logoUrl
+            weight
           }
         }
       }

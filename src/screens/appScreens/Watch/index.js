@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ImageBackground,
   Text,
@@ -28,7 +28,20 @@ export default function Watch(props) {
   const navigation = useNavigation();
   const [itemSelected, setItemSelected] = useState(props?.route?.params?.item);
   const [bottomMenu, setBottomMenu] = useState(false);
+  const [bottomShow, setBottomShow] = useState(false);
   const {searchFlag} = props?.route?.params;
+
+  useEffect(()=>{
+    if(props?.route?.params?.item && props?.route?.params?.item?.rightsHoldersConnection?.totalCount > 1){
+      let list = props?.route?.params?.item?.rightsHoldersConnection?.edges.filter((item) => {
+        const rightsHolder = item?.node;
+        return rightsHolder && rightsHolder.weight > 1000;
+      });
+      if(list&&list.length>0){
+        setBottomShow(true)
+      }
+    }
+  },[props?.route?.params?.item])
 
   return (
     <ImageBackground
@@ -105,92 +118,18 @@ export default function Watch(props) {
               showsVerticalScrollIndicator={false}
               horizontal
               contentContainerStyle={{flex: 1, justifyContent: 'center'}}
-              renderItem={({item, index}) => (
-                <TouchableOpacity
-                  style={{width: screenWidth / 4, overflow: 'hidden'}}
-                  onPress={() =>
-                    navigation.navigate('withoutBottomtab', {
-                      screen: 'Connect',
-                      params: {item: itemSelected, holderItem: item?.node},
-                    })
-                  }>
-                  <View style={{alignItems: 'center', marginTop: 25}}>
-                    <View
-                      // source={Images.InActiveSliderBorder}
-                      // resizeMode="cover"
-                      style={{
-                        borderRadius: 20,
-                        borderWidth: 2,
-                        borderColor: '#21354F',
-                        backgroundColor: '#21354F',
-                        overflow: 'hidden',
-                      }}>
-                      <View
-                        style={{
-                          position: 'absolute',
-                          left: 0,
-                          top: 0,
-                          width: '100%',
-                          height: '100%',
-                          backgroundColor: 'rgba(0, 0, 0, 0.15)',
-                        }}
-                      />
-                      <View style={styles.imageContainer}>
-                        <ImageWithPlaceHolder
-                          source={item?.node?.logoUrl}
-                          placeholderSource={Constants.placeholder_trophy_icon}
-                          style={styles.imageRightsIcon}
-                          logoUrl={true}
-                          widthLogo={50}
-                          heightLogo={50}
-                          resizeMode="contain"
-                        />
-                      </View>
-                    </View>
-                    <Text style={styles.listTitleTxt} numberOfLines={1}>
-                      {item?.node?.name || item?.title}
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              )}
-            />
-          </View>
-        ) : (
-          <Text style={styles.orangeTxt}>{Strings.connectToWatchEmpty}</Text>
-        )}
-      </View>
-      {itemSelected &&
-      itemSelected?.rightsHoldersConnection?.edges &&
-      itemSelected?.rightsHoldersConnection?.totalCount > 1 ? (
-        <>
-          {/* Bottom Menu circle */}
-          {bottomMenu ? (
-            <ImageBackground
-              source={Images.CircleBGLarge}
-              resizeMode={'stretch'}
-              style={styles.largeMenuImage}>
-              <TouchableOpacity onPress={() => setBottomMenu(false)}>
-                <Image source={Images.Menu} style={styles.menuBtn2} />
-              </TouchableOpacity>
-              <Text style={styles.wayToWatch}>{Strings.otherWays}</Text>
-              <View style={{marginTop: 1, marginHorizontal: 1}}>
-                <FlatList
-                  data={itemSelected?.rightsHolders || data}
-                  showsVerticalScrollIndicator={false}
-                  contentContainerStyle={{justifyContent: 'center'}}
-                  horizontal
-                  renderItem={({item, index}) => (
-                    <TouchableOpacity
-                      onPress={() =>
-                        navigation.navigate('withoutBottomtab', {
-                          screen: 'Connect',
-                          params: {item: itemSelected},
-                        })
-                      }
-                      style={[
-                        styles.listBottomContainer,
-                        {width: screenWidth / 4, overflow: 'hidden'},
-                      ]}>
+              renderItem={({item, index}) => {
+                return item?.node?.weight === null ||
+                  item?.node?.weight < 1000 ? (
+                  <TouchableOpacity
+                    style={{width: screenWidth / 4, overflow: 'hidden'}}
+                    onPress={() =>
+                      navigation.navigate('withoutBottomtab', {
+                        screen: 'Connect',
+                        params: {item: itemSelected, holderItem: item},
+                      })
+                    }>
+                    <View style={{alignItems: 'center', marginTop: 25}}>
                       <View
                         // source={Images.InActiveSliderBorder}
                         // resizeMode="cover"
@@ -212,22 +151,101 @@ export default function Watch(props) {
                           }}
                         />
                         <View style={styles.imageContainer}>
-                          <Image
-                            source={
-                              item?.logoUrl
-                                ? {uri: item?.logoUrl}
-                                : Images.NBALogo
+                          <ImageWithPlaceHolder
+                            source={item?.node?.logoUrl}
+                            placeholderSource={
+                              Constants.placeholder_trophy_icon
                             }
                             style={styles.imageRightsIcon}
-                            resizeMode={'contain'}
+                            logoUrl={true}
+                            widthLogo={50}
+                            heightLogo={50}
+                            resizeMode="contain"
                           />
                         </View>
                       </View>
-                      <Text style={styles.listTitleTxt2} numberOfLines={1}>
-                        {item?.name || item?.title}
+                      <Text style={styles.listTitleTxt} numberOfLines={1}>
+                        {item?.node?.name || item?.title}
                       </Text>
-                    </TouchableOpacity>
-                  )}
+                    </View>
+                  </TouchableOpacity>
+                ) : null;
+              }}
+            />
+          </View>
+        ) : (
+          <Text style={styles.orangeTxt}>{Strings.connectToWatchEmpty}</Text>
+        )}
+      </View>
+      {bottomShow&& (
+          bottomMenu ? (
+            <ImageBackground
+              source={Images.CircleBGLarge}
+              resizeMode={'stretch'}
+              style={styles.largeMenuImage}>
+              <TouchableOpacity onPress={() => setBottomMenu(false)}>
+                <Image source={Images.Menu} style={styles.menuBtn2} />
+              </TouchableOpacity>
+              <Text style={styles.wayToWatch}>{Strings.otherWays}</Text>
+              <View style={{marginTop: 1, marginHorizontal: 1}}>
+                <FlatList
+                  data={itemSelected?.rightsHoldersConnection?.edges || data}
+                  showsVerticalScrollIndicator={false}
+                  contentContainerStyle={{justifyContent: 'center'}}
+                  horizontal
+                  renderItem={({item, index}) => {
+                    return item?.node?.weight > 1000 ? (
+                      <TouchableOpacity
+                        onPress={() =>
+                          navigation.navigate('withoutBottomtab', {
+                            screen: 'Connect',
+                            params: {item: itemSelected, holderItem: item},
+                          })
+                        }
+                        style={[
+                          styles.listBottomContainer,
+                          {width: screenWidth / 4, overflow: 'hidden'},
+                        ]}>
+                        <View
+                          // source={Images.InActiveSliderBorder}
+                          // resizeMode="cover"
+                          style={{
+                            borderRadius: 20,
+                            borderWidth: 2,
+                            borderColor: '#21354F',
+                            backgroundColor: '#21354F',
+                            overflow: 'hidden',
+                          }}>
+                          <View
+                            style={{
+                              position: 'absolute',
+                              left: 0,
+                              top: 0,
+                              width: '100%',
+                              height: '100%',
+                              backgroundColor: 'rgba(0, 0, 0, 0.15)',
+                            }}
+                          />
+                          <View style={styles.imageContainer}>
+                            <ImageWithPlaceHolder
+                              source={item?.node?.logoUrl}
+                              placeholderSource={
+                                Constants.placeholder_trophy_icon
+                              }
+                              style={styles.imageRightsIcon}
+                              logoUrl={true}
+                              widthLogo={50}
+                              heightLogo={50}
+                              resizeMode="contain"
+                            />
+                          </View>
+                        </View>
+                        <Text style={styles.listTitleTxt2} numberOfLines={1}>
+                          {item?.node?.name || item?.title}
+                        </Text>
+                      </TouchableOpacity>
+                    ) : null;
+                  }}
                 />
               </View>
             </ImageBackground>
@@ -241,9 +259,8 @@ export default function Watch(props) {
               </TouchableOpacity>
               <Text style={styles.wayToWatch}>{Strings.otherWays}</Text>
             </ImageBackground>
-          )}
-        </>
-      ) : null}
+          )
+      )}
     </ImageBackground>
   );
 }

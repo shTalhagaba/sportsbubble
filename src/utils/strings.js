@@ -47,4 +47,5 @@ export default {
   sportStreaming: 'Sports & Streaming Apps',
   sportStreamingDes: 'Please share how you watch to help us improve our service',
   alertDes: 'Are you sure you want to cancel your account? This will erase your favorites and notification preferences.',
+  emptyGuideList: "There are no live events in our schedule during this time period. Tap 'Live Now' above to see live event listings or swipe right to see upcoming event listings",
 };
