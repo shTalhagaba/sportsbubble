@@ -69,7 +69,6 @@ export default function Connect(props) {
                     {'  l  '}
                   </Text>
                   <Text style={[styles.dateEventTxt]}>
-                    n
                     {item?.startTime
                       ? dayjs(item?.startTime).format('h:mma') +
                         ' - ' +

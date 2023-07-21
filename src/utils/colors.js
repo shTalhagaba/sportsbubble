@@ -21,4 +21,5 @@ export default {
     mediumGreen: "#50813B",
     darkOrange: "#FF9900",
     lightBlue: "#6489B7",
+    backBlack: "#0D131A",
 }

@@ -36,7 +36,7 @@ export default function Search(props) {
     dayjs(new Date()).add(7, 'day').toISOString(),
   );
   const [isFocused, setIsFocused] = useState(true);
-  const [searchFlag, setSearchFlag] = useState(false);
+  const [searchFlag, setSearchFlag] = useState(true);
 
   const handleFocus = () => {
     setIsFocused(true);
@@ -129,13 +129,22 @@ export default function Search(props) {
     onPressTouch();
   }, [isFocused]);
   const onPressTouch = () => {
+    if(!isFocused){
     setTimeout(() => {
       inputRef?.current?.focus();
       // setIsFocused(false)
 
       Keyboard.dismiss();
     }, 100); // Delay the focus call to ensure proper rendering
+  }
   };
+
+  const handleClear = () => {
+    setSearchText('');
+    setIsFocused(false);
+    setSearchFlag(false)
+  };
+
 
   // const onPressTouch = () => {
 
@@ -162,7 +171,7 @@ export default function Search(props) {
       <View style={styles.mainContainer}>
         {/* Search text box */}
         <TouchableOpacity
-          onPress={() => setIsFocused(!isFocused)}
+          onPress={() => setIsFocused(true)}
           style={[
             styles.searchContainer,
             isFocused ? styles.focus : styles.blur,
@@ -201,23 +210,17 @@ export default function Search(props) {
               <TextInput
                 style={[styles.inputField]}
                 onFocus={handleFocus}
-                // onBlur={handleBlur}
+                // onBlur={handleBlur} // Uncomment this line if needed
                 autoFocus={true}
                 placeholder={!isFocused ? 'Search' : ''}
                 placeholderTextColor={Colors.white}
-                // ref={textInputRef}
-                // ref={inputRef}
                 value={searchText}
                 onChangeText={text => handleInputChange(text)}
-                onSubmitEditing={() => handleDone()}
+                onSubmitEditing={handleDone}
               />
             </View>
           </View>
-          <TouchableOpacity
-            onPress={() => {
-              setSearchText('');
-              setIsFocused(false);
-            }}>
+          <TouchableOpacity onPress={handleClear}>
             <Image
               source={Images.Cross}
               style={styles.crossImage}

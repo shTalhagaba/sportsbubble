@@ -4,8 +4,7 @@ import { ScaledSheet } from 'react-native-size-matters';
 export default ScaledSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: Colors.appColorBackground,
-    backgroundColor: Colors.mediumBlue,
+    backgroundColor: Colors.backBlack,
   },
   sbContainer: {
     alignItems: 'center',

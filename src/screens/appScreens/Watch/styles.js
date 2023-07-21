@@ -128,8 +128,7 @@ export default ScaledSheet.create({
     fontFamily: Fonts.Regular,
     textAlign: 'center',
     marginTop: 8,
-    marginStart: -10,
-    width: '60%',
+    width: '80%',
   },
   listTitleTxt2: {
     fontSize: "13@ms0.3",
@@ -140,8 +139,7 @@ export default ScaledSheet.create({
     textAlign: 'center',
     alignSelf:'center',
     marginTop: 8,
-    marginStart: -10,
-    width: '60%',
+    width: '80%',
   },
   sliderActiveTimeTxt: {
     fontSize: "14@ms0.3",
