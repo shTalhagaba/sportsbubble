@@ -13,7 +13,7 @@ import {
   Platform,
 } from 'react-native';
 import styles from './styles';
-import {Images, Colors, Constants} from 'src/utils';
+import {Images, Colors, Constants, Strings} from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
 import AppSearch from 'src/components/AppSearch';
 import {useQuery} from '@apollo/client';
@@ -249,9 +249,7 @@ export default function Search(props) {
           ListEmptyComponent={
             <View>
               <Text style={styles.emptyTxt}>
-                {
-                  'Search by Event, Team, League or Sport to Find Event Watch Information'
-                }
+                {Strings.emptySearchList}
               </Text>
             </View>
           }
