@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   ImageBackground,
   Text,
@@ -8,7 +8,7 @@ import {
   Linking,
 } from 'react-native';
 import styles from './styles';
-import {Images, Colors, Strings, Constants} from 'src/utils';
+import { Images, Colors, Strings, Constants } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
 import GreenButton from 'src/components/GreenButton';
 import dayjs from 'dayjs';
@@ -16,7 +16,8 @@ import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 
 export default function Connect(props) {
   const [item, setItem] = useState(props?.route?.params?.item);
-  const {holderItem, eventFlag} = props?.route?.params;
+  const { holderItem, eventFlag } = props?.route?.params;
+  const currentDate = dayjs(); // Get the current date and time
   const handleClick = url => {
     if (url) {
       Linking.openURL(url);
@@ -37,7 +38,7 @@ export default function Connect(props) {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        customLeftImage={{tintColor: Colors.orange}}
+        customLeftImage={{ tintColor: Colors.orange }}
         SimpleView
       />
       {/* Main View */}
@@ -71,8 +72,8 @@ export default function Connect(props) {
                   <Text style={[styles.dateEventTxt]}>
                     {item?.startTime
                       ? dayjs(item?.startTime).format('h:mma') +
-                        ' - ' +
-                        dayjs(item?.endTime).format('h:mma')
+                      ' - ' +
+                      dayjs(item?.endTime).format('h:mma')
                       : item?.time}
                   </Text>
                 </View>
@@ -103,17 +104,20 @@ export default function Connect(props) {
           />
         </View>
         <View style={styles.buttonContainer}>
-          <GreenButton
-            title={Strings.watchNow}
-            rightIcon={true}
-            onpress={() =>
-              handleClick(
-                eventFlag
-                  ? item?.rightsHoldersConnection?.edges?.[0]?.rhVideoUrl
-                  : holderItem?.rhVideoUrl,
-              )
-            }
-          />
+
+          {dayjs(item?.startTime).isAfter(currentDate) ? null :
+            <GreenButton
+              title={Strings.watchNow}
+              rightIcon={true}
+              onpress={() =>
+                handleClick(
+                  eventFlag
+                    ? item?.rightsHoldersConnection?.edges?.[0]?.rhVideoUrl
+                    : holderItem?.rhVideoUrl,
+                )
+              }
+            />
+          }
         </View>
       </View>
       {/* Powered by sports bubble */}
