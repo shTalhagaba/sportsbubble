@@ -78,7 +78,7 @@ export default ScaledSheet.create({
     paddingVertical: "20@ms0.3",
     paddingHorizontal: Platform.OS === "android" ? 15 : 18,
     overflow: "hidden",
-    borderRadius: "16@ms0.3"
+    borderRadius: "16@ms0.3",
   },
   bottomImageContainer: {
     marginRight: 16,
@@ -137,7 +137,7 @@ export default ScaledSheet.create({
     color: Colors.white,
     fontFamily: Fonts.Regular,
     textAlign: 'center',
-    alignSelf:'center',
+    alignSelf: 'center',
     marginTop: 8,
     width: '80%',
   },
@@ -162,7 +162,7 @@ export default ScaledSheet.create({
     lineHeight: "25@ms0.3",
     color: Colors.white,
     fontFamily: Fonts.Regular,
-    width: Platform.OS ==='android'? screenWidth - 130 :'85%',
+    width: Platform.OS === 'android' ? screenWidth - 130 : '85%',
   },
   eventTxt: {
     fontSize: "14@ms0.3",
@@ -170,7 +170,7 @@ export default ScaledSheet.create({
     lineHeight: "20@ms0.3",
     color: Colors.white,
     fontFamily: Fonts.Regular,
-    width: Platform.OS ==='android'? screenWidth - 130 :'85%',
+    width: Platform.OS === 'android' ? screenWidth - 130 : '85%',
   },
   dateEventTxt: {
     fontSize: "14@ms0.3",
