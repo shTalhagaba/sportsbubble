@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ImageBackground,
   Text,
@@ -10,26 +10,27 @@ import {
   Dimensions,
 } from 'react-native';
 import styles from './styles';
-import { Images, Colors, Strings, Constants } from 'src/utils';
+import {Images, Colors, Strings, Constants} from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import dayjs from 'dayjs';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 const screenWidth = Dimensions.get('window').width;
 
 const data = [
-  { id: 1, img: Images.NBALogo, title: 'Fubo' },
-  { id: 2, img: Images.NBALogo, title: 'ESPN' },
-  { id: 3, img: Images.NBALogo, title: 'Sling' },
-  { id: 4, img: Images.NBALogo, title: 'DAZN' },
+  {id: 1, img: Images.NBALogo, title: 'Fubo'},
+  {id: 2, img: Images.NBALogo, title: 'ESPN'},
+  {id: 3, img: Images.NBALogo, title: 'Sling'},
+  {id: 4, img: Images.NBALogo, title: 'DAZN'},
 ];
 
 export default function Watch(props) {
   const navigation = useNavigation();
+  const currentDate = dayjs(); // Get the current date and time
   const [itemSelected, setItemSelected] = useState(props?.route?.params?.item);
   const [bottomMenu, setBottomMenu] = useState(false);
   const [bottomShow, setBottomShow] = useState(false);
-  const { searchFlag } = props?.route?.params;
+  const {searchFlag} = props?.route?.params;
 
   useEffect(() => {
     if (
@@ -102,8 +103,8 @@ export default function Watch(props) {
                   <Text style={[styles.dateEventTxt]}>
                     {' ' + itemSelected?.startTime
                       ? dayjs(itemSelected?.startTime).format('h:mma') +
-                      ' - ' +
-                      dayjs(itemSelected?.endTime).format('h:mma')
+                        ' - ' +
+                        dayjs(itemSelected?.endTime).format('h:mma')
                       : itemSelected?.time}
                   </Text>
                 </View>
@@ -115,35 +116,39 @@ export default function Watch(props) {
         <Text style={styles.watchOptions}>{Strings.watchOptions}</Text>
         {/* right holder connection list */}
         {itemSelected &&
-          itemSelected?.rightsHoldersConnection?.edges &&
-          itemSelected?.rightsHoldersConnection?.totalCount > 1 ? (
+        itemSelected?.rightsHoldersConnection?.edges &&
+        itemSelected?.rightsHoldersConnection?.totalCount > 1 ? (
           <View style={styles.flatlistContainer}>
-            <Text style={styles.conectTxt}>{Strings.connectToWatch}</Text>
+            <Text style={styles.conectTxt}>{dayjs(itemSelected?.startTime).isAfter(currentDate)?Strings.connectToWatchFuture+" "+dayjs(itemSelected?.startTime).format('dddd MM/D [at] h:mma'):Strings.connectToWatch}</Text>
             <FlatList
               data={itemSelected?.rightsHoldersConnection?.edges || data}
               showsVerticalScrollIndicator={false}
               horizontal
-              contentContainerStyle={{ flex: 1, justifyContent: 'center', }}
-              renderItem={({ item, index }) => {
+              contentContainerStyle={{flex: 1, justifyContent: 'center'}}
+              renderItem={({item, index}) => {
                 return item?.node?.weight === null ||
                   item?.node?.weight < 1000 ? (
-
                   <TouchableOpacity
-                    onPress={() =>
-                      navigation.navigate('withoutBottomtab', {
+                    onPress={() =>{
+                      dayjs(itemSelected?.startTime).isAfter(currentDate)?{}: navigation.navigate('withoutBottomtab', {
                         screen: 'Connect',
-                        params: { item: itemSelected, holderItem: item },
-                      })
+                        params: {item: itemSelected, holderItem: item},
+                      })}
                     }
-                    style={{ alignItems: "center", marginTop: 25, marginRight: 20 }}>
-                    <View style={{
-                      width: screenWidth / 4,
-                      backgroundColor: "#21354F",
-                      borderWidth: 2,
-                      borderRadius: 16,
-                      overflow: 'hidden',
-                      borderColor: "#21354F",
+                    style={{
+                      alignItems: 'center',
+                      marginTop: 25,
+                      marginRight: 20,
                     }}>
+                    <View
+                      style={{
+                        width: screenWidth / 4,
+                        backgroundColor: '#21354F',
+                        borderWidth: 2,
+                        borderRadius: 16,
+                        overflow: 'hidden',
+                        borderColor: '#21354F',
+                      }}>
                       <View
                         style={{
                           position: 'absolute',
@@ -157,9 +162,7 @@ export default function Watch(props) {
                       <View style={styles.imageContainer}>
                         <ImageWithPlaceHolder
                           source={item?.node?.logoUrl}
-                          placeholderSource={
-                            Constants.placeholder_trophy_icon
-                          }
+                          placeholderSource={Constants.placeholder_trophy_icon}
                           style={styles.imageRightsIcon}
                           logoUrl={true}
                           widthLogo={50}
@@ -167,63 +170,11 @@ export default function Watch(props) {
                           resizeMode="contain"
                         />
                       </View>
-
                     </View>
                     <Text style={styles.listTitleTxt} numberOfLines={1}>
                       {item?.node?.name || item?.title}
                     </Text>
                   </TouchableOpacity>
-
-
-
-
-
-                  // <TouchableOpacity
-                  //   style={{ width: screenWidth / 4, overflow: 'hidden', }}
-                  //   onPress={() =>
-                  //     navigation.navigate('withoutBottomtab', {
-                  //       screen: 'Connect',
-                  //       params: { item: itemSelected, holderItem: item },
-                  //     })
-                  //   }>
-                  //   <View style={{ alignItems: 'center', marginTop: 25 }}>
-                  //     <View
-                  //       style={{
-                  //         borderRadius: 20,
-                  //         borderWidth: 2,
-                  //         borderColor: '#21354F',
-                  //         backgroundColor: '#21354F',
-                  //         overflow: 'hidden',
-                  //       }}>
-                  //       <View
-                  //         style={{
-                  //           position: 'absolute',
-                  //           left: 0,
-                  //           top: 0,
-                  //           width: '100%',
-                  //           height: '100%',
-                  //           backgroundColor: 'rgba(0, 0, 0, 0.15)',
-                  //         }}
-                  //       />
-                  //       <View style={styles.imageContainer}>
-                  //         <ImageWithPlaceHolder
-                  //           source={item?.node?.logoUrl}
-                  //           placeholderSource={
-                  //             Constants.placeholder_trophy_icon
-                  //           }
-                  //           style={styles.imageRightsIcon}
-                  //           logoUrl={true}
-                  //           widthLogo={50}
-                  //           heightLogo={50}
-                  //           resizeMode="contain"
-                  //         />
-                  //       </View>
-                  //     </View>
-                  //     <Text style={styles.listTitleTxt} numberOfLines={1}>
-                  //       {item?.node?.name || item?.title}
-                  //     </Text>
-                  //   </View>
-                  // </TouchableOpacity>
                 ) : null;
               }}
             />
@@ -238,29 +189,28 @@ export default function Watch(props) {
             source={Images.CircleBGLarge}
             resizeMode={'stretch'}
             style={styles.largeMenuImage}>
-            <TouchableOpacity
-              onPress={() => setBottomMenu(false)}>
+            <TouchableOpacity onPress={() => setBottomMenu(false)}>
               <Image source={Images.Menu} style={styles.menuBtn2} />
             </TouchableOpacity>
             <Text style={styles.wayToWatch}>{Strings.otherWays}</Text>
-            <View style={{ marginTop: 1, marginHorizontal: 1 }}>
+            <View style={{marginTop: 1, marginHorizontal: 1}}>
               <FlatList
                 data={itemSelected?.rightsHoldersConnection?.edges || data}
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={{ justifyContent: 'center' }}
+                contentContainerStyle={{justifyContent: 'center'}}
                 horizontal
-                renderItem={({ item, index }) => {
+                renderItem={({item, index}) => {
                   return item?.node?.weight > 1000 ? (
-                    <TouchableOpacity
-                      onPress={() =>
-                        navigation.navigate('withoutBottomtab', {
-                          screen: 'Connect',
-                          params: { item: itemSelected, holderItem: item },
-                        })
-                      }
+                    <View
+                      // onPress={() =>
+                      //   navigation.navigate('withoutBottomtab', {
+                      //     screen: 'Connect',
+                      //     params: {item: itemSelected, holderItem: item},
+                      //   })
+                      // }
                       style={[
                         styles.listBottomContainer,
-                        { width: screenWidth / 4 - 2, overflow: 'hidden' },
+                        {width: screenWidth / 4 - 2, overflow: 'hidden'},
                       ]}>
                       <View
                         // source={Images.InActiveSliderBorder}
@@ -299,7 +249,7 @@ export default function Watch(props) {
                       <Text style={styles.listTitleTxt2} numberOfLines={1}>
                         {item?.node?.name || item?.title}
                       </Text>
-                    </TouchableOpacity>
+                    </View>
                   ) : null;
                 }}
               />

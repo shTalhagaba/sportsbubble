@@ -280,36 +280,42 @@ export default function Guide(props) {
   useEffect(() => {
     if (eventList && eventList.length > 0) {
       let filteredEvents;
-      if (selectedTimeIndex >= 0 && selectedCategory != 'all') {
-        filteredEvents = eventList.filter(
-          event => event.category.name === selectedCategory,
+
+      if (selectedCategory.includes('all')) {
+        // If "all" category is selected, no need to filter, keep all events
+        filteredEvents = eventList;
+      } else {
+        // Filter events based on the selected categories
+        filteredEvents = eventList.filter(event =>
+          selectedCategory.includes(event.category.name.toLowerCase()),
         );
       }
+
       setFilteredEventList(filteredEvents);
     }
   }, [eventList]);
 
   const handleSelectedCategory = (e, index) => {
+    if (index === 0 && selectedCategory === 'all') {
+      return;
+    }
     let list = [...categoryData];
     const selectedTime = timeData?.[selectedTimeIndex]?.datetime;
     const formattedTime = dayjs(selectedTime).format(
       'YYYY-MM-DDTHH:mm:ss.SSSZ',
     );
 
-    if (index === 0) {
-      // Toggle the selected category
-      list[index].selected = !list[index].selected;
+    // Toggle the selected category
+    list[index].selected = !list[index].selected;
 
-      // Deselect all other categories
+    if (index === 0) {
+      // Deselect all other categories if 'all' category is selected
       list.forEach((element, idx) => {
         if (idx !== 0) {
           element.selected = false;
         }
       });
     } else {
-      // Toggle the selected category
-      list[index].selected = !list[index].selected;
-
       // Check if all other categories are deselected
       const otherSelected = list.slice(1).some(element => element.selected);
       if (!otherSelected) {
@@ -318,9 +324,18 @@ export default function Guide(props) {
         list[0].selected = false;
       }
     }
+
     // Filter events based on selected categories and time
+    const selectedCategories = list.filter(category => category.selected);
+    const selectedCategoryValues = selectedCategories.map(
+      category => category.value,
+    );
+
     let filteredEvents = [];
-    if (list[0].selected) {
+    if (
+      selectedCategories.length === 1 &&
+      selectedCategoryValues[0] === 'all'
+    ) {
       setSelectedCategory('all');
       filteredEvents =
         selectedTimeIndex === 0
@@ -332,19 +347,17 @@ export default function Guide(props) {
       filteredEvents =
         selectedTimeIndex === 0
           ? eventList.filter(event =>
-              list.some(
-                category =>
-                  category.selected && category.value === event.category.name,
+              selectedCategoryValues.includes(
+                event.category.name.toLowerCase(),
               ),
             )
           : eventList.filter(
               event =>
-                list.some(
-                  category =>
-                    category.selected && category.value === event.category.name,
+                selectedCategoryValues.includes(
+                  event.category.name.toLowerCase(),
                 ) && dayjs(event.startTime).isAfter(formattedTime),
             );
-      setSelectedCategory(e?.value);
+      setSelectedCategory(selectedCategoryValues);
     }
 
     setCategoryData(list);
@@ -424,82 +437,79 @@ export default function Guide(props) {
   const ItemComponent = React.memo(({item}) => {
     return (
       // Render your item component here
-      selectedCategory === 'all' ||
-        item?.category?.name === selectedCategory ? (
-        <TouchableOpacity
-          style={styles.listContiner}
-          onPress={() => {
-            if (
-              item &&
-              item?.rightsHoldersConnection &&
-              item?.rightsHoldersConnection?.totalCount === 1
-            ) {
-              navigation.navigate('withoutBottomtab', {
-                screen: 'Connect',
-                params: {
-                  item: item,
-                  holderItem: item?.rightsHoldersConnection,
-                  eventFlag: true,
-                },
-              });
-            } else {
-              navigation.navigate('Watch', {item: item});
-            }
-          }}>
-          <View style={styles.innerContainer}>
-            <View style={styles.imageContainer}>
-              <ImageWithPlaceHolder
-                source={item?.logo1}
-                placeholderSource={Constants.placeholder_trophy_icon}
-                style={styles.imageIcon}
-                resizeMode="contain"
-              />
-            </View>
-            <View
-              style={{
-                width: item?.startTime ? startTimeWidth(item?.startTime) : 0,
-                backgroundColor: Colors.darkBlue,
-              }}></View>
-            <View
-              style={{
-                width: endTimeWidth(item?.endTime),
-                backgroundColor: dayjs(item?.startTime).isAfter(currentDate)
-                  ? Colors.mediumBlue
-                  : Colors.mediumGreen,
-              }}></View>
-            <View
-              style={{
-                flex: 1,
-                backgroundColor: Colors.darkBlue,
-              }}></View>
-            <View style={styles.userNameContainer}>
-              <Text style={[styles.eventTxt, {marginTop: 5}]} numberOfLines={1}>
-                {item?.line1 ? item?.line1 : item?.companyName}
+      <TouchableOpacity
+        style={styles.listContiner}
+        onPress={() => {
+          if (
+            item &&
+            item?.rightsHoldersConnection &&
+            item?.rightsHoldersConnection?.totalCount === 1
+          ) {
+            navigation.navigate('withoutBottomtab', {
+              screen: 'Connect',
+              params: {
+                item: item,
+                holderItem: item?.rightsHoldersConnection,
+                eventFlag: true,
+              },
+            });
+          } else {
+            navigation.navigate('Watch', {item: item});
+          }
+        }}>
+        <View style={styles.innerContainer}>
+          <View style={styles.imageContainer}>
+            <ImageWithPlaceHolder
+              source={item?.logo1}
+              placeholderSource={Constants.placeholder_trophy_icon}
+              style={styles.imageIcon}
+              resizeMode="contain"
+            />
+          </View>
+          <View
+            style={{
+              width: item?.startTime ? startTimeWidth(item?.startTime) : 0,
+              backgroundColor: Colors.darkBlue,
+            }}></View>
+          <View
+            style={{
+              width: endTimeWidth(item?.endTime),
+              backgroundColor: dayjs(item?.startTime).isAfter(currentDate)
+                ? Colors.mediumBlue
+                : Colors.mediumGreen,
+            }}></View>
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: Colors.darkBlue,
+            }}></View>
+          <View style={styles.userNameContainer}>
+            <Text style={[styles.eventTxt, {marginTop: 5}]} numberOfLines={1}>
+              {item?.line1 ? item?.line1 : item?.companyName}
+            </Text>
+            <Text style={styles.titleTxt} numberOfLines={1}>
+              {item?.line2 ? item?.line2 : item?.title}
+            </Text>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={[styles.eventDateTxt]}>
+                {' '}
+                {item?.startTime
+                  ? dayjs(item?.startTime).format('ddd. MM/D')
+                  : item?.day}
+                {'  l '}
               </Text>
-              <Text style={styles.titleTxt} numberOfLines={1}>
-                {item?.line2 ? item?.line2 : item?.title}
+              <Text style={[styles.eventDateTxt]}>
+                {' '}
+                {item?.startTime
+                  ? `${dayjs(item?.startTime).format('h:mma')} - ${dayjs(
+                      item?.endTime,
+                    ).format('h:mma')}`
+                  : item?.time}
               </Text>
-              <View style={{flexDirection: 'row'}}>
-                <Text style={[styles.eventDateTxt]}>
-                  {' '}
-                  {item?.startTime
-                    ? dayjs(item?.startTime).format('ddd. MM/D')
-                    : item?.day}
-                  {'  l '}
-                </Text>
-                <Text style={[styles.eventDateTxt]}>
-                  {' '}
-                  {item?.startTime
-                    ? `${dayjs(item?.startTime).format('h:mma')} - ${dayjs(
-                        item?.endTime,
-                      ).format('h:mma')}`
-                    : item?.time}
-                </Text>
-              </View>
             </View>
           </View>
-        </TouchableOpacity>
-      ) : null
+        </View>
+      </TouchableOpacity>
     );
   });
 
@@ -609,8 +619,7 @@ export default function Guide(props) {
             renderItem={({item, index}) => {
               const adjustedIndex = index + currentIndex; // Calculate the adjusted index based on the current index
               return (
-                <TouchableOpacity
-                  // onPress={() => handleSelectTime(item, index)}
+                <View
                   style={[
                     styles.timeContainer,
                     {
@@ -620,7 +629,7 @@ export default function Guide(props) {
                   <Text style={styles.sliderInactiveTimeTxt}>
                     {timeData[adjustedIndex]?.title}
                   </Text>
-                </TouchableOpacity>
+                </View>
               );
             }}
           />

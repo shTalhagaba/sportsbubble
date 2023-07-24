@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   FlatList,
   ImageBackground,
@@ -13,15 +13,15 @@ import {
   Platform,
 } from 'react-native';
 import styles from './styles';
-import { Images, Colors, Constants, Strings } from 'src/utils';
+import {Images, Colors, Constants, Strings} from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
 import AppSearch from 'src/components/AppSearch';
-import { useQuery } from '@apollo/client';
-import { SEARCH_EVENTS_QUERY } from './queries'; 
+import {useQuery} from '@apollo/client';
+import {SEARCH_EVENTS_QUERY} from './queries';
 import dayjs from 'dayjs';
-import { useNavigation, useIsFocused } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {useNavigation, useIsFocused} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 const expireTime = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
@@ -73,7 +73,7 @@ export default function Search(props) {
       (reduxData && reduxData?.expire === currentTime) ||
       (reduxData && reduxData?.eventList && reduxData?.eventList.length <= 0)
     ) {
-      const { loading, refetch, error, data } = useQuery(SEARCH_EVENTS_QUERY, {
+      const {loading, refetch, error, data} = useQuery(SEARCH_EVENTS_QUERY, {
         variables: {
           searchString: searchText,
           startTime: startTime,
@@ -142,9 +142,8 @@ export default function Search(props) {
   const handleClear = () => {
     setSearchText('');
     setIsFocused(false);
-    setSearchFlag(false)
+    setSearchFlag(false);
   };
-
 
   // const onPressTouch = () => {
 
@@ -176,7 +175,7 @@ export default function Search(props) {
             styles.searchContainer,
             isFocused ? styles.focus : styles.blur,
           ]}>
-          <View style={{ flex: 1 }}>
+          <View style={{flex: 1}}>
             {isFocused && (
               <View
                 style={{
@@ -248,12 +247,10 @@ export default function Search(props) {
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={
             <View>
-              <Text style={styles.emptyTxt}>
-                {Strings.emptySearchList}
-              </Text>
+              <Text style={styles.emptyTxt}>{Strings.emptySearchList}</Text>
             </View>
           }
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <TouchableOpacity
               style={styles.listContiner}
               onPress={() => {
@@ -304,8 +301,8 @@ export default function Search(props) {
                       {' '}
                       {' ' + item?.startTime
                         ? dayjs(item?.startTime).format('h:mma') +
-                        ' - ' +
-                        dayjs(item?.endTime).format('h:mma')
+                          ' - ' +
+                          dayjs(item?.endTime).format('h:mma')
                         : item?.time}
                     </Text>
                   </View>

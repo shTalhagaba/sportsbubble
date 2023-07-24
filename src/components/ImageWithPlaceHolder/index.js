@@ -1,6 +1,6 @@
 import CustomSvg from 'src/assets/images/PlaceholderIcon';
-import React, { useState } from 'react';
-import { Image, View } from 'react-native';
+import React, {useState} from 'react';
+import {Image, View} from 'react-native';
 
 const ImageWithPlaceHolder = ({
   source,
@@ -30,7 +30,7 @@ const ImageWithPlaceHolder = ({
             uri:
               !imageError && source && source != 'null'
                 ? source
-                : placeholderSource
+                : placeholderSource,
           }}
           style={style}
           onError={handleImageError}
