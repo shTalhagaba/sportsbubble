@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   FlatList,
   ImageBackground,
@@ -6,28 +6,25 @@ import {
   Image,
   Text,
   StatusBar,
-  ActivityIndicator,
   TouchableOpacity,
   Keyboard,
   TextInput,
   Platform,
 } from 'react-native';
 import styles from './styles';
-import { Images, Colors, Constants, Strings } from 'src/utils';
+import {Images, Colors, Constants, Strings} from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
-import AppSearch from 'src/components/AppSearch';
-import { useQuery } from '@apollo/client';
-import { SEARCH_EVENTS_QUERY } from './queries';
+import {useQuery} from '@apollo/client';
+import {SEARCH_EVENTS_QUERY} from './queries';
 import dayjs from 'dayjs';
-import { useNavigation, useIsFocused } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {useNavigation} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
+import strings from 'src/utils/strings';
 const expireTime = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
 export default function Search(props) {
   const navigation = useNavigation();
-  const textInputRef = useRef();
   const reduxData = useSelector(state => state.user);
   const [searchText, setSearchText] = useState('');
   const [list, setList] = useState([]);
@@ -46,26 +43,7 @@ export default function Search(props) {
     setIsFocused(false);
   };
 
-  // useEffect(() => {
-  //   if (textInputRef.current) {
-  //     const unsubscribe = navigation.addListener('focus', () => {
-  //       textInputRef.current?.focus();
-  //     });
-  //     return unsubscribe;
-  //   }
-  // }, [textInputRef.current]);
-
   const inputRef = useRef(null);
-
-  // useEffect(() => {
-  //   inputRef?.current?.focus();
-  //   Keyboard.dismiss(); // Open the keyboard immediately after focusing
-
-  //   // Optionally, you can add a delay before opening the keyboard
-  //   // setTimeout(() => {
-  //   //   Keyboard.dismiss();
-  //   // }, 2000);
-  // }, [inputRef, navigation]);
 
   useEffect(() => {
     const currentTime = Date.now();
@@ -73,7 +51,7 @@ export default function Search(props) {
       (reduxData && reduxData?.expire === currentTime) ||
       (reduxData && reduxData?.eventList && reduxData?.eventList.length <= 0)
     ) {
-      const { loading, refetch, error, data } = useQuery(SEARCH_EVENTS_QUERY, {
+      const {loading, refetch, error, data} = useQuery(SEARCH_EVENTS_QUERY, {
         variables: {
           searchString: searchText,
           startTime: startTime,
@@ -145,11 +123,6 @@ export default function Search(props) {
     setSearchFlag(false);
   };
 
-  // const onPressTouch = () => {
-
-  //   inputRef?.current?.focus();
-  //   Keyboard.dismiss(); // Open the keyboard immediately after focusing
-  // }
   return (
     <ImageBackground
       source={Images.Background2}
@@ -161,7 +134,6 @@ export default function Search(props) {
         barStyle="light-content"
       />
       {/* Header with Logo and back icon  */}
-      {/* <KeyboardAwareScrollView enableAutomaticScroll={true}> */}
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
@@ -175,7 +147,7 @@ export default function Search(props) {
             styles.searchContainer,
             isFocused ? styles.focus : styles.blur,
           ]}>
-          <View style={{ flex: 1 }}>
+          <View style={{flex: 1}}>
             {isFocused && (
               <View
                 style={{
@@ -189,7 +161,7 @@ export default function Search(props) {
                   style={styles.searchImageTwo}
                   resizeMode={'contain'}
                 />
-                <Text style={styles.searchTxt}>Search</Text>
+                <Text style={styles.searchTxt}>{strings.search}</Text>
               </View>
             )}
             <View
@@ -207,14 +179,13 @@ export default function Search(props) {
                 />
               )}
               <TextInput
-                style={[styles.inputField]}
+                style={styles.inputField}
                 onFocus={handleFocus}
-                // onBlur={handleBlur} // Uncomment this line if needed
                 autoFocus={true}
                 placeholder={!isFocused ? 'Search' : ''}
                 placeholderTextColor={Colors.white}
                 value={searchText}
-                onChangeText={text => handleInputChange(text)}
+                onChangeText={handleInputChange}
                 onSubmitEditing={handleDone}
               />
             </View>
@@ -227,20 +198,6 @@ export default function Search(props) {
             />
           </TouchableOpacity>
         </TouchableOpacity>
-
-        {/* <AppSearch
-            searchImage={Images.Search}
-            placeHolderColor={Colors.white}
-            placeHolder={'Search...'}
-            closeImage={Images.Cross}
-            refInner={inputRef}
-            // ref={inputRef}
-            // refInner={textInputRef}
-            onPressCloseImage={() => setSearchText('')}
-            value={searchText}
-            onChangeText={text => handleInputChange(text)}
-            autoFocus={true}
-          /> */}
         {/* list showing after search */}
         <FlatList
           data={searchText.length > 0 ? list : []}
@@ -250,7 +207,7 @@ export default function Search(props) {
               <Text style={styles.emptyTxt}>{Strings.emptySearchList}</Text>
             </View>
           }
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <TouchableOpacity
               style={styles.listContiner}
               onPress={() => {
@@ -301,8 +258,8 @@ export default function Search(props) {
                       {' '}
                       {' ' + item?.startTime
                         ? dayjs(item?.startTime).format('h:mma') +
-                        ' - ' +
-                        dayjs(item?.endTime).format('h:mma')
+                          ' - ' +
+                          dayjs(item?.endTime).format('h:mma')
                         : item?.time}
                     </Text>
                   </View>
@@ -312,13 +269,7 @@ export default function Search(props) {
           )}
           keyExtractor={(item, index) => item?.id}
         />
-        {/* ) : (
-          <View style={{flex: 1, justifyContent: 'center'}}>
-            <ActivityIndicator color={'#fff'} size={'large'} />
-          </View>
-        )} */}
       </View>
-      {/* </KeyboardAwareScrollView> */}
     </ImageBackground>
   );
 }

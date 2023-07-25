@@ -43,14 +43,8 @@ export default ScaledSheet.create({
   },
   timeContainer: {
     backgroundColor: '#21365110', // Set a semi-transparent background color
-    // paddingLeft: '10@ms0.3',
-    // marginLeft: '50@ms0.3',
-    // borderRadius: '15@ms0.3',
-    // height: '26@ms0.3',
-    // width: '54@ms0.3',
     alignSelf: 'center',
     paddingHorizontal: '18@ms0.3',
-    // marginLeft: '8@ms0.3',
     borderRadius: '20@ms0.3',
     height: '26@ms0.3',
     elevation: 3,
@@ -203,15 +197,6 @@ export default ScaledSheet.create({
     textShadowRadius: 8,
     textShadowColor: '#000000',
     marginTop: '6@ms0.3',
-
-    // elevation: 3,
-    // shadowOffset: { width: 0, height: 3 },
-    // shadowOpacity: 0.6,
-    // shadowRadius: 3,
-    // shadowColor: 'rgba(0, 0, 0, 0.4)',
-    // backgroundColor: '#00000010', // Set a semi-transparent background color
-    // borderRadius: '44@ms0.3',
-    // overflow: 'visible',
   },
   rectangle2: {
     position: 'absolute',

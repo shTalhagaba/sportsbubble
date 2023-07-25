@@ -418,14 +418,9 @@ export default function Guide(props) {
   };
 
   const handleNext = () => {
-    // if (isLive) {
-    //   handleSelectTime(currentIndex);
-    //   setIsLive(false);
-    // } else {
     handleSelectTime(currentIndex + 1);
     setCurrentIndex(prevIndex => prevIndex + 1);
     setIsLive(false);
-    // }
   };
 
   const handleLive = () => {
@@ -523,7 +518,6 @@ export default function Guide(props) {
         translucent
         barStyle="light-content"
       />
-      {/* <StatusBar backgroundColor={Colors.mediumBlue} barStyle="light-content" /> */}
       {/* Header with Logo only  */}
       <AppHeader centerImage={Images.Logo} />
       {/* Slider all pro  */}

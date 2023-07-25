@@ -50,4 +50,5 @@ export default {
   alertDes: 'Are you sure you want to cancel your account? This will erase your favorites and notification preferences.',
   emptyGuideList: "There are no live events in our schedule during this time period. Tap 'Live Now' above to see live event listings or swipe right to see upcoming event listings",
   emptySearchList: "Search by Event, Team, League or Sport to Find Event Watch Information",
+  search: "Search",
 };

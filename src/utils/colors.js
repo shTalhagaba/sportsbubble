@@ -22,4 +22,5 @@ export default {
     darkOrange: "#FF9900",
     lightBlue: "#6489B7",
     backBlack: "#0D131A",
+    black15: "rgba(0, 0, 0, 0.15)",
 }
