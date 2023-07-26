@@ -3,7 +3,7 @@ import { View, Text, ScrollView, ImageBackground, StatusBar, TouchableOpacity, I
 import styles from './styles';
 import ContactTextInput from 'src/components/ContactTextInput'
 import AppHeader from 'src/components/AppHeader'
-import { Images, Colors } from 'src/utils';
+import { Images, Colors, Strings } from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 import CustomModalView from 'src/components/Modal/CustomModal'
@@ -48,17 +48,17 @@ export default function Signup() {
             <AppHeader
                 centerImage={Images.Logo}
                 LeftImage={Images.LeftIcon}
-                customLeftImage={{ tintColor: Colors.yellow }}
+                headerContainer={{marginTop: 10}}
                 SimpleView />
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.innerContainer}>
-                    <Text style={styles.signupTxt}>Sign Up</Text>
+                    <Text style={styles.signupTxt}>{Strings.signUp}</Text>
                     <ContactTextInput
                         leftImage={Images.UserIcon}
                         refInner={fullNameRef}
                         Contianer={{ marginTop: 40 }}
                         placeholderTextColor={Colors.white}
-                        placeholder={"First Name"}
+                        placeholder={Strings.firstName}
                         multiline={false}
                         value={fullName}
                         maxLength={50}
@@ -75,7 +75,7 @@ export default function Signup() {
                         leftImage={Images.UserIcon}
                         refInner={lastNameRef}
                         placeholderTextColor={Colors.white}
-                        placeholder={"Last Name"}
+                        placeholder={Strings.lastName}
                         multiline={false}
                         value={lastName}
                         maxLength={50}
@@ -92,7 +92,7 @@ export default function Signup() {
                         leftImage={Images.EmailIcon}
                         refInner={emailRef}
                         placeholderTextColor={Colors.white}
-                        placeholder={"Email"}
+                        placeholder={Strings.email}
                         multiline={false}
                         value={email}
                         maxLength={50}
@@ -109,7 +109,7 @@ export default function Signup() {
                         leftImage={Images.LockIcon}
                         refInner={passwordRef}
                         placeholderTextColor={Colors.white}
-                        placeholder={"Password"}
+                        placeholder={Strings.password}
                         multiline={false}
                         value={password}
                         maxLength={50}
@@ -130,7 +130,7 @@ export default function Signup() {
                         leftImage={Images.LockIcon}
                         refInner={confirmPasswordRef}
                         placeholderTextColor={Colors.white}
-                        placeholder={"Confrim Password"}
+                        placeholder={Strings.confrimPassword}
                         multiline={false}
                         value={confirmPassword}
                         maxLength={50}
@@ -148,7 +148,7 @@ export default function Signup() {
                             style={styles.uncheckBox}>
                             {emailOptCheck && <Image source={Images.Tick} style={{ tintColor: Colors.white, height: 10, width: 10 }} />}
                         </TouchableOpacity>
-                        <Text style={[styles.checkBoxTxt, { marginStart: 10 }]}>Email Opt-in lorem ipsum dolor sit amet consecteur.</Text>
+                        <Text style={[styles.checkBoxTxt, { marginStart: 10 }]}>{Strings.signupTerm}</Text>
                     </View>
                     <View style={styles.chekboxContainer}>
                         <TouchableOpacity onPress={() => setTermsCheck(!termsCheck)}
@@ -157,14 +157,15 @@ export default function Signup() {
                         </TouchableOpacity>
 
                         <View style={styles.termConditionContainer}>
-                            <Text style={styles.checkBoxTxt}>I have read and agree to the</Text>
-                            <TouchableOpacity>
-                                <Text style={[styles.checkBoxGreenTxt]}>{' '}Terms of Service</Text>
+                            <Text style={styles.checkBoxTxt1}>{Strings.haveRead}
+                            <TouchableOpacity style={{paddingTop:10}}>
+                                <Text style={[styles.checkBoxGreenTxt]}>{' '}{Strings.termsofService}</Text>
                             </TouchableOpacity>
-                            <Text style={[styles.checkBoxTxt]}>{' '}and{' '}</Text>
-                            <TouchableOpacity>
-                                <Text style={[styles.checkBoxGreenTxt]}>Privacy Policy</Text>
+                            <Text style={[styles.checkBoxTxt2]}>{' '}and{' '}</Text>
+                            <TouchableOpacity style={{paddingTop:10}}>
+                                <Text style={[styles.checkBoxGreenTxt]}>{Strings.privacyPolicy2}</Text>
                             </TouchableOpacity>
+                            </Text>
                         </View>
                     </View>
                     <CustomButton

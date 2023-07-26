@@ -27,9 +27,10 @@ export default ScaledSheet.create({
     },
     sideTxt: {
         fontSize: "14@ms0.3",
-        color: Colors.white,
+        color: 'rgba(255, 255, 255, 0.66)',
         marginTop: "5@ms0.3",
         lineHeight: "20@ms0.3",
+        fontWeight: "400",
     },
     btnContainer: {
         marginTop: "55@ms0.3",

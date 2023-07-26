@@ -13,7 +13,6 @@ import { Provider } from 'react-redux';
 import rootReducer from 'src/store/Reducers/rootReducer';
 import mySaga from 'src/store/sagas';
 import { LogBox } from 'react-native';
-import Instabug, { InvocationEvent } from 'instabug-reactnative';
 
 const sagaMiddleware = createSagaMiddleware();
 const persistConfig = {

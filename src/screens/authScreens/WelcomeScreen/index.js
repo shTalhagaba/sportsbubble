@@ -1,13 +1,16 @@
 import React from 'react';
 import { View, Text, Image, ImageBackground, StatusBar, TouchableOpacity } from 'react-native';
 import styles from './styles';
-import { Images, Colors } from 'src/utils';
+import { Images, Colors, Strings } from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
+import { setGuest, setUser } from 'src/store/types';
+import { useDispatch } from 'react-redux';
 
 
 export default function WelcomeScreen() {
     const navigation = useNavigation()
+    const dispatch = useDispatch();
 
     return (
         <ImageBackground source={Images.HomeScreen}
@@ -15,23 +18,26 @@ export default function WelcomeScreen() {
             style={styles.container}>
             <StatusBar backgroundColor={Colors.mediumBlue} />
             <View style={styles.innerContainer}>
-                <Text style={styles.welcomeTxt}>Welcome to</Text>
+                <Text style={styles.welcomeTxt}>{Strings.welcome}</Text>
                 <Image source={Images.Logo} style={styles.logoImage} />
-                <Text style={styles.liveSportTxt}>Live Sports Event Guide</Text>
-                <Text style={styles.liveSportDesTxt}>Create an account for fast access to Pro, College, Olympic and Esports event information & viewing</Text>
+                <Text style={styles.liveSportTxt}>{Strings.liveSportsEventGuide}</Text>
+                <Text style={styles.liveSportDesTxt}>{Strings.welcomeCreateAccount}</Text>
                 <View style={styles.btnContainer}>
                     <CustomButton
                         Contianer={styles.freeBtnContainer}
-                        title={"Create Free Account"}
+                        title={Strings.createFreeAccount}
                         onpress={() => navigation.navigate("Signup")} />
                     <CustomButton
                         blue={true}
                         Contianer={styles.loginBtnContainer}
-                        title={"Login"}
+                        title={Strings.login}
                         onpress={() => navigation.navigate("Login")} />
-                    <TouchableOpacity onPress={() => console.log("Guest")}
+                    <TouchableOpacity onPress={() => {
+                        dispatch(setGuest(true))
+                        dispatch(setUser(true))
+                    }}
                         style={styles.guestContainer}>
-                        <Text style={styles.guestTxt}>Continue as Guest</Text>
+                        <Text style={styles.guestTxt}>{Strings.continueGuest}</Text>
                         <Image source={Images.RightArrow} style={styles.rightArrowImage} resizeMode={"contain"} />
                     </TouchableOpacity>
                 </View>

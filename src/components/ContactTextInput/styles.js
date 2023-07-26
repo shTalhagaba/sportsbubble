@@ -58,7 +58,7 @@ const styles = ScaledSheet.create({
     },
     eyeIcon: {
         height: "20@ms0.3",
-        width: "20@ms0.3",
+        width: "18@ms0.3",
         marginRight: "17@ms0.3",
         tintColor: Colors.white,
     },

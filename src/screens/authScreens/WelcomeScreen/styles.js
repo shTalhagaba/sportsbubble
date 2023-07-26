@@ -14,7 +14,7 @@ export default ScaledSheet.create({
         fontSize: "24@ms0.3",
         color: Colors.white,
         fontFamily: Fonts.Regular,
-        fontWeight: "500",
+        fontWeight: "400",
         marginTop: "60@ms0.3",
         textAlign: "center"
     },
@@ -22,7 +22,7 @@ export default ScaledSheet.create({
         fontSize: "22@ms0.3",
         color: Colors.white,
         fontFamily: Fonts.Regular,
-        fontWeight: "800",
+        fontWeight: "900",
         marginTop: "60@ms0.3",
         textAlign: "center",
         fontStyle: "italic"
@@ -41,7 +41,7 @@ export default ScaledSheet.create({
         fontSize: "16@ms0.3",
         color: Colors.white,
         fontFamily: Fonts.Regular,
-        fontWeight: "800",
+        fontWeight: "900",
         marginHorizontal: 10,
         lineHeight: "30@ms0.3",
         fontStyle: 'italic'
@@ -64,7 +64,8 @@ export default ScaledSheet.create({
         tintColor: Colors.white
     },
     btnContainer: {
-        marginHorizontal: "20@ms0.3"
+        marginHorizontal: "20@ms0.3",
+        zIndex:999
     },
     freeBtnContainer: {
         marginTop: "70@ms0.3"

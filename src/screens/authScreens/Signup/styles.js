@@ -21,11 +21,24 @@ export default ScaledSheet.create({
         alignSelf: "center",
         maxWidth: "80%"
     },
+    checkBoxTxt1: {
+        fontSize: "14@ms0.3",
+        fontWeight: "500",
+        color: Colors.white,
+        marginRight:'5%'
+    },
+    checkBoxTxt2: {
+        fontSize: "14@ms0.3",
+        fontWeight: "500",
+        color: Colors.white,
+        // maxWidth: "90%"
+    },
     checkBoxGreenTxt: {
         fontSize: "14@ms0.3",
         fontWeight: "800",
         textAlign: "center",
         color: Colors.lightGreen,
+        marginRight:'5%'
     },
     innerContainer: {
         marginHorizontal: "20@ms0.3",
@@ -34,7 +47,7 @@ export default ScaledSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         alignSelf: "center",
-        marginStart: "10@ms0.3"
+        marginStart: "10@ms0.3",
     },
     chekboxContainer: {
         flexDirection: "row",

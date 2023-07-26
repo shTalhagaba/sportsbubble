@@ -22,7 +22,7 @@ export default function ForgotPassword() {
             <AppHeader
                 centerImage={Images.Logo}
                 LeftImage={Images.LeftIcon}
-                customLeftImage={{ tintColor: Colors.yellow }}
+                headerContainer={{marginTop: 10}}
                 SimpleView />
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={{ marginHorizontal: 20 }}>

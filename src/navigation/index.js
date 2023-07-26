@@ -1,7 +1,6 @@
 import React from "react"
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AuthNavigator from './authNavigation'
-import SplashNavigator from './splashNavigation'
 import MyTabs from './bottomTab'
 import withoutBottomtab from './withoutBottomtab'
 import { useSelector } from "react-redux";
@@ -13,7 +12,6 @@ const StackNavigator = createNativeStackNavigator()
 const AppStackNavigator = () => {
   return (
     <StackNavigator.Navigator>
-      <StackNavigator.Screen name="Splash" component={Splash} options={{ headerShown: false }} />
       <StackNavigator.Screen name="Root" options={{ headerShown: false }}>
         {props => <MyTabs {...props} />}
       </StackNavigator.Screen>
@@ -23,16 +21,14 @@ const AppStackNavigator = () => {
 }
 
 const MainNavigator = () => {
-  // const data = useSelector((state) => state.user);
-  const data = !null
+  const data = useSelector((state) => state.user);
+  // const data = !null
   // if (data?.user) {
-  if (data) {
+  if (data?.user) {
     return <AppStackNavigator />
   }
   else {
-    // return <AuthNavigator />
-    return <SplashNavigator />
-
+    return <AuthNavigator />
   }
 }
 export default MainNavigator

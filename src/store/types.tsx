@@ -12,6 +12,13 @@ export const setUser = (args: any) => {
   };
 };
 
+export const setGuest = (args: any) => {
+  return {
+    type: 'SET_GUEST',
+    payload: args,
+  };
+};
+
 export const setStoreEventList = (args: any) => {
   return {
     type: 'SET_EVENT_LIST',

@@ -10,6 +10,7 @@ const initialState = {
   eventList: [],
   splashEventList: [],
   expire: '',
+  guest: false,
 };
 
 const user = (state = initialState, action: any) => {
@@ -58,6 +59,18 @@ const user = (state = initialState, action: any) => {
           return {
             ...state,
             user: action.payload,
+          };
+        } catch (e) {
+          alert(e);
+          return state;
+        }
+        break;
+      // guest
+       case 'SET_GUEST':
+        try {
+          return {
+            ...state,
+            guest: action.payload,
           };
         } catch (e) {
           alert(e);

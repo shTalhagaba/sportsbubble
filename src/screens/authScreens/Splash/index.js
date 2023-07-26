@@ -14,7 +14,7 @@ import DeviceInfo from 'react-native-device-info';
 import {useQuery} from '@apollo/client';
 import {GET_SORTED_EVENTS} from 'src/screens/appScreens/Guide/queries';
 import dayjs from 'dayjs';
-import {setSplashEventList} from 'src/store/types';
+import {setGuest, setSplashEventList, setUser} from 'src/store/types';
 import {useDispatch, useSelector} from 'react-redux';
 
 export default function Splash() {
@@ -68,7 +68,12 @@ export default function Splash() {
 
   useEffect(() => {
     if (!loading && reduxData?.splashEventList && reduxData?.splashEventList.length>0) {
-      navigation.replace('Root');
+      dispatch(setUser(false))
+      if(reduxData?.user){
+        navigation.replace('Root')
+      }else{
+      navigation.replace('WelcomeScreen')
+      }
     }
   }, [loading, reduxData?.splashEventList]);
 
