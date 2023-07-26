@@ -25,6 +25,7 @@ export default function Setting() {
   useEffect(() => {
     Instabug.init({
       token: '02e02ab36f08bb8372ad6966cd83bf8a',
+      invocationEvents: [InvocationEvent.shake],
       // invocationEvents: [InvocationEvent.shake, InvocationEvent.screenshot],
     });
   }, []);
