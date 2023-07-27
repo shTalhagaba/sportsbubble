@@ -33,6 +33,7 @@ export default function Watch(props) {
   const {searchFlag} = props?.route?.params;
 
   useEffect(() => {
+    setItemSelected(props?.route?.params?.item)
     if (
       props?.route?.params?.item &&
       props?.route?.params?.item?.rightsHoldersConnection?.totalCount > 1
@@ -120,9 +121,10 @@ export default function Watch(props) {
           <View style={styles.flatlistContainer}>
             <Text style={styles.conectTxt}>
               {dayjs(itemSelected?.startTime).isAfter(currentDate)
-                ? Strings.connectToWatchFuture +
-                  ' ' +
-                  dayjs(itemSelected?.startTime).format('dddd MM/D [at] h:mma')
+                ? 
+                //Strings.connectToWatchFuture +
+                  ' ' 
+                  //dayjs(itemSelected?.startTime).format('dddd MM/D [at] h:mma')
                 : Strings.connectToWatch}
             </Text>
             <FlatList

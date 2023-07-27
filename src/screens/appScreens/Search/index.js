@@ -17,7 +17,7 @@ import AppHeader from 'src/components/AppHeader';
 import {useQuery} from '@apollo/client';
 import {SEARCH_EVENTS_QUERY} from './queries';
 import dayjs from 'dayjs';
-import {useNavigation} from '@react-navigation/native';
+import {CommonActions, useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 import strings from 'src/utils/strings';
@@ -137,6 +137,14 @@ export default function Search(props) {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
+        onPressBack={() =>
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 1,
+              routes: [{name: 'Guide'}],
+            }),
+          )
+        }
         SimpleView
       />
       <View style={styles.mainContainer}>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ImageBackground,
   Text,
@@ -19,6 +19,10 @@ export default function Connect(props) {
   const {holderItem, eventFlag} = props?.route?.params;
   const currentDate = dayjs(); // Get the current date and time
   
+  useEffect(() => {
+    setItem(props?.route?.params?.item)
+  }, [props?.route?.params?.item]);
+
   const handleClick = url => {
     if (url) {
       Linking.openURL(url);

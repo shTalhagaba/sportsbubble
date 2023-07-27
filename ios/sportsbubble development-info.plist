@@ -35,13 +35,22 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>$(PRODUCT_NAME) needs access to your device's microphone to enable voice recording for adding audio notes to your travel journal entries. We never use the microphone for any other purpose or record audio without your explicit permission.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like to access your photo library to allow you to upload images and create personalized albums within the app. We do not store or share your photos without your explicit consent.</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>AvenirLTStd-Black.otf</string>
-		<string>AvenirLTStd-Book.otf</string>
-		<string>AvenirLTStd-Roman.otf</string>
+		<string>Lato-Black.ttf</string>
+		<string>Lato-BlackItalic.ttf</string>
+		<string>Lato-Bold.ttf</string>
+		<string>Lato-BoldItalic.ttf</string>
+		<string>Lato-Italic.ttf</string>
+		<string>Lato-Light.ttf</string>
+		<string>Lato-LightItalic.ttf</string>
+		<string>Lato-Regular.ttf</string>
+		<string>Lato-Thin.ttf</string>
+		<string>Lato-ThinItalic.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
