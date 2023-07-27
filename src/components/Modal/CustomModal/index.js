@@ -17,7 +17,7 @@ const CustomModal = (props) => {
                 <View style={styles.mainView}>
                     <View style={styles.checkBoxContainer}>
                         {props.headerTxt &&
-                            <Text style={styles.headerTxt}>{props?.headerTxt}</Text>}
+                            <Text style={[styles.headerTxt, props.headerTxtStyle]}>{props?.headerTxt}</Text>}
                         <Text style={[styles.desTxt, props.dexTxtStyle]}>{props?.desTxt}</Text>
                         {props.btn &&
                             <View style={props.rowStyle ? styles.rowBtn : styles.columnBtn}>

@@ -69,4 +69,9 @@ export default {
   termsofService: "Terms of Service",
   privacyPolicy2: "Privacy Policy",
   search: "Search",
+  continue: "Continue",
+  pleaseCheckInbox: "Please check your inbox to verify your account",
+  liveNow: "LIVE NOW!",
+  womenQualifir: "Women’s World Cup Qualifier",
+  connecttoWatch: "Connect to Watch",
 };

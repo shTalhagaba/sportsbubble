@@ -57,6 +57,10 @@ const images = {
     SplashBack: require("src/assets/images/SplashBack.png"),
     SplashBackTop: require("src/assets/images/SplahBackTop.png"),
     LogoText: require("src/assets/images/LogoText.png"),
+    Twitch_logo_2019: require("src/assets/images/Twitch_logo_2019.png"),
+    ESPN_Plus: require("src/assets/images/ESPN_Plus.png"),
+    FuboTV_logo: require("src/assets/images/FuboTV_logo.png"),
+    MySportsFiiled: require("src/assets/images/MySportsFiiled.png"),
 }
 
 export default images

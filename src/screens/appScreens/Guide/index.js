@@ -115,7 +115,7 @@ export default function Guide(props) {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLive, setIsLive] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [liveMatchModal, setLiveMatchModal] = useState(false);
+  const [liveMatchModal, setLiveMatchModal] = useState(true);
   const [timeData, setTimeData] = useState([]);
   const [categoryData, setCategoryData] = useState(categoryArr);
   const [selectedTimeIndex, setSelectedTimeIndex] = useState(0);

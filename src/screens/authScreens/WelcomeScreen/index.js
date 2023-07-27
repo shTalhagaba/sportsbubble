@@ -26,12 +26,12 @@ export default function WelcomeScreen() {
                     <CustomButton
                         Contianer={styles.freeBtnContainer}
                         title={Strings.createFreeAccount}
-                        onpress={() => navigation.navigate("Signup")} />
+                        onpress={() => navigation.replace("Signup")} />
                     <CustomButton
                         blue={true}
                         Contianer={styles.loginBtnContainer}
                         title={Strings.login}
-                        onpress={() => navigation.navigate("Login")} />
+                        onpress={() => navigation.replace("Login")} />
                     <TouchableOpacity onPress={() => {
                         dispatch(setGuest(true))
                         dispatch(setUser(true))

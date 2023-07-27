@@ -13,6 +13,7 @@ import { Images, Colors, Strings } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
 import { useNavigation } from '@react-navigation/native';
 import CustomModalView from 'src/components/Modal/CustomModal';
+import {moderateScale} from 'react-native-size-matters';
 
 const data = [
   {
@@ -80,6 +81,32 @@ const data = [
   },
 ];
 
+// Sample data for the category slider
+const categoryArr = [
+  {
+    id: 1,
+    title: 'all',
+    value: 'all',
+    selected: true,
+  },
+  {
+    id: 2,
+    title: 'pro',
+    value: 'pro',
+  },
+  {
+    id: 3,
+    title: 'college',
+    value: 'college',
+  },
+  {
+    id: 4,
+    title: 'esports',
+    value: 'e-sports',
+  },
+];
+
+
 export default function Guide() {
   const navigation = useNavigation();
 
@@ -87,6 +114,7 @@ export default function Guide() {
   const [proFlag, setProFlag] = useState(false);
   const [collegeFlag, setCollegeFlag] = useState(false);
   const [sportFlag, setSportFlag] = useState(false);
+  const [categoryData, setCategoryData] = useState(categoryArr);
   const [reminderModal, setRemaindarModal] = useState(false);
   const [fvrtModal, setFvrtModal] = useState(false);
   const [mySportData, setSportData] = useState(data);
@@ -143,6 +171,9 @@ export default function Guide() {
 
   };
 
+  const handleSelectedCategory = (e, index) => {
+  };
+
   return (
     <ImageBackground
       source={Images.Background2}
@@ -153,80 +184,62 @@ export default function Guide() {
       <AppHeader centerImage={Images.Logo} />
       {/* Slider all pro  */}
       <View style={styles.sliderContainer}>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => handleAll()}
-          style={styles.sliderInnerContainer}>
-          <ImageBackground
-            source={
-              allFlag ? Images.ActiveSliderBack : Images.InActiveSliderBorder
-            }
-            style={styles.sliderImageBackground}
-            resizeMode={'contain'}>
-            <Image
-              source={Images.Trophy}
-              style={styles.sliderIcon}
-              resizeMode={'contain'}
-            />
-            <Text style={styles.sliderTxt}>{Strings.all}</Text>
-          </ImageBackground>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => handlePro()}
-          style={styles.sliderInnerContainer}>
-          <ImageBackground
-            source={
-              proFlag ? Images.ActiveSliderBack : Images.InActiveSliderBorder
-            }
-            style={styles.sliderImageBackground}
-            resizeMode={'contain'}>
-            <Image
-              source={Images.Crown}
-              style={styles.sliderIcon}
-              resizeMode={'contain'}
-            />
-            <Text style={styles.sliderTxt}>{Strings.pro}</Text>
-          </ImageBackground>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => handleCollege()}
-          style={styles.sliderInnerContainer}>
-          <ImageBackground
-            source={
-              collegeFlag
-                ? Images.ActiveSliderBack
-                : Images.InActiveSliderBorder
-            }
-            style={styles.sliderImageBackground}
-            resizeMode={'contain'}>
-            <Image
-              source={Images.College}
-              style={styles.sliderIcon}
-              resizeMode={'contain'}
-            />
-            <Text style={styles.sliderTxt}>{Strings.college}</Text>
-          </ImageBackground>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => handleSport()}
-          style={styles.sliderInnerContainer}>
-          <ImageBackground
-            source={
-              sportFlag ? Images.ActiveSliderBack : Images.InActiveSliderBorder
-            }
-            style={styles.sliderImageBackground}
-            resizeMode={'contain'}>
-            <Image
-              source={Images.Game}
-              style={styles.sliderIcon}
-              resizeMode={'contain'}
-            />
-            <Text style={styles.sliderTxt}>{Strings.esports}</Text>
-          </ImageBackground>
-        </TouchableOpacity>
+        <FlatList
+          horizontal
+          data={categoryData}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{justifyContent: 'center', flex: 1}}
+          scrollEnabled={false}
+          renderItem={({item, index}) => (
+            <TouchableOpacity
+              onPress={() => handleSelectedCategory(item, index)}
+              style={styles.sliderInnerContainer}>
+              <View
+                style={[
+                  styles.sliderInnerMainContainer,
+                  {borderWidth: item?.selected ? moderateScale(2, 0.3) : 0},
+                ]}>
+                {item?.selected && <View style={styles.rectangle2} />}
+                <ImageBackground
+                  source={
+                    item?.selected
+                      ? Images.ActiveSliderBack
+                      : Images.InActiveSliderBorder
+                  }
+                  style={styles.sliderImageBackground}
+                  imageStyle={
+                    Platform.OS === 'android'
+                      ? {
+                          borderRadius: moderateScale(20, 0.3),
+                          borderWidth: item?.selected
+                            ? 0
+                            : moderateScale(2.5, 0.3),
+                          borderColor: Colors.darkBlue,
+                        }
+                      : {}
+                  }
+                  resizeMode={'stretch'}>
+                  <Image
+                    source={
+                      index === 0
+                        ? Images.Trophy
+                        : index === 1
+                        ? Images.Crown
+                        : index === 2
+                        ? Images.College
+                        : Images.Game
+                    }
+                    style={styles.sliderIcon}
+                    resizeMode={'contain'}
+                  />
+                  <Text style={styles.sliderTxt}>
+                    {item?.title.toUpperCase()}
+                  </Text>
+                </ImageBackground>
+              </View>
+            </TouchableOpacity>
+          )}
+        />
       </View>
       {/*  header text */}
       <View style={styles.mangeFvrtContainer}>
@@ -275,6 +288,8 @@ export default function Guide() {
         visible={reminderModal}
         headerTxt={Strings.eventReminder}
         desTxt={Strings.eventReminderNotifications}
+        headerTxtStyle={styles.headerTxtStyle}
+        dexTxtStyle={styles.dexTxtStyle}
         blackBtnTxt={Strings.no}
         otherBtnTxt={Strings.yes}
         btn

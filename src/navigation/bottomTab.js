@@ -91,14 +91,14 @@ const BottomTab = () => {
           ),
         }}
       />
-      {/* <Tab.Screen
+      <Tab.Screen
         name="MySports"
         component={MySports}
         options={{
-          tabBarIcon: ({ focused }) => (
+          tabBarIcon: ({focused}) => (
             <View style={styles.bottomContainer}>
               <Image
-                source={Images.MySports}
+                source={focused ? Images.MySportsFiiled : Images.MySports}
                 style={[
                   styles.iconImage,
                   {
@@ -110,7 +110,7 @@ const BottomTab = () => {
             </View>
           ),
         }}
-      /> */}
+      />
       <Tab.Screen
         name="Search"
         component={Search}

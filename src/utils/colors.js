@@ -15,6 +15,8 @@ export default {
     orange: "#fe9d0d",
     green: "#50813A",
     darkBlue: "#161F2A",
+    darkBlue90: 'rgba(22, 31, 42, 0.9)',
+    darkBlue70: 'rgba(22, 31, 42, 0.7)',
     mediumBlue: "#21354F",
     brandBlue: "#004EBC",
     lightGreen: "#69A833",

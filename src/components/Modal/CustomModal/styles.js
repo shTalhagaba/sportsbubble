@@ -5,11 +5,10 @@ import { ScaledSheet } from "react-native-size-matters";
 const styles = ScaledSheet.create({
     mainView: {
         flex: 1,
-        backgroundColor: Colors.darkBlue,
-        opacity: 0.9
+        backgroundColor: Colors.darkBlue70,
     },
     checkBoxContainer: {
-        backgroundColor: "black",
+        backgroundColor: Colors.backBlack,
         width: "80%",
         alignSelf: "center",
         marginTop: "120@ms0.3",
@@ -18,7 +17,7 @@ const styles = ScaledSheet.create({
         borderRadius: "16@ms0.3",
     },
     headerTxt: {
-        fontSize: "20@ms0.3",
+        fontSize: "22@ms0.3",
         color: Colors.white,
         fontFamily: Fonts.Regular,
         fontWeight: "800",
@@ -39,7 +38,7 @@ const styles = ScaledSheet.create({
     },
     blackBtnContainer: {
         flex: 1,
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.backBlack,
         borderWidth: "2@ms0.3",
         borderColor: Colors.white
     },
@@ -50,7 +49,7 @@ const styles = ScaledSheet.create({
         borderColor: Colors.darkOrange
     },
     blackBtnContainer2: {
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.backBlack,
         borderWidth: "2@ms0.3",
         borderColor: Colors.white
     },

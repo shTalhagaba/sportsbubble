@@ -7,8 +7,7 @@ export default ScaledSheet.create({
     },
     innerContainer: {
         flex: 1,
-        backgroundColor: Colors.darkBlue,
-        opacity: 0.9
+        backgroundColor: Colors.darkBlue90,
     },
     welcomeTxt: {
         fontSize: "24@ms0.3",
@@ -56,7 +55,7 @@ export default ScaledSheet.create({
         flexDirection: "row",
         marginTop: "30@ms0.3",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
     },
     rightArrowImage: {
         width: "16@ms0.3",
@@ -65,7 +64,6 @@ export default ScaledSheet.create({
     },
     btnContainer: {
         marginHorizontal: "20@ms0.3",
-        zIndex:999
     },
     freeBtnContainer: {
         marginTop: "70@ms0.3"

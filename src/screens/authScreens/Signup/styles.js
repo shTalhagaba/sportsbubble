@@ -25,7 +25,7 @@ export default ScaledSheet.create({
         fontSize: "14@ms0.3",
         fontWeight: "500",
         color: Colors.white,
-        marginRight:'5%'
+        marginRight:'5%',
     },
     checkBoxTxt2: {
         fontSize: "14@ms0.3",
@@ -48,6 +48,7 @@ export default ScaledSheet.create({
         justifyContent: "center",
         alignSelf: "center",
         marginStart: "10@ms0.3",
+        marginTop: -20,
     },
     chekboxContainer: {
         flexDirection: "row",
