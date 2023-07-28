@@ -6,15 +6,15 @@ import { ScaledSheet } from "react-native-size-matters";
 const styles = ScaledSheet.create({
 
     container: {
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: Colors.mediumBlue,
         paddingStart: "10@ms0.3",
         marginTop: "20@ms0.3",
         borderRadius: "15@ms0.3",
         height: "55@ms0.3",
     },
     leftIcon: {
-        height: "18@ms0.3",
-        width: "18@ms0.3",
+        height: "16@ms0.3",
+        width: "16@ms0.3",
         alignSelf: "center",
         tintColor: Colors.white,
         marginHorizontal: "10@ms0.3",
@@ -46,8 +46,8 @@ const styles = ScaledSheet.create({
     inputField: {
         flex: 1,
         fontFamily: Fonts.Regular,
-        fontSize: "17@ms0.3",
-        fontWeight: "400",
+        fontSize: "18@ms0.3",
+        fontWeight: "500",
         lineHeight: "21@ms0.3",
         padding: "0@ms0.3",
         color: Colors.white,
@@ -57,8 +57,8 @@ const styles = ScaledSheet.create({
 
     },
     eyeIcon: {
-        height: "20@ms0.3",
-        width: "18@ms0.3",
+        height: "16@ms0.3",
+        width: "16@ms0.3",
         marginRight: "17@ms0.3",
         tintColor: Colors.white,
     },

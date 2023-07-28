@@ -27,7 +27,7 @@ const styles = ScaledSheet.create({
         lineHeight: "30@ms0.3",
     },
     desTxt: {
-        fontSize: "21@ms0.3",
+        fontSize: "24@ms0.3",
         color: Colors.white,
         fontFamily: Fonts.Regular,
         fontWeight: "500",

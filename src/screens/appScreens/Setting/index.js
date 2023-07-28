@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Image,
   ImageBackground,
@@ -6,21 +6,27 @@ import {
   StatusBar,
   Text,
   View,
+  TouchableOpacity
 } from 'react-native';
 import styles from './styles';
-import {Images, Colors} from 'src/utils';
-import {useNavigation} from '@react-navigation/native';
+import { Images, Colors } from 'src/utils';
+import { useNavigation } from '@react-navigation/native';
 import AppHeader from 'src/components/AppHeader';
 import ButtonWithIcon from 'src/components/ButtonWithIcon';
 import DeviceInfo from 'react-native-device-info';
 import Strings from 'src/utils/strings';
 import CustomModalView from 'src/components/Modal/CustomModal';
-import Instabug, {InvocationEvent} from 'instabug-reactnative';
+import Instabug, { InvocationEvent } from 'instabug-reactnative';
+import { useSelector } from "react-redux";
 
 export default function Setting() {
   const navigation = useNavigation();
   const version = DeviceInfo.getVersion();
   const [logoutModal, setLogoutModal] = useState(false);
+
+  const data = useSelector((state) => state.user);
+
+
 
   useEffect(() => {
     Instabug.init({
@@ -44,7 +50,7 @@ export default function Setting() {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        customLeftImage={{tintColor: Colors.orange}}
+        customLeftImage={{ tintColor: Colors.orange }}
         SimpleView
       />
       {/* Main tabs  */}
@@ -52,10 +58,14 @@ export default function Setting() {
         <Text style={styles.loginTxt}>{Strings.settings}</Text>
         <View style={styles.innerContainer}>
           {/* changes for next version */}
-          {/* <ButtonWithIcon title={Strings.personalInfo} onpress={() => navigation.navigate("withoutBottomtab", { screen: "PersonalInfo" })} />
-          <ButtonWithIcon title={Strings.changePassword} onpress={() => navigation.navigate('withoutBottomtab', { screen: "UpdatePassword" })} />
+          {!data?.guest &&
+            <>
+              <ButtonWithIcon title={Strings.personalInfo} onpress={() => navigation.navigate("withoutBottomtab", { screen: "PersonalInfo" })} />
+              <ButtonWithIcon title={Strings.changePassword} onpress={() => navigation.navigate('withoutBottomtab', { screen: "UpdatePassword" })} />
+            </>
+          }
           <ButtonWithIcon title={Strings.sportsStreamingApps} onpress={() => navigation.navigate('withoutBottomtab', { screen: "SportStreaming" })} />
-          <ButtonWithIcon title={Strings.aboutWatchSports} /> */}
+          <ButtonWithIcon title={Strings.aboutWatchSports} />
           <ButtonWithIcon
             title={Strings.legal}
             onpress={() => navigation.navigate('Legal')}
@@ -64,11 +74,13 @@ export default function Setting() {
             title={Strings.reportProblem}
             onpress={() => Instabug.show()}
           />
-          {/* <TouchableOpacity onPress={() => setLogoutModal(!logoutModal)}
-            style={{ flexDirection: "row", marginTop: 24, alignItems: "center" }}>
-            <Image source={Images.LeftArrowIcon} style={styles.logoutIcon} />
-            <Text style={styles.logoutTxt}>{Strings.logout}</Text>
-          </TouchableOpacity> */}
+          {!data?.guest &&
+            <TouchableOpacity onPress={() => setLogoutModal(!logoutModal)}
+              style={{ flexDirection: "row", marginTop: 24, alignItems: "center" }}>
+              <Image source={Images.LeftArrowIcon} style={styles.logoutIcon} />
+              <Text style={styles.logoutTxt}>{Strings.logout}</Text>
+            </TouchableOpacity>
+          }
         </View>
       </ScrollView>
 
@@ -84,10 +96,10 @@ export default function Setting() {
         rowStyle={true}
         blackBtnPress={() => setLogoutModal(!logoutModal)}
         ornageBtnPress={() => setLogoutModal(!logoutModal)}
-        Contianer={{backgroundColor: Colors.black}}
+        Contianer={{ backgroundColor: Colors.black }}
       />
       {/* Powered by sports bubble */}
-      <View style={styles.sbContainer}>
+      {/* <View style={styles.sbContainer}>
         <Image
           source={Images.Sports}
           style={styles.leftArrowIcon}
@@ -99,7 +111,7 @@ export default function Setting() {
           resizeMode={'contain'}
         />
         <Text style={styles.versionTxt}>v {version}</Text>
-      </View>
+      </View> */}
     </ImageBackground>
   );
 }

@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -11,9 +11,9 @@ import {
 import styles from './styles';
 import ContactTextInput from 'src/components/ContactTextInput';
 import AppHeader from 'src/components/AppHeader';
-import {Images, Colors, Strings} from 'src/utils';
+import { Images, Colors, Strings } from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import CustomModalView from 'src/components/Modal/CustomModal';
 
 export default function Signup() {
@@ -25,7 +25,7 @@ export default function Signup() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [emailOptCheck, setEmailOptCheck] = useState(false);
   const [termsCheck, setTermsCheck] = useState(false);
-  const [verifyModal, setVerifyModal] = useState(false);
+  const [verifyModal, setVerifyModal] = useState(true);
 
   const [displayPassword, setDisplayPassword] = useState(true);
   const [displayConfirmPassword, setDisplayConfirmPassword] = useState(true);
@@ -43,7 +43,7 @@ export default function Signup() {
         navigation.navigate('WelcomeAccount');
       }, 2000);
     }
-  });
+  }, []);
 
   return (
     <ImageBackground
@@ -55,7 +55,7 @@ export default function Signup() {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        headerContainer={{marginTop: 10}}
+        headerContainer={{ marginTop: 10 }}
         SimpleView
       />
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -64,7 +64,7 @@ export default function Signup() {
           <ContactTextInput
             leftImage={Images.UserIcon}
             refInner={fullNameRef}
-            Contianer={{marginTop: 40}}
+            Contianer={{ marginTop: 40 }}
             placeholderTextColor={Colors.white}
             placeholder={Strings.firstName}
             multiline={false}
@@ -158,11 +158,11 @@ export default function Signup() {
               {emailOptCheck && (
                 <Image
                   source={Images.Tick}
-                  style={{tintColor: Colors.white, height: 10, width: 10}}
+                  style={{ tintColor: Colors.white, height: 10, width: 10 }}
                 />
               )}
             </TouchableOpacity>
-            <Text style={[styles.checkBoxTxt, {marginStart: 10}]}>
+            <Text style={[styles.checkBoxTxt, { marginStart: 10 }]}>
               {Strings.signupTerm}
             </Text>
           </View>
@@ -173,27 +173,26 @@ export default function Signup() {
               {termsCheck && (
                 <Image
                   source={Images.Tick}
-                  style={{tintColor: Colors.white, height: 10, width: 10}}
+                  style={{ tintColor: Colors.white, height: 10, width: 10 }}
                 />
               )}
             </TouchableOpacity>
 
             <View style={styles.termConditionContainer}>
-              <Text style={styles.checkBoxTxt1}>
+              <Text style={styles.termsCondition}>
                 {Strings.haveRead}
-                <TouchableOpacity style={{paddingTop: 40}}>
-                  <Text style={[styles.checkBoxGreenTxt]}>
-                    {' '}
-                    {Strings.termsofService}
-                  </Text>
-                </TouchableOpacity>
-                <Text style={[styles.checkBoxTxt2]}> and </Text>
-                <TouchableOpacity style={{paddingTop: 20}}>
-                  <Text style={[styles.checkBoxGreenTxt]}>
-                    {Strings.privacyPolicy2}
-                  </Text>
-                </TouchableOpacity>
+                <Text onPress={() => console.log("temrs")} style={styles.termsConditionBold}>{' ' + Strings.termsofService}</Text>
+                {''} and {''}
+                <Text onPress={() => console.log("privacy policy")} style={styles.termsConditionBold}>{Strings.privacyPolicy2}</Text>
               </Text>
+              {/* <Text style={styles.checkBoxTxt1}>{Strings.haveRead}</Text>
+              <TouchableOpacity>
+                <Text style={[styles.checkBoxGreenTxt]}>{' ' + Strings.termsofService}</Text>
+              </TouchableOpacity>
+              <Text style={[styles.checkBoxTxt2]}> and </Text>
+              <TouchableOpacity>
+                <Text style={[styles.checkBoxGreenTxt]}>{Strings.privacyPolicy2} </Text>
+              </TouchableOpacity> */}
             </View>
           </View>
           <CustomButton

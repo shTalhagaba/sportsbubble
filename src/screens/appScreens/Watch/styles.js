@@ -229,9 +229,10 @@ export default ScaledSheet.create({
   sliderContainer: {
     flexDirection: 'row',
     backgroundColor: Colors.mediumBlue,
-    height: "110@ms0.3",
+    // height: "110@ms0.3",
     alignItems: 'center',
     paddingHorizontal: "15@ms0.3",
+    paddingVertical: "10@ms0.3"
   },
   sliderInnerContainer: {
     flex: 1,

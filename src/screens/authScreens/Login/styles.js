@@ -8,7 +8,7 @@ export default ScaledSheet.create({
         backgroundColor: Colors.appColorBackground
     },
     loginTxt: {
-        fontSize: "20@ms0.3",
+        fontSize: "22@ms0.3",
         fontWeight: "800",
         textAlign: "center",
         color: Colors.white,
@@ -20,19 +20,20 @@ export default ScaledSheet.create({
         color: Colors.greenText,
         marginVertical: "10@ms0.3",
         fontFamily: Fonts.Regular,
+        fontStyle: "italic"
     },
     innerContainer: {
         marginHorizontal: "20@ms0.3",
     },
     forgotTxt: {
-        fontSize: "14@ms0.3",
-        fontWeight: "800",
+        fontSize: "16@ms0.3",
+        fontWeight: "900",
         textAlign: "center",
-        color: Colors.white,
+        color: Colors.darkOrange,
         marginVertical: "30@ms0.3",
     },
     accountTxt: {
-        fontSize: "14@ms0.3",
+        fontSize: "16@ms0.3",
         textAlign: "center",
         color: Colors.white,
         marginVertical: "1@ms0.3",

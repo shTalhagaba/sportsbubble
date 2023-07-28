@@ -9,7 +9,7 @@ export default ScaledSheet.create({
     },
     signupTxt: {
         fontSize: "22@ms0.3",
-        fontWeight: "bold",
+        fontWeight: "800",
         textAlign: "center",
         color: Colors.white
     },
@@ -25,7 +25,6 @@ export default ScaledSheet.create({
         fontSize: "14@ms0.3",
         fontWeight: "500",
         color: Colors.white,
-        marginRight:'5%',
     },
     checkBoxTxt2: {
         fontSize: "14@ms0.3",
@@ -38,21 +37,30 @@ export default ScaledSheet.create({
         fontWeight: "800",
         textAlign: "center",
         color: Colors.lightGreen,
-        marginRight:'5%'
     },
     innerContainer: {
         marginHorizontal: "20@ms0.3",
     },
     termConditionContainer: {
         flexDirection: "row",
-        justifyContent: "center",
-        alignSelf: "center",
         marginStart: "10@ms0.3",
-        marginTop: -20,
+        maxWidth: "80%"
+    },
+    termsCondition: {
+        color: Colors.white,
+        fontSize: "14@ms0.3",
+        fontWeight: "500",
+    },
+    termsConditionBold: {
+        color: "#69A833",
+        fontSize: "14@ms0.3",
+        textAlign: "center",
+        alignItems: "center",
+        fontWeight: "800"
     },
     chekboxContainer: {
         flexDirection: "row",
-        marginTop: "21@ms0.3"
+        marginTop: "21@ms0.3",
     },
     uncheckBox: {
         width: "18@ms0.3",

@@ -23,11 +23,14 @@ export default ScaledSheet.create({
         color: Colors.white,
         marginTop: "25@ms0.3",
         letterSpacing: "0.5@ms0.3",
-        fontStyle: "italic"
+        fontStyle: "italic",
+        lineHeight: "30@ms0.3"
     },
     sideTxt: {
         fontSize: "14@ms0.3",
-        color: 'rgba(255, 255, 255, 0.66)',
+        // color: 'rgba(255, 255, 255, 0.66)',
+        color: "#FFFFFF",
+        opacity: 0.7,
         marginTop: "5@ms0.3",
         lineHeight: "20@ms0.3",
         fontWeight: "400",

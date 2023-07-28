@@ -6,7 +6,8 @@ import { ScaledSheet } from "react-native-size-matters";
 const styles = ScaledSheet.create({
 
     container: {
-        backgroundColor: Colors.buttonGreen,
+        backgroundColor: Colors.mediumGreen,
+        // backgroundColor: Colors.buttonGreen,
         marginTop: "20@ms0.3",
         marginHorizontal: "5@ms0.3",
         borderRadius: "15@ms0.3",
