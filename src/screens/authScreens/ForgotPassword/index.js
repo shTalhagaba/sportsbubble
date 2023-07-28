@@ -14,15 +14,19 @@ export default function ForgotPassword() {
     const emailRef = useRef()
 
     return (
-        <ImageBackground source={Images.Background2}
+        <ImageBackground source={Images.Background}
             resizeMode="cover"
             style={styles.container}>
-            <StatusBar backgroundColor={Colors.mediumBlue} />
+            <StatusBar
+                backgroundColor={Colors.transparent}
+                translucent
+                barStyle="light-content"
+            />
 
             <AppHeader
                 centerImage={Images.Logo}
                 LeftImage={Images.LeftIcon}
-                headerContainer={{marginTop: 10}}
+                headerContainer={{ marginTop: 10 }}
                 SimpleView />
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={{ marginHorizontal: 20 }}>

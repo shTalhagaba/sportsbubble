@@ -1,8 +1,10 @@
 import React from "react";
 import {
-    View, Modal, Text, TouchableWithoutFeedback
+    View, Modal, Text, TouchableWithoutFeedback, StatusBar
 } from "react-native";
 import styles from "./styles";
+import { Colors } from 'src/utils';
+
 import CustomButton from 'src/components/CustomButton';
 
 
@@ -12,6 +14,11 @@ const CustomModal = (props) => {
             animationType="slide"
             transparent={true}
             visible={props.visible}>
+            <StatusBar
+                backgroundColor={Colors.transparent}
+                translucent
+                barStyle="light-content"
+            />
             <TouchableWithoutFeedback
                 style={styles.mainView}>
                 <View style={styles.mainView}>

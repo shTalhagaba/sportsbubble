@@ -4,6 +4,7 @@ import { Colors, Fonts } from 'src/utils';
 export default ScaledSheet.create({
     container: {
         flex: 1,
+        backgroundColor: Colors.appColorBackground
     },
     innerContainer: {
         flex: 1,

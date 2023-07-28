@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { View, Text, ScrollView, ImageBackground } from 'react-native';
+import { View, Text, ScrollView, ImageBackground, StatusBar } from 'react-native';
 import styles from './styles';
 import ContactTextInput from 'src/components/ContactTextInput';
 import AppHeader from 'src/components/AppHeader';
@@ -17,9 +17,14 @@ export default function WelcomeAccount() {
 
   return (
     <ImageBackground
-      source={Images.Background2}
+      source={Images.Background}
       resizeMode="cover"
       style={styles.container}>
+      <StatusBar
+        backgroundColor={Colors.transparent}
+        translucent
+        barStyle="light-content"
+      />
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}

@@ -13,7 +13,7 @@ import { Images, Colors, Strings } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
 import { useNavigation } from '@react-navigation/native';
 import CustomModalView from 'src/components/Modal/CustomModal';
-import {moderateScale} from 'react-native-size-matters';
+import { moderateScale } from 'react-native-size-matters';
 
 const data = [
   {
@@ -176,10 +176,14 @@ export default function Guide() {
 
   return (
     <ImageBackground
-      source={Images.Background2}
+      source={Images.Background}
       resizeMode="cover"
       style={styles.container}>
-      <StatusBar backgroundColor={Colors.mediumBlue} />
+      <StatusBar
+        backgroundColor={Colors.transparent}
+        translucent
+        barStyle="light-content"
+      />
       {/* Header with Logo only  */}
       <AppHeader centerImage={Images.Logo} />
       {/* Slider all pro  */}
@@ -188,16 +192,16 @@ export default function Guide() {
           horizontal
           data={categoryData}
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{justifyContent: 'center', flex: 1}}
+          contentContainerStyle={{ justifyContent: 'center', flex: 1 }}
           scrollEnabled={false}
-          renderItem={({item, index}) => (
+          renderItem={({ item, index }) => (
             <TouchableOpacity
               onPress={() => handleSelectedCategory(item, index)}
               style={styles.sliderInnerContainer}>
               <View
                 style={[
                   styles.sliderInnerMainContainer,
-                  {borderWidth: item?.selected ? moderateScale(2, 0.3) : 0},
+                  { borderWidth: item?.selected ? moderateScale(2, 0.3) : 0 },
                 ]}>
                 {item?.selected && <View style={styles.rectangle2} />}
                 <ImageBackground
@@ -210,12 +214,12 @@ export default function Guide() {
                   imageStyle={
                     Platform.OS === 'android'
                       ? {
-                          borderRadius: moderateScale(20, 0.3),
-                          borderWidth: item?.selected
-                            ? 0
-                            : moderateScale(2.5, 0.3),
-                          borderColor: Colors.darkBlue,
-                        }
+                        borderRadius: moderateScale(20, 0.3),
+                        borderWidth: item?.selected
+                          ? 0
+                          : moderateScale(2.5, 0.3),
+                        borderColor: Colors.darkBlue,
+                      }
                       : {}
                   }
                   resizeMode={'stretch'}>
@@ -224,10 +228,10 @@ export default function Guide() {
                       index === 0
                         ? Images.Trophy
                         : index === 1
-                        ? Images.Crown
-                        : index === 2
-                        ? Images.College
-                        : Images.Game
+                          ? Images.Crown
+                          : index === 2
+                            ? Images.College
+                            : Images.Game
                     }
                     style={styles.sliderIcon}
                     resizeMode={'contain'}

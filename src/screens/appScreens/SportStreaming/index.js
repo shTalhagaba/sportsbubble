@@ -86,10 +86,14 @@ export default function SportStreaming() {
 
   return (
     <ImageBackground
-      source={Images.Background2}
+      source={Images.Background}
       resizeMode="cover"
       style={styles.container}>
-      <StatusBar backgroundColor={Colors.mediumBlue} />
+      <StatusBar
+        backgroundColor={Colors.transparent}
+        translucent
+        barStyle="light-content"
+      />
 
       <AppHeader
         centerImage={Images.Logo}

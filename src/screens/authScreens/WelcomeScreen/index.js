@@ -16,7 +16,11 @@ export default function WelcomeScreen() {
         <ImageBackground source={Images.HomeScreen}
             resizeMode="cover"
             style={styles.container}>
-            <StatusBar backgroundColor={Colors.mediumBlue} />
+            <StatusBar
+                backgroundColor={Colors.transparent}
+                translucent
+                barStyle="light-content"
+            />
             <View style={styles.innerContainer}>
                 <Text style={styles.welcomeTxt}>{Strings.welcome}</Text>
                 <Image source={Images.Logo} style={styles.logoImage} />

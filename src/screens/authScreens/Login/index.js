@@ -36,7 +36,11 @@ export default function Login() {
       source={Images.Background}
       resizeMode="cover"
       style={styles.container}>
-      <StatusBar backgroundColor={Colors.mediumBlue} />
+      <StatusBar
+        backgroundColor={Colors.transparent}
+        translucent
+        barStyle="light-content"
+      />
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}

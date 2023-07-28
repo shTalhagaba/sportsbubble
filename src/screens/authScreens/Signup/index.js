@@ -25,7 +25,7 @@ export default function Signup() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [emailOptCheck, setEmailOptCheck] = useState(false);
   const [termsCheck, setTermsCheck] = useState(false);
-  const [verifyModal, setVerifyModal] = useState(true);
+  const [verifyModal, setVerifyModal] = useState(false);
 
   const [displayPassword, setDisplayPassword] = useState(true);
   const [displayConfirmPassword, setDisplayConfirmPassword] = useState(true);
@@ -47,10 +47,14 @@ export default function Signup() {
 
   return (
     <ImageBackground
-      source={Images.Background2}
+      source={Images.Background}
       resizeMode="cover"
       style={styles.container}>
-      <StatusBar backgroundColor={Colors.mediumBlue} />
+      <StatusBar
+        backgroundColor={Colors.transparent}
+        translucent
+        barStyle="light-content"
+      />
 
       <AppHeader
         centerImage={Images.Logo}

@@ -38,7 +38,7 @@ export default function Setting() {
 
   return (
     <ImageBackground
-      source={Images.Background2}
+      source={Images.Background}
       resizeMode="cover"
       style={styles.container}>
       <StatusBar

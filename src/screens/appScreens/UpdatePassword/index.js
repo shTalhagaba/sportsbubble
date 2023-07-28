@@ -23,10 +23,14 @@ export default function UpdatePassword() {
     const [displayNewConfirmPassword, setDisplayNewConfirmPassword] = useState(true);
 
     return (
-        <ImageBackground source={Images.Background2}
+        <ImageBackground source={Images.Background}
             resizeMode="cover"
             style={styles.container}>
-            <StatusBar backgroundColor={Colors.mediumBlue} />
+            <StatusBar
+                backgroundColor={Colors.transparent}
+                translucent
+                barStyle="light-content"
+            />
 
             <AppHeader
                 centerImage={Images.Logo}
