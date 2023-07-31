@@ -1,4 +1,4 @@
-import { Images, Strings } from 'src/utils';
+import {Images, Strings} from 'src/utils';
 import React from 'react';
 import {
   View,
@@ -6,14 +6,15 @@ import {
   Text,
   TouchableWithoutFeedback,
   Image,
-  TouchableOpacity, StatusBar
+  TouchableOpacity,
+  StatusBar,
 } from 'react-native';
 import styles from './styles';
 import BlackClose from 'src/assets/images/BlackClose.js';
 import GreenButton from 'src/components/GreenButton';
-import { Colors } from 'src/utils';
+import {Colors} from 'src/utils';
 
-const LiveMatch = ({ setLiveMatchModal, liveMatchModal }) => {
+const LiveMatch = ({setLiveMatchModal, liveMatchModal}) => {
   return (
     <Modal animationType="slide" transparent={true} visible={liveMatchModal}>
       <StatusBar
@@ -33,14 +34,17 @@ const LiveMatch = ({ setLiveMatchModal, liveMatchModal }) => {
             <Text style={styles.liveTxt}>{Strings.liveNow}</Text>
             <Text style={styles.matchNameTxt}>{Strings.womenQualifir}</Text>
             <View style={styles.logoContainer}>
-              <Image source={Images.Twitch_logo_2019} style={styles.logoImage} />
+              <Image
+                source={Images.Twitch_logo_2019}
+                style={styles.logoImage}
+              />
               <Image source={Images.ESPN_Plus} style={styles.logoImage} />
               <Image source={Images.FuboTV_logo} style={styles.logoImage} />
             </View>
             <GreenButton
               title={Strings.connecttoWatch}
               rightIcon={false}
-              onpress={() => { }}
+              onpress={() => {}}
             />
           </View>
         </View>

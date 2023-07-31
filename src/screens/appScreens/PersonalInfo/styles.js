@@ -7,8 +7,8 @@ export default ScaledSheet.create({
         backgroundColor: Colors.appColorBackground
     },
     headerTxt: {
-        fontSize: "20@ms0.3",
-        fontWeight: "bold",
+        fontSize: "22@ms0.3",
+        fontWeight: "900",
         textAlign: "center",
         color: Colors.white,
         fontFamily: Fonts.Regular,
@@ -29,4 +29,7 @@ export default ScaledSheet.create({
         marginHorizontal: "20@ms0.3",
         flex: 1,
     },
+    headerTxtStyle: {
+        color: Colors.white70
+    }
 });

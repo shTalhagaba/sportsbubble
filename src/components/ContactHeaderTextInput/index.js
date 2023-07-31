@@ -11,7 +11,7 @@ const ContactHeaderTextInput = (props) => {
             <View style={[styles.innerContainer, props.innerContainer]}>
                 <View style={[styles.headerContainer, props.headerContainer]}>
                     <Image source={props.leftImage} style={styles.leftIcon} resizeMode={"contain"} />
-                    <Text style={styles.headerTxt}>{props.headerName}</Text>
+                    <Text style={[styles.headerTxt,props.headerTxtStyle]}>{props.headerName}</Text>
                 </View>
                 <TextInput
                     {...props}

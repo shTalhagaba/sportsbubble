@@ -112,7 +112,7 @@ export default ScaledSheet.create({
     elevation: 3,
     textShadowOffset: {width: 0, height: 1},
     textShadowRadius: 8,
-    textShadowColor: '#000000',
+    textShadowColor: Colors.black,
     marginTop: '6@ms0.3',
   },
   rectangle2: {

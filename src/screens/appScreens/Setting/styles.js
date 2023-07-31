@@ -1,5 +1,5 @@
-import { ScaledSheet } from 'react-native-size-matters';
-import { Colors, Fonts } from 'src/utils';
+import {ScaledSheet} from 'react-native-size-matters';
+import {Colors, Fonts} from 'src/utils';
 
 export default ScaledSheet.create({
   container: {
@@ -38,7 +38,7 @@ export default ScaledSheet.create({
     color: Colors.darkOrange,
     fontFamily: Fonts.Regular,
     marginStart: '16@ms0.3',
-    lineHeight: "30@ms0.3"
+    lineHeight: '30@ms0.3',
   },
   sbContainer: {
     height: '25%',

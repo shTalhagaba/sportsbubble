@@ -1,7 +1,9 @@
 export default {
     transparent: "transparent",
     white: "#fff",
+    white70: "rgba(256, 256, 256, 0.70)",
     black: "#000000",
+    black10: "rgba(0, 0, 0, 0.1)",
     appColor: "#2664c0",
     appColorBackground: "rgba(0, 0, 0, 0.95)",
     yellow: "#ddfc14",
@@ -15,6 +17,7 @@ export default {
     orange: "#fe9d0d",
     green: "#50813A",
     darkBlue: "#161F2A",
+    darkBlue10: "rgba(22, 31, 42, 0.1)",
     darkBlue90: 'rgba(22, 31, 42, 0.9)',
     darkBlue70: 'rgba(22, 31, 42, 0.7)',
     mediumBlue: "#21354F",

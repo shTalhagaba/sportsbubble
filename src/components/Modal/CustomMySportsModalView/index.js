@@ -5,13 +5,14 @@ import {
   Text,
   TouchableWithoutFeedback,
   StatusBar,
+  ImageBackground,
 } from 'react-native';
 import styles from './styles';
-import {Colors} from 'src/utils';
+import {Colors, Images} from 'src/utils';
 
 import CustomButton from 'src/components/CustomButton';
 
-const CustomModal = props => {
+const CustomMySportsModalView = props => {
   return (
     <Modal animationType="slide" transparent={true} visible={props.visible}>
       <StatusBar
@@ -19,6 +20,10 @@ const CustomModal = props => {
         translucent
         barStyle="light-content"
       />
+      <ImageBackground 
+          source={Images.BackgroundMySports}
+          resizeMode="cover"
+          style={styles.container} >
       <TouchableWithoutFeedback style={styles.mainView}>
         <View style={styles.mainView}>
           <View style={styles.checkBoxContainer}>
@@ -32,15 +37,6 @@ const CustomModal = props => {
             </Text>
             {props.btn && (
               <View style={props.rowStyle ? styles.rowBtn : styles.columnBtn}>
-                <CustomButton
-                  title={props.blackBtnTxt}
-                  Contianer={
-                    props.rowStyle
-                      ? styles.blackBtnContainer
-                      : styles.blackBtnContainer2
-                  }
-                  onpress={props.blackBtnPress}
-                />
                 {props.orangrBTn ? (
                   <CustomButton
                     title={props.orangeBtnTxt}
@@ -60,12 +56,22 @@ const CustomModal = props => {
                     onpress={props.otherBtnPress}
                   />
                 )}
+                <CustomButton
+                  title={props.blackBtnTxt}
+                  Contianer={
+                    props.rowStyle
+                      ? styles.blackBtnContainer
+                      : styles.blackBtnContainer2
+                  }
+                  onpress={props.blackBtnPress}
+                />
               </View>
             )}
           </View>
         </View>
       </TouchableWithoutFeedback>
+      </ImageBackground>
     </Modal>
   );
 };
-export default CustomModal;
+export default CustomMySportsModalView;

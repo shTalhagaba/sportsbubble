@@ -1,6 +1,7 @@
 const images = {
     Background: require("src/assets/images/Background.png"),
     Background2: require("src/assets/images/Background2.png"),
+    BackgroundMySports: require("src/assets/images/BackgroundMySports.png"),
     Logo: require("src/assets/images/Logo.png"),
     LeftIcon: require("src/assets/images/BackOrange.png"),
     OldLeftIcon: require("src/assets/images/LeftIcon.png"),

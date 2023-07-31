@@ -1,9 +1,9 @@
-import React, { useRef, useState } from 'react';
-import { View, Text, ScrollView, ImageBackground, StatusBar } from 'react-native';
+import React, {useRef, useState} from 'react';
+import {View, Text, ScrollView, ImageBackground, StatusBar} from 'react-native';
 import styles from './styles';
 import ContactTextInput from 'src/components/ContactTextInput';
 import AppHeader from 'src/components/AppHeader';
-import { Images, Colors } from 'src/utils';
+import {Images, Colors} from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
 
 export default function WelcomeAccount() {
@@ -28,7 +28,7 @@ export default function WelcomeAccount() {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        headerContainer={{ marginTop: 10 }}
+        headerContainer={{marginTop: 10}}
         SimpleView
       />
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -40,7 +40,7 @@ export default function WelcomeAccount() {
           <ContactTextInput
             leftImage={Images.Location}
             refInner={zipCodeRef}
-            Contianer={{ marginTop: 40 }}
+            Contianer={{marginTop: 40}}
             placeholderTextColor={Colors.white}
             placeholder={'Zip Code'}
             multiline={false}
@@ -62,7 +62,7 @@ export default function WelcomeAccount() {
           <ContactTextInput
             leftImage={Images.Birthday}
             refInner={birthdayRef}
-            Contianer={{ marginTop: 40 }}
+            Contianer={{marginTop: 40}}
             placeholderTextColor={Colors.white}
             placeholder={'Birthdate'}
             multiline={false}
@@ -84,7 +84,7 @@ export default function WelcomeAccount() {
           </Text>
           <ContactTextInput
             leftImage={Images.Pronouns}
-            Contianer={{ marginTop: 40 }}
+            Contianer={{marginTop: 40}}
             refInner={pronounsRef}
             placeholderTextColor={Colors.white}
             placeholder={'Pronouns'}

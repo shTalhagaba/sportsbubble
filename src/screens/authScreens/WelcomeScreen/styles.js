@@ -4,11 +4,10 @@ import { Colors, Fonts } from 'src/utils';
 export default ScaledSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.appColorBackground
     },
     innerContainer: {
         flex: 1,
-        backgroundColor: Colors.darkBlue,
+        backgroundColor: Colors.darkBlue90
     },
     welcomeTxt: {
         fontSize: "24@ms0.3",
@@ -22,7 +21,7 @@ export default ScaledSheet.create({
         fontSize: "22@ms0.3",
         color: Colors.white,
         fontFamily: Fonts.Regular,
-        fontWeight: "800",
+        fontWeight: "900",
         marginTop: "60@ms0.3",
         textAlign: "center",
         fontStyle: "italic"
@@ -41,7 +40,7 @@ export default ScaledSheet.create({
         fontSize: "16@ms0.3",
         color: Colors.white,
         fontFamily: Fonts.Regular,
-        fontWeight: "800",
+        fontWeight: "900",
         marginHorizontal: "10@ms0.3",
         lineHeight: "30@ms0.3",
         fontStyle: 'italic'
