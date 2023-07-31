@@ -2,6 +2,7 @@ export default {
     transparent: "transparent",
     white: "#fff",
     white70: "rgba(256, 256, 256, 0.70)",
+    white80: "rgba(256, 256, 256, 0.80)",
     black: "#000000",
     black10: "rgba(0, 0, 0, 0.1)",
     appColor: "#2664c0",

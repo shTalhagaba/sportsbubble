@@ -58,8 +58,8 @@ export default function PersonalInfo() {
           Contianer={{marginTop: 24}}
           customInputStyle={{marginBottom: 5}}
           refInner={firstNameRef}
-          placeholderTextColor={Colors.white}
-          placeholder={'First Name'}
+          // placeholderTextColor={Colors.white}
+          // placeholder={'First Name'}
           headerTxtStyle={styles.headerTxtStyle}
           multiline={false}
           value={firstName}
@@ -77,9 +77,9 @@ export default function PersonalInfo() {
           leftImage={Images.UserIcon}
           headerName={'Last Name'}
           refInner={lastNameRef}
-          placeholderTextColor={Colors.white}
+          // placeholder={'First Name'}
+          // placeholderTextColor={Colors.white}
           customInputStyle={{marginBottom: 5}}
-          placeholder={'First Name'}
           multiline={false}
           headerTxtStyle={styles.headerTxtStyle}
           value={lastName}
@@ -97,8 +97,8 @@ export default function PersonalInfo() {
           leftImage={Images.Location}
           headerName={'Zip Code'}
           refInner={zipCodeRef}
-          placeholderTextColor={Colors.white}
-          placeholder={'Zip Code'}
+          // placeholderTextColor={Colors.white}
+          // placeholder={'Zip Code'}
           headerTxtStyle={styles.headerTxtStyle}
           customInputStyle={{marginBottom: 5}}
           multiline={false}
@@ -117,8 +117,8 @@ export default function PersonalInfo() {
           leftImage={Images.Birthday}
           headerName={'Birthdate'}
           refInner={dobRef}
-          placeholderTextColor={Colors.white}
-          placeholder={'Birthdate'}
+          // placeholderTextColor={Colors.white}
+          // placeholder={'Birthdate'}
           headerTxtStyle={styles.headerTxtStyle}
           customInputStyle={{marginBottom: 5}}
           multiline={false}
@@ -158,8 +158,8 @@ export default function PersonalInfo() {
           leftImage={Images.EmailIcon}
           headerName={'Email'}
           refInner={emailRef}
-          placeholderTextColor={Colors.white}
-          placeholder={'Email'}
+          // placeholderTextColor={Colors.white}
+          // placeholder={'Email'}
           headerTxtStyle={styles.headerTxtStyle}
           customInputStyle={{marginBottom: 5}}
           multiline={false}
@@ -187,6 +187,7 @@ export default function PersonalInfo() {
         desTxt={Strings.alertDes}
         blackBtnTxt={Strings.no}
         orangeBtnTxt={Strings.yes}
+        fillBefore={true}
         btn
         orangrBTn
         rowStyle={true}

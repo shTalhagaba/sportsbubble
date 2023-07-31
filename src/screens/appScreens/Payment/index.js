@@ -38,7 +38,7 @@ export default function Payment() {
     }
 
     return (
-        <ImageBackground source={Images.Background}
+        <ImageBackground source={Images.Background2}
             resizeMode="cover"
             style={styles.container}>
             <StatusBar
@@ -69,6 +69,7 @@ export default function Payment() {
                     <FlatList
                         data={paymentData}
                         horizontal
+                        showsHorizontalScrollIndicator={false}
                         renderItem={({ item, index }) => (
                             <TouchableOpacity
                                 onPress={() => handleSelectPayment(item, index)}
@@ -88,7 +89,9 @@ export default function Payment() {
                     leftImage={Images.Card}
                     refInner={cardNumberRef}
                     placeholderTextColor={Colors.white}
-                    placeholder={"Password"}
+                    placeholder={Strings.cardNumber}
+                    customInputStyle={styles.customInputStyle}
+                    Contianer={styles.ContactTextInputContainer}
                     multiline={false}
                     value={cardNumber}
                     maxLength={16}
@@ -98,11 +101,9 @@ export default function Payment() {
                     returnKeyType={"next"}
                     blurOnSubmit={false}
                     secureTextEntry={true}
-                    blurOnSubmit={false}
                     onSubmitEditing={() => {
                         expiryDateRef.current.focus();
                     }}
-
                 />
                 <View style={{ flexDirection: "row" }}>
                     <View style={styles.expiryContainer}>
@@ -110,6 +111,8 @@ export default function Payment() {
                             leftImage={Images.Card}
                             refInner={expiryDateRef}
                             placeholderTextColor={Colors.white}
+                            customInputStyle={styles.customInputStyle}
+                            Contianer={styles.ContactTextInputContainer}
                             placeholder={"MM/YY"}
                             multiline={false}
                             value={expiryDate}
@@ -129,7 +132,9 @@ export default function Payment() {
                             leftImage={Images.Card}
                             refInner={cvvRef}
                             placeholderTextColor={Colors.white}
-                            placeholder={"CVV"}
+                            customInputStyle={styles.customInputStyle}
+                            Contianer={styles.ContactTextInputContainer}
+                            placeholder={Strings.CVV}
                             multiline={false}
                             value={cvv}
                             maxLength={3}
@@ -159,7 +164,9 @@ export default function Payment() {
                 <ContactTextInput
                     leftImage={Images.Country}
                     placeholderTextColor={Colors.white}
-                    placeholder={"United States"}
+                    placeholder={Strings.unitedStates}
+                    customInputStyle={styles.customInputStyle}
+                    Contianer={styles.ContactTextInputContainer}
                     multiline={false}
                     value={country}
                     maxLength={50}
@@ -171,7 +178,9 @@ export default function Payment() {
                 <ContactTextInput
                     leftImage={Images.Location}
                     placeholderTextColor={Colors.white}
-                    placeholder={"Zip"}
+                    placeholder={Strings.zip}
+                    customInputStyle={styles.customInputStyle}
+                    Contianer={styles.ContactTextInputContainer}
                     multiline={false}
                     value={zip}
                     maxLength={50}
@@ -183,7 +192,7 @@ export default function Payment() {
 
                 <View style={styles.btnContainer}>
                     <CustomButton
-                        title={"Upgrade"}
+                        title={Strings.upgrade}
                         onpress={() => navigation.navigate("withoutBottomtab", { screen: "Payment" })} />
 
                 </View>

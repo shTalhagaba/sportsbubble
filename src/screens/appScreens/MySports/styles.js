@@ -63,9 +63,14 @@ export default ScaledSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  bellIcon: {
+    height: '22@ms0.3',
+    width: '22@ms0.3',
+    marginRight: '15@ms0.3',
+  },
   fvrtIcon: {
-    height: '24@ms0.3',
-    width: '21@ms0.3',
+    height: '23@ms0.3',
+    width: '23@ms0.3',
     marginRight: '20@ms0.3',
   },
   sliderContainer: {

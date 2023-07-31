@@ -115,6 +115,7 @@ export default function Setting() {
         desTxt={Strings.wantToLogout}
         blackBtnTxt={Strings.no}
         orangeBtnTxt={Strings.yes}
+        fillBefore={true}
         btn
         orangrBTn
         rowStyle={true}

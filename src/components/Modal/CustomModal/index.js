@@ -32,6 +32,7 @@ const CustomModal = props => {
             </Text>
             {props.btn && (
               <View style={props.rowStyle ? styles.rowBtn : styles.columnBtn}>
+                {props.fillBefore &&
                 <CustomButton
                   title={props.blackBtnTxt}
                   Contianer={
@@ -40,7 +41,7 @@ const CustomModal = props => {
                       : styles.blackBtnContainer2
                   }
                   onpress={props.blackBtnPress}
-                />
+                />}
                 {props.orangrBTn ? (
                   <CustomButton
                     title={props.orangeBtnTxt}
@@ -60,6 +61,17 @@ const CustomModal = props => {
                     onpress={props.otherBtnPress}
                   />
                 )}
+                 {!props.fillBefore &&
+                <CustomButton
+                  title={props.blackBtnTxt}
+                  Contianer={
+                    props.rowStyle
+                      ? styles.blackBtnContainer
+                      : styles.blackBtnContainer2
+                  }
+                  onpress={props.blackBtnPress}
+                />}
+                
               </View>
             )}
           </View>

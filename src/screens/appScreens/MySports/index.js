@@ -269,7 +269,7 @@ export default function Guide() {
                 <Image
                   source={Images.Bell}
                   style={[
-                    styles.fvrtIcon,
+                    styles.bellIcon,
                     {
                       tintColor: item?.notifcationFlag
                         ? Colors.darkOrange
@@ -297,6 +297,7 @@ export default function Guide() {
         dexTxtStyle={styles.dexTxtStyle}
         blackBtnTxt={Strings.no}
         otherBtnTxt={Strings.yes}
+        fillBefore={false}
         btn
         rowStyle={true}
         blue
@@ -309,6 +310,7 @@ export default function Guide() {
         desTxt={Strings.accessFeatures}
         blackBtnTxt={Strings.noThanks}
         otherBtnTxt={Strings.createFreeAccount}
+        fillBefore={false}
         btn
         rowStyle={false}
         blackBtnPress={() => setFvrtModal(!fvrtModal)}

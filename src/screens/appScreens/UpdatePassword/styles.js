@@ -32,7 +32,7 @@ export default ScaledSheet.create({
     },
     cancelBtnContainer: {
         marginTop: "16@ms0.3",
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.transparent,
         borderColor: Colors.darkOrange,
         borderWidth: "2@ms0.3",
     },

@@ -12,17 +12,17 @@ export default ScaledSheet.create({
     },
     upgradeTxt: {
         fontSize: "24@ms0.3",
-        fontWeight: "800",
+        fontWeight: "900",
         textAlign: "center",
         color: Colors.white,
         fontFamily: Fonts.Regular,
-        maxWidth: "85%",
+        maxWidth: "80%",
         alignSelf: "center",
         lineHeight: "33@ms0.3"
     },
     choosePlanTxt: {
         fontSize: "24@ms0.3",
-        fontWeight: "500",
+        fontWeight: "400",
         textAlign: "center",
         color: Colors.white,
         fontFamily: Fonts.Regular,
@@ -31,7 +31,7 @@ export default ScaledSheet.create({
     },
     priceTxt: {
         fontSize: "16@ms0.3",
-        fontWeight: "500",
+        fontWeight: "400",
         textAlign: "center",
         color: Colors.white,
         fontFamily: Fonts.Regular,
@@ -45,13 +45,14 @@ export default ScaledSheet.create({
         justifyContent: "center",
     },
     filterImage: {
-        height: "20@ms0.3",
-        width: "20@ms0.3"
+        height: "22@ms0.3",
+        width: "24@ms0.3",
+        marginTop: "5@ms0.3",
     },
     filterTxt: {
         fontSize: "20@ms0.3",
-        fontWeight: "500",
-        color: Colors.white,
+        fontWeight: "400",
+        color: Colors.white80,
         fontFamily: Fonts.Regular,
         alignSelf: "center",
         maxWidth: "70%",
@@ -111,7 +112,7 @@ export default ScaledSheet.create({
     blackBtnContainer: {
         borderColor: Colors.white,
         borderWidth: "1@ms0.3",
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.backBlack,
         marginTop: "16@ms0.3",
         marginBottom: "20@ms0.3"
     },

@@ -22,7 +22,7 @@ export default ScaledSheet.create({
     },
     payusingTxt: {
         fontSize: "20@ms0.3",
-        fontWeight: "500",
+        fontWeight: "400",
         color: Colors.white,
         fontFamily: Fonts.Regular,
         alignSelf: "center",
@@ -40,7 +40,7 @@ export default ScaledSheet.create({
     },
     payContainer: {
         flexDirection: "row",
-        marginTop: "16@ms0.3",
+        marginTop: "13@ms0.3",
     },
     line: {
         flex: 1,
@@ -49,7 +49,7 @@ export default ScaledSheet.create({
     },
     payusingContainer: {
         flexDirection: "row",
-        paddingVertical: "26@ms0.3",
+        paddingVertical: "20@ms0.3",
         alignItems: "center"
     },
     googleContainer: {
@@ -63,8 +63,8 @@ export default ScaledSheet.create({
         alignItems: "center"
     },
     payIcon: {
-        height: "38@ms0.3",
-        width: "80@ms0.3"
+        height: "35@ms0.3",
+        width: "75@ms0.3"
     },
     uncheckBox: {
         height: "18@ms0.3",
@@ -89,7 +89,7 @@ export default ScaledSheet.create({
     },
     payTxt: {
         fontSize: "16@ms0.3",
-        fontWeight: "500",
+        fontWeight: "400",
         textAlign: "center",
         color: Colors.white,
         fontFamily: Fonts.Regular,
@@ -119,15 +119,15 @@ export default ScaledSheet.create({
     },
     saveCardContainer: {
         flex: 1,
-        paddingVertical: "17@ms0.3",
+        paddingVertical: "14@ms0.3",
         flexDirection: "row",
-        marginLeft: "8@ms0.3",
-        borderRadius: "16@ms0.3",
-        borderWidth: "2@ms0.3",
+        marginLeft: "1@ms0.3",
+        // borderRadius: "16@ms0.3",
+        // borderWidth: "2@ms0.3",
     },
     saveCardTxt: {
         fontSize: "16@ms0.3",
-        fontWeight: "500",
+        fontWeight: "400",
         textAlign: "center",
         color: Colors.white,
         fontFamily: Fonts.Regular,
@@ -137,6 +137,10 @@ export default ScaledSheet.create({
         // marginTop: "40@ms0.3"
         marginBottom: "40@ms0.3"
     },
-
-
+    customInputStyle: {
+        fontSize: "16@ms0.3",
+    },
+    ContactTextInputContainer: {
+        marginTop: "10@ms0.3",
+    }
 });
