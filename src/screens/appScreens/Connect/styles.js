@@ -6,7 +6,9 @@ const screenWidth = Dimensions.get('window').width;
 export default ScaledSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.appColorBackground
+    // backgroundColor: Colors.appColorBackground
+    backgroundColor: Colors.backBlack
+
   },
   listContiner: {
     paddingRight: "5@ms0.3",
@@ -59,7 +61,7 @@ export default ScaledSheet.create({
     lineHeight: "25@ms0.3",
     color: Colors.white,
     fontFamily: Fonts.Regular,
-    width: Platform.OS ==='android'? screenWidth - 130 :'85%',
+    width: Platform.OS === 'android' ? screenWidth - 130 : '85%',
   },
   eventTxt: {
     fontSize: "14@ms0.3",
@@ -67,7 +69,7 @@ export default ScaledSheet.create({
     lineHeight: "20@ms0.3",
     color: Colors.white,
     fontFamily: Fonts.Regular,
-    width: Platform.OS ==='android'? screenWidth - 130 :'85%',
+    width: Platform.OS === 'android' ? screenWidth - 130 : '85%',
   },
   dateEventTxt: {
     fontSize: "14@ms0.3",
@@ -189,6 +191,6 @@ export default ScaledSheet.create({
     justifyContent: "center",
     position: 'absolute',
     left: "80@ms0.3",
-    alignSelf:'center'
+    alignSelf: 'center'
   },
 });

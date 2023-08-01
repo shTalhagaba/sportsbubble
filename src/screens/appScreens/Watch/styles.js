@@ -6,7 +6,9 @@ const screenWidth = Dimensions.get('window').width;
 export default ScaledSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.appColorBackground
+    // backgroundColor: Colors.appColorBackground
+    backgroundColor: Colors.backBlack
+
   },
 
   itemListContainer: {

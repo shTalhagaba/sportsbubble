@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   ImageBackground,
   Text,
@@ -9,11 +9,11 @@ import {
   StatusBar,
 } from 'react-native';
 import styles from './styles';
-import {Images, Colors, Strings} from 'src/utils';
+import { Images, Colors, Strings } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import CustomModalView from 'src/components/Modal/CustomModal';
-import {moderateScale} from 'react-native-size-matters';
+import { moderateScale } from 'react-native-size-matters';
 import CustomMySportsModalView from 'src/components/Modal/CustomMySportsModalView';
 import { useSelector } from 'react-redux';
 
@@ -119,7 +119,7 @@ export default function Guide() {
   const [categoryData, setCategoryData] = useState(categoryArr);
   const [reminderModal, setRemaindarModal] = useState(false);
   const [fvrtModal, setFvrtModal] = useState(false);
-  const [mySportModal, setMySportModal] = useState(reduxData?.guest?true:false);
+  const [mySportModal, setMySportModal] = useState(reduxData?.guest ? true : false);
   const [mySportData, setSportData] = useState(data);
   const [curremItem, setCurrentItem] = useState({});
   const [curremIndex, setCurrentIndex] = useState();
@@ -170,10 +170,10 @@ export default function Guide() {
     list[curremIndex].fvrtFlag = !list[curremIndex].fvrtFlag;
     setSportData(list);
     setFvrtModal(!fvrtModal);
-    navigation.navigate('withoutBottomtab', {screen: 'UpgradeAccount'});
+    navigation.navigate('withoutBottomtab', { screen: 'UpgradeAccount' });
   };
 
-  const handleSelectedCategory = (e, index) => {};
+  const handleSelectedCategory = (e, index) => { };
 
   return (
     <ImageBackground
@@ -193,16 +193,16 @@ export default function Guide() {
           horizontal
           data={categoryData}
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{justifyContent: 'center', flex: 1}}
+          contentContainerStyle={{ justifyContent: 'center', flex: 1 }}
           scrollEnabled={false}
-          renderItem={({item, index}) => (
+          renderItem={({ item, index }) => (
             <TouchableOpacity
               onPress={() => handleSelectedCategory(item, index)}
               style={styles.sliderInnerContainer}>
               <View
                 style={[
                   styles.sliderInnerMainContainer,
-                  {borderWidth: item?.selected ? moderateScale(2, 0.3) : 0},
+                  { borderWidth: item?.selected ? moderateScale(2, 0.3) : 0 },
                 ]}>
                 {item?.selected && <View style={styles.rectangle2} />}
                 <ImageBackground
@@ -215,12 +215,12 @@ export default function Guide() {
                   imageStyle={
                     Platform.OS === 'android'
                       ? {
-                          borderRadius: moderateScale(20, 0.3),
-                          borderWidth: item?.selected
-                            ? 0
-                            : moderateScale(2.5, 0.3),
-                          borderColor: Colors.darkBlue,
-                        }
+                        borderRadius: moderateScale(20, 0.3),
+                        borderWidth: item?.selected
+                          ? 0
+                          : moderateScale(2.5, 0.3),
+                        borderColor: Colors.darkBlue,
+                      }
                       : {}
                   }
                   resizeMode={'stretch'}>
@@ -229,10 +229,10 @@ export default function Guide() {
                       index === 0
                         ? Images.Trophy
                         : index === 1
-                        ? Images.Crown
-                        : index === 2
-                        ? Images.College
-                        : Images.Game
+                          ? Images.Crown
+                          : index === 2
+                            ? Images.College
+                            : Images.Game
                     }
                     style={styles.sliderIcon}
                     resizeMode={'contain'}
@@ -254,7 +254,7 @@ export default function Guide() {
       <FlatList
         data={mySportData}
         showsVerticalScrollIndicator={false}
-        renderItem={({item, index}) => (
+        renderItem={({ item, index }) => (
           <View style={styles.listContiner}>
             <View style={styles.innerContainer}>
               <Image
@@ -282,6 +282,7 @@ export default function Guide() {
                 <Image
                   source={item?.fvrtFlag ? Images.FilledFvrt : Images.Favorite}
                   style={styles.fvrtIcon}
+                  resizeMode={"contain"}
                 />
               </TouchableOpacity>
             </View>
