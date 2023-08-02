@@ -142,29 +142,11 @@ export default function Watch(props) {
                         params: {item: itemSelected, holderItem: item},
                       });
                     }}
-                    style={{
-                      alignItems: 'center',
-                      marginTop: 25,
-                      marginRight: 20,
-                    }}>
+                    style={styles.listMainContainer}>
                     <View
-                      style={{
-                        width: screenWidth / 4,
-                        backgroundColor: Colors.mediumBlue,
-                        borderWidth: 2,
-                        borderRadius: 16,
-                        overflow: 'hidden',
-                        borderColor: Colors.mediumBlue,
-                      }}>
+                      style={styles.listInnerContainer}>
                       <View
-                        style={{
-                          position: 'absolute',
-                          left: 0,
-                          top: 0,
-                          width: '100%',
-                          height: '100%',
-                          backgroundColor: Colors.black15,
-                        }}
+                        style={styles.listBackground}
                       />
                       <View style={styles.imageContainer}>
                         <ImageWithPlaceHolder
@@ -200,7 +182,7 @@ export default function Watch(props) {
               <Image source={Images.Menu} style={styles.menuBtn2} />
             </TouchableOpacity>
             <Text style={styles.wayToWatch}>{Strings.otherWays}</Text>
-            <View style={{marginTop: 1, marginHorizontal: 1}}>
+            <View style={styles.bottomFlatlist}>
               <FlatList
                 data={itemSelected?.rightsHoldersConnection?.edges || data}
                 showsVerticalScrollIndicator={false}
@@ -209,29 +191,11 @@ export default function Watch(props) {
                 renderItem={({item, index}) => {
                   return item?.node?.weight > 1000 ? (
                     <View
-                      style={{
-                        alignItems: 'center',
-                        marginTop: 0,
-                        marginRight: 20,
-                      }}>
+                      style={styles.bottomListContainer}>
                       <View
-                        style={{
-                          width: screenWidth / 4,
-                          backgroundColor: Colors.mediumBlue,
-                          borderWidth: 2,
-                          borderRadius: 16,
-                          overflow: 'hidden',
-                          borderColor: Colors.mediumBlue,
-                        }}>
+                        style={styles.bottomInnerContainer}>
                         <View
-                          style={{
-                            position: 'absolute',
-                            left: 0,
-                            top: 0,
-                            width: '100%',
-                            height: '100%',
-                            backgroundColor: Colors.black15,
-                          }}
+                          style={styles.bottomListBackground}
                         />
                         <View style={styles.imageContainer}>
                           <ImageWithPlaceHolder

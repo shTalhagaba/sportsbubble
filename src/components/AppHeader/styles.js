@@ -4,11 +4,11 @@ import { ScaledSheet } from "react-native-size-matters";
 
 const styles = ScaledSheet.create({
     headerContainer: {
-        height: "85@ms0.3",
+        height: Platform.OS === 'ios' ? "95@ms0.3" : "85@ms0.3",
         flexDirection: "row",
         alignItems: "center",
         backgroundColor: Colors.transparent,
-        paddingTop: Platform.OS === 'ios' ? "25@ms0.3" : "25@ms0.3",
+        paddingTop: Platform.OS === 'ios' ? "40@ms0.3" : "25@ms0.3",
     },
     leftArrowIcon: {
         width: "27@ms0.3",
