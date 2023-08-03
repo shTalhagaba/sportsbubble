@@ -1,8 +1,8 @@
-import {Colors, Fonts} from 'src/utils';
-import {ScaledSheet} from 'react-native-size-matters';
-import {Dimensions, Platform} from 'react-native';
+import { Colors, Fonts } from 'src/utils';
+import { ScaledSheet } from 'react-native-size-matters';
+import { Dimensions, Platform } from 'react-native';
 const screenWidth = Dimensions.get('window').width;
-const {fontScale} = Dimensions.get('window');
+const { fontScale } = Dimensions.get('window');
 
 export default ScaledSheet.create({
   container: {
@@ -48,8 +48,6 @@ export default ScaledSheet.create({
   },
   itemContainer: {
     height: fontScale > 1 ? 76 * fontScale : '80@ms0.3',
-    width: '80@ms0.3',
-    justifyContent: 'center',
     alignItems: 'center',
   },
   backImageContainer: {
@@ -149,7 +147,8 @@ export default ScaledSheet.create({
     lineHeight: '25@ms0.3',
     color: Colors.white,
     fontFamily: Fonts.Regular,
-    width: Platform.OS === 'android' ? screenWidth - 130 : '85%',
+    maxWidth: Platform.OS === 'android' ? screenWidth - 130 : screenWidth - 130,
+
   },
   eventTxt: {
     fontSize: '14@ms0.3',
@@ -287,7 +286,7 @@ export default ScaledSheet.create({
     borderRadius: '16@ms0.3',
     overflow: 'hidden',
     borderColor: Colors.mediumBlue,
-    justifyContent:'center',
+    justifyContent: 'center',
   },
   bottomListBackground: {
     position: 'absolute',
@@ -298,7 +297,7 @@ export default ScaledSheet.create({
     backgroundColor: Colors.black15,
   },
   bottomFlatlist: {
-    marginTop: 1, 
+    marginTop: 1,
     marginHorizontal: 1
   },
   listBackground: {
@@ -317,7 +316,7 @@ export default ScaledSheet.create({
     borderRadius: '16@ms0.3',
     overflow: 'hidden',
     borderColor: Colors.mediumBlue,
-    justifyContent:'center'
+    justifyContent: 'center'
   },
   listMainContainer: {
     alignItems: 'center',
