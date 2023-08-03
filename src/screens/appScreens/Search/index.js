@@ -138,12 +138,9 @@ export default function Search(props) {
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
         onPressBack={() =>
-          navigation.dispatch(
-            CommonActions.reset({
-              index: 1,
-              routes: [{name: 'Guide'}],
-            }),
-          )
+          navigation.navigate('Guide', {
+            screen: 'Guide',
+          })
         }
         SimpleView
       />
