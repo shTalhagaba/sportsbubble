@@ -904,12 +904,12 @@
 				DEVELOPMENT_TEAM = N2NJSCBBBJ;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "sportsbubble development-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "sportsbubble development";
+				INFOPLIST_KEY_CFBundleDisplayName = "dev sportsbubble";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.01;
+				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -934,10 +934,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = N2NJSCBBBJ;
 				INFOPLIST_FILE = "sportsbubble development-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "sportsbubble development";
+				INFOPLIST_KEY_CFBundleDisplayName = "dev sportsbubble";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -970,7 +970,7 @@
 				DEVELOPMENT_TEAM = 73GD389QU6;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "sportsbubble staging-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "sportbubble staging";
+				INFOPLIST_KEY_CFBundleDisplayName = "stage sportbubble";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1003,7 +1003,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 73GD389QU6;
 				INFOPLIST_FILE = "sportsbubble staging-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "sportbubble staging";
+				INFOPLIST_KEY_CFBundleDisplayName = "stage sportbubble";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

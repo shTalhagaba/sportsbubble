@@ -1,9 +1,7 @@
 import React from 'react'
 import { View, TextInput, Image, TouchableOpacity } from 'react-native'
 import styles from './styles'
-import { Images, Colors } from 'src/utils';
-
-
+import { Images } from 'src/utils';
 
 const ContactTextInput = (props) => {
     return (
@@ -42,12 +40,8 @@ const ContactTextInput = (props) => {
                     </TouchableOpacity>
                 )}
             </View>
-
         </View>
-
-
     )
-
 }
 
 export default ContactTextInput

@@ -1,5 +1,6 @@
 import { Colors, Fonts } from 'src/utils'
 import { ScaledSheet } from "react-native-size-matters";
+
 const styles = ScaledSheet.create({
     container: {
         backgroundColor: Colors.mediumGreen,
@@ -31,7 +32,6 @@ const styles = ScaledSheet.create({
     eyeIcon: {
         height: "28@ms0.3",
         width: "28@ms0.3",
-        // tintColor: Colors.white,
         marginLeft: "12@ms0.3",
     },
 })

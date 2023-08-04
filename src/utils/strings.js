@@ -51,4 +51,6 @@ export default {
   emptyGuideList: "There are no live events in our schedule during this time period. Tap 'Live Now' above to see live event listings or swipe right to see upcoming event listings",
   emptySearchList: "Search by Event, Team, League or Sport to Find Event Watch Information",
   search: "Search",
+  liveNow: "LIVE NOW!",
+  womenWorld: "Women’s World Cup Qualifier",
 };
