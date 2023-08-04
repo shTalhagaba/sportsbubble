@@ -28,8 +28,8 @@ sagaMiddleware.run(mySaga);
 const persistor = persistStore(store);
 
 const httpLink = createHttpLink({
-  // uri: 'https://cpbubzqq92.execute-api.us-west-2.amazonaws.com/dev/graphql'
-   uri: 'https://6953ptqg3b.execute-api.us-west-2.amazonaws.com/dev/graphql',
+  uri: 'https://cpbubzqq92.execute-api.us-west-2.amazonaws.com/dev/graphql', // same web link
+  // uri: 'https://6953ptqg3b.execute-api.us-west-2.amazonaws.com/dev/graphql',
   // uri: Config.BASE_URL
 });
 

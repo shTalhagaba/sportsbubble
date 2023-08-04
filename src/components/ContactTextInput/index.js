@@ -1,9 +1,8 @@
 import React from 'react'
 import { View, TextInput, Image, TouchableOpacity } from 'react-native'
 import styles from './styles'
-import { Images, Colors } from 'src/utils';
-
-
+import EyeOpen from 'src/assets/images/EyeOpen';
+import { Colors } from 'src/utils';
 
 const ContactTextInput = (props) => {
     return (
@@ -32,8 +31,8 @@ const ContactTextInput = (props) => {
                     numberOfLines={props.numberOfLines}
                 />
                 {props.secureText && (
-                    <TouchableOpacity onPress={props.onPress} style={styles.iconContainer}>
-                        <Image source={props.eyeOpen ? Images.EyeOpen : Images.EyeClose} style={styles.eyeIcon} resizeMode={"contain"} />
+                    <TouchableOpacity onPress={props.onPress} style={styles.iconEyeContainer}>
+                        <EyeOpen width={18} height={18} color={props.eyeOpen ?  Colors.white : Colors.white70 } />
                     </TouchableOpacity>
                 )}
                 {props.rightImage && (
@@ -42,12 +41,8 @@ const ContactTextInput = (props) => {
                     </TouchableOpacity>
                 )}
             </View>
-
         </View>
-
-
     )
-
 }
 
 export default ContactTextInput

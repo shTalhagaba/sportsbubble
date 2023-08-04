@@ -5,9 +5,7 @@ import { ScaledSheet } from "react-native-size-matters";
 export default ScaledSheet.create({
     container: {
         flex: 1,
-        // backgroundColor: Colors.appColorBackground
-        backgroundColor: Colors.backBlack
-
+        backgroundColor: Colors.appColorBackground
     },
     innerContainer: {
         marginTop: "10@ms0.3",

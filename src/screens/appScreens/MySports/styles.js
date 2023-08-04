@@ -1,14 +1,12 @@
-import { Colors, Fonts } from 'src/utils';
-import { ScaledSheet } from 'react-native-size-matters';
-import { Dimensions } from 'react-native';
+import {Colors, Fonts} from 'src/utils';
+import {ScaledSheet} from 'react-native-size-matters';
+import {Dimensions} from 'react-native';
 const width = Dimensions.get('window').width;
 
 export default ScaledSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: Colors.appColorBackground,
-    backgroundColor: Colors.backBlack
-
+    backgroundColor: Colors.appColorBackground,
   },
   listContiner: {
     marginVertical: '8@ms0.3',
@@ -117,7 +115,7 @@ export default ScaledSheet.create({
     fontFamily: Fonts.Bold,
     fontStyle: 'italic',
     elevation: 3,
-    textShadowOffset: { width: 0, height: 1 },
+    textShadowOffset: {width: 0, height: 1},
     textShadowRadius: 8,
     textShadowColor: Colors.black,
     marginTop: '6@ms0.3',

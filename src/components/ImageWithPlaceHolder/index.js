@@ -1,6 +1,6 @@
 import CustomSvg from 'src/assets/images/PlaceholderIcon';
 import React, {useState} from 'react';
-import {Image, View} from 'react-native';
+import {Image} from 'react-native';
 
 const ImageWithPlaceHolder = ({
   source,

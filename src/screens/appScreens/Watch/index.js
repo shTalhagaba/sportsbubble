@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   StatusBar,
   Dimensions,
+  ScrollView,
 } from 'react-native';
 import styles from './styles';
 import {Images, Colors, Strings, Constants} from 'src/utils';
@@ -69,7 +70,10 @@ export default function Watch(props) {
         SimpleView
       />
       {/* Main View */}
-      <View style={styles.flexOnly}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{paddingBottom: 20}}
+        style={styles.flexOnly}>
         {/* after header card */}
         <View style={styles.sliderContainer}>
           <View style={styles.itemListContainer}>
@@ -121,9 +125,10 @@ export default function Watch(props) {
           <View style={styles.flatlistContainer}>
             <Text style={styles.conectTxt}>
               {dayjs(itemSelected?.startTime).isAfter(currentDate)
-                ? Strings.connectToWatchFuture +
-                  ' ' +
-                  dayjs(itemSelected?.startTime).format('dddd MM/D [at] h:mma')
+                ? 
+                //Strings.connectToWatchFuture +
+                  ' ' 
+                  //dayjs(itemSelected?.startTime).format('dddd MM/D [at] h:mma')
                 : Strings.connectToWatch}
             </Text>
             <FlatList
@@ -141,30 +146,9 @@ export default function Watch(props) {
                         params: {item: itemSelected, holderItem: item},
                       });
                     }}
-                    style={{
-                      alignItems: 'center',
-                      marginTop: 25,
-                      marginRight: 20,
-                    }}>
-                    <View
-                      style={{
-                        width: screenWidth / 4,
-                        backgroundColor: Colors.mediumBlue,
-                        borderWidth: 2,
-                        borderRadius: 16,
-                        overflow: 'hidden',
-                        borderColor: Colors.mediumBlue,
-                      }}>
-                      <View
-                        style={{
-                          position: 'absolute',
-                          left: 0,
-                          top: 0,
-                          width: '100%',
-                          height: '100%',
-                          backgroundColor: Colors.black15,
-                        }}
-                      />
+                    style={styles.listMainContainer}>
+                    <View style={styles.listInnerContainer}>
+                      <View style={styles.listBackground} />
                       <View style={styles.imageContainer}>
                         <ImageWithPlaceHolder
                           source={item?.node?.logoUrl}
@@ -188,7 +172,7 @@ export default function Watch(props) {
         ) : (
           <Text style={styles.orangeTxt}>{Strings.connectToWatchEmpty}</Text>
         )}
-      </View>
+      </ScrollView>
       {bottomShow &&
         (bottomMenu ? (
           <ImageBackground
@@ -199,7 +183,7 @@ export default function Watch(props) {
               <Image source={Images.Menu} style={styles.menuBtn2} />
             </TouchableOpacity>
             <Text style={styles.wayToWatch}>{Strings.otherWays}</Text>
-            <View style={{marginTop: 1, marginHorizontal: 1}}>
+            <View style={styles.bottomFlatlist}>
               <FlatList
                 data={itemSelected?.rightsHoldersConnection?.edges || data}
                 showsVerticalScrollIndicator={false}
@@ -207,31 +191,9 @@ export default function Watch(props) {
                 horizontal
                 renderItem={({item, index}) => {
                   return item?.node?.weight > 1000 ? (
-                    <View
-                      style={{
-                        alignItems: 'center',
-                        marginTop: 0,
-                        marginRight: 20,
-                      }}>
-                      <View
-                        style={{
-                          width: screenWidth / 4,
-                          backgroundColor: Colors.mediumBlue,
-                          borderWidth: 2,
-                          borderRadius: 16,
-                          overflow: 'hidden',
-                          borderColor: Colors.mediumBlue,
-                        }}>
-                        <View
-                          style={{
-                            position: 'absolute',
-                            left: 0,
-                            top: 0,
-                            width: '100%',
-                            height: '100%',
-                            backgroundColor: Colors.black15,
-                          }}
-                        />
+                    <View style={styles.bottomListContainer}>
+                      <View style={styles.bottomInnerContainer}>
+                        <View style={styles.bottomListBackground} />
                         <View style={styles.imageContainer}>
                           <ImageWithPlaceHolder
                             source={item?.node?.logoUrl}

@@ -83,4 +83,5 @@ export default {
   zip: "Zip",
   unitedStates: "United States",
   CVV: "CVV",
+  womenWorld: "Women’s World Cup Qualifier",
 };

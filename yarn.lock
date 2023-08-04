@@ -11,9 +11,9 @@
     "@jridgewell/trace-mapping" "^0.3.9"
 
 "@apollo/client@^3.7.16":
-  version "3.7.16"
-  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.7.16.tgz#418cb23566a6d52e9e22d34484167149269efd40"
-  integrity sha512-rdhoc7baSD7ZzcjavEpYN8gZJle1KhjEKj4SJeMgBpcnO4as7oXUVU4LtFpotzZdFlo57qaLrNzfvppSTsKvZQ==
+  version "3.7.17"
+  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.7.17.tgz#1d2538729fd8ef138aa301a7cf62704474e57b72"
+  integrity sha512-0EErSHEtKPNl5wgWikHJbKFAzJ/k11O0WO2QyqZSHpdxdAnw7UWHY4YiLbHCFG7lhrD+NTQ3Z/H9Jn4rcikoJA==
   dependencies:
     "@graphql-typed-document-node/core" "^3.1.1"
     "@wry/context" "^0.7.0"
@@ -1485,9 +1485,9 @@
     fastq "^1.6.0"
 
 "@react-native-async-storage/async-storage@^1.18.2":
-  version "1.19.0"
-  resolved "https://registry.yarnpkg.com/@react-native-async-storage/async-storage/-/async-storage-1.19.0.tgz#594aca9c20924b7955d62cf43797b4187e1e6cf8"
-  integrity sha512-xOFkz/FaQctD6yNJDur+WnHdSTigOs3pTz6HmfC8X8PYwcnnN3R9UxuWiwsfK8vvT2WioAxUkQt3lB7GySNA2w==
+  version "1.19.1"
+  resolved "https://registry.yarnpkg.com/@react-native-async-storage/async-storage/-/async-storage-1.19.1.tgz#09d35caaa31823b40fdfeebf95decf8f992a6274"
+  integrity sha512-5QXuGCtB+HL3VtKL2JN3+6t4qh8VXizK+aGDAv6Dqiq3MLrzgZHb4tjVgtEWMd8CcDtD/JqaAI1b6/EaYGtFIA==
   dependencies:
     merge-options "^3.0.4"
 
@@ -7296,9 +7296,9 @@ tslib@^2.0.1:
   integrity sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==
 
 tslib@^2.1.0, tslib@^2.3.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.6.0.tgz#b295854684dbda164e181d259a22cd779dcd7bc3"
-  integrity sha512-7At1WUettjcSRHXCyYtTselblcHl9PJFFVKiCAy/bY97+BPZXSQ2wbq0P9s8tK2G7dFQfNnlJnPAiArVBVBsfA==
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.6.1.tgz#fd8c9a0ff42590b25703c0acb3de3d3f4ede0410"
+  integrity sha512-t0hLfiEKfMUoqhG+U1oid7Pva4bbDPHYfJNiB7BiIjRkj1pyC++4N3huJfqY6aRH6VTB0rvtzQwjM4K6qpfOig==
 
 tsutils@^3.21.0:
   version "3.21.0"

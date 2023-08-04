@@ -12,6 +12,15 @@ const styles = ScaledSheet.create({
     alignSelf: 'center',
     borderRadius: '16@ms0.3',
     paddingBottom: '30@ms0.3',
+    borderRadius: 16,
+    elevation: 5,
+    shadowColor: Colors.black30,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 8,
+    marginBottom: 6, // Adjust this value as needed
   },
   matchTeam: {
     height: '240@ms0.6',
@@ -58,4 +67,5 @@ const styles = ScaledSheet.create({
     marginVertical: '20@ms0.3',
   }
 });
+
 export default styles;

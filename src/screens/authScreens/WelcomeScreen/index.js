@@ -39,13 +39,13 @@ export default function WelcomeScreen() {
           <CustomButton
             Contianer={styles.freeBtnContainer}
             title={Strings.createFreeAccount}
-            onpress={() => navigation.replace('Signup')}
+            onpress={() => navigation.navigate('Signup')}
           />
           <CustomButton
             blue={true}
             Contianer={styles.loginBtnContainer}
             title={Strings.login}
-            onpress={() => navigation.replace('Login')}
+            onpress={() => navigation.navigate('Login')}
           />
           <TouchableOpacity
             onPress={() => {

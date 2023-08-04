@@ -1,10 +1,13 @@
 export default {
     transparent: "transparent",
     white: "#fff",
+    white30: "rgba(256, 256, 256, 0.30)",
+    white50: "rgba(256, 256, 256, 0.50)",
     white70: "rgba(256, 256, 256, 0.70)",
     white80: "rgba(256, 256, 256, 0.80)",
     black: "#000000",
     black10: "rgba(0, 0, 0, 0.1)",
+    black30: "rgba(0, 0, 0, 0.3)",
     appColor: "#2664c0",
     appColorBackground: "rgba(0, 0, 0, 0.95)",
     yellow: "#ddfc14",

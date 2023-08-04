@@ -1,14 +1,12 @@
 import { Colors, Fonts } from 'src/utils';
 import { ScaledSheet } from "react-native-size-matters";
 import { Dimensions } from 'react-native';
-const screenWidth = Dimensions.get('window').width;
+const {screenWidth,fontScale} = Dimensions.get('window');
 
 export default ScaledSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: Colors.appColorBackground
-    backgroundColor: Colors.backBlack
-
+    backgroundColor: Colors.appColorBackground
   },
   listContiner: {
     paddingRight: "5@ms0.3",
@@ -29,7 +27,7 @@ export default ScaledSheet.create({
     width: "16@ms0.3",
   },
   itemContainer: {
-    height: "80@ms0.3",
+    height: fontScale > 1 ? 76 * fontScale : '80@ms0.3',
     width: "80@ms0.3",
     justifyContent: "center",
     alignItems: "center"
@@ -61,7 +59,7 @@ export default ScaledSheet.create({
     lineHeight: "25@ms0.3",
     color: Colors.white,
     fontFamily: Fonts.Regular,
-    width: Platform.OS === 'android' ? screenWidth - 130 : '85%',
+    width: Platform.OS ==='android'? screenWidth - 130 :'85%',
   },
   eventTxt: {
     fontSize: "14@ms0.3",
@@ -69,7 +67,7 @@ export default ScaledSheet.create({
     lineHeight: "20@ms0.3",
     color: Colors.white,
     fontFamily: Fonts.Regular,
-    width: Platform.OS === 'android' ? screenWidth - 130 : '85%',
+    width: Platform.OS ==='android'? screenWidth - 130 :'85%',
   },
   dateEventTxt: {
     fontSize: "14@ms0.3",
@@ -113,7 +111,7 @@ export default ScaledSheet.create({
   sliderContainer: {
     flexDirection: 'row',
     backgroundColor: Colors.mediumBlue,
-    height: "110@ms0.3",
+    height: fontScale > 1 ? 105 * fontScale : '110@ms0.3',
     alignItems: 'center',
     paddingHorizontal: "15@ms0.3",
   },
@@ -191,6 +189,6 @@ export default ScaledSheet.create({
     justifyContent: "center",
     position: 'absolute',
     left: "80@ms0.3",
-    alignSelf: 'center'
+    alignSelf:'center'
   },
 });

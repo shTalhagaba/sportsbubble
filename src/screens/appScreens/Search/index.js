@@ -17,10 +17,11 @@ import AppHeader from 'src/components/AppHeader';
 import {useQuery} from '@apollo/client';
 import {SEARCH_EVENTS_QUERY} from './queries';
 import dayjs from 'dayjs';
-import {CommonActions, useNavigation} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 import strings from 'src/utils/strings';
+const expireTime = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
 export default function Search(props) {
   const navigation = useNavigation();
@@ -138,12 +139,9 @@ export default function Search(props) {
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
         onPressBack={() =>
-          navigation.dispatch(
-            CommonActions.reset({
-              index: 1,
-              routes: [{name: 'Guide'}],
-            }),
-          )
+          navigation.navigate('Guide', {
+            screen: 'Guide',
+          })
         }
         SimpleView
       />

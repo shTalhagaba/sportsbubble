@@ -5,9 +5,7 @@ import { ScaledSheet } from "react-native-size-matters";
 export default ScaledSheet.create({
     container: {
         flex: 1,
-        // backgroundColor: Colors.appColorBackground
-        backgroundColor: Colors.backBlack
-
+        backgroundColor: Colors.appColorBackground
     },
     signupTxt: {
         fontSize: "22@ms0.3",

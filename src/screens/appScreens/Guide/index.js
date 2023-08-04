@@ -24,6 +24,7 @@ import {setExpire, setStoreEventList} from 'src/store/types';
 import {moderateScale} from 'react-native-size-matters';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 const screenWidth = Dimensions.get('window').width;
+const {width, fontScale} = Dimensions.get('window');
 
 // Sample data for the list
 const list = [
@@ -145,7 +146,13 @@ export default function Guide(props) {
     notifyOnNetworkStatusChange: true,
     onCompleted: data => {
       if (data && data?.sortedEvents) {
-        const filteredEvents = data?.sortedEvents.filter(event => {
+        const filteredEvents = data?.sortedEvents.sort((eventA, eventB) => {
+          const startEventA = new Date(eventA.startTime).getTime();
+          const startEventB = new Date(eventB.startTime).getTime();
+      
+          // Sort events in ascending order based on the start time
+          return startEventA - startEventB;
+        }).filter(event => {
           const {line1, line2, startTime, endTime, logo1, rightsHolders} =
             event;
           // Check if all required properties exist
@@ -432,7 +439,8 @@ export default function Guide(props) {
   const ItemComponent = React.memo(({item}) => {
     return (
       // Render your item component here
-      <TouchableOpacity
+      dayjs(item?.startTime).isAfter(currentDate) ? (
+        <TouchableOpacity
         style={styles.listContiner}
         onPress={() => {
           if (
@@ -452,37 +460,37 @@ export default function Guide(props) {
             navigation.navigate('Watch', {item: item});
           }
         }}>
-        <View style={styles.innerContainer}>
-          <View style={styles.imageContainer}>
-            <ImageWithPlaceHolder
-              source={item?.logo1}
-              placeholderSource={Constants.placeholder_trophy_icon}
-              style={styles.imageIcon}
-              resizeMode="contain"
-            />
-          </View>
-          <View
-            style={{
-              width: item?.startTime ? startTimeWidth(item?.startTime) : 0,
-              backgroundColor: Colors.darkBlue,
-            }}></View>
-          <View
-            style={{
-              width: endTimeWidth(item?.endTime),
-              backgroundColor: dayjs(item?.startTime).isAfter(currentDate)
-                ? Colors.mediumBlue
-                : Colors.mediumGreen,
-            }}></View>
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: Colors.darkBlue,
-            }}></View>
-          <View style={styles.userNameContainer}>
-            <Text style={[styles.eventTxt, {marginTop: 5}]} numberOfLines={1}>
-              {item?.line1 ? item?.line1 : item?.companyName}
-            </Text>
-            <Text style={styles.titleTxt} numberOfLines={1}>
+          <View style={styles.innerContainer}>
+            <View style={styles.imageContainer}>
+              <ImageWithPlaceHolder
+                source={item?.logo1}
+                placeholderSource={Constants.placeholder_trophy_icon}
+                style={styles.imageIcon}
+                resizeMode="contain"
+              />
+            </View>
+            <View
+              style={{
+                width: item?.startTime ? startTimeWidth(item?.startTime) : 0,
+                backgroundColor: Colors.darkBlue,
+              }}></View>
+            <View
+              style={{
+                width: endTimeWidth(item?.endTime),
+                backgroundColor: dayjs(item?.startTime).isAfter(currentDate)
+                  ? Colors.mediumBlue
+                  : Colors.mediumGreen,
+              }}></View>
+            <View
+              style={{
+                flex: 1,
+                backgroundColor: Colors.darkBlue,
+              }}></View>
+            <View style={styles.userNameContainer}>
+              <Text style={[styles.eventTxt, {marginTop: 5}]} numberOfLines={1}>
+                {item?.line1 ? item?.line1 : item?.companyName}
+              </Text>
+              <Text style={styles.titleTxt} numberOfLines={1}>
               {item?.line2 ? item?.line2 : item?.title}
             </Text>
             <View style={{flexDirection: 'row'}}>
@@ -503,8 +511,8 @@ export default function Guide(props) {
               </Text>
             </View>
           </View>
-        </View>
-      </TouchableOpacity>
+          </View>
+      </TouchableOpacity>):null
     );
   });
 
@@ -526,8 +534,12 @@ export default function Guide(props) {
           horizontal
           data={categoryData}
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{justifyContent: 'center', flex: 1}}
-          scrollEnabled={false}
+          contentContainerStyle={
+            fontScale > 1
+              ? {justifyContent: 'center'}
+              : {justifyContent: 'center', flex: 1}
+          }
+          scrollEnabled={fontScale > 1 ? true : false}
           renderItem={({item, index}) => (
             <TouchableOpacity
               onPress={() => handleSelectedCategory(item, index)}
@@ -581,7 +593,7 @@ export default function Guide(props) {
       </View>
       {/* time slider */}
       <View style={styles.timeSliderContainer}>
-        <View style={{width: screenWidth / 5}}>
+        <View style={styles.liveMainContainer}>
           <TouchableOpacity
             onPress={() => handleLive()}
             style={[
@@ -609,7 +621,7 @@ export default function Guide(props) {
             horizontal
             data={timeData}
             showsHorizontalScrollIndicator={false}
-            scrollEnabled={false}
+            scrollEnabled={fontScale > 1 ? true : false}
             renderItem={({item, index}) => {
               const adjustedIndex = index + currentIndex; // Calculate the adjusted index based on the current index
               return (

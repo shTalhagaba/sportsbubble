@@ -1,6 +1,5 @@
-import { Colors, Fonts } from "src/utils";
-import { ScaledSheet } from "react-native-size-matters";
-
+import {Colors, Fonts} from 'src/utils';
+import {ScaledSheet} from 'react-native-size-matters';
 
 const styles = ScaledSheet.create({
     mainView: {
@@ -66,4 +65,5 @@ const styles = ScaledSheet.create({
         color: Colors.darkOrange
     }
 });
+
 export default styles;
