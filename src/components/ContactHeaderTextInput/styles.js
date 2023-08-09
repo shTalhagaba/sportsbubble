@@ -4,18 +4,18 @@ import {ScaledSheet} from 'react-native-size-matters';
 const styles = ScaledSheet.create({
   container: {
     backgroundColor: Colors.blueGrey,
-    paddingStart: '10@ms0.3',
+    paddingStart: '20@ms0.3',
     marginTop: '16@ms0.3',
     borderRadius: '15@ms0.3',
     height: '60@ms0.3',
-    marginStart: '10@ms0.3',
+    // marginStart: '15@ms0.3',
     paddingVertical: '5@ms0.3',
     flexDirection: 'row',
   },
   leftIcon: {
-    height: '12@ms0.3',
-    width: '12@ms0.3',
-    tintColor: Colors.white,
+    height: '13@ms0.3',
+    width: '13@ms0.3',
+    tintColor: Colors.white70,
   },
   headerContainer: {
     flexDirection: 'row',
@@ -25,10 +25,10 @@ const styles = ScaledSheet.create({
     flex: 1,
   },
   headerTxt: {
-    fontSize: '12@ms0.3',
-    fontWeight: '500',
+    fontSize: '15@ms0.3',
+    fontWeight: '400',
     lineHeight: '24@ms0.3',
-    color: Colors.white,
+    color: Colors.white70,
     fontFamily: Fonts.Regular,
     marginStart: '10@ms0.3',
   },

@@ -5,7 +5,7 @@ import { ScaledSheet } from "react-native-size-matters";
 const styles = ScaledSheet.create({
     container: {
         flex: 1,
-        // backgroundColor: Colors.darkBlue90,
+        backgroundColor: Colors.darkBlue60,
     },
     mainView: {
         flex: 1,

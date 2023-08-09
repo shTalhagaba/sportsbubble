@@ -54,12 +54,12 @@ export default function PersonalInfo() {
         <Text style={styles.headerTxt}>{Strings.personalInfo}</Text>
         <ContactHeaderTextInput
           leftImage={Images.UserIcon}
-          headerName={'First Name'}
+          headerName={Strings.firstName}
           Contianer={{marginTop: 24}}
           customInputStyle={{marginBottom: 5}}
           refInner={firstNameRef}
           // placeholderTextColor={Colors.white}
-          // placeholder={'First Name'}
+          // placeholder={Strings.firstName}
           headerTxtStyle={styles.headerTxtStyle}
           multiline={false}
           value={firstName}
@@ -75,9 +75,9 @@ export default function PersonalInfo() {
         />
         <ContactHeaderTextInput
           leftImage={Images.UserIcon}
-          headerName={'Last Name'}
+          headerName={Strings.lastName}
           refInner={lastNameRef}
-          // placeholder={'First Name'}
+          // placeholder={Strings.lastName}
           // placeholderTextColor={Colors.white}
           customInputStyle={{marginBottom: 5}}
           multiline={false}
@@ -95,10 +95,10 @@ export default function PersonalInfo() {
         />
         <ContactHeaderTextInput
           leftImage={Images.Location}
-          headerName={'Zip Code'}
+          headerName={Strings.zipCode}
           refInner={zipCodeRef}
           // placeholderTextColor={Colors.white}
-          // placeholder={'Zip Code'}
+          // placeholder={Strings.zipCode}
           headerTxtStyle={styles.headerTxtStyle}
           customInputStyle={{marginBottom: 5}}
           multiline={false}
@@ -115,10 +115,10 @@ export default function PersonalInfo() {
         />
         <ContactHeaderTextInput
           leftImage={Images.Birthday}
-          headerName={'Birthdate'}
+          headerName={Strings.birthdate}
           refInner={dobRef}
           // placeholderTextColor={Colors.white}
-          // placeholder={'Birthdate'}
+          // placeholder={Strings.birthdate}
           headerTxtStyle={styles.headerTxtStyle}
           customInputStyle={{marginBottom: 5}}
           multiline={false}
@@ -136,9 +136,9 @@ export default function PersonalInfo() {
         />
         <ContactTextInput
           leftImage={Images.Pronouns}
-          headerName={'Prounouns'}
+          headerName={Strings.prounouns}
           placeholderTextColor={Colors.white}
-          placeholder={'Prounouns'}
+          placeholder={Strings.prounouns}
           multiline={false}
           value={pronouns}
           headerTxtStyle={styles.headerTxtStyle}
@@ -156,12 +156,12 @@ export default function PersonalInfo() {
         />
         <ContactHeaderTextInput
           leftImage={Images.EmailIcon}
-          headerName={'Email'}
+          headerName={Strings.email}
           refInner={emailRef}
           // placeholderTextColor={Colors.white}
-          // placeholder={'Email'}
+          // placeholder={Strings.email}
           headerTxtStyle={styles.headerTxtStyle}
-          customInputStyle={{marginBottom: 5}}
+          customInputStyle={{marginBottom: 8}}
           multiline={false}
           value={email}
           maxLength={50}
@@ -171,14 +171,14 @@ export default function PersonalInfo() {
           returnKeyType={'done'}
         />
         <CustomButton
-          title={'Save Changes'}
+          title={Strings.saveChanges}
           onpress={() => navigation.goBack(null)}
           Contianer={styles.btnContainer}
         />
 
         <TouchableOpacity
           onPress={() => setCancelAccountModal(!cancelAccountModal)}>
-          <Text style={styles.cancelAccountTxt}>Cancel Account</Text>
+          <Text style={styles.cancelAccountTxt}>{Strings.cancelAccount}</Text>
         </TouchableOpacity>
       </ScrollView>
       <CustomModalView

@@ -55,20 +55,22 @@ export default ScaledSheet.create({
         fontFamily: Fonts.Regular,
     },
     uncheckBox: {
-        height: "18@ms0.3",
-        width: "18@ms0.3",
-        borderColor: Colors.white,
-        borderWidth: "1@ms0.3",
+        height: "19@ms0.3",
+        width: "19@ms0.3",
+        borderWidth: "1.3@ms0.3",
         borderRadius: "20@ms0.3",
         marginRight: "20@ms0.3",
         justifyContent: "center"
     },
     tickImage: {
-        height: "10@ms0.3",
-        width: "10@ms0.3",
-        tintColor: Colors.white,
+        height: "11@ms0.3",
+        width: "11@ms0.3",
+        tintColor: Colors.darkOrange,
         alignSelf: "center"
-
     },
-
+    doneButton: {
+        position:'absolute',
+        bottom: "40@ms0.3",
+        marginHorizontal: "20@ms0.3",
+    }
 });

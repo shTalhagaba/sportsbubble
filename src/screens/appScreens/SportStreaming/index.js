@@ -15,13 +15,14 @@ import {Images, Colors} from 'src/utils';
 import {useNavigation} from '@react-navigation/native';
 import Strings from 'src/utils/strings';
 import AppSearch from 'src/components/AppSearch';
+import CustomButton from 'src/components/CustomButton';
 
 const data = [
   {
     id: 1,
     img: Images.BaseBall,
     title: 'Baseball',
-    selected: true,
+    selected: false,
   },
   {
     id: 2,
@@ -77,10 +78,13 @@ export default function SportStreaming() {
   const navigation = useNavigation();
 
   const [mySportData, setSportData] = useState(data);
+  const [selectedItems, setSelectedItems] = useState([]);
 
   const handleSelectSports = (item, index) => {
     let list = [...mySportData];
     list[index].selected = !list[index].selected;
+    let l = list.filter(item => item.selected)
+    setSelectedItems(l)
     setSportData(list);
   };
 
@@ -105,7 +109,7 @@ export default function SportStreaming() {
           <AppSearch
             searchImage={Images.Search}
             placeHolderColor={Colors.white}
-            placeHolder={'Search...'}
+            placeHolder={Strings.search}
             closeImage={Images.Cross}
           />
           {/* main list */}
@@ -125,7 +129,7 @@ export default function SportStreaming() {
                   </View>
                   <TouchableOpacity
                     onPress={() => handleSelectSports(item, index)}
-                    style={styles.uncheckBox}>
+                    style={[styles.uncheckBox,{borderColor: item?.selected ? Colors.darkOrange : Colors.white}]}>
                     {item?.selected && (
                       <Image source={Images.Tick} style={styles.tickImage} />
                     )}
@@ -136,6 +140,12 @@ export default function SportStreaming() {
           />
         </View>
       </ScrollView>
+      {selectedItems && selectedItems.length>0?
+      <CustomButton
+            title={Strings.done}
+            Contianer={styles.doneButton}
+            // onpress={() => setVerifyModal(!verifyModal)}
+          />:null}
     </ImageBackground>
   );
 }

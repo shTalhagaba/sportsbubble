@@ -176,6 +176,7 @@ export default function Search(props) {
                 alignSelf: 'center',
                 alignItems: 'center',
                 marginLeft: 12,
+                marginTop: 3,
               }}>
               {!isFocused && (
                 <Image

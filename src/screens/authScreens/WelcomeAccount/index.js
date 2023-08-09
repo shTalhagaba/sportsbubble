@@ -3,22 +3,23 @@ import {View, Text, ScrollView, ImageBackground, StatusBar} from 'react-native';
 import styles from './styles';
 import ContactTextInput from 'src/components/ContactTextInput';
 import AppHeader from 'src/components/AppHeader';
-import {Images, Colors} from 'src/utils';
+import {Images, Colors, Strings} from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
 
 export default function WelcomeAccount() {
   const [zipCode, setZipCode] = useState('');
   const [birthday, setBirthday] = useState('');
   const [pronouns, setPronouns] = useState('');
-
+  const [firstName, setFirstName] = useState('First Name');
+  
   const zipCodeRef = useRef();
   const birthdayRef = useRef();
   const pronounsRef = useRef();
 
   return (
     <ImageBackground
-      source={Images.Background}
-      resizeMode="cover"
+      source={Images.Background2}
+      resizeMode="contain"
       style={styles.container}>
       <StatusBar
         backgroundColor={Colors.transparent}
@@ -33,16 +34,15 @@ export default function WelcomeAccount() {
       />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.innerContainer}>
-          <Text style={styles.welcomeTxt}>Welcome, FirstName!</Text>
-          <Text style={styles.accountTxt}>
-            We just need a few more details to configure your account
-          </Text>
+          <Text style={styles.welcomeTxt}>{Strings.welcomeName.replace(__NAME__,firstName)}</Text>
+          <Text style={styles.accountTxt}>{Strings.wejustneed}</Text>
           <ContactTextInput
             leftImage={Images.Location}
             refInner={zipCodeRef}
             Contianer={{marginTop: 40}}
+            customInputStyle={{marginLeft: 10}}
             placeholderTextColor={Colors.white}
-            placeholder={'Zip Code'}
+            placeholder={Strings.zipCode}
             multiline={false}
             value={zipCode}
             maxLength={6}
@@ -55,16 +55,14 @@ export default function WelcomeAccount() {
               birthdayRef.current.focus();
             }}
           />
-          <Text style={styles.sideTxt}>
-            Sharing your location allows us to surface the most relevant event
-            listings in your area
-          </Text>
+          <Text style={styles.sideTxt}>{Strings.sharingyourlocation}</Text>
           <ContactTextInput
             leftImage={Images.Birthday}
             refInner={birthdayRef}
             Contianer={{marginTop: 40}}
+            customInputStyle={{marginLeft: 10}}
             placeholderTextColor={Colors.white}
-            placeholder={'Birthdate'}
+            placeholder={Strings.birthdate}
             multiline={false}
             value={birthday}
             maxLength={50}
@@ -79,15 +77,14 @@ export default function WelcomeAccount() {
               pronounsRef.current.focus();
             }}
           />
-          <Text style={styles.sideTxt}>
-            You must be at least 14 years of age of register.
-          </Text>
+          <Text style={styles.sideTxt}>{Strings.youmustbe}</Text>
           <ContactTextInput
             leftImage={Images.Pronouns}
             Contianer={{marginTop: 40}}
+            customInputStyle={{marginLeft: 10}}
             refInner={pronounsRef}
             placeholderTextColor={Colors.white}
-            placeholder={'Pronouns'}
+            placeholder={Strings.pronouns}
             multiline={false}
             value={pronouns}
             maxLength={50}
@@ -98,9 +95,9 @@ export default function WelcomeAccount() {
             rightImage={Images.DownArrow}
             pressRightImage={() => console.log('pronouns')}
           />
-          <Text style={styles.sideTxt}>Wording for this tk</Text>
+          <Text style={styles.sideTxt}>{Strings.wordingforthistk}</Text>
           <View style={styles.btnContainer}>
-            <CustomButton title={'Continue'} />
+            <CustomButton title={Strings.continue} />
           </View>
         </View>
       </ScrollView>

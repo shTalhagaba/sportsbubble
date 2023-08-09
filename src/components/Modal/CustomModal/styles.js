@@ -4,11 +4,11 @@ import {ScaledSheet} from 'react-native-size-matters';
 const styles = ScaledSheet.create({
     mainView: {
         flex: 1,
-        backgroundColor: Colors.darkBlue70,
+        backgroundColor: Colors.darkBlue80,
     },
     checkBoxContainer: {
         backgroundColor: Colors.backBlack,
-        width: "80%",
+        width: "84%",
         alignSelf: "center",
         marginTop: "160@ms0.3",
         borderWidth: "1@ms0.3",

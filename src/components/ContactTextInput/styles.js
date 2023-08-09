@@ -53,6 +53,13 @@ const styles = ScaledSheet.create({
     marginRight: '17@ms0.3',
     justifyContent: 'center',
   },
+  eyeIcon: {
+    height: '16@ms0.3',
+    width: '16@ms0.3',
+    alignSelf: 'center',
+    tintColor: Colors.white,
+    marginHorizontal: '17@ms0.3',
+  },
 });
 
 export default styles;

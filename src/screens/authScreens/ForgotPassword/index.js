@@ -10,7 +10,7 @@ import {
 import styles from './styles';
 import ContactTextInput from 'src/components/ContactTextInput';
 import AppHeader from 'src/components/AppHeader';
-import {Images, Colors} from 'src/utils';
+import {Images, Colors, Strings} from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 
@@ -38,7 +38,7 @@ export default function ForgotPassword() {
       />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{marginHorizontal: 20}}>
-          <Text style={styles.loginTxt}>Forgot Password</Text>
+          <Text style={styles.loginTxt}>{Strings.forgotPassword}</Text>
           <ContactTextInput
             leftImage={Images.EmailIcon}
             refInner={emailRef}
@@ -55,9 +55,9 @@ export default function ForgotPassword() {
           />
           <CustomButton blue={true} title={'Submit'} />
 
-          <Text style={styles.accountTxt}>Don't have an account?</Text>
+          <Text style={styles.accountTxt}>{Strings.dontAccount}</Text>
           <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
-            <Text style={styles.signupTxt}>Sign Up</Text>
+            <Text style={styles.signupTxt}>{Strings.signUp}</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

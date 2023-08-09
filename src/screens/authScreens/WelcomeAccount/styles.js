@@ -1,4 +1,4 @@
-import { Colors } from 'src/utils';
+import { Colors, Fonts } from 'src/utils';
 import { ScaledSheet } from "react-native-size-matters";
 
 
@@ -28,12 +28,12 @@ export default ScaledSheet.create({
     },
     sideTxt: {
         fontSize: "14@ms0.3",
-        // color: 'rgba(255, 255, 255, 0.66)',
-        color: "#FFFFFF",
-        opacity: 0.7,
+        color: 'rgba(255, 255, 255, 0.66)',
         marginTop: "5@ms0.3",
         lineHeight: "20@ms0.3",
         fontWeight: "400",
+        fontFamily: Fonts.Regular,
+        marginStart: "20@ms0.3",
     },
     btnContainer: {
         marginTop: "55@ms0.3",

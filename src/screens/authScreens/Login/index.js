@@ -14,7 +14,7 @@ import {Images, Colors, Fonts, Strings} from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
-import {setUser} from 'src/store/types';
+import {setGuest, setUser} from 'src/store/types';
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -29,7 +29,8 @@ export default function Login() {
 
   const buttonSignin = () => {
     dispatch(setUser(true));
-  };
+    dispatch(setGuest(false));
+ };
 
   return (
     <ImageBackground

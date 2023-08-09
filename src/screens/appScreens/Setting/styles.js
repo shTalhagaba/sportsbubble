@@ -38,7 +38,7 @@ export default ScaledSheet.create({
     color: Colors.darkOrange,
     fontFamily: Fonts.Regular,
     marginStart: '16@ms0.3',
-    lineHeight: '30@ms0.3',
+    lineHeight: '28@ms0.3',
   },
   sbContainer: {
     height: '25%',
@@ -49,8 +49,8 @@ export default ScaledSheet.create({
     flex: 1,
   },
   logoutIcon: {
-    height: '9@ms0.3',
-    width: '16@ms0.3',
+    height: '10@ms0.3',
+    width: '18@ms0.3',
   },
   innerContainer: {
     marginTop: '24@ms0.3',

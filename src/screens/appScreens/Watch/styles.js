@@ -17,30 +17,8 @@ export default ScaledSheet.create({
   itemInnerContainer: {
     flexDirection: 'row',
   },
-  timeContainer: {
-    backgroundColor: '#213651',
-    paddingHorizontal: '20@ms0.3',
-    marginHorizontal: '15@ms0.3',
-    borderRadius: '20@ms0.3',
-    height: fontScale > 1 ? 28 * fontScale : '30@ms0.3',
-    justifyContent: 'center',
-    alignSelf: 'center',
-  },
-  timeSliderContainer: {
-    flexDirection: 'row',
-    paddingVertical: '10@ms0.3',
-  },
   timeSliderInnerContainer: {
     width: '75%',
-  },
-  nextContainer: {
-    backgroundColor: Colors.brandBlue,
-    paddingHorizontal: '20@ms0.3',
-    marginHorizontal: '20@ms0.3',
-    borderRadius: '20@ms0.3',
-    height: fontScale > 1 ? 28 * fontScale : '30@ms0.3',
-    justifyContent: 'center',
-    alignSelf: 'center',
   },
   rightIcon: {
     height: '10@ms0.3',
@@ -69,15 +47,6 @@ export default ScaledSheet.create({
     marginRight: 16,
     borderRadius: 16,
   },
-  image2Container: {
-    backgroundColor: Colors.mediumBlue,
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: '2@ms0.3',
-    borderRadius: 16,
-    paddingVertical: 18,
-    paddingHorizontal: Platform.OS === 'android' ? 15 : 18,
-  },
   imageIcon: {
     height: '65@ms0.3',
     width: '65@ms0.3',
@@ -96,14 +65,6 @@ export default ScaledSheet.create({
     justifyContent: 'center',
     position: 'absolute',
     left: '80@ms0.3',
-  },
-  leftContainer: {
-    flex: 1,
-    backgroundColor: Colors.darkGrey,
-  },
-  rightContainer: {
-    flex: 1,
-    backgroundColor: Colors.blueGrey,
   },
   listTitleTxt: {
     fontSize: '13@ms0.3',
@@ -262,12 +223,14 @@ export default ScaledSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     paddingTop: '20@ms0.3',
+    backgroundColor: 'transparent',
   },
   smallMenuImage: {
     width: '100%',
     height: fontScale > 1 ? 76 * fontScale : '80@ms0.3',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'transparent',
   },
   flexOnly: {
     flex: 1,

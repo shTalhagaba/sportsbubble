@@ -439,7 +439,7 @@ export default function Guide(props) {
   const ItemComponent = React.memo(({item}) => {
     return (
       // Render your item component here
-      dayjs(item?.startTime).isAfter(currentDate) ? (
+      dayjs(item?.endTime).isAfter(currentDate) ? (
         <TouchableOpacity
         style={styles.listContiner}
         onPress={() => {
@@ -518,7 +518,7 @@ export default function Guide(props) {
 
   return (
     <ImageBackground
-      source={Images.Background}
+      source={Images.Background2}
       resizeMode="cover"
       style={styles.container}>
       <StatusBar

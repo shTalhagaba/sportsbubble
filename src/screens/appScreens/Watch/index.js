@@ -208,9 +208,9 @@ export default function Watch(props) {
                           />
                         </View>
                       </View>
-                      <Text style={styles.listTitleTxt2} numberOfLines={1}>
+                      {/* <Text style={styles.listTitleTxt2} numberOfLines={1}>
                         {item?.node?.name || item?.title}
-                      </Text>
+                      </Text> */}
                     </View>
                   ) : null;
                 }}

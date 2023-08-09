@@ -1,5 +1,5 @@
-import { Colors, Fonts } from 'src/utils';
-import { ScaledSheet } from 'react-native-size-matters';
+import {Colors, Fonts} from 'src/utils';
+import {ScaledSheet} from 'react-native-size-matters';
 
 export default ScaledSheet.create({
   container: {
@@ -14,7 +14,7 @@ export default ScaledSheet.create({
   },
   signupTxt: {
     fontSize: '16@ms0.3',
-    fontWeight: '800',
+    fontWeight: '900',
     textAlign: 'center',
     color: Colors.greenText,
     marginVertical: '10@ms0.3',
@@ -30,6 +30,7 @@ export default ScaledSheet.create({
     textAlign: 'center',
     color: Colors.darkOrange,
     marginVertical: '30@ms0.3',
+    fontFamily: Fonts.Regular,
   },
   accountTxt: {
     fontSize: '16@ms0.3',
@@ -37,5 +38,6 @@ export default ScaledSheet.create({
     color: Colors.white,
     marginVertical: '1@ms0.3',
     fontWeight: '400',
+    fontFamily: Fonts.Regular,
   },
 });
