@@ -8,11 +8,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import styles from './styles';
-import {Images, Colors, Strings} from 'src/utils';
+import { Images, Colors, Strings } from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
-import {useNavigation} from '@react-navigation/native';
-import {setGuest, setUser} from 'src/store/types';
-import {useDispatch} from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
+import { setGuest, setUser } from 'src/store/types';
+import { useDispatch } from 'react-redux';
 
 export default function WelcomeScreen() {
   const navigation = useNavigation();
