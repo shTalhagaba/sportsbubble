@@ -34,7 +34,7 @@ export default function WelcomeAccount() {
       />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.innerContainer}>
-          <Text style={styles.welcomeTxt}>{Strings.welcomeName.replace(__NAME__,firstName)}</Text>
+          <Text style={styles.welcomeTxt}>{Strings.welcomeName.replace('__NAME__',firstName)}</Text>
           <Text style={styles.accountTxt}>{Strings.wejustneed}</Text>
           <ContactTextInput
             leftImage={Images.Location}

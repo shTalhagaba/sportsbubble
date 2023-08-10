@@ -161,9 +161,9 @@ export default function Watch(props) {
                         />
                       </View>
                     </View>
-                    <Text style={styles.listTitleTxt} numberOfLines={1}>
+                    {/* <Text style={styles.listTitleTxt} numberOfLines={1}>
                       {item?.node?.name || item?.title}
-                    </Text>
+                    </Text> */}
                   </TouchableOpacity>
                 ) : null;
               }}

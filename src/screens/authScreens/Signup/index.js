@@ -37,17 +37,25 @@ export default function Signup() {
   const confirmPasswordRef = useRef();
 
   useEffect(() => {
-    if (verifyModal) {
+    // if (verifyModal) {
+    //   setTimeout(() => {
+    //     setVerifyModal(false);
+    //     navigation.navigate('WelcomeAccount');
+    //   }, 2000);
+    // }
+  }, []);
+
+  const showVerifyModal = () => {
+    setVerifyModal(true);
       setTimeout(() => {
         setVerifyModal(false);
         navigation.navigate('WelcomeAccount');
       }, 2000);
-    }
-  }, []);
+  }
 
   return (
     <ImageBackground
-      source={Images.Background}
+      source={Images.Background2}
       resizeMode="cover"
       style={styles.container}>
       <StatusBar
@@ -201,7 +209,7 @@ export default function Signup() {
           </View>
           <CustomButton
             title={Strings.continue}
-            onpress={() => setVerifyModal(!verifyModal)}
+            onpress={() => showVerifyModal()}
           />
           <CustomModalView
             visible={verifyModal}

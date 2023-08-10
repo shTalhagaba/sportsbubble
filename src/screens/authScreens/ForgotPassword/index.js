@@ -21,7 +21,7 @@ export default function ForgotPassword() {
 
   return (
     <ImageBackground
-      source={Images.Background}
+      source={Images.Background2}
       resizeMode="cover"
       style={styles.container}>
       <StatusBar

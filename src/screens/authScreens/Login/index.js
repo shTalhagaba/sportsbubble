@@ -34,7 +34,7 @@ export default function Login() {
 
   return (
     <ImageBackground
-      source={Images.Background}
+      source={Images.Background3}
       resizeMode="cover"
       style={styles.container}>
       <StatusBar
