@@ -20,9 +20,10 @@ import {useQuery} from '@apollo/client';
 import dayjs from 'dayjs';
 import {GET_SORTED_EVENTS} from './queries';
 import {useDispatch, useSelector} from 'react-redux';
-import {setExpire, setStoreEventList} from 'src/store/types';
+import {setExpire, setGuest, setStoreEventList, setUser} from 'src/store/types';
 import {moderateScale} from 'react-native-size-matters';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
+import CustomMySportsModalView from 'src/components/Modal/CustomMySportsModalView';
 const screenWidth = Dimensions.get('window').width;
 const {width, fontScale} = Dimensions.get('window');
 
@@ -116,10 +117,13 @@ export default function Guide(props) {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLive, setIsLive] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [liveMatchModal, setLiveMatchModal] = useState(true);
+  const [liveMatchModal, setLiveMatchModal] = useState(false);
   const [timeData, setTimeData] = useState([]);
   const [categoryData, setCategoryData] = useState(categoryArr);
   const [selectedTimeIndex, setSelectedTimeIndex] = useState(0);
+  const [mySportModal, setMySportModal] = useState(
+    reduxData?.guest === true ? true : false,
+  );
   const [eventList, setEventList] = useState(
     reduxData &&
       reduxData?.splashEventList &&
@@ -139,42 +143,48 @@ export default function Guide(props) {
   const {loading, refetch, error} = useQuery(GET_SORTED_EVENTS, {
     variables: {
       startTime: startTime,
-      endTime: dayjs(startTime).add(4, 'hours').set('minute', 0).set('second', 0).toISOString(),
+      endTime: dayjs(startTime)
+        .add(4, 'hours')
+        .set('minute', 0)
+        .set('second', 0)
+        .toISOString(),
     },
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
     onCompleted: data => {
       if (data && data?.sortedEvents) {
-        const filteredEvents = data?.sortedEvents.sort((eventA, eventB) => {
-          const startEventA = new Date(eventA.startTime).getTime();
-          const startEventB = new Date(eventB.startTime).getTime();
-      
-          // Sort events in ascending order based on the start time
-          return startEventA - startEventB;
-        }).filter(event => {
-          const {line1, line2, startTime, endTime, logo1, rightsHolders} =
-            event;
-          // Check if all required properties exist
-          if (
-            !line1 ||
-            !line2 ||
-            !startTime ||
-            !endTime ||
-            !logo1 ||
-            !rightsHolders
-          ) {
-            return false;
-          }
-          // Check if at least one rightsholder has a logoUrl
-          const hasLogoUrl = rightsHolders.some(
-            rightsholder => rightsholder.logoUrl,
-          );
-          if (!hasLogoUrl) {
-            return false;
-          }
+        const filteredEvents = data?.sortedEvents
+          .sort((eventA, eventB) => {
+            const startEventA = new Date(eventA.startTime).getTime();
+            const startEventB = new Date(eventB.startTime).getTime();
 
-          return true;
-        });
+            // Sort events in ascending order based on the start time
+            return startEventA - startEventB;
+          })
+          .filter(event => {
+            const {line1, line2, startTime, endTime, logo1, rightsHolders} =
+              event;
+            // Check if all required properties exist
+            if (
+              !line1 ||
+              !line2 ||
+              !startTime ||
+              !endTime ||
+              !logo1 ||
+              !rightsHolders
+            ) {
+              return false;
+            }
+            // Check if at least one rightsholder has a logoUrl
+            const hasLogoUrl = rightsHolders.some(
+              rightsholder => rightsholder.logoUrl,
+            );
+            if (!hasLogoUrl) {
+              return false;
+            }
+
+            return true;
+          });
         setEventList(filteredEvents);
       }
       setIsRefreshing(false);
@@ -440,25 +450,25 @@ export default function Guide(props) {
       // Render your item component here
       dayjs(item?.endTime).isAfter(currentDate) ? (
         <TouchableOpacity
-        style={styles.listContiner}
-        onPress={() => {
-          if (
-            item &&
-            item?.rightsHoldersConnection &&
-            item?.rightsHoldersConnection?.totalCount === 1
-          ) {
-            navigation.navigate('withoutBottomtab', {
-              screen: 'Connect',
-              params: {
-                item: item,
-                holderItem: item?.rightsHoldersConnection,
-                eventFlag: true,
-              },
-            });
-          } else {
-            navigation.navigate('Watch', {item: item});
-          }
-        }}>
+          style={styles.listContiner}
+          onPress={() => {
+            if (
+              item &&
+              item?.rightsHoldersConnection &&
+              item?.rightsHoldersConnection?.totalCount === 1
+            ) {
+              navigation.navigate('withoutBottomtab', {
+                screen: 'Connect',
+                params: {
+                  item: item,
+                  holderItem: item?.rightsHoldersConnection,
+                  eventFlag: true,
+                },
+              });
+            } else {
+              navigation.navigate('Watch', {item: item});
+            }
+          }}>
           <View style={styles.innerContainer}>
             <View style={styles.imageContainer}>
               <ImageWithPlaceHolder
@@ -490,28 +500,29 @@ export default function Guide(props) {
                 {item?.line1 ? item?.line1 : item?.companyName}
               </Text>
               <Text style={styles.titleTxt} numberOfLines={1}>
-              {item?.line2 ? item?.line2 : item?.title}
-            </Text>
-            <View style={{flexDirection: 'row'}}>
-              <Text style={[styles.eventDateTxt]}>
-                {' '}
-                {item?.startTime
-                  ? dayjs(item?.startTime).format('ddd. MM/D')
-                  : item?.day}
-                {'  l '}
+                {item?.line2 ? item?.line2 : item?.title}
               </Text>
-              <Text style={[styles.eventDateTxt]}>
-                {' '}
-                {item?.startTime
-                  ? `${dayjs(item?.startTime).format('h:mma')} - ${dayjs(
-                      item?.endTime,
-                    ).format('h:mma')}`
-                  : item?.time}
-              </Text>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={[styles.eventDateTxt]}>
+                  {' '}
+                  {item?.startTime
+                    ? dayjs(item?.startTime).format('ddd. MM/D')
+                    : item?.day}
+                  {'  l '}
+                </Text>
+                <Text style={[styles.eventDateTxt]}>
+                  {' '}
+                  {item?.startTime
+                    ? `${dayjs(item?.startTime).format('h:mma')} - ${dayjs(
+                        item?.endTime,
+                      ).format('h:mma')}`
+                    : item?.time}
+                </Text>
+              </View>
             </View>
           </View>
-          </View>
-      </TouchableOpacity>):null
+        </TouchableOpacity>
+      ) : null
     );
   });
 
@@ -752,6 +763,24 @@ export default function Guide(props) {
       <LiveMatchView
         setLiveMatchModal={setLiveMatchModal}
         liveMatchModal={liveMatchModal}
+      />
+      {/* My Sport Popup for guest  */}
+      <CustomMySportsModalView
+        visible={mySportModal}
+        desTxt={Strings.accessFeatures}
+        blackBtnTxt={Strings.noThanks}
+        otherBtnTxt={Strings.createFreeAccount}
+        btn
+        rowStyle={false}
+        blackBtnPress={() => {
+          setMySportModal(!mySportModal);
+          setLiveMatchModal(true);
+        }}
+        otherBtnPress={() => {
+          dispatch(setUser(false));
+          dispatch(setGuest(false));
+          navigation.replace('Signup');
+        }}
       />
     </ImageBackground>
   );

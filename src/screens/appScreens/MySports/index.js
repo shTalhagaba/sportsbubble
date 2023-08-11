@@ -295,17 +295,6 @@ export default function Guide() {
         blackBtnPress={() => setFvrtModal(!fvrtModal)}
         otherBtnPress={() => handleFvrtAlert()}
       />
-      {/* My Sport Popup for guest  */}
-      <CustomMySportsModalView
-        visible={mySportModal}
-        desTxt={Strings.accessFeatures}
-        blackBtnTxt={Strings.noThanks}
-        otherBtnTxt={Strings.createFreeAccount}
-        btn
-        rowStyle={false}
-        blackBtnPress={() => setMySportModal(!mySportModal)}
-        otherBtnPress={() => navigation.replace('Signup')}
-      />
     </ImageBackground>
   );
 }
