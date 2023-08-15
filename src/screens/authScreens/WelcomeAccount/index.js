@@ -1,9 +1,9 @@
-import React, { useRef, useState } from 'react';
-import { View, Text, ScrollView, ImageBackground, StatusBar } from 'react-native';
+import React, {useRef, useState} from 'react';
+import {View, Text, ScrollView, ImageBackground, StatusBar} from 'react-native';
 import styles from './styles';
 import ContactTextInput from 'src/components/ContactTextInput';
 import AppHeader from 'src/components/AppHeader';
-import { Images, Colors, Strings } from 'src/utils';
+import {Images, Colors, Strings} from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
 
 export default function WelcomeAccount() {
@@ -29,18 +29,20 @@ export default function WelcomeAccount() {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        headerContainer={{ marginTop: 10 }}
+        headerContainer={{marginTop: 10}}
         SimpleView
       />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.innerContainer}>
-          <Text style={styles.welcomeTxt}>{Strings.welcomeName.replace('__NAME__', firstName)}</Text>
+          <Text style={styles.welcomeTxt}>
+            {Strings.welcomeName.replace('__NAME__', firstName)}
+          </Text>
           <Text style={styles.accountTxt}>{Strings.wejustneed}</Text>
           <ContactTextInput
             leftImage={Images.Location}
             refInner={zipCodeRef}
-            Contianer={{ marginTop: 40 }}
-            customInputStyle={{ marginLeft: 10 }}
+            Contianer={{marginTop: 40}}
+            customInputStyle={{marginLeft: 10}}
             placeholderTextColor={Colors.white}
             placeholder={Strings.zipCode}
             multiline={false}
@@ -59,8 +61,8 @@ export default function WelcomeAccount() {
           <ContactTextInput
             leftImage={Images.Birthday}
             refInner={birthdayRef}
-            Contianer={{ marginTop: 40 }}
-            customInputStyle={{ marginLeft: 10 }}
+            Contianer={{marginTop: 40}}
+            customInputStyle={{marginLeft: 10}}
             placeholderTextColor={Colors.white}
             placeholder={Strings.birthdate}
             multiline={false}
@@ -80,8 +82,8 @@ export default function WelcomeAccount() {
           <Text style={styles.sideTxt}>{Strings.youmustbe}</Text>
           <ContactTextInput
             leftImage={Images.Pronouns}
-            Contianer={{ marginTop: 40 }}
-            customInputStyle={{ marginLeft: 10 }}
+            Contianer={{marginTop: 40}}
+            customInputStyle={{marginLeft: 10}}
             refInner={pronounsRef}
             placeholderTextColor={Colors.white}
             placeholder={Strings.pronouns}
