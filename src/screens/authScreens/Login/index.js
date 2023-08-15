@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -10,11 +10,11 @@ import {
 import styles from './styles';
 import ContactTextInput from 'src/components/ContactTextInput';
 import AppHeader from 'src/components/AppHeader';
-import {Images, Colors, Fonts, Strings} from 'src/utils';
+import { Images, Colors, Fonts, Strings } from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
-import {useNavigation} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
-import {setGuest, setUser} from 'src/store/types';
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { setGuest, setUser } from 'src/store/types';
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -30,11 +30,11 @@ export default function Login() {
   const buttonSignin = () => {
     dispatch(setUser(true));
     dispatch(setGuest(false));
- };
+  };
 
   return (
     <ImageBackground
-      source={Images.Background3}
+      source={Images.Background}
       resizeMode="cover"
       style={styles.container}>
       <StatusBar
@@ -45,7 +45,7 @@ export default function Login() {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        headerContainer={{marginTop: 10}}
+        headerContainer={{ marginTop: 10 }}
         SimpleView
       />
       <ScrollView showsVerticalScrollIndicator={false}>

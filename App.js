@@ -13,6 +13,8 @@ import { Provider } from 'react-redux';
 import rootReducer from 'src/store/Reducers/rootReducer';
 import mySaga from 'src/store/sagas';
 import { LogBox } from 'react-native';
+import Toast from "react-native-toast-message";
+import { toastConfig } from "src/components/ToastConfig";
 
 const sagaMiddleware = createSagaMiddleware();
 const persistConfig = {
@@ -49,6 +51,7 @@ const App = () => {
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
             <Navigation />
+            <Toast config={toastConfig} ref={(ref) => Toast.setRef(ref)} />
           </PersistGate>
         </Provider>
       </NavigationContainer>
