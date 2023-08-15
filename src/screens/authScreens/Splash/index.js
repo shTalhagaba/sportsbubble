@@ -28,7 +28,7 @@ export default function Splash() {
   const {loading, refetch, error} = useQuery(GET_SORTED_EVENTS, {
     variables: {
       startTime: startTime,
-      endTime: dayjs(startTime).add(4, 'hours').toISOString(),
+      endTime: dayjs(startTime).add(4, 'hours').set('minute', 0).set('second', 0).toISOString(),
     },
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,

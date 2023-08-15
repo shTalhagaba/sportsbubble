@@ -24,9 +24,10 @@ export default function Setting() {
 
   useEffect(() => {
     Instabug.init({
-        // token: '02e02ab36f08bb8372ad6966cd83bf8a',  // own instabug
-        token: 'fa2bfcf8ea1c455d74b12f36846eb929', // stage
-        invocationEvents: [InvocationEvent.shake],
+      // token: '02e02ab36f08bb8372ad6966cd83bf8a',  // own instabug
+      token: 'fa2bfcf8ea1c455d74b12f36846eb929', // stage
+      invocationEvents: [InvocationEvent.shake],
+      // invocationEvents: [InvocationEvent.shake, InvocationEvent.screenshot],
     });
   }, []);
 

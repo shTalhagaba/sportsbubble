@@ -137,7 +137,7 @@ export default function Watch(props) {
               contentContainerStyle={{flex: 1, justifyContent: 'center'}}
               renderItem={({item, index}) => {
                 return item?.node?.weight === null ||
-                  item?.node?.weight < 1000 ? (
+                  item?.node?.weight > 1000 ? (
                   <TouchableOpacity
                     onPress={() => {
                       navigation.navigate('withoutBottomtab', {
@@ -189,7 +189,7 @@ export default function Watch(props) {
                 contentContainerStyle={{justifyContent: 'center'}}
                 horizontal
                 renderItem={({item, index}) => {
-                  return item?.node?.weight > 1000 ? (
+                  return item?.node?.weight < 1000 ? (
                     <View style={styles.bottomListContainer}>
                       <View style={styles.bottomInnerContainer}>
                         <View style={styles.bottomListBackground} />
