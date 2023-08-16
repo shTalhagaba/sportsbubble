@@ -101,6 +101,7 @@ export default ScaledSheet.create({
   mainContainer: {
     flex: 1,
     marginHorizontal: "20@ms0.3",
+    marginTop: "10@ms0.3"
   },
   textWhite: {
     color: Colors.white

@@ -1,8 +1,8 @@
-import {Colors, Fonts} from 'src/utils';
-import {ScaledSheet} from 'react-native-size-matters';
-import {Dimensions, Platform} from 'react-native';
+import { Colors, Fonts } from 'src/utils';
+import { ScaledSheet } from 'react-native-size-matters';
+import { Dimensions, Platform } from 'react-native';
 const width = Dimensions.get('window').width;
-const {fontScale} = Dimensions.get('window');
+const { fontScale } = Dimensions.get('window');
 
 export default ScaledSheet.create({
   container: {
@@ -34,7 +34,7 @@ export default ScaledSheet.create({
     flexDirection: 'row',
     height: fontScale > 1 ? 65 * fontScale : '69@ms0.3',
     elevation: 3,
-    shadowOffset: {width: 0, height: 3},
+    shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.6,
     shadowRadius: 3,
     shadowColor: 'rgba(0, 0, 0, 0.4)',
@@ -50,7 +50,7 @@ export default ScaledSheet.create({
     height: fontScale > 1 ? 24 * fontScale : '26@ms0.3',
     elevation: 3,
     shadowColor: 'rgba(0, 0, 0, 0.15)',
-    shadowOffset: {width: 0, height: 1},
+    shadowOffset: { width: 0, height: 1 },
     shadowRadius: 3,
     shadowOpacity: 1,
     marginLeft: Platform.OS === 'android' ? '31@ms0.3' : '36@ms0.3',
@@ -68,7 +68,7 @@ export default ScaledSheet.create({
     alignSelf: 'center',
     elevation: 3,
     shadowColor: 'rgba(0, 0, 0, 0.15)',
-    shadowOffset: {width: 0, height: 1},
+    shadowOffset: { width: 0, height: 1 },
     shadowRadius: 3,
     shadowOpacity: 1,
   },
@@ -159,7 +159,7 @@ export default ScaledSheet.create({
     flexDirection: 'row',
     backgroundColor: Colors.mediumBlue,
     // height: '120@ms0.3',
-    height: fontScale > 1 ? (width / 4.2) * fontScale : '120@ms0.3',
+    height: fontScale > 1 ? (width / 4.2) * fontScale : '110@ms0.3',
   },
   sliderInnerContainer: {
     // flex: 1,
@@ -186,20 +186,20 @@ export default ScaledSheet.create({
     overflow: 'visible',
   },
   sliderIcon: {
-    height: fontScale > 1 ? 32 * fontScale : '35@ms0.3',
-    width: fontScale > 1 ? 32 * fontScale : '35@ms0.3',
+    height: fontScale > 1 ? 32 * fontScale : '28@ms0.3',
+    width: fontScale > 1 ? 32 * fontScale : '28@ms0.3',
     paddingVertical: '12@ms0.3',
     tintColor: Colors.white,
   },
   sliderTxt: {
-    fontSize: '16@ms0.3',
+    fontSize: '13@ms0.3',
     fontWeight: '900',
     lineHeight: '24@ms0.3',
     color: Colors.white,
     fontFamily: Fonts.Bold,
     fontStyle: 'italic',
     elevation: 3,
-    textShadowOffset: {width: 0, height: 1},
+    textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 8,
     textShadowColor: '#000000',
     marginTop: '6@ms0.3',
