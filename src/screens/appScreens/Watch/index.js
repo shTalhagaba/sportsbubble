@@ -136,8 +136,7 @@ export default function Watch(props) {
               horizontal
               contentContainerStyle={{flex: 1, justifyContent: 'center'}}
               renderItem={({item, index}) => {
-                return item?.node?.weight === null ||
-                  item?.node?.weight > 1000 ? (
+                return item?.node?.weight > 1000 ? (
                   <TouchableOpacity
                     onPress={() => {
                       navigation.navigate('withoutBottomtab', {
@@ -160,9 +159,9 @@ export default function Watch(props) {
                         />
                       </View>
                     </View>
-                    <Text style={styles.listTitleTxt} numberOfLines={1}>
+                    {/* <Text style={styles.listTitleTxt} numberOfLines={1}>
                       {item?.node?.name || item?.title}
-                    </Text>
+                    </Text> */}
                   </TouchableOpacity>
                 ) : null;
               }}
@@ -189,7 +188,7 @@ export default function Watch(props) {
                 contentContainerStyle={{justifyContent: 'center'}}
                 horizontal
                 renderItem={({item, index}) => {
-                  return item?.node?.weight < 1000 ? (
+                  return item?.node?.weight === null || item?.node?.weight < 1000 ? (
                     <View style={styles.bottomListContainer}>
                       <View style={styles.bottomInnerContainer}>
                         <View style={styles.bottomListBackground} />
@@ -207,9 +206,9 @@ export default function Watch(props) {
                           />
                         </View>
                       </View>
-                      <Text style={styles.listTitleTxt2} numberOfLines={1}>
+                      {/* <Text style={styles.listTitleTxt2} numberOfLines={1}>
                         {item?.node?.name || item?.title}
-                      </Text>
+                      </Text> */}
                     </View>
                   ) : null;
                 }}

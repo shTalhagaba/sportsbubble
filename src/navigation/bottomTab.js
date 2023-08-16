@@ -63,11 +63,11 @@ const BottomTab = () => {
           height:
             Platform.OS === 'android'
               ? moderateScale(75, 0.3)
-              : moderateScale(80, 0.3),
+              : moderateScale(91, 0.3),
           paddingTop:
             Platform.OS === 'android'
               ? moderateScale(2, 0.3)
-              : moderateScale(10, 0.3),
+              : moderateScale(21, 0.3),
         },
       }}>
       <Tab.Screen

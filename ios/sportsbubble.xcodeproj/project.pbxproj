@@ -36,6 +36,16 @@
 		8A2376982A544DF100F2EA20 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		8A23769C2A544DF100F2EA20 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		8A23769D2A544DF100F2EA20 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		8AD252E02A8BE362009434F7 /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8EB929DCEE7D4136AED466AD /* Lato-Black.ttf */; };
+		8AD252E12A8BE366009434F7 /* Lato-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6E79C282259D43D190FC762B /* Lato-BlackItalic.ttf */; };
+		8AD252E22A8BE369009434F7 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3159C7199A284E32A2A28A5D /* Lato-Bold.ttf */; };
+		8AD252E32A8BE36A009434F7 /* Lato-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E120C17725514735851EBBFE /* Lato-BoldItalic.ttf */; };
+		8AD252E42A8BE36D009434F7 /* Lato-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3816C32EFAA24AE2B764D8BA /* Lato-Italic.ttf */; };
+		8AD252E52A8BE371009434F7 /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85EBC3D84A7A4D379AC96C30 /* Lato-Light.ttf */; };
+		8AD252E62A8BE373009434F7 /* Lato-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4186B46E6CF049A68CA75CF3 /* Lato-LightItalic.ttf */; };
+		8AD252E72A8BE375009434F7 /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 928CD786E81E41C58E8BC40A /* Lato-Regular.ttf */; };
+		8AD252E82A8BE377009434F7 /* Lato-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7FA88236A9844606B2FE7731 /* Lato-Thin.ttf */; };
+		8AD252E92A8BE379009434F7 /* Lato-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2BB5870BB8654F81A5120057 /* Lato-ThinItalic.ttf */; };
 		8CE46E65500F46938FBA6BB8 /* Lato-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6E79C282259D43D190FC762B /* Lato-BlackItalic.ttf */; };
 		9093F27C56B248761025C058 /* libPods-sportsbubbleCommonPods-sportsbubbleStaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7AC2FB01D98864628D1F8AC /* libPods-sportsbubbleCommonPods-sportsbubbleStaging.a */; };
 		922965D57C474B5589D09420 /* Lato-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3816C32EFAA24AE2B764D8BA /* Lato-Italic.ttf */; };
@@ -377,8 +387,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8AD252E92A8BE379009434F7 /* Lato-ThinItalic.ttf in Resources */,
+				8AD252E82A8BE377009434F7 /* Lato-Thin.ttf in Resources */,
+				8AD252E72A8BE375009434F7 /* Lato-Regular.ttf in Resources */,
+				8AD252E62A8BE373009434F7 /* Lato-LightItalic.ttf in Resources */,
+				8AD252E52A8BE371009434F7 /* Lato-Light.ttf in Resources */,
+				8AD252E42A8BE36D009434F7 /* Lato-Italic.ttf in Resources */,
+				8AD252E32A8BE36A009434F7 /* Lato-BoldItalic.ttf in Resources */,
+				8AD252E22A8BE369009434F7 /* Lato-Bold.ttf in Resources */,
+				8AD252E12A8BE366009434F7 /* Lato-BlackItalic.ttf in Resources */,
 				8A23769C2A544DF100F2EA20 /* LaunchScreen.storyboard in Resources */,
 				8A23769D2A544DF100F2EA20 /* Images.xcassets in Resources */,
+				8AD252E02A8BE362009434F7 /* Lato-Black.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -788,7 +808,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -860,7 +880,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -915,7 +935,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.passport.sportsbubble.development;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sportsbubble.development;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				RESOURCES_TARGETED_DEVICE_FAMILY = "";
@@ -934,7 +954,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = N2NJSCBBBJ;
 				INFOPLIST_FILE = "sportsbubble development-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "dev sportsbubble";
@@ -948,7 +968,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.passport.sportsbubble.development;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sportsbubble.development;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				RESOURCES_TARGETED_DEVICE_FAMILY = "";
@@ -967,7 +987,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = 73GD389QU6;
+				DEVELOPMENT_TEAM = N2NJSCBBBJ;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "sportsbubble staging-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "stage sportbubble";
@@ -981,7 +1001,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sportbubble;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sportsbubble.staging;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				RESOURCES_TARGETED_DEVICE_FAMILY = "";
@@ -1000,21 +1020,21 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 73GD389QU6;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_TEAM = N2NJSCBBBJ;
 				INFOPLIST_FILE = "sportsbubble staging-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "stage sportbubble";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 2.01;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sportbubble;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sportsbubble.staging;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				RESOURCES_TARGETED_DEVICE_FAMILY = "";
