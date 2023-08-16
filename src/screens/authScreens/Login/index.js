@@ -15,6 +15,7 @@ import CustomButton from 'src/components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {setGuest, setUser} from 'src/store/types';
+import { Auth, JS } from 'aws-amplify';
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -31,6 +32,49 @@ export default function Login() {
     dispatch(setUser(true));
     dispatch(setGuest(false));
  };
+
+ async function login() {
+  // console.log(uniqueEmail[0] + password)
+  setpassMsg(false);
+  setemailMsg(false);
+  if (email !== '' && password !== '') {
+    try {
+      setloading(true)
+      const user = await Auth.signIn({
+
+        username: uniqueEmail[0],
+        password: password
+      });
+      dispatch(setToken(user?.signInUserSession?.idToken?.jwtToken))
+      console.log("User => ", JSON.stringify(user?.signInUserSession?.idToken?.jwtToken))
+      // props.navigation.navigate("start")
+      setloading(false)
+      setemail('')
+      setpassword('')
+
+    } catch (error) {
+      console.log(error)
+      if (error.message.includes(":")) {
+        const myArray = error.message.split(":");
+        alert(myArray[1])
+        setloading(false)
+      }
+      else {
+        alert(error.message)
+        setloading(false)
+      }
+
+    }
+
+  } else {
+    if (email === '' && password === '') {
+      setpassMsg(true);
+      setemailMsg(true);
+    }
+    if (email === '') setemailMsg(true);
+    if (password === '') setpassMsg(true);
+  }
+};
 
   return (
     <ImageBackground
