@@ -1,6 +1,6 @@
-import { Colors, Fonts } from 'src/utils';
-import { ScaledSheet } from 'react-native-size-matters';
-import { Dimensions } from 'react-native';
+import {Colors, Fonts} from 'src/utils';
+import {ScaledSheet} from 'react-native-size-matters';
+import {Dimensions} from 'react-native';
 const width = Dimensions.get('window').width;
 
 export default ScaledSheet.create({
@@ -13,7 +13,7 @@ export default ScaledSheet.create({
     paddingVertical: '5@ms0.3',
     borderRadius: '16@ms0.3',
     backgroundColor: '#2B3B50',
-    marginHorizontal: '15@ms0.3',
+    marginHorizontal: '20@ms0.3',
     paddingHorizontal: '4@ms0.3',
   },
   innerContainer: {
@@ -115,7 +115,7 @@ export default ScaledSheet.create({
     fontFamily: Fonts.Bold,
     fontStyle: 'italic',
     elevation: 3,
-    textShadowOffset: { width: 0, height: 1 },
+    textShadowOffset: {width: 0, height: 1},
     textShadowRadius: 8,
     textShadowColor: Colors.black,
     marginTop: '6@ms0.3',
