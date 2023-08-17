@@ -1,194 +1,193 @@
-import { Colors, Fonts } from 'src/utils';
-import { ScaledSheet } from "react-native-size-matters";
-import { Dimensions } from 'react-native';
-const {screenWidth,fontScale} = Dimensions.get('window');
+import {Colors, Fonts} from 'src/utils';
+import {ScaledSheet} from 'react-native-size-matters';
+import {Dimensions} from 'react-native';
+const {screenWidth, fontScale} = Dimensions.get('window');
 
 export default ScaledSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.appColorBackground
+    backgroundColor: Colors.appColorBackground,
   },
   listContiner: {
-    paddingRight: "5@ms0.3",
-    marginVertical: "10@ms0.3",
-    paddingVertical: "5@ms0.3",
-    alignItems: "center"
+    paddingRight: '5@ms0.3',
+    marginVertical: '10@ms0.3',
+    paddingVertical: '5@ms0.3',
+    alignItems: 'center',
   },
   itemListContainer: {
-    paddingRight: "0@ms0.3",
-    marginVertical: "1@ms0.3",
-    paddingVertical: "5@ms0.3",
+    paddingRight: '0@ms0.3',
+    marginVertical: '1@ms0.3',
+    paddingVertical: '5@ms0.3',
   },
   itemInnerContainer: {
-    flexDirection: "row"
+    flexDirection: 'row',
   },
   rightIcon: {
-    height: "10@ms0.3",
-    width: "16@ms0.3",
+    height: '10@ms0.3',
+    width: '16@ms0.3',
   },
   itemContainer: {
-    height: fontScale > 1 ? 76 * fontScale : '80@ms0.3',
-    width: "80@ms0.3",
-    justifyContent: "center",
-    alignItems: "center"
+    height: fontScale > 1 ? 74 * fontScale : '78@ms0.3',
+    width: fontScale > 1 ? 74 * fontScale : '78@ms0.3',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   logoImageContainer: {
-    height: "75@ms0.3",
+    height: '75@ms0.3',
     // width: "75@ms0.3",
-    justifyContent: "center",
-    alignSelf: "center",
-    margin: "20@ms0.3",
+    justifyContent: 'center',
+    alignSelf: 'center',
+    margin: '10@ms0.3',
     borderRadius: 16,
   },
   imageContainer: {
-    height: "75@ms0.3",
-    width: "75@ms0.3",
+    height: '70@ms0.3',
+    width: '70@ms0.3',
     backgroundColor: Colors.mediumBlue,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     margin: 5,
     borderRadius: 16,
   },
   imageIcon: {
-    height: "65@ms0.3",
-    width: "65@ms0.3",
+    height: '65@ms0.3',
+    width: '64@ms0.3',
   },
   titleTxt: {
-    fontSize: "18@ms0.3",
-    fontWeight: "800",
-    lineHeight: "25@ms0.3",
+    fontSize: '15@ms0.3',
+    fontWeight: '800',
+    lineHeight: '23@ms0.3',
     color: Colors.white,
     fontFamily: Fonts.Regular,
-    width: Platform.OS ==='android'? screenWidth - 130 :'85%',
+    width: Platform.OS === 'android' ? screenWidth - 110 : '88%',
   },
   eventTxt: {
-    fontSize: "14@ms0.3",
-    fontWeight: "400",
-    lineHeight: "20@ms0.3",
+    fontSize: '13@ms0.3',
+    fontWeight: '400',
+    lineHeight: '18@ms0.3',
     color: Colors.white,
     fontFamily: Fonts.Regular,
-    width: Platform.OS ==='android'? screenWidth - 130 :'85%',
+    width: Platform.OS === 'android' ? screenWidth - 110 : '88%',
   },
   dateEventTxt: {
-    fontSize: "14@ms0.3",
-    fontWeight: "400",
-    lineHeight: "20@ms0.3",
+    fontSize: '13@ms0.3',
+    fontWeight: '400',
+    lineHeight: '18@ms0.3',
     color: Colors.white,
     fontFamily: Fonts.Regular,
   },
   watchOptions: {
-    fontSize: "22@ms0.3",
-    fontWeight: "800",
-    lineHeight: "30@ms0.3",
+    fontSize: '22@ms0.3',
+    fontWeight: '800',
+    lineHeight: '30@ms0.3',
     color: Colors.lightGreen,
     fontFamily: Fonts.Regular,
-    textTransform: "uppercase",
+    textTransform: 'uppercase',
     marginTop: 40,
-    textAlign: "center"
+    textAlign: 'center',
   },
   wayToWatch: {
-    fontSize: "20@ms0.3",
-    fontWeight: "800",
-    lineHeight: "30@ms0.3",
+    fontSize: '20@ms0.3',
+    fontWeight: '800',
+    lineHeight: '30@ms0.3',
     color: Colors.lightGreen,
     fontFamily: Fonts.Regular,
-    textTransform: "uppercase",
+    textTransform: 'uppercase',
     marginTop: 40,
-    textAlign: "center"
+    textAlign: 'center',
   },
   connectingText: {
-    fontSize: "18@ms0.3",
-    fontWeight: "500",
-    lineHeight: "22@ms0.3",
+    fontSize: '16@ms0.3',
+    fontWeight: '400',
+    lineHeight: '20@ms0.3',
     color: Colors.white,
     fontFamily: Fonts.Regular,
-    marginTop: "20@ms0.3",
-    textAlign: "center",
-    maxWidth: "70%",
-    alignSelf: "center",
-    fontStyle: 'italic'
+    marginTop: '20@ms0.3',
+    textAlign: 'center',
+    maxWidth: '70%',
+    alignSelf: 'center',
+    fontStyle: 'italic',
   },
   sliderContainer: {
     flexDirection: 'row',
     backgroundColor: Colors.mediumBlue,
-    height: fontScale > 1 ? 105 * fontScale : '110@ms0.3',
+    height: fontScale > 1 ? 90 * fontScale : '100@ms0.3',
     alignItems: 'center',
-    paddingHorizontal: "15@ms0.3",
+    paddingHorizontal: '13@ms0.3',
   },
   sliderInnerContainer: {
     flex: 1,
-    marginHorizontal: "5@ms0.3",
+    marginHorizontal: '5@ms0.3',
   },
   sliderImageBackground: {
-    height: "100%",
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "center"
+    height: '100%',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   sliderIcon: {
-    height: "32@ms0.3",
-    width: "32@ms0.3",
-    paddingVertical: "15@ms0.3",
-    tintColor: Colors.white
+    height: '32@ms0.3',
+    width: '32@ms0.3',
+    paddingVertical: '15@ms0.3',
+    tintColor: Colors.white,
   },
   sliderTxt: {
-    fontSize: "14@ms0.3",
-    fontWeight: "600",
-    lineHeight: "24@ms0.3",
+    fontSize: '14@ms0.3',
+    fontWeight: '600',
+    lineHeight: '24@ms0.3',
     color: Colors.white,
     fontFamily: Fonts.Regular,
   },
   sbContainer: {
-    alignItems: "center",
+    alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 20
+    marginBottom: 15,
   },
   sbImage: {
-    height: "150@ms0.3",
-    alignItems: "center",
+    height: '150@ms0.3',
+    alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: "20@ms0.3",
+    paddingTop: '20@ms0.3',
   },
   flexOnly: {
-    flex: 1
+    flex: 1,
   },
   leftArrowIcon: {
-    width: "45@ms0.3",
-    height: "45@ms0.3",
-    resizeMode: "cover",
+    width: '44@ms0.3',
+    height: '44@ms0.3',
+    resizeMode: 'cover',
   },
   powerImage: {
-    width: "165@ms0.3",
-    height: "75@ms0.3",
-    resizeMode: "cover",
-    tintColor: Colors.white
+    width: '160@ms0.3',
+    height: '72@ms0.3',
+    resizeMode: 'cover',
+    tintColor: Colors.white,
   },
   imageContainer: {
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   buttonContainer: {
-    marginTop: "40@ms0.3",
-    marginHorizontal: "20@ms0.3",
+    // marginTop: '10@ms0.3',
+    marginHorizontal: '20@ms0.3',
   },
   imageStyle: {
-    height: "60@ms0.3",
-    marginTop: "30@ms0.3",
+    height: '45@ms0.3',
+    marginTop: '30@ms0.3',
   },
   logoImageStyle: {
-    height: "100@ms0.3",
-    marginTop: "40@ms0.3",
-    width: "163@ms0.3",
+    height: '100@ms0.3',
+    width: '163@ms0.3',
   },
   flexRow: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   userNameContainer: {
-    paddingStart: "13@ms0.3",
-    height: "90@ms0.3",
-    justifyContent: "center",
+    paddingStart: '13@ms0.3',
+    height: '90@ms0.3',
+    justifyContent: 'center',
     position: 'absolute',
-    left: "80@ms0.3",
-    alignSelf:'center'
+    left: '80@ms0.3',
+    alignSelf: 'center',
   },
 });

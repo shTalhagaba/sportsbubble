@@ -7,8 +7,8 @@ const styles = ScaledSheet.create({
         paddingStart: "10@ms0.3",
         marginTop: "10@ms0.3",
         borderRadius: "15@ms0.3",
-        height: "55@ms0.3",
-        width: "280@ms0.3",
+        height: "50@ms0.3",
+        width: "265@ms0.3",
         alignSelf: 'center'
     },
     innerContainer: {

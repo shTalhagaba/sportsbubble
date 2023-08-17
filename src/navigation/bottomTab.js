@@ -59,15 +59,17 @@ const BottomTab = () => {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: Colors.appColorBackground,
+          backgroundColor: Colors.appColorBackground90,
           height:
             Platform.OS === 'android'
-              ? moderateScale(75, 0.3)
-              : moderateScale(91, 0.3),
+              ? moderateScale(72, 0.3)
+              : moderateScale(85, 0.3),
           paddingTop:
             Platform.OS === 'android'
               ? moderateScale(2, 0.3)
-              : moderateScale(21, 0.3),
+              : moderateScale(19, 0.3),
+          borderTopWidth: 2,
+          borderTopColor: '#3E4349',
         },
       }}>
       <Tab.Screen
@@ -82,7 +84,7 @@ const BottomTab = () => {
                 style={[
                   styles.iconImage,
                   {
-                    tintColor: focused ? Colors.lightGreen : Colors.greyText,
+                    tintColor: focused ? Colors.lightGreen : Colors.white,
                   },
                 ]}
                 resizeMode={'contain'}
@@ -123,7 +125,7 @@ const BottomTab = () => {
                 style={[
                   styles.iconImage,
                   {
-                    tintColor: focused ? Colors.lightGreen : Colors.greyText,
+                    tintColor: focused ? Colors.lightGreen : Colors.white,
                   },
                 ]}
                 resizeMode={'contain'}
@@ -144,7 +146,7 @@ const BottomTab = () => {
                 style={[
                   styles.iconImage,
                   {
-                    tintColor: focused ? Colors.lightGreen : Colors.greyText,
+                    tintColor: focused ? Colors.lightGreen : Colors.white,
                   },
                 ]}
                 resizeMode={'contain'}
@@ -170,7 +172,7 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
   },
   iconImage: {
-    height: '47@ms0.3',
-    width: '80@ms0.3',
+    height: '36@ms0.3',
+    width: '70@ms0.3',
   },
 });
