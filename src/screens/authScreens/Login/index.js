@@ -15,13 +15,16 @@ import CustomButton from 'src/components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {setGuest, setUser} from 'src/store/types';
-import { Auth, JS } from 'aws-amplify';
+import {Auth, JS} from 'aws-amplify';
+import {userLogin} from 'src/services/authLogin';
 
 export default function Login() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordMessage, setPasswordMessage] = useState(false);
+  const [emailMessage, setEmailMessage] = useState('');
 
   const [displayPassword, setDisplayPassword] = useState(true);
 
@@ -29,52 +32,43 @@ export default function Login() {
   const passwordRef = useRef();
 
   const buttonSignin = () => {
-    dispatch(setUser(true));
-    dispatch(setGuest(false));
- };
+    login();
+  };
 
- async function login() {
-  // console.log(uniqueEmail[0] + password)
-  setpassMsg(false);
-  setemailMsg(false);
-  if (email !== '' && password !== '') {
-    try {
-      setloading(true)
-      const user = await Auth.signIn({
-
-        username: uniqueEmail[0],
-        password: password
-      });
-      dispatch(setToken(user?.signInUserSession?.idToken?.jwtToken))
-      console.log("User => ", JSON.stringify(user?.signInUserSession?.idToken?.jwtToken))
-      // props.navigation.navigate("start")
-      setloading(false)
-      setemail('')
-      setpassword('')
-
-    } catch (error) {
-      console.log(error)
-      if (error.message.includes(":")) {
-        const myArray = error.message.split(":");
-        alert(myArray[1])
-        setloading(false)
+  async function login() {
+    setPasswordMessage(false);
+    setEmailMessage(false);
+    if (email !== '' && password !== '') {
+      try {
+        const user = await userLogin(email, password);
+        user.id = user?.accessToken?.payload?.sub ?? '';
+        console.log(user?.accessToken?.payload);
+        if (user?.accessToken?.payload) {
+          dispatch(setUser(true));
+          dispatch(setGuest(false));
+          setEmail('');
+          setPassword('');
+        }
+        // dispatch(setToken(user?.signInUserSession?.idToken?.jwtToken))
+        // props.navigation.navigate("start")
+      } catch (error) {
+        console.log('error : ', error);
+        if (error.message.includes(':')) {
+          const myArray = error.message.split(':');
+        } else {
+          alert(error.message);
+          setloading(false);
+        }
       }
-      else {
-        alert(error.message)
-        setloading(false)
+    } else {
+      if (email === '' && password === '') {
+        setPasswordMessage(true);
+        setEmailMessage(true);
       }
-
+      if (email === '') setEmailMessage(true);
+      if (password === '') setPasswordMessage(true);
     }
-
-  } else {
-    if (email === '' && password === '') {
-      setpassMsg(true);
-      setemailMsg(true);
-    }
-    if (email === '') setemailMsg(true);
-    if (password === '') setpassMsg(true);
   }
-};
 
   return (
     <ImageBackground

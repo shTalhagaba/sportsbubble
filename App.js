@@ -15,10 +15,10 @@ import mySaga from 'src/store/sagas';
 import { LogBox } from 'react-native';
 import Toast from "react-native-toast-message";
 import { toastConfig } from "src/components/ToastConfig";
-import Amplify, { Auth } from 'aws-amplify';
-import awsConfig from './src/utils/aws-exports';
+// import Amplify, { Auth } from 'aws-amplify';
+// import awsConfig from './src/utils/aws-exports';
 
-Amplify.configure(awsConfig);
+// Amplify.configure(awsConfig);
 
 const sagaMiddleware = createSagaMiddleware();
 const persistConfig = {

@@ -24,7 +24,6 @@
     "@react-navigation/native-stack": "^6.9.12",
     "amazon-cognito-identity-js": "^6.3.2",
     "apollo3-cache-persist": "^0.14.1",
-    "aws-amplify": "^5.3.7",
     "dayjs": "^1.11.9",
     "graphql": "^16.7.1",
     "graphql-tag": "^2.12.6",
