@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -10,23 +10,24 @@ import {
 import styles from './styles';
 import ContactTextInput from 'src/components/ContactTextInput';
 import AppHeader from 'src/components/AppHeader';
-import {Images, Colors, Fonts, Strings} from 'src/utils';
+import { Images, Colors, Fonts, Strings } from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
-import {useNavigation} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
-import {setGuest, setUser} from 'src/store/types';
-import {Auth, JS} from 'aws-amplify';
-import {userLogin} from 'src/services/authLogin';
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { setGuest, setUser } from 'src/store/types';
+import { userLogin } from 'src/services/authLogin';
+import { loginValidation } from 'src/common/authValidation';
+import LoaderModal from 'src/components/LoaderModal';
+import { ShowMessage } from "src/components/ShowMessage";
+
 
 export default function Login() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [passwordMessage, setPasswordMessage] = useState(false);
-  const [emailMessage, setEmailMessage] = useState('');
-
   const [displayPassword, setDisplayPassword] = useState(true);
+  const [loadingLocal, setLoadingLocal] = useState(false)
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -36,13 +37,13 @@ export default function Login() {
   };
 
   async function login() {
-    setPasswordMessage(false);
-    setEmailMessage(false);
-    if (email !== '' && password !== '') {
+    if (loginValidation(email, password)) {
       try {
+        setLoadingLocal(true)
         const user = await userLogin(email, password);
         user.id = user?.accessToken?.payload?.sub ?? '';
         console.log(user?.accessToken?.payload);
+        setLoadingLocal(false)
         if (user?.accessToken?.payload) {
           dispatch(setUser(true));
           dispatch(setGuest(false));
@@ -56,23 +57,17 @@ export default function Login() {
         if (error.message.includes(':')) {
           const myArray = error.message.split(':');
         } else {
-          alert(error.message);
-          setloading(false);
+          ShowMessage(error.message);
         }
+      } finally {
+        setLoadingLocal(false)
       }
-    } else {
-      if (email === '' && password === '') {
-        setPasswordMessage(true);
-        setEmailMessage(true);
-      }
-      if (email === '') setEmailMessage(true);
-      if (password === '') setPasswordMessage(true);
     }
   }
 
   return (
     <ImageBackground
-      source={Images.Background3}
+      source={Images.Background}
       resizeMode="cover"
       style={styles.container}>
       <StatusBar
@@ -83,7 +78,7 @@ export default function Login() {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        headerContainer={{marginTop: 10}}
+        headerContainer={{ marginTop: 10 }}
         SimpleView
       />
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -140,6 +135,8 @@ export default function Login() {
           </TouchableOpacity>
         </View>
       </ScrollView>
+      <LoaderModal visible={loadingLocal} loadingText={''} />
+
     </ImageBackground>
   );
 }

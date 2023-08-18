@@ -8,7 +8,7 @@ export const checkValidation = (checkableValue) => {
     else
         return false
 }
-export const signupValidation = (firstName, lastName, email, password, confirmPassword) => {
+export const signupValidation = (firstName, lastName, email, password, confirmPassword, emailOptCheck, termsCheck) => {
     if (checkValidation(firstName)) {
         ShowMessage("Please enter first name");
     } else if (firstName.length < 2) {
@@ -33,6 +33,24 @@ export const signupValidation = (firstName, lastName, email, password, confirmPa
             ShowMessage("Password should be 6 characters");
         } else if (password !== confirmPassword) {
             ShowMessage("Password don't match")
+        } else if (!emailOptCheck) {
+            ShowMessage("Please check email otp")
+        } else if (!termsCheck) {
+            ShowMessage("Please check terms and policy")
+        } else {
+            return true;
+        }
+    }
+}
+export const loginValidation = (email, password) => {
+    if (checkValidation(email)) {
+        ShowMessage("Please enter email");
+    } else {
+        const trimmedEmail = email.trim();
+        if (regEmail.test(trimmedEmail) === false) {
+            ShowMessage("Please enter valid email");
+        } else if (checkValidation(password)) {
+            ShowMessage("Please enter password");
         } else {
             return true;
         }
