@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, {useRef, useState} from 'react';
 import {
   View,
   Text,
@@ -10,16 +10,15 @@ import {
 import styles from './styles';
 import ContactTextInput from 'src/components/ContactTextInput';
 import AppHeader from 'src/components/AppHeader';
-import { Images, Colors, Fonts, Strings } from 'src/utils';
+import {Images, Colors, Fonts, Strings} from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
-import { useNavigation } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
-import { setGuest, setUser } from 'src/store/types';
-import { userLogin } from 'src/services/authLogin';
-import { loginValidation } from 'src/common/authValidation';
+import {useNavigation} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
+import {setGuest, setToken, setUser, setUserData} from 'src/store/types';
+import {userLogin} from 'src/services/authLogin';
+import {loginValidation} from 'src/common/authValidation';
 import LoaderModal from 'src/components/LoaderModal';
-import { ShowMessage } from "src/components/ShowMessage";
-
+import {ShowMessage} from 'src/components/ShowMessage';
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -27,7 +26,7 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [displayPassword, setDisplayPassword] = useState(true);
-  const [loadingLocal, setLoadingLocal] = useState(false)
+  const [loadingLocal, setLoadingLocal] = useState(false);
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -39,19 +38,19 @@ export default function Login() {
   async function login() {
     if (loginValidation(email, password)) {
       try {
-        setLoadingLocal(true)
+        setLoadingLocal(true);
         const user = await userLogin(email, password);
         user.id = user?.accessToken?.payload?.sub ?? '';
-        console.log(user?.accessToken?.payload);
-        setLoadingLocal(false)
-        if (user?.accessToken?.payload) {
+        setLoadingLocal(false);
+        console.log(user)
+        if (user?.idToken?.payload) {
           dispatch(setUser(true));
           dispatch(setGuest(false));
+          dispatch(setToken(user?.idToken?.jwtToken))
+          dispatch(setUserData(user?.idToken?.payload))
           setEmail('');
           setPassword('');
         }
-        // dispatch(setToken(user?.signInUserSession?.idToken?.jwtToken))
-        // props.navigation.navigate("start")
       } catch (error) {
         console.log('error : ', error);
         if (error.message.includes(':')) {
@@ -60,14 +59,14 @@ export default function Login() {
           ShowMessage(error.message);
         }
       } finally {
-        setLoadingLocal(false)
+        setLoadingLocal(false);
       }
     }
   }
 
   return (
     <ImageBackground
-      source={Images.Background}
+      source={Images.Background3}
       resizeMode="cover"
       style={styles.container}>
       <StatusBar
@@ -78,7 +77,7 @@ export default function Login() {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        headerContainer={{ marginTop: 10 }}
+        headerContainer={{marginTop: 10}}
         SimpleView
       />
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -136,7 +135,6 @@ export default function Login() {
         </View>
       </ScrollView>
       <LoaderModal visible={loadingLocal} loadingText={''} />
-
     </ImageBackground>
   );
 }

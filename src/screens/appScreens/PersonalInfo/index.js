@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {
   ImageBackground,
   ScrollView,
@@ -15,16 +15,18 @@ import ContactHeaderTextInput from 'src/components/ContactHeaderTextInput';
 import ContactTextInput from 'src/components/ContactTextInput';
 import CustomButton from 'src/components/CustomButton';
 import CustomModalView from 'src/components/Modal/CustomModal';
+import { useSelector } from 'react-redux';
 
 export default function PersonalInfo() {
   const navigation = useNavigation();
+  const data = useSelector((state) => state.user);
 
-  const [firstName, setFirstName] = useState('Matthew');
+  const [firstName, setFirstName] = useState('Example');
   const [lastName, setLastName] = useState('Dichter');
   const [zipCode, setZipcode] = useState('91364');
   const [dob, setDob] = useState('05/22/1977');
   const [pronouns, setPronouns] = useState('');
-  const [email, setEmail] = useState('mattyd@sportsbubble.io');
+  const [email, setEmail] = useState('example@sportsbubble.io');
   const [cancelAccountModal, setCancelAccountModal] = useState(false);
 
   const firstNameRef = useRef();
@@ -32,6 +34,16 @@ export default function PersonalInfo() {
   const zipCodeRef = useRef();
   const dobRef = useRef();
   const emailRef = useRef();
+
+  useEffect(()=>{
+    if(data?.userData){
+      const user = data?.userData
+      setFirstName(user?.name)
+      setLastName(user?.family_name)
+      setDob(user?.birthdate)
+      setEmail(user?.email)
+    }
+  },[data?.userData])
 
   return (
     <ImageBackground

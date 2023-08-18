@@ -12,6 +12,21 @@ export const setUser = (args: any) => {
   };
 };
 
+export const setUserData = (args: any) => {
+  return {
+    type: 'SET_USER_DATA',
+    payload: args,
+  };
+};
+
+export const setToken = (args: any) => {
+  return {
+    type: 'SET_TOKEN',
+    payload: args,
+  };
+};
+
+
 export const setGuest = (args: any) => {
   return {
     type: 'SET_GUEST',

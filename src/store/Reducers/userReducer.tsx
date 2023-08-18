@@ -1,11 +1,11 @@
-
-
 const initialState = {
   isLoggedIn: false,
   email: 'haa@gmail.com',
   firstName: '',
   lastName: '',
   id: '',
+  token: '',
+  userData: {},
   user: false,
   eventList: [],
   splashEventList: [],
@@ -15,68 +15,92 @@ const initialState = {
 
 const user = (state = initialState, action: any) => {
   switch (action.type) {
-               // splash event list
-               case 'SET_SPLASH_EVENT_LIST':
-                console.log('SET_SPLASH_EVENT_LIST : ',action.payload)
-                try {
-                  return {
-                    ...state,
-                    splashEventList: action.payload,
-                  };
-                } catch (e) {
-                  alert(e);
-                  return state;
-                }
-                break;
-           // event list
-           case 'SET_EVENT_LIST':
-            console.log('SET_EVENT_LIST : ',action.payload)
-            try {
-              return {
-                ...state,
-                eventList: action.payload,
-              };
-            } catch (e) {
-              alert(e);
-              return state;
-            }
-            break;
-          // expire
-           case 'SET_EXPIRE':
-            try {
-              return {
-                ...state,
-                expire: action.payload,
-              };
-            } catch (e) {
-              alert(e);
-              return state;
-            }
-            break;
-       // User Info
-       case 'SET_USER':
-        try {
-          return {
-            ...state,
-            user: action.payload,
-          };
-        } catch (e) {
-          alert(e);
-          return state;
-        }
-        break;
-      // guest
-       case 'SET_GUEST':
-        try {
-          return {
-            ...state,
-            guest: action.payload,
-          };
-        } catch (e) {
-          alert(e);
-          return state;
-        }
-        break;
+    // splash event list
+    case 'SET_SPLASH_EVENT_LIST':
+      console.log('SET_SPLASH_EVENT_LIST : ', action.payload);
+      try {
+        return {
+          ...state,
+          splashEventList: action.payload,
+        };
+      } catch (e) {
+        alert(e);
+        return state;
+      }
+      break;
+    // event list
+    case 'SET_EVENT_LIST':
+      console.log('SET_EVENT_LIST : ', action.payload);
+      try {
+        return {
+          ...state,
+          eventList: action.payload,
+        };
+      } catch (e) {
+        alert(e);
+        return state;
+      }
+      break;
+    // expire
+    case 'SET_EXPIRE':
+      try {
+        return {
+          ...state,
+          expire: action.payload,
+        };
+      } catch (e) {
+        alert(e);
+        return state;
+      }
+      break;
+    // User Info
+    case 'SET_USER':
+      try {
+        return {
+          ...state,
+          user: action.payload,
+        };
+      } catch (e) {
+        alert(e);
+        return state;
+      }
+      break;
+    // User Data Info
+    case 'SET_USER_DATA':
+      try {
+        return {
+          ...state,
+          userData: action.payload,
+        };
+      } catch (e) {
+        alert(e);
+        return state;
+      }
+      break;
+    // token
+    case 'SET_TOKEN':
+      try {
+        return {
+          ...state,
+          token: action.payload,
+        };
+      } catch (e) {
+        alert(e);
+        return state;
+      }
+      break;
+    // guest
+    case 'SET_GUEST':
+      try {
+        return {
+          ...state,
+          guest: action.payload,
+        };
+      } catch (e) {
+        alert(e);
+        return state;
+      }
+      break;
     // Login.
     case 'SIGN_IN_SUCCESS':
       try {
