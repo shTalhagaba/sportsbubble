@@ -5,8 +5,11 @@ import ContactTextInput from 'src/components/ContactTextInput';
 import AppHeader from 'src/components/AppHeader';
 import {Images, Colors, Strings} from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
+import { useNavigation } from '@react-navigation/native';
 
 export default function WelcomeAccount() {
+  const navigation = useNavigation();
+
   const [zipCode, setZipCode] = useState('');
   const [birthday, setBirthday] = useState('');
   const [pronouns, setPronouns] = useState('');
@@ -41,8 +44,7 @@ export default function WelcomeAccount() {
           <ContactTextInput
             leftImage={Images.Location}
             refInner={zipCodeRef}
-            Contianer={{marginTop: 40}}
-            customInputStyle={{marginLeft: 10}}
+            Contianer={{marginTop: 30}}
             placeholderTextColor={Colors.white}
             placeholder={Strings.zipCode}
             multiline={false}
@@ -61,8 +63,7 @@ export default function WelcomeAccount() {
           <ContactTextInput
             leftImage={Images.Birthday}
             refInner={birthdayRef}
-            Contianer={{marginTop: 40}}
-            customInputStyle={{marginLeft: 10}}
+            Contianer={{marginTop: 30}}
             placeholderTextColor={Colors.white}
             placeholder={Strings.birthdate}
             multiline={false}
@@ -82,8 +83,7 @@ export default function WelcomeAccount() {
           <Text style={styles.sideTxt}>{Strings.youmustbe}</Text>
           <ContactTextInput
             leftImage={Images.Pronouns}
-            Contianer={{marginTop: 40}}
-            customInputStyle={{marginLeft: 10}}
+            Contianer={{marginTop: 30}}
             refInner={pronounsRef}
             placeholderTextColor={Colors.white}
             placeholder={Strings.pronouns}
@@ -99,7 +99,12 @@ export default function WelcomeAccount() {
           />
           <Text style={styles.sideTxt}>{Strings.wordingforthistk}</Text>
           <View style={styles.btnContainer}>
-            <CustomButton title={Strings.continue} />
+            <CustomButton
+              title={Strings.continue}
+              Contianer={styles.blueButtonContainer}
+              txt={styles.blueButtonTxt}
+              onpress={() => navigation.replace('Login')}
+            />
           </View>
         </View>
       </ScrollView>

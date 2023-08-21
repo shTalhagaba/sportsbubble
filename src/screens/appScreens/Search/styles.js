@@ -55,7 +55,6 @@ export default ScaledSheet.create({
     padding: '0@ms0.3',
     fontFamily: Fonts.Regular,
     marginStart: '10@ms0.3',
-
   },
   searchTxt: {
     letterSpacing: 0.75,

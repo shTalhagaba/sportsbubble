@@ -14,11 +14,11 @@ import AppHeader from 'src/components/AppHeader';
 import {Images, Colors, Strings} from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
-import CustomModalView from 'src/components/Modal/CustomModal';
 import {signupValidation} from 'src/common/authValidation';
 import LoaderModal from 'src/components/LoaderModal';
 import {ShowMessage} from 'src/components/ShowMessage';
 import {userSignup} from 'src/services/authSignup';
+import CustomVeriificationModal from 'src/components/Modal/CustomVeriificationModal';
 
 export default function Signup() {
   const navigation = useNavigation();
@@ -225,11 +225,16 @@ export default function Signup() {
             title={Strings.continue}
             onpress={() => showVerifyModal()}
           />
-          <CustomModalView
-            visible={!verifyModal}
+          <CustomVeriificationModal
+            visible={verifyModal}
             desTxt={Strings.pleaseCheckInbox}
             dexTxtStyle={styles.modalContainer}
             btn={true}
+            otherBtnTxt={'Verify'}
+            otherBtnPress={()=>{
+            navigation.navigate('WelcomeAccount')
+            setVerifyModal(!verifyModal)
+            }}
           />
         </View>
       </ScrollView>
