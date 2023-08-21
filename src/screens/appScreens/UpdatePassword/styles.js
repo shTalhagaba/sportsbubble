@@ -8,7 +8,7 @@ export default ScaledSheet.create({
         backgroundColor: Colors.appColorBackground
     },
     loginTxt: {
-        fontSize: "20@ms0.3",
+        fontSize: "21@ms0.3",
         fontWeight: "bold",
         textAlign: "center",
         color: Colors.white
@@ -28,21 +28,29 @@ export default ScaledSheet.create({
         marginVertical: "30@ms0.3",
     },
     saveBtnContainer: {
-        marginTop: "40@ms0.3"
+        marginTop: "40@ms0.3",
+        height: '53@ms0.3',
+        marginHorizontal: '0@ms0.3',
     },
     cancelBtnContainer: {
         marginTop: "16@ms0.3",
         backgroundColor: Colors.transparent,
         borderColor: Colors.darkOrange,
         borderWidth: "2@ms0.3",
+        height: '53@ms0.3',
+        marginHorizontal: '0@ms0.3',
     },
     btnTxt: {
-        color: Colors.darkOrange
+        color: Colors.darkOrange,
+        fontSize: '14@ms0.3',
     },
     accountTxt: {
         fontSize: "14@ms0.3",
         textAlign: "center",
         color: Colors.white,
         marginVertical: "30@ms0.3",
-    }
+    },
+      btnContainerTxt: {
+        fontSize: '14@ms0.3',
+      },
 });

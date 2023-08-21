@@ -17,8 +17,8 @@ import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 export default function Connect(props) {
   const [item, setItem] = useState(props?.route?.params?.item);
   const {holderItem, eventFlag} = props?.route?.params;
-  const currentDate = dayjs(); // Get the current date and time
-
+  const currentDate = dayjs(new Date()).toISOString(); // Get the current date and time
+  
   useEffect(() => {
     setItem(props?.route?.params?.item);
   }, [props?.route?.params?.item]);
@@ -109,7 +109,8 @@ export default function Connect(props) {
           />
         </View>
         <View style={styles.buttonContainer}>
-          {dayjs(item?.startTime).isAfter(currentDate) ? null : (
+          {dayjs(currentDate).isAfter(item?.startTime) &&
+          dayjs(currentDate).isBefore(item?.endTime) ? (
             <GreenButton
               title={Strings.watchNow}
               rightIcon={true}
@@ -121,7 +122,7 @@ export default function Connect(props) {
                 )
               }
             />
-          )}
+          ) : null}
         </View>
       </View>
       {/* Powered by sports bubble */}

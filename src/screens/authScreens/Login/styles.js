@@ -7,14 +7,14 @@ export default ScaledSheet.create({
     backgroundColor: Colors.appColorBackground,
   },
   loginTxt: {
-    fontSize: '22@ms0.3',
+    fontSize: '21@ms0.3',
     fontWeight: '800',
     textAlign: 'center',
     color: Colors.white,
   },
   signupTxt: {
     fontSize: '16@ms0.3',
-    fontWeight: '900',
+    fontWeight: '800',
     textAlign: 'center',
     color: Colors.greenText,
     marginVertical: '10@ms0.3',
@@ -22,22 +22,29 @@ export default ScaledSheet.create({
     fontStyle: 'italic',
   },
   innerContainer: {
-    marginHorizontal: '20@ms0.3',
+    marginHorizontal: '16@ms0.3',
   },
   forgotTxt: {
-    fontSize: '16@ms0.3',
-    fontWeight: '900',
+    fontSize: '15@ms0.3',
+    fontWeight: '500',
     textAlign: 'center',
     color: Colors.darkOrange,
     marginVertical: '30@ms0.3',
     fontFamily: Fonts.Regular,
   },
   accountTxt: {
-    fontSize: '16@ms0.3',
+    fontSize: '15@ms0.3',
     textAlign: 'center',
     color: Colors.white,
     marginVertical: '1@ms0.3',
     fontWeight: '400',
     fontFamily: Fonts.Regular,
   },
+  blueButtonContainer: {
+    height: '53@ms0.3',
+    marginHorizontal: '0@ms0.3',
+  },
+  blueButtonTxt: {
+    fontSize: '14@ms0.3',
+  }
 });

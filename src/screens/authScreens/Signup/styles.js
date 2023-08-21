@@ -8,13 +8,13 @@ export default ScaledSheet.create({
         backgroundColor: Colors.appColorBackground
     },
     signupTxt: {
-        fontSize: "22@ms0.3",
+        fontSize: "20@ms0.3",
         fontWeight: "800",
         textAlign: "center",
         color: Colors.white
     },
     checkBoxTxt: {
-        fontSize: "14@ms0.3",
+        fontSize: "13@ms0.3",
         fontWeight: "500",
         color: Colors.white,
         justifyContent: "center",
@@ -22,18 +22,18 @@ export default ScaledSheet.create({
         maxWidth: "80%"
     },
     checkBoxTxt1: {
-        fontSize: "14@ms0.3",
+        fontSize: "13@ms0.3",
         fontWeight: "500",
         color: Colors.white,
     },
     checkBoxTxt2: {
-        fontSize: "14@ms0.3",
+        fontSize: "13@ms0.3",
         fontWeight: "500",
         color: Colors.white,
         // maxWidth: "90%"
     },
     checkBoxGreenTxt: {
-        fontSize: "14@ms0.3",
+        fontSize: "13@ms0.3",
         fontWeight: "800",
         textAlign: "center",
         color: Colors.lightGreen,
@@ -48,12 +48,12 @@ export default ScaledSheet.create({
     },
     termsCondition: {
         color: Colors.white,
-        fontSize: "14@ms0.3",
+        fontSize: "13@ms0.3",
         fontWeight: "500",
     },
     termsConditionBold: {
         color: "#69A833",
-        fontSize: "14@ms0.3",
+        fontSize: "13@ms0.3",
         textAlign: "center",
         alignItems: "center",
         fontWeight: "800"

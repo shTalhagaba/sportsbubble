@@ -96,4 +96,5 @@ export default {
   cancelAccount: "Cancel Account",
   saveChanges: "Save Changes",
   prounouns: "Prounouns",
+  submit: 'Submit',
 };

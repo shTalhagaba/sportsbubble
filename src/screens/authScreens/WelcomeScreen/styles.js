@@ -2,42 +2,50 @@ import { ScaledSheet } from "react-native-size-matters";
 import { Colors, Fonts } from 'src/utils';
 
 export default ScaledSheet.create({
+    containerTop:{
+        flex: 1,
+        backgroundColor: Colors.darkBlue
+    },
     container: {
         flex: 1,
+        marginTop: "38@ms0.3",
+        marginBottom: "10@ms0.3",
     },
     innerContainer: {
         flex: 1,
-        backgroundColor: Colors.darkBlue90
+        backgroundColor: Colors.darkBlue90,
     },
     welcomeTxt: {
-        fontSize: "24@ms0.3",
+        fontSize: "23@ms0.3",
         color: Colors.white,
         fontFamily: Fonts.Regular,
         fontWeight: "400",
-        marginTop: "60@ms0.3",
+        marginTop: "10@ms0.3",
         textAlign: "center"
     },
     liveSportTxt: {
-        fontSize: "22@ms0.3",
+        fontSize: "20@ms0.3",
         color: Colors.white,
         fontFamily: Fonts.Regular,
         fontWeight: "900",
-        marginTop: "60@ms0.3",
+        marginTop: "65@ms0.3",
         textAlign: "center",
         fontStyle: "italic"
     },
     liveSportDesTxt: {
-        fontSize: "22@ms0.3",
+        fontSize: "18@ms0.3",
         color: Colors.white,
-        fontFamily: Fonts.Regular,
+        // fontFamily: Fonts.Regular,
         fontWeight: "500",
-        marginTop: "30@ms0.3",
+        marginTop: "35@ms0.3",
         marginHorizontal: "10@ms0.3",
         textAlign: "center",
-        lineHeight: "30@ms0.3"
+        lineHeight: "28@ms0.3",
+        width:'85%',
+        alignSelf:'center'
     },
     guestTxt: {
-        fontSize: "16@ms0.3",
+        fontSize: "15@ms0.3",
         color: Colors.white,
         fontFamily: Fonts.Regular,
         fontWeight: "900",
@@ -46,8 +54,8 @@ export default ScaledSheet.create({
         fontStyle: 'italic'
     },
     logoImage: {
-        height: "56@ms0.3",
-        width: "284@ms0.3",
+        height: "48@ms0.3",
+        width: "244@ms0.3",
         marginTop: "13@ms0.3",
         alignSelf: "center"
     },
@@ -65,11 +73,18 @@ export default ScaledSheet.create({
     btnContainer: {
         marginHorizontal: "20@ms0.3",
     },
+    freeBtnTxt: {
+        fontSize: '14@ms0.3',
+    },
     freeBtnContainer: {
-        marginTop: "70@ms0.3"
+        marginTop: "70@ms0.3",
+        height: "53@ms0.3"
+    },
+    loginBtnTxt: {
+        fontSize: '14@ms0.3',
     },
     loginBtnContainer: {
-        marginTop: "24@ms0.3"
+        marginTop: "20@ms0.3",
+        height: "53@ms0.3"
     },
-
 });

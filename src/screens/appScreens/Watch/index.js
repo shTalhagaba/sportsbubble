@@ -68,6 +68,7 @@ export default function Watch(props) {
         LeftImage={Images.LeftIcon}
         onPressBack={searchFlag ? () => navigation.navigate('Search') : null}
         SimpleView
+        headerContainer={styles.headerContainer}
       />
       {/* Main View */}
       <ScrollView
@@ -123,22 +124,16 @@ export default function Watch(props) {
         itemSelected?.rightsHoldersConnection?.edges &&
         itemSelected?.rightsHoldersConnection?.totalCount > 1 ? (
           <View style={styles.flatlistContainer}>
-            <Text style={styles.conectTxt}>
-              {dayjs(itemSelected?.startTime).isAfter(currentDate)
-                ? 
-                //Strings.connectToWatchFuture +
-                  ' ' 
-                  //dayjs(itemSelected?.startTime).format('dddd MM/D [at] h:mma')
-                : Strings.connectToWatch}
-            </Text>
+            {dayjs(itemSelected?.startTime).isAfter(currentDate) ? null : (
+              <Text style={styles.conectTxt}>{Strings.connectToWatch}</Text>
+            )}
             <FlatList
               data={itemSelected?.rightsHoldersConnection?.edges || data}
               showsVerticalScrollIndicator={false}
               horizontal
               contentContainerStyle={{flex: 1, justifyContent: 'center'}}
               renderItem={({item, index}) => {
-                return item?.node?.weight === null ||
-                  item?.node?.weight > 1000 ? (
+                return item?.node?.weight > 1000 ? (
                   <TouchableOpacity
                     onPress={() => {
                       navigation.navigate('withoutBottomtab', {
@@ -190,7 +185,8 @@ export default function Watch(props) {
                 contentContainerStyle={{justifyContent: 'center'}}
                 horizontal
                 renderItem={({item, index}) => {
-                  return item?.node?.weight < 1000 ? (
+                  return item?.node?.weight === null ||
+                    item?.node?.weight < 1000 ? (
                     <View style={styles.bottomListContainer}>
                       <View style={styles.bottomInnerContainer}>
                         <View style={styles.bottomListBackground} />

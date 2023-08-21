@@ -15,7 +15,7 @@ const AuthNavigation = () => {
             screenOptions={{
                 headerShown: false
             }} >
-            <AuthNavigator.Screen name="Splash" component={Splash} />
+            {/* <AuthNavigator.Screen name="Splash" component={Splash} /> */}
             <AuthNavigator.Screen name="WelcomeScreen" component={WelcomeScreen} />
             <AuthNavigator.Screen name="Login" component={Login} />
             <AuthNavigator.Screen name="Signup" component={Signup} />

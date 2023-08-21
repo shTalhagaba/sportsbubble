@@ -14,18 +14,18 @@ export default ScaledSheet.create({
         color: Colors.white
     },
     leftArrowIcon: {
-        width: "45@ms0.3",
-        height: "45@ms0.3",
+        width: "42@ms0.3",
+        height: "42@ms0.3",
         resizeMode: "cover",
     },
     powerImage: {
-        width: "165@ms0.3",
-        height: "75@ms0.3",
+        width: "155@ms0.3",
+        height: "65@ms0.3",
         resizeMode: "cover",
         tintColor: Colors.white
     },
     versionTxt: {
-        fontSize: "18@ms0.3",
+        fontSize: "17@ms0.3",
         fontWeight: "bold",
         textAlign: "center",
         color: Colors.white,
@@ -33,7 +33,7 @@ export default ScaledSheet.create({
         fontStyle: "italic"
     },
     sbContainer: {
-        height: '25%',
+        height: '21%',
         alignItems: 'center'
     },
     mainTabContainer: {

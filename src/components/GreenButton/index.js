@@ -9,7 +9,7 @@ const GreenButton = props => {
       onPress={props.onpress}
       style={[styles.container, props.Contianer]}>
       <View style={[styles.innerContainer, props.innerContainer]}>
-        <Text style={[styles.btnTxt]}>{props.title}</Text>
+        <Text style={[styles.btnTxt,props.btnTxt]}>{props.title}</Text>
         {props.rightIcon &&
           <View style={styles.iconContainer}>
             <Image

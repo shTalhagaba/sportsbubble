@@ -17,16 +17,39 @@ export default ScaledSheet.create({
   itemInnerContainer: {
     flexDirection: 'row',
   },
+  timeContainer: {
+    backgroundColor: '#213651',
+    paddingHorizontal: '20@ms0.3',
+    marginHorizontal: '15@ms0.3',
+    borderRadius: '20@ms0.3',
+    height: fontScale > 1 ? 28 * fontScale : '30@ms0.3',
+    justifyContent: 'center',
+    alignSelf: 'center',
+  },
+  timeSliderContainer: {
+    flexDirection: 'row',
+    paddingVertical: '10@ms0.3',
+  },
   timeSliderInnerContainer: {
     width: '75%',
+  },
+  nextContainer: {
+    backgroundColor: Colors.brandBlue,
+    paddingHorizontal: '20@ms0.3',
+    marginHorizontal: '20@ms0.3',
+    borderRadius: '20@ms0.3',
+    height: fontScale > 1 ? 28 * fontScale : '30@ms0.3',
+    justifyContent: 'center',
+    alignSelf: 'center',
   },
   rightIcon: {
     height: '10@ms0.3',
     width: '16@ms0.3',
   },
   itemContainer: {
-    height: fontScale > 1 ? 76 * fontScale : '80@ms0.3',
+    height: fontScale > 1 ? 74 * fontScale : '78@ms0.3',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   backImageContainer: {
     marginRight: '16@ms0.3',
@@ -49,7 +72,7 @@ export default ScaledSheet.create({
   },
   imageIcon: {
     height: '65@ms0.3',
-    width: '65@ms0.3',
+    width: '64@ms0.3',
   },
   imageRightsIcon: {
     height: '47@ms0.3',
@@ -103,32 +126,32 @@ export default ScaledSheet.create({
     fontFamily: Fonts.Regular,
   },
   titleTxt: {
-    fontSize: '18@ms0.3',
+    fontSize: '16@ms0.3',
     fontWeight: '800',
     lineHeight: '25@ms0.3',
     color: Colors.white,
     fontFamily: Fonts.Regular,
-    maxWidth: Platform.OS === 'android' ? screenWidth - 130 : screenWidth - 130,
+    maxWidth: Platform.OS === 'android' ? screenWidth - 110 : screenWidth - 110,
   },
   eventTxt: {
-    fontSize: '14@ms0.3',
+    fontSize: '13@ms0.3',
     fontWeight: '400',
-    lineHeight: '20@ms0.3',
+    lineHeight: '18@ms0.3',
     color: Colors.white,
     fontFamily: Fonts.Regular,
-    width: Platform.OS === 'android' ? screenWidth - 130 : '85%',
+    width: Platform.OS === 'android' ? screenWidth - 110 : screenWidth - 110,
   },
   dateEventTxt: {
-    fontSize: '14@ms0.3',
+    fontSize: '13@ms0.3',
     fontWeight: '400',
-    lineHeight: '20@ms0.3',
+    lineHeight: '19@ms0.3',
     color: Colors.white,
     fontFamily: Fonts.Regular,
   },
   watchOptions: {
-    fontSize: '22@ms0.3',
+    fontSize: '18@ms0.3',
     fontWeight: '800',
-    lineHeight: '30@ms0.3',
+    lineHeight: '26@ms0.3',
     color: Colors.lightGreen,
     fontFamily: Fonts.Regular,
     textTransform: 'uppercase',
@@ -136,7 +159,7 @@ export default ScaledSheet.create({
     textAlign: 'center',
   },
   wayToWatch: {
-    fontSize: '24@ms0.3',
+    fontSize: '22@ms0.3',
     fontWeight: '900',
     lineHeight: '30@ms0.3',
     color: Colors.lightGreen,
@@ -151,12 +174,12 @@ export default ScaledSheet.create({
   conectTxt: {
     fontSize: '18@ms0.3',
     fontWeight: '800',
-    lineHeight: '24@ms0.3',
+    lineHeight: '22@ms0.3',
     color: Colors.white,
     fontFamily: Fonts.Regular,
     marginVertical: '16@ms0.3',
     textAlign: 'center',
-    maxWidth: '70%',
+    maxWidth: '65%',
     alignSelf: 'center',
     fontStyle: 'italic',
   },
@@ -175,9 +198,10 @@ export default ScaledSheet.create({
   sliderContainer: {
     flexDirection: 'row',
     backgroundColor: Colors.mediumBlue,
-    height: fontScale > 1 ? 100 * fontScale : '110@ms0.3',
+    height: fontScale > 1 ? (screenWidth / 4.4) * fontScale : '100@ms0.3',
     alignItems: 'center',
     paddingHorizontal: '15@ms0.3',
+    marginTop: '10@ms0.3',
   },
   sliderInnerContainer: {
     flex: 1,
@@ -210,12 +234,12 @@ export default ScaledSheet.create({
     width: '32@ms0.3',
     height: '12@ms0.3',
     marginTop: '20@ms0.3',
-    marginRight: '20@ms0.3',
+    marginRight: '10@ms0.3',
   },
   menuBtn2: {
     width: '32@ms0.3',
     height: '12@ms0.3',
-    marginRight: '20@ms0.3',
+    marginRight: '10@ms0.3',
   },
   largeMenuImage: {
     width: '100%',
@@ -238,11 +262,11 @@ export default ScaledSheet.create({
   bottomListContainer: {
     alignItems: 'center',
     marginTop: 0,
-    marginRight: '20@ms0.3',
+    marginRight: '10@ms0.3',
   },
   bottomInnerContainer: {
-    width: screenWidth / 4.1,
-    height: screenWidth / 4.1,
+    width: screenWidth / 4.5,
+    height: screenWidth / 4.5,
     backgroundColor: Colors.mediumBlue,
     borderWidth: '2@ms0.3',
     borderRadius: '16@ms0.3',
@@ -261,6 +285,7 @@ export default ScaledSheet.create({
   bottomFlatlist: {
     marginTop: 1,
     marginHorizontal: 1,
+    marginTop: '12@ms0.3',
   },
   listBackground: {
     position: 'absolute',
@@ -271,8 +296,8 @@ export default ScaledSheet.create({
     backgroundColor: Colors.black15,
   },
   listInnerContainer: {
-    width: screenWidth / 4.1,
-    height: screenWidth / 4.1,
+    width: screenWidth / 4.5,
+    height: screenWidth / 4.5,
     backgroundColor: Colors.mediumBlue,
     borderWidth: '2@ms0.3',
     borderRadius: '16@ms0.3',
@@ -283,6 +308,13 @@ export default ScaledSheet.create({
   listMainContainer: {
     alignItems: 'center',
     marginTop: '25@ms0.3',
-    marginRight: '20@ms0.3',
+    marginRight: '10@ms0.3',
+  },
+  headerContainer: {
+    height: Platform.OS === 'ios' ? '85@ms0.3' : '70@ms0.3',
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Colors.transparent,
+    paddingTop: Platform.OS === 'ios' ? '40@ms0.3' : '22@ms0.3',
   },
 });

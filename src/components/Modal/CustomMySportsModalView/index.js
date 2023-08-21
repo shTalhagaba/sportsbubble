@@ -51,8 +51,9 @@ const CustomMySportsModalView = props => {
                 ) : (
                   <CustomButton
                     blue={props.blue}
-                    Contianer={props.rowStyle ? {flex: 1} : null}
+                    Contianer={props.rowStyle ? {flex: 1} : styles.buttonStyle}
                     title={props.otherBtnTxt}
+                    txt={styles.buttonTxt}
                     onpress={props.otherBtnPress}
                   />
                 )}
@@ -63,6 +64,7 @@ const CustomMySportsModalView = props => {
                       ? styles.blackBtnContainer
                       : styles.blackBtnContainer2
                   }
+                  txt={styles.buttonTxt}
                   onpress={props.blackBtnPress}
                 />
               </View>

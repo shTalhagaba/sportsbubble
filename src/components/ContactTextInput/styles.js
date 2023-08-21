@@ -5,13 +5,13 @@ const styles = ScaledSheet.create({
   container: {
     backgroundColor: Colors.blueGrey,
     paddingStart: '10@ms0.3',
-    marginTop: '20@ms0.3',
+    marginTop: '15@ms0.3',
     borderRadius: '15@ms0.3',
     height: '55@ms0.3',
   },
   leftIcon: {
-    height: '16@ms0.3',
-    width: '16@ms0.3',
+    height: '13@ms0.3',
+    width: '13@ms0.3',
     alignSelf: 'center',
     tintColor: Colors.white,
     marginHorizontal: '10@ms0.3',
@@ -40,9 +40,9 @@ const styles = ScaledSheet.create({
   inputField: {
     flex: 1,
     fontFamily: Fonts.Regular,
-    fontSize: '17@ms0.3',
+    fontSize: '15@ms0.3',
     fontWeight: '400',
-    lineHeight: '21@ms0.3',
+    lineHeight: '18@ms0.3',
     padding: '0@ms0.3',
     color: Colors.white,
   },

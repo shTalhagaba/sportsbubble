@@ -186,6 +186,7 @@ export default function PersonalInfo() {
           title={Strings.saveChanges}
           onpress={() => navigation.goBack(null)}
           Contianer={styles.btnContainer}
+          txt={styles.btnContainerTxt}
         />
 
         <TouchableOpacity

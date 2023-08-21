@@ -110,6 +110,7 @@ export default function UpdatePassword() {
             title={Strings.saveChanges}
             Contianer={styles.saveBtnContainer}
             onpress={() => navigation.goBack(null)}
+            txt={styles.btnContainerTxt}
           />
           <CustomButton
             title={Strings.cancel}

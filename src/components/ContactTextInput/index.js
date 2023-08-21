@@ -32,7 +32,7 @@ const ContactTextInput = (props) => {
                 />
                 {props.secureText && (
                     <TouchableOpacity onPress={props.onPress} style={styles.iconEyeContainer}>
-                        <EyeOpen width={18} height={18} color={props.eyeOpen ?  Colors.white : Colors.white70 } />
+                        <EyeOpen width={14} height={14} color={props.eyeOpen ?  Colors.white : Colors.white70 } />
                     </TouchableOpacity>
                 )}
                 {props.rightImage && (

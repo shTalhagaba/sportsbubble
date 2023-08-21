@@ -30,14 +30,14 @@ const styles = ScaledSheet.create({
         lineHeight: "30@ms0.3",
     },
     desTxt: {
-        fontSize: "22@ms0.3",
+        fontSize: "20@ms0.3",
         color: Colors.white,
         fontFamily: Fonts.Regular,
         fontWeight: "500",
         textAlign: "center",
-        paddingVertical: "8@ms0.3",
+        marginTop: "15@ms0.3",
         paddingHorizontal: "20@ms0.3",
-        lineHeight: "30@ms0.3",
+        lineHeight: "28@ms0.3",
     },
     blackBtnContainer: {
         flex: 1,
@@ -54,7 +54,14 @@ const styles = ScaledSheet.create({
     blackBtnContainer2: {
         backgroundColor: Colors.backBlack,
         borderWidth: "2@ms0.3",
-        borderColor: Colors.white
+        borderColor: Colors.white,
+        height: "53@ms0.3",
+    },
+    buttonStyle: {
+        height: "53@ms0.3",
+    },
+    buttonTxt: {
+        fontSize: "14@ms0.3",
     },
     rowBtn: {
         flexDirection: "row",
@@ -62,7 +69,7 @@ const styles = ScaledSheet.create({
         paddingBottom: "30@ms0.3",
     },
     columnBtn: {
-        marginHorizontal: "10@ms0.3",
+        marginHorizontal: "15@ms0.3",
         paddingBottom: "30@ms0.3",
     },
     orangeTxt: {

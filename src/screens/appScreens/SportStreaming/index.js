@@ -90,7 +90,7 @@ export default function SportStreaming() {
 
   return (
     <ImageBackground
-      source={Images.Background2}
+      source={Images.Background3}
       resizeMode="cover"
       style={styles.container}>
       <StatusBar backgroundColor={Colors.mediumBlue} />
@@ -111,6 +111,7 @@ export default function SportStreaming() {
             placeHolderColor={Colors.white}
             placeHolder={Strings.search}
             closeImage={Images.Cross}
+            customContainer={styles.searchContainer}
           />
           {/* main list */}
           <FlatList

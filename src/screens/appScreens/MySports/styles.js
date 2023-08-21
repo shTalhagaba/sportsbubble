@@ -2,6 +2,7 @@ import {Colors, Fonts} from 'src/utils';
 import {ScaledSheet} from 'react-native-size-matters';
 import {Dimensions} from 'react-native';
 const width = Dimensions.get('window').width;
+const {fontScale} = Dimensions.get('window');
 
 export default ScaledSheet.create({
   container: {
@@ -28,12 +29,12 @@ export default ScaledSheet.create({
     width: '48@ms0.3',
   },
   userNameContainer: {
-    paddingStart: '13@ms0.3',
+    paddingStart: '9@ms0.3',
     justifyContent: 'center',
     flex: 1,
   },
   mangeFavTxt: {
-    fontSize: '22@ms0.3',
+    fontSize: '20@ms0.3',
     fontWeight: '800',
     lineHeight: '25@ms0.3',
     color: Colors.white,
@@ -41,21 +42,16 @@ export default ScaledSheet.create({
     textAlign: 'center',
   },
   titleTxt: {
-    fontSize: '16@ms0.3',
+    fontSize: '15@ms0.3',
     fontWeight: '800',
-    lineHeight: '25@ms0.3',
+    lineHeight: '22@ms0.3',
     color: Colors.white,
     fontFamily: Fonts.Regular,
   },
   sliderContainer: {
     flexDirection: 'row',
     backgroundColor: Colors.mediumBlue,
-    height: '120@ms0.3',
-  },
-  sliderInnerContainer: {
-    flex: 1,
-    marginHorizontal: '5@ms0.3',
-    marginVertical: 5,
+    height: fontScale > 1 ? (width / 4.4) * fontScale : '100@ms0.3',
   },
   sliderImageBackground: {
     height: '100%',
@@ -64,24 +60,19 @@ export default ScaledSheet.create({
     alignItems: 'center',
   },
   bellIcon: {
-    height: '22@ms0.3',
-    width: '22@ms0.3',
-    marginRight: '15@ms0.3',
+    height: '20@ms0.3',
+    width: '20@ms0.3',
+    marginRight: '12@ms0.3',
   },
   fvrtIcon: {
-    height: '23@ms0.3',
-    width: '23@ms0.3',
-    marginRight: '20@ms0.3',
-  },
-  sliderContainer: {
-    flexDirection: 'row',
-    backgroundColor: Colors.mediumBlue,
-    height: '120@ms0.3',
+    height: '21@ms0.3',
+    width: '21@ms0.3',
+    marginRight: '15@ms0.3',
   },
   sliderInnerContainer: {
     // flex: 1,
-    marginHorizontal: '3@ms0.3',
-    marginVertical: '5@ms0.3',
+    marginHorizontal: '7@ms0.3',
+    marginVertical: '10@ms0.3',
     justifyContent: 'center',
   },
   sliderImageBackground: {
@@ -89,26 +80,26 @@ export default ScaledSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    // zIndex:999
   },
   sliderInnerMainContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: '2@ms0.3',
     borderColor: '#004EBC',
-    height: '90@ms0.3',
-    borderRadius: '22@ms0.3',
-    width: width / 4 - 12,
+    height: fontScale > 1 ? (width / 4.8) * fontScale : width / 5.1,
+    borderRadius: fontScale > 1 ? 21 * fontScale : '18@ms0.3',
+    width: fontScale > 1 ? (width / 4.8) * fontScale : width / 5.1,
     overflow: 'visible',
   },
   sliderIcon: {
-    height: '35@ms0.3',
-    width: '35@ms0.3',
+    height: fontScale > 1 ? 25 * fontScale : '28@ms0.3',
+    width: fontScale > 1 ? 25 * fontScale : '28@ms0.3',
     paddingVertical: '12@ms0.3',
     tintColor: Colors.white,
+    marginTop: '10@ms0.3',
   },
   sliderTxt: {
-    fontSize: '16@ms0.3',
+    fontSize: '12@ms0.3',
     fontWeight: '900',
     lineHeight: '24@ms0.3',
     color: Colors.white,
@@ -117,19 +108,21 @@ export default ScaledSheet.create({
     elevation: 3,
     textShadowOffset: {width: 0, height: 1},
     textShadowRadius: 8,
-    textShadowColor: Colors.black,
-    marginTop: '6@ms0.3',
+    textShadowColor: '#000000',
+    marginBottom: '3@ms0.3',
   },
   rectangle2: {
     position: 'absolute',
-    left: Platform.OS === 'android' ? -4 : -4,
-    top: -4,
-    height: '94@ms0.3',
-    width: width / 4 - 8,
-    borderRadius: '22@ms0.3',
-    borderWidth: 2,
-    borderColor: '#004EBC',
-    opacity: 0.5,
+    left: Platform.OS === 'android' ? -5 : -5,
+    top: -4.5,
+    // height: '94@ms0.3',
+    height: fontScale > 1 ? (width / 4.9) * fontScale : width / 4.7 - 1,
+    // width: width / 4.3,
+    width: fontScale > 1 ? (width / 4.9) * fontScale : width / 4.71,
+    borderRadius: fontScale > 1 ? 19 * fontScale : '20@ms0.3',
+    borderWidth: '3@ms0.3',
+    borderColor: Colors.brandBlue,
+    opacity: 0.3,
   },
   headerTxtStyle: {
     fontSize: '22@ms0.3',

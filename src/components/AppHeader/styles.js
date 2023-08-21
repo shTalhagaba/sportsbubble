@@ -8,11 +8,11 @@ const styles = ScaledSheet.create({
         flexDirection: "row",
         alignItems: "center",
         backgroundColor: Colors.transparent,
-        paddingTop: Platform.OS === 'ios' ? "40@ms0.3" : "25@ms0.3",
+        paddingTop: Platform.OS === 'ios' ? "35@ms0.3" : "22@ms0.3",
     },
     leftArrowIcon: {
-        width: "27@ms0.3",
-        height: "27@ms0.3",
+        width: "23@ms0.3",
+        height: "23@ms0.3",
         resizeMode: "cover",
     },
     rightIcon: {
@@ -26,8 +26,8 @@ const styles = ScaledSheet.create({
         alignItems: "center",
     },
     centerImage: {
-        height: "30@ms0.3",
-        width: "148@ms0.3",
+        height: "25@ms0.3",
+        width: "136@ms0.3",
     },
     iconContainer: {
         width: "25%",

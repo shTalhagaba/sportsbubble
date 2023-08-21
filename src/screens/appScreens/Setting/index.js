@@ -30,7 +30,8 @@ export default function Setting() {
 
   useEffect(() => {
     Instabug.init({
-      token: '02e02ab36f08bb8372ad6966cd83bf8a',
+      // token: '02e02ab36f08bb8372ad6966cd83bf8a',  // own instabug
+      token: 'fa2bfcf8ea1c455d74b12f36846eb929', // stage
       invocationEvents: [InvocationEvent.shake],
     });
   }, []);
@@ -101,7 +102,7 @@ export default function Setting() {
                 flexDirection: 'row',
                 marginTop: 24,
                 alignItems: 'center',
-                marginLeft: 30,
+                marginLeft: 24,
               }}>
               <Image source={Images.LeftArrowIcon} style={styles.logoutIcon} />
               <Text style={styles.logoutTxt}>{Strings.logout}</Text>
@@ -122,8 +123,10 @@ export default function Setting() {
         orangrBTn
         rowStyle={true}
         blackBtnPress={() => setLogoutModal(!logoutModal)}
-        ornageBtnPress={() => {setLogoutModal(!logoutModal)
+        ornageBtnPress={() => {
+          setLogoutModal(!logoutModal)
           dispatch(setUser(false))
+          navigation.replace('Auth')
         }}
         Contianer={{backgroundColor: Colors.backBlack}}
       />

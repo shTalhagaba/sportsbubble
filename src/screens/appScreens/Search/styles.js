@@ -1,6 +1,8 @@
 import { Colors, Fonts } from 'src/utils';
 import { ScaledSheet } from "react-native-size-matters";
+import { Dimensions } from 'react-native';
 
+const {fontScale} = Dimensions.get('window');
 
 export default ScaledSheet.create({
   container: {
@@ -17,11 +19,11 @@ export default ScaledSheet.create({
   },
   searchContainer: {
     flexDirection: 'row',
-    height: '58@ms0.3',
-    borderRadius: '16@ms0.3',
+    height: '53@ms0.3',
+    borderRadius: '15@ms0.3',
     justifyContent: 'center',
     backgroundColor: Colors.mediumBlue,
-    marginVertical: '10@ms0.3',
+    marginBottom: '8@ms0.3',
     alignSelf: "center",
     alignItems: "center"
   },
@@ -73,59 +75,58 @@ export default ScaledSheet.create({
     borderWidth: '1@ms0.3',
     borderColor: Colors.lightGreen,
   },
-
-
   imageContainer: {
-    height: "80@ms0.3",
-    width: "80@ms0.3",
+    height: "69@ms0.3",
+    width: "67@ms0.3",
     backgroundColor: Colors.mediumBlue,
     justifyContent: "center",
     alignItems: "center"
   },
   imageIcon: {
-    height: "65@ms0.3",
-    width: "65@ms0.3",
+    height: "61@ms0.3",
+    width: "60@ms0.3",
   },
   userNameContainer: {
     flex: 1,
-    marginStart: "13@ms0.3",
+    marginStart: "9@ms0.3",
     alignSelf: "center"
   },
   titleTxt: {
-    fontSize: "16@ms0.3",
+    fontSize: "15@ms0.3",
     fontWeight: "700",
-    lineHeight: "24@ms0.3",
+    lineHeight: "22@ms0.3",
     color: Colors.white,
     fontFamily: Fonts.Regular,
   },
   mainContainer: {
     flex: 1,
     marginHorizontal: "20@ms0.3",
+    marginTop: "10@ms0.3"
   },
   textWhite: {
     color: Colors.white
   },
   eventTxt: {
-    fontSize: "14@ms0.3",
+    fontSize: "13@ms0.3",
     fontWeight: "400",
-    lineHeight: "20@ms0.3",
+    lineHeight: "18@ms0.3",
     color: Colors.white,
     fontFamily: Fonts.Regular,
   },
   emptyTxt: {
     letterSpacing: 0.75,
     color: Colors.white,
-    fontSize: "20@ms0.3",
+    fontSize: "21@ms0.3",
     flex: 1,
     fontWeight: "600",
     padding: "0@ms0.3",
     fontFamily: Fonts.Regular,
     alignContent: 'center',
     textAlign: 'center',
-    width: '80%',
+    width: '85%',
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
-    marginTop: "40@ms0.3",
+    marginTop: "45@ms0.3",
   }
 });

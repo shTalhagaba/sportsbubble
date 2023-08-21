@@ -7,6 +7,7 @@ import {
   FlatList,
   TouchableOpacity,
   StatusBar,
+  Dimensions,
 } from 'react-native';
 import styles from './styles';
 import {Images, Colors, Strings} from 'src/utils';
@@ -14,8 +15,9 @@ import AppHeader from 'src/components/AppHeader';
 import {useNavigation} from '@react-navigation/native';
 import CustomModalView from 'src/components/Modal/CustomModal';
 import {moderateScale} from 'react-native-size-matters';
-import CustomMySportsModalView from 'src/components/Modal/CustomMySportsModalView';
 import {useSelector} from 'react-redux';
+const screenWidth = Dimensions.get('window').width;
+const {fontScale} = Dimensions.get('window');
 
 const data = [
   {
@@ -115,9 +117,6 @@ export default function Guide() {
   const [categoryData, setCategoryData] = useState(categoryArr);
   const [reminderModal, setRemaindarModal] = useState(false);
   const [fvrtModal, setFvrtModal] = useState(false);
-  const [mySportModal, setMySportModal] = useState(
-    reduxData?.guest ? true : false,
-  );
   const [mySportData, setSportData] = useState(data);
   const [curremItem, setCurrentItem] = useState({});
   const [curremIndex, setCurrentIndex] = useState();
@@ -163,12 +162,16 @@ export default function Guide() {
       <AppHeader centerImage={Images.Logo} />
       {/* Slider all pro  */}
       <View style={styles.sliderContainer}>
-        <FlatList
+      <FlatList
           horizontal
           data={categoryData}
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{justifyContent: 'center', flex: 1}}
-          scrollEnabled={false}
+          contentContainerStyle={
+            fontScale > 1
+              ? {justifyContent: 'center'}
+              : {justifyContent: 'center', flex: 1}
+          }
+          scrollEnabled={fontScale > 1 ? true : false}
           renderItem={({item, index}) => (
             <TouchableOpacity
               onPress={() => handleSelectedCategory(item, index)}
@@ -189,7 +192,7 @@ export default function Guide() {
                   imageStyle={
                     Platform.OS === 'android'
                       ? {
-                          borderRadius: moderateScale(20, 0.3),
+                          borderRadius: moderateScale(22, 0.3),
                           borderWidth: item?.selected
                             ? 0
                             : moderateScale(2.5, 0.3),

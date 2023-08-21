@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   View,
   Text,
@@ -58,7 +58,6 @@ export default function Signup() {
         const user = await userSignup(fullName, lastName, email, password);
         setLoadingLocal(false);
       } catch (error) {
-        console.log('errorrrrr : ', error);
         if (error.message.includes(':')) {
           const myArray = error.message.split(':');
         } else {
@@ -72,7 +71,7 @@ export default function Signup() {
 
   return (
     <ImageBackground
-      source={Images.Background}
+      source={Images.Background2}
       resizeMode="cover"
       style={styles.container}>
       <StatusBar
@@ -80,11 +79,9 @@ export default function Signup() {
         translucent
         barStyle="light-content"
       />
-
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        headerContainer={{marginTop: 10}}
         SimpleView
       />
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -229,9 +226,10 @@ export default function Signup() {
             onpress={() => showVerifyModal()}
           />
           <CustomModalView
-            visible={verifyModal}
+            visible={!verifyModal}
             desTxt={Strings.pleaseCheckInbox}
             dexTxtStyle={styles.modalContainer}
+            btn={true}
           />
         </View>
       </ScrollView>

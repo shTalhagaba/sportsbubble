@@ -19,9 +19,10 @@ export default function WelcomeScreen() {
   const dispatch = useDispatch();
 
   return (
+    <View style={styles.containerTop}>
     <ImageBackground
       source={Images.HomeScreen}
-      resizeMode="cover"
+      resizeMode="contain"
       style={styles.container}>
       <StatusBar
         backgroundColor={Colors.transparent}
@@ -39,11 +40,13 @@ export default function WelcomeScreen() {
           <CustomButton
             Contianer={styles.freeBtnContainer}
             title={Strings.createFreeAccount}
+            txt={styles.freeBtnTxt}
             onpress={() => navigation.navigate('Signup')}
           />
           <CustomButton
             blue={true}
             Contianer={styles.loginBtnContainer}
+            txt={styles.loginBtnTxt}
             title={Strings.login}
             onpress={() => navigation.navigate('Login')}
           />
@@ -51,6 +54,7 @@ export default function WelcomeScreen() {
             onPress={() => {
               dispatch(setGuest(true));
               dispatch(setUser(true));
+              navigation.replace('Root')
             }}
             style={styles.guestContainer}>
             <Text style={styles.guestTxt}>{Strings.continueGuest}</Text>
@@ -63,5 +67,6 @@ export default function WelcomeScreen() {
         </View>
       </View>
     </ImageBackground>
+    </View>
   );
 }

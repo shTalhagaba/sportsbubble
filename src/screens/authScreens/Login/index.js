@@ -50,6 +50,7 @@ export default function Login() {
           dispatch(setUserData(user?.idToken?.payload))
           setEmail('');
           setPassword('');
+          navigation.replace('Root')
         }
       } catch (error) {
         console.log('error : ', error);
@@ -122,6 +123,8 @@ export default function Login() {
             onpress={buttonSignin}
             blue={true}
             title={Strings.signIn}
+            Contianer={styles.blueButtonContainer}
+            txt={styles.blueButtonTxt}
           />
           <TouchableOpacity
             onPress={() => navigation.navigate('ForgotPassword')}>

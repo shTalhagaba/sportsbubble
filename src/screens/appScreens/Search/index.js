@@ -47,31 +47,31 @@ export default function Search(props) {
   const inputRef = useRef(null);
 
   useEffect(() => {
-    const currentTime = Date.now();
-    if (
-      (reduxData && reduxData?.expire === currentTime) ||
-      (reduxData && reduxData?.eventList && reduxData?.eventList.length <= 0)
-    ) {
-      const {loading, refetch, error, data} = useQuery(SEARCH_EVENTS_QUERY, {
-        variables: {
-          searchString: searchText,
-          startTime: startTime,
-          endTime: endTime,
-        },
-        onCompleted: data => {
-          if (data && data?.sortedEvents.length > 0) {
-            dispatch(setStoreEventList(data?.sortedEvents));
-            dispatch(setExpire(expireTime));
-          }
-        },
-        fetchPolicy: 'network-only',
-        notifyOnNetworkStatusChange: true,
-
-        onError: error => {
-          console.log('error : ', error);
-        },
-      });
-    }
+    // const currentTime = Date.now();
+    // if (
+    //   (reduxData && reduxData?.expire && reduxData?.expire === currentTime) ||
+    //   (reduxData && reduxData?.eventList && reduxData?.eventList.length <= 0)
+    // ) {
+    //   const {loading, refetch, error, data} = useQuery(SEARCH_EVENTS_QUERY, {
+    //     variables: {
+    //       searchString: searchText,
+    //       startTime: startTime,
+    //       endTime: endTime,
+    //     },
+    //     onCompleted: data => {
+    //       if (data && data?.sortedEvents && data?.sortedEvents.length > 0) {
+    //         dispatch(setStoreEventList(data?.sortedEvents));
+    //         dispatch(setExpire(expireTime));
+    //       }
+    //     },
+    //     fetchPolicy: 'network-only',
+    //     notifyOnNetworkStatusChange: true,
+    //     onError: error => {
+    //       console.log('error : ', error);
+    //       // ShowMessage(error);
+    //     },
+    //   });
+    // }
   }, [navigation]);
 
   const handleInputChange = text => {
@@ -104,9 +104,10 @@ export default function Search(props) {
     setIsFocused(false);
   };
 
-  useEffect(() => {
-    onPressTouch();
-  }, [isFocused]);
+  // useEffect(() => {
+  //   onPressTouch();
+  // }, [isFocused]);
+
   const onPressTouch = () => {
     if (!isFocused) {
       setTimeout(() => {

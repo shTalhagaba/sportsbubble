@@ -37,7 +37,6 @@ const list = [
     day: 'Thu. 2/9',
     time: '5:00pm - 7:30pm',
     live: true,
-    percentage: '25%',
   },
   {
     id: 2,
@@ -47,7 +46,6 @@ const list = [
     day: 'Thu. 2/9',
     time: '5:00pm - 7:30pm',
     live: true,
-    percentage: '35%',
   },
   {
     id: 3,
@@ -57,7 +55,6 @@ const list = [
     day: 'Thu. 2/9',
     time: '5:00pm - 7:30pm',
     live: true,
-    percentage: '45%',
   },
   {
     id: 4,
@@ -67,7 +64,6 @@ const list = [
     day: 'Thu. 2/9',
     time: '5:00pm - 7:30pm',
     live: false,
-    percentage: '55%',
   },
   {
     id: 5,
@@ -77,7 +73,6 @@ const list = [
     day: 'Thu. 2/9',
     time: '5:00pm - 7:30pm',
     live: false,
-    percentage: '65%',
   },
 ];
 
@@ -496,7 +491,7 @@ export default function Guide(props) {
                 backgroundColor: Colors.darkBlue,
               }}></View>
             <View style={styles.userNameContainer}>
-              <Text style={[styles.eventTxt, {marginTop: 5}]} numberOfLines={1}>
+              <Text style={[styles.eventTxt]} numberOfLines={1}>
                 {item?.line1 ? item?.line1 : item?.companyName}
               </Text>
               <Text style={styles.titleTxt} numberOfLines={1}>
@@ -504,7 +499,6 @@ export default function Guide(props) {
               </Text>
               <View style={{flexDirection: 'row'}}>
                 <Text style={[styles.eventDateTxt]}>
-                  {' '}
                   {item?.startTime
                     ? dayjs(item?.startTime).format('ddd. MM/D')
                     : item?.day}
@@ -570,7 +564,7 @@ export default function Guide(props) {
                   imageStyle={
                     Platform.OS === 'android'
                       ? {
-                          borderRadius: moderateScale(20, 0.3),
+                          borderRadius: moderateScale(22, 0.3),
                           borderWidth: item?.selected
                             ? 0
                             : moderateScale(2.5, 0.3),
@@ -650,7 +644,7 @@ export default function Guide(props) {
             }}
           />
         </View>
-        <View style={{width: screenWidth / 5}}>
+        <View style={styles.rightIconStyle}>
           <TouchableOpacity
             onPress={() => handleNext()}
             style={[
@@ -667,68 +661,70 @@ export default function Guide(props) {
           </TouchableOpacity>
         </View>
       </View>
-      <TouchableOpacity style={styles.listContiner}>
-        <View style={[{backgroundColor: Colors.brandBlue}]}>
-          <View
-            style={[
-              styles.imageContainer,
-              {backgroundColor: Colors.brandBlue},
-            ]}>
-            <ImageWithPlaceHolder
-              source={eventList?.[0]?.logo1}
-              placeholderSource={Constants.placeholder_trophy_icon}
-              style={styles.imageIcon}
-              resizeMode="contain"
-            />
-          </View>
-          <View
-            style={{
-              width: eventList?.[0]?.startTime
-                ? startTimeWidth(eventList?.[0]?.startTime)
-                : 0,
-              // backgroundColor: Colors.darkBlue,
-            }}></View>
-          <View
-            style={{
-              width: endTimeWidth(eventList?.[0]?.endTime),
-              // backgroundColor: dayjs(eventList?.[0]?.startTime).isAfter(currentDate)
-              //   ? Colors.mediumBlue
-              //   : Colors.mediumGreen,
-            }}></View>
-          <View
-            style={{
-              flex: 1,
-              // backgroundColor: Colors.darkBlue,
-            }}></View>
-          <View style={styles.userNameContainer}>
-            <Text style={[styles.eventTxt, {marginTop: 5}]} numberOfLines={1}>
-              {eventList?.[0]?.line1}
-            </Text>
-            <Text style={styles.titleTxt} numberOfLines={1}>
-              {eventList?.[0]?.line2
-                ? eventList?.[0]?.line2
-                : eventList?.[0]?.title}
-            </Text>
-            <View style={{flexDirection: 'row'}}>
-              <Text style={[styles.eventDateTxt]}>
-                {' '}
-                {eventList?.[0]?.startTime
-                  ? dayjs(eventList?.[0]?.startTime).format('ddd. MM/D')
-                  : eventList?.[0]?.day}
-                {'  l '}
+      {eventList && eventList.length > 0 ? (
+        <TouchableOpacity style={styles.listContiner}>
+          <View style={[{backgroundColor: Colors.brandBlue, paddingBottom:5}]}>
+            <View
+              style={[
+                styles.imageContainer,
+                {backgroundColor: Colors.brandBlue},
+              ]}>
+              <ImageWithPlaceHolder
+                source={eventList?.[0]?.logo1}
+                placeholderSource={Constants.placeholder_trophy_icon}
+                style={styles.imageIcon}
+                resizeMode="contain"
+              />
+            </View>
+            <View
+              style={{
+                width: eventList?.[0]?.startTime
+                  ? startTimeWidth(eventList?.[0]?.startTime)
+                  : 0,
+                // backgroundColor: Colors.darkBlue,
+              }}></View>
+            <View
+              style={{
+                width: endTimeWidth(eventList?.[0]?.endTime),
+                // backgroundColor: dayjs(eventList?.[0]?.startTime).isAfter(currentDate)
+                //   ? Colors.mediumBlue
+                //   : Colors.mediumGreen,
+              }}></View>
+            <View
+              style={{
+                flex: 1,
+                // backgroundColor: Colors.darkBlue,
+              }}></View>
+            <View style={styles.userNameContainer}>
+              <Text style={[styles.eventTxt, {marginTop: 5}]} numberOfLines={1}>
+                {eventList?.[0]?.line1}
               </Text>
-              <Text style={[styles.eventDateTxt]}>
-                {' '}
-                {eventList?.[0]?.startTime
-                  ? `${dayjs(eventList?.[0]?.startTime).format(
-                      'h:mma',
-                    )} - ${dayjs(eventList?.[0]?.endTime).format('h:mma')}`
-                  : eventList?.[0]?.time}
+              <Text style={styles.titleTxt} numberOfLines={1}>
+                {eventList?.[0]?.line2
+                  ? eventList?.[0]?.line2
+                  : eventList?.[0]?.title}
               </Text>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={[styles.eventDateTxt]}>
+                  {' '}
+                  {eventList?.[0]?.startTime
+                    ? dayjs(eventList?.[0]?.startTime).format('ddd. MM/D')
+                    : eventList?.[0]?.day}
+                  {'  l '}
+                </Text>
+                <Text style={[styles.eventDateTxt]}>
+                  {' '}
+                  {eventList?.[0]?.startTime
+                    ? `${dayjs(eventList?.[0]?.startTime).format(
+                        'h:mma',
+                      )} - ${dayjs(eventList?.[0]?.endTime).format('h:mma')}`
+                    : eventList?.[0]?.time}
+                </Text>
+              </View>
             </View>
           </View>
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      ) : null}
       {/* main list  */}
       {loading && currentIndex ? (
         <View style={{flex: 1, justifyContent: 'center'}}>

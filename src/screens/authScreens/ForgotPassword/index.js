@@ -21,7 +21,7 @@ export default function ForgotPassword() {
 
   return (
     <ImageBackground
-      source={Images.Background}
+      source={Images.Background3}
       resizeMode="cover"
       style={styles.container}>
       <StatusBar
@@ -43,7 +43,7 @@ export default function ForgotPassword() {
             leftImage={Images.EmailIcon}
             refInner={emailRef}
             placeholderTextColor={Colors.white}
-            placeholder={'Email'}
+            placeholder={Strings.email}
             multiline={false}
             value={email}
             maxLength={50}
@@ -53,7 +53,9 @@ export default function ForgotPassword() {
             returnKeyType={'next'}
             blurOnSubmit={true}
           />
-          <CustomButton blue={true} title={'Submit'} />
+          <CustomButton blue={true} title={Strings.submit}   
+          Contianer={styles.blueButtonContainer}
+            txt={styles.blueButtonTxt} />
 
           <Text style={styles.accountTxt}>{Strings.dontAccount}</Text>
           <TouchableOpacity onPress={() => navigation.navigate('Signup')}>

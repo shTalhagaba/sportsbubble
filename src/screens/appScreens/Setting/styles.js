@@ -7,25 +7,25 @@ export default ScaledSheet.create({
     backgroundColor: Colors.appColorBackground,
   },
   loginTxt: {
-    fontSize: '22@ms0.3',
+    fontSize: '20@ms0.3',
     fontWeight: '800',
     textAlign: 'center',
     color: Colors.white,
     fontFamily: Fonts.Regular,
   },
   leftArrowIcon: {
-    width: '45@ms0.3',
-    height: '45@ms0.3',
+    width: '42@ms0.3',
+    height: '42@ms0.3',
     resizeMode: 'cover',
   },
   powerImage: {
-    width: '165@ms0.3',
-    height: '75@ms0.3',
+    width: '150@ms0.3',
+    height: '65@ms0.3',
     resizeMode: 'cover',
     tintColor: Colors.white,
   },
   versionTxt: {
-    fontSize: '18@ms0.3',
+    fontSize: '17@ms0.3',
     fontWeight: 'bold',
     textAlign: 'center',
     color: Colors.white,
@@ -33,15 +33,15 @@ export default ScaledSheet.create({
     fontStyle: 'italic',
   },
   logoutTxt: {
-    fontSize: '18@ms0.3',
-    fontWeight: '500',
+    fontSize: '17@ms0.3',
+    fontWeight: '400',
     color: Colors.darkOrange,
     fontFamily: Fonts.Regular,
     marginStart: '16@ms0.3',
-    lineHeight: '28@ms0.3',
+    lineHeight: '22@ms0.3',
   },
   sbContainer: {
-    height: '25%',
+    height: '21%',
     alignItems: 'center',
   },
   mainTabContainer: {
@@ -49,8 +49,8 @@ export default ScaledSheet.create({
     flex: 1,
   },
   logoutIcon: {
-    height: '10@ms0.3',
-    width: '18@ms0.3',
+    height: '9@ms0.3',
+    width: '16@ms0.3',
   },
   innerContainer: {
     marginTop: '24@ms0.3',
