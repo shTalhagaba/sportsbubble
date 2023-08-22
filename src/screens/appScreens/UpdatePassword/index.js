@@ -7,20 +7,47 @@ import {Images, Colors} from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import Strings from 'src/utils/strings';
+import { changePassword } from 'src/services/userProfile';
+import { useSelector } from 'react-redux';
+import LoaderModal from 'src/components/LoaderModal';
+import ShowMessage from 'src/components/ShowMessage';
 
 export default function UpdatePassword() {
   const navigation = useNavigation();
+  const data = useSelector((state) => state.user);
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [newConfirmPassword, setNewConfirmPassword] = useState('');
   const currentPasswordRef = useRef();
   const newPasswordRef = useRef();
   const newConfirmPasswordRef = useRef();
+  const [loadingLocal, setLoadingLocal] = useState(false);
 
   const [displayCurrentPassword, setDisplayCurrentPassword] = useState(true);
   const [displayNewPassword, setDisplayNewPassword] = useState(true);
   const [displayNewConfirmPassword, setDisplayNewConfirmPassword] =
     useState(true);
+
+    const updatePassword = async () => {
+      console.log('updatePassword : ',data?.userData)
+        try {
+          setLoadingLocal(true);
+          const user = await changePassword(data?.userData?.email,currentPassword,newPassword);
+          console.log("updatePassword => ", user)
+          if(user === 'SUCCESS'){
+          navigation.goBack(null)
+          }
+          setLoadingLocal(false);
+        } catch (error) {
+          if (error.message.includes(':')) {
+            const myArray = error.message.split(':');
+          } else {
+            ShowMessage(error.message);
+          }
+        } finally {
+          setLoadingLocal(false);
+        }
+    }
 
   return (
     <ImageBackground
@@ -109,7 +136,7 @@ export default function UpdatePassword() {
           <CustomButton
             title={Strings.saveChanges}
             Contianer={styles.saveBtnContainer}
-            onpress={() => navigation.goBack(null)}
+            onpress={() =>  updatePassword()}
             txt={styles.btnContainerTxt}
           />
           <CustomButton
@@ -120,6 +147,7 @@ export default function UpdatePassword() {
           />
         </View>
       </ScrollView>
+      <LoaderModal visible={loadingLocal} loadingText={''} />
     </ImageBackground>
   );
 }

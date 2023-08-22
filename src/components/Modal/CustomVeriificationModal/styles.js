@@ -47,11 +47,6 @@ const styles = ScaledSheet.create({
     borderWidth: '2@ms0.3',
     borderColor: Colors.darkOrange,
   },
-  blackBtnContainer2: {
-    backgroundColor: Colors.backBlack,
-    borderWidth: '2@ms0.3',
-    borderColor: Colors.white,
-  },
   rowBtn: {
     flexDirection: 'row',
     marginHorizontal: '10@ms0.3',
@@ -76,12 +71,20 @@ const styles = ScaledSheet.create({
   },
   greenButtonContainer: {
     marginTop: "40@ms0.3",
-    marginBottom: "10@ms0.3",
     height: "53@ms0.3"
   },
   greenButtonTxt: {
     fontSize: '14@ms0.3',
-  }
+  },
+  blackBtnContainer2: {
+    backgroundColor: Colors.backBlack,
+    borderWidth: "2@ms0.3",
+    borderColor: Colors.white,
+    height: "53@ms0.3",
+},
+buttonStyle: {
+    height: "53@ms0.3",
+},
 });
 
 export default styles;

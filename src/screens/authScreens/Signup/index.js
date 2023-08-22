@@ -18,8 +18,9 @@ import { signupValidation, otpValidation } from 'src/common/authValidation';
 import LoaderModal from 'src/components/LoaderModal';
 import { ShowMessage } from 'src/components/ShowMessage';
 import { userSignup } from 'src/services/authSignup';
-import { userOTP } from 'src/services/authOTP';
+import { resendCode, userOTP } from 'src/services/authOTP';
 import CustomVeriificationModal from 'src/components/Modal/CustomVeriificationModal';
+
 export default function Signup() {
   const navigation = useNavigation();
   const [fullName, setFullName] = useState('');
@@ -75,7 +76,9 @@ export default function Signup() {
       try {
         setLoadingLocal(true);
         const user = await userOTP(email, otp);
-        console.log("Userr => ", user)
+        if(user === 'SUCCESS'){
+          setVerifyModal(false)
+        }
         setLoadingLocal(false);
       } catch (error) {
         if (error.message.includes(':')) {
@@ -87,10 +90,23 @@ export default function Signup() {
         setLoadingLocal(false);
       }
     }
-
-    // navigation.navigate('WelcomeAccount')
-    // setVerifyModal(!verifyModal)
-
+  }
+  const handleResendCode = async () => {
+    console.log('handleResendCode : ')
+      try {
+        setLoadingLocal(true);
+        const user = await resendCode(email);
+        console.log("Userr => ", user)
+        setLoadingLocal(false);
+      } catch (error) {
+        if (error.message.includes(':')) {
+          const myArray = error.message.split(':');
+        } else {
+          ShowMessage(error.message);
+        }
+      } finally {
+        setLoadingLocal(false);
+      }
   }
 
   return (
@@ -255,7 +271,9 @@ export default function Signup() {
             dexTxtStyle={styles.modalContainer}
             btn={true}
             otherBtnTxt={'Verify'}
+            blackBtnTxt={'Resend Code'}
             otherBtnPress={() => handleVerify()}
+            blackBtnPress={() => handleResendCode()}
             onChangeText={(txt) => setOTP(txt)}
             otpValue={otp}
           />

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Modal,
@@ -8,7 +8,7 @@ import {
   TextInput,
 } from 'react-native';
 import styles from './styles';
-import { Colors } from 'src/utils';
+import {Colors} from 'src/utils';
 
 import CustomButton from 'src/components/CustomButton';
 
@@ -72,6 +72,12 @@ const CustomVeriificationModal = props => {
                 title={props.otherBtnTxt}
                 onpress={props.otherBtnPress}
                 txt={styles.greenButtonTxt}
+              />
+              <CustomButton
+                title={props.blackBtnTxt}
+                Contianer={styles.blackBtnContainer2}
+                txt={styles.greenButtonTxt}
+                onpress={props.blackBtnPress}
               />
             </View>
           </View>
