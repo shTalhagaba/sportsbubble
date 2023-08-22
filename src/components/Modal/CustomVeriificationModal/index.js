@@ -8,7 +8,7 @@ import {
   TextInput,
 } from 'react-native';
 import styles from './styles';
-import {Colors} from 'src/utils';
+import { Colors } from 'src/utils';
 
 import CustomButton from 'src/components/CustomButton';
 
@@ -50,8 +50,8 @@ const CustomVeriificationModal = props => {
                 marginHorizontal: 15,
                 borderColor: Colors.white,
                 borderWidth: 2,
-                padding:14,
-                borderRadius:15,
+                padding: 14,
+                borderRadius: 15,
               }}>
               <TextInput
                 style={styles.inputField}
@@ -60,8 +60,8 @@ const CustomVeriificationModal = props => {
                 placeholder={'Code'}
                 placeholderTextColor={Colors.white}
                 maxLength={6}
-                value={searchText}
-                onChangeText={handleInputChange}
+                value={props.otpValue}
+                onChangeText={props.onChangeText}
                 onSubmitEditing={handleDone}
               />
             </View>

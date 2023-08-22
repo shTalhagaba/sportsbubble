@@ -56,3 +56,12 @@ export const loginValidation = (email, password) => {
         }
     }
 }
+export const otpValidation = (otp) => {
+    if (checkValidation(otp)) {
+        ShowMessage("Please enter otp");
+    } else if (otp.length < 6) {
+        ShowMessage("Please enter valid otp")
+    } else {
+        return true;
+    }
+}
