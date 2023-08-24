@@ -29,7 +29,11 @@ export default function Splash() {
   const {loading, refetch, error} = useQuery(GET_SORTED_EVENTS, {
     variables: {
       startTime: startTime,
-      endTime: dayjs(startTime).add(4, 'hours').set('minute', 0).set('second', 0).toISOString(),
+      endTime: dayjs(startTime)
+        .add(2, 'hours')
+        .set('minutes', 59)
+        .set('second', 0)
+        .toISOString(),
     },
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
@@ -75,15 +79,20 @@ export default function Splash() {
   });
 
   useEffect(() => {
-    if (!loading && reduxData?.splashEventList && reduxData?.splashEventList.length>0) {
+    if (
+      !loading &&
+      reduxData?.splashEventList &&
+      reduxData?.splashEventList.length > 0
+    ) {
       setTimeout(() => {
         navigation.replace('Root');
       }, 1000);
-    }if (!loading) {
-        setTimeout(() => {
-          navigation.replace('Root');
-        }, 1000);
-      }
+    }
+    if (!loading) {
+      setTimeout(() => {
+        navigation.replace('Root');
+      }, 1000);
+    }
   }, [loading, reduxData?.splashEventList]);
 
   return (

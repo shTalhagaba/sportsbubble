@@ -142,8 +142,8 @@ export default function Guide(props) {
     variables: {
       startTime: startTime,
       endTime: dayjs(startTime)
-        .add(4, 'hours')
-        .set('minute', 0)
+        .add(2, 'hours')
+        .set('minutes', 59)
         .set('second', 0)
         .toISOString(),
     },
