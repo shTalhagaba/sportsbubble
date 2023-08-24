@@ -56,6 +56,22 @@ export const loginValidation = (email, password) => {
         }
     }
 }
+export const updatePasswordValidation = (currentPassword, newPassword, newConfirmPassword) => {
+    if (checkValidation(currentPassword)) {
+        ShowMessage("Please enter current Password");
+    } else if (checkValidation(newPassword)) {
+        ShowMessage("Please enter new Password");
+    } else if (newPassword?.length < 6) {
+        ShowMessage("Password should be 6 characters");
+    } else if (checkValidation(newConfirmPassword)) {
+        ShowMessage("Please enter new Password");
+    } else if (newPassword !== newConfirmPassword) {
+        ShowMessage("Password don't match")
+    } else {
+        return true
+    }
+
+}
 export const otpValidation = (otp) => {
     if (checkValidation(otp)) {
         ShowMessage("Please enter otp");

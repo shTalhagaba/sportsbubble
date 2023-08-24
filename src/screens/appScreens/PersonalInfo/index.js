@@ -17,7 +17,7 @@ import CustomButton from 'src/components/CustomButton';
 import CustomModalView from 'src/components/Modal/CustomModal';
 import { useSelector } from 'react-redux';
 import { userUpdateProfile } from 'src/services/updateProfile';
-import { userDelete } from 'src/services/deleteAccount';
+import { userDelete, adminDeleteUser } from 'src/services/deleteAccount';
 import LoaderModal from 'src/components/LoaderModal';
 import { ShowMessage } from 'src/components/ShowMessage';
 
@@ -43,6 +43,7 @@ export default function PersonalInfo() {
   useEffect(() => {
     if (data?.userData) {
       const user = data?.userData
+      console.log("data?.userData", data?.userData)
       setFirstName(user?.given_name)
       setLastName(user?.family_name)
       setDob(user?.birthdate)
@@ -72,7 +73,13 @@ export default function PersonalInfo() {
   const handleDeleteAccount = async () => {
     try {
       setLoadingLocal(true);
-      const user = await userDelete(email);
+      // const user = await userDelete(data?.userData?.email);
+      const adminCredentials = {
+        username: data?.userData?.email,    // Replace with the actual admin username
+        password: "Qwerty@1234",    // Replace with the actual admin password
+      };
+      console.log("adminCredentials => ", adminCredentials)
+      const user = await adminDeleteUser(adminCredentials, data?.userData?.email);
       console.log("delete user => ", user)
       setLoadingLocal(false);
       setCancelAccountModal(!cancelAccountModal)

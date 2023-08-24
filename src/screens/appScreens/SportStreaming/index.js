@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -11,8 +11,8 @@ import {
 } from 'react-native';
 import styles from './styles';
 import AppHeader from 'src/components/AppHeader';
-import {Images, Colors} from 'src/utils';
-import {useNavigation} from '@react-navigation/native';
+import { Images, Colors } from 'src/utils';
+import { useNavigation } from '@react-navigation/native';
 import Strings from 'src/utils/strings';
 import AppSearch from 'src/components/AppSearch';
 import CustomButton from 'src/components/CustomButton';
@@ -90,15 +90,19 @@ export default function SportStreaming() {
 
   return (
     <ImageBackground
-      source={Images.Background3}
+      source={Images.Background}
       resizeMode="cover"
       style={styles.container}>
-      <StatusBar backgroundColor={Colors.mediumBlue} />
+      <StatusBar
+        backgroundColor={Colors.transparent}
+        translucent
+        barStyle="light-content"
+      />
 
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        customLeftImage={{tintColor: Colors.darkOrange}}
+        customLeftImage={{ tintColor: Colors.darkOrange }}
         SimpleView
       />
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -117,7 +121,7 @@ export default function SportStreaming() {
           <FlatList
             data={mySportData}
             showsVerticalScrollIndicator={false}
-            renderItem={({item, index}) => (
+            renderItem={({ item, index }) => (
               <View style={styles.listContiner}>
                 <View style={styles.innerListContainer}>
                   <Image
@@ -130,7 +134,7 @@ export default function SportStreaming() {
                   </View>
                   <TouchableOpacity
                     onPress={() => handleSelectSports(item, index)}
-                    style={[styles.uncheckBox,{borderColor: item?.selected ? Colors.darkOrange : Colors.white}]}>
+                    style={[styles.uncheckBox, { borderColor: item?.selected ? Colors.darkOrange : Colors.white }]}>
                     {item?.selected && (
                       <Image source={Images.Tick} style={styles.tickImage} />
                     )}
@@ -141,12 +145,12 @@ export default function SportStreaming() {
           />
         </View>
       </ScrollView>
-      {selectedItems && selectedItems.length>0?
+      {/* {selectedItems && selectedItems.length>0?
       <CustomButton
             title={Strings.done}
             Contianer={styles.doneButton}
             // onpress={() => setVerifyModal(!verifyModal)}
-          />:null}
+          />:null} */}
     </ImageBackground>
   );
 }
