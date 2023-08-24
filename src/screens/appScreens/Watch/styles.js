@@ -248,14 +248,14 @@ export default ScaledSheet.create({
     marginHorizontal: '15@ms0.3',
   },
   menuBtn: {
-    width: '32@ms0.3',
-    height: '12@ms0.3',
+    width: '35@ms0.3',
+    height: '13@ms0.3',
     marginTop: '20@ms0.3',
     marginRight: '10@ms0.3',
   },
   menuBtn2: {
-    width: '32@ms0.3',
-    height: '12@ms0.3',
+    width: '35@ms0.3',
+    height: '13@ms0.3',
     marginRight: '10@ms0.3',
   },
   largeMenuImage: {

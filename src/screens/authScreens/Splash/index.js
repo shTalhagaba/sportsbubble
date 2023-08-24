@@ -16,6 +16,7 @@ import {GET_SORTED_EVENTS} from 'src/screens/appScreens/Guide/queries';
 import dayjs from 'dayjs';
 import {setSplashEventList} from 'src/store/types';
 import {useDispatch, useSelector} from 'react-redux';
+import Config from 'react-native-config';
 
 export default function Splash() {
   const navigation = useNavigation();
@@ -32,6 +33,13 @@ export default function Splash() {
     },
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
+    context: {
+      headers: {
+        authorization: Config?.BEARER_TOKEN
+          ? `Bearer ${Config.BEARER_TOKEN}`
+          : '',
+      },
+    },
     onCompleted: data => {
       if (data && data?.sortedEvents) {
         const filteredEvents = data?.sortedEvents.filter(event => {
@@ -62,14 +70,20 @@ export default function Splash() {
       }
     },
     onError: error => {
-      console.log('error : ', error);
+      console.log('error splash : ', error);
     },
   });
 
   useEffect(() => {
     if (!loading && reduxData?.splashEventList && reduxData?.splashEventList.length>0) {
-      navigation.replace('Root');
-    }
+      setTimeout(() => {
+        navigation.replace('Root');
+      }, 1000);
+    }if (!loading) {
+        setTimeout(() => {
+          navigation.replace('Root');
+        }, 1000);
+      }
   }, [loading, reduxData?.splashEventList]);
 
   return (

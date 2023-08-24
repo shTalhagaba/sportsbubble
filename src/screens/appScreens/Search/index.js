@@ -21,6 +21,7 @@ import {CommonActions, useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 import strings from 'src/utils/strings';
+import Config from 'react-native-config';
 const expireTime = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
 export default function Search(props) {
@@ -65,7 +66,13 @@ export default function Search(props) {
         },
         fetchPolicy: 'network-only',
         notifyOnNetworkStatusChange: true,
-
+        context: {
+          headers: {
+            authorization: Config?.BEARER_TOKEN
+              ? `Bearer ${Config.BEARER_TOKEN}`
+              : '',
+          },
+        },
         onError: error => {
           console.log('error : ', error);
         },
@@ -209,7 +216,11 @@ export default function Search(props) {
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={
             <View>
-              <Text style={styles.emptyTxt}>{Strings.emptySearchList}</Text>
+              <Text style={styles.emptyTxt}>
+                {searchText.length > 0 && list && list.length <= 0
+                  ? Strings.emptyEventsSearchList
+                  : Strings.emptySearchList}
+              </Text>
             </View>
           }
           renderItem={({item}) => (

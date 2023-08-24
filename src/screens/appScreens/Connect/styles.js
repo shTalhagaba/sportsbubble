@@ -168,7 +168,7 @@ export default ScaledSheet.create({
     justifyContent: 'center',
   },
   buttonContainer: {
-    // marginTop: '10@ms0.3',
+    marginTop: '30@ms0.3',
     marginHorizontal: '20@ms0.3',
   },
   imageStyle: {

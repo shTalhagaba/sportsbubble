@@ -23,6 +23,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setExpire, setStoreEventList} from 'src/store/types';
 import {moderateScale} from 'react-native-size-matters';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
+import Config from 'react-native-config';
 const screenWidth = Dimensions.get('window').width;
 const {width, fontScale} = Dimensions.get('window');
 
@@ -148,6 +149,13 @@ export default function Guide(props) {
     },
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
+    context: {
+      headers: {
+        authorization: Config?.BEARER_TOKEN
+          ? `Bearer ${Config.BEARER_TOKEN}`
+          : '',
+      },
+    },
     onCompleted: data => {
       if (data && data?.sortedEvents) {
         const filteredEvents = data?.sortedEvents
@@ -198,6 +206,13 @@ export default function Guide(props) {
     },
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
+    context: {
+      headers: {
+        authorization: Config?.BEARER_TOKEN
+          ? `Bearer ${Config.BEARER_TOKEN}`
+          : '',
+      },
+    },
     onCompleted: data => {
       const currentTime = Date.now();
       if (
