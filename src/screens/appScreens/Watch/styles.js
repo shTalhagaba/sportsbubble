@@ -1,8 +1,8 @@
-import {Colors, Fonts} from 'src/utils';
-import {ScaledSheet} from 'react-native-size-matters';
-import {Dimensions, Platform} from 'react-native';
+import { Colors, Fonts } from 'src/utils';
+import { ScaledSheet } from 'react-native-size-matters';
+import { Dimensions, Platform } from 'react-native';
 const screenWidth = Dimensions.get('window').width;
-const {fontScale} = Dimensions.get('window');
+const { fontScale } = Dimensions.get('window');
 
 export default ScaledSheet.create({
   container: {
@@ -247,7 +247,7 @@ export default ScaledSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     paddingTop: '20@ms0.3',
-    backgroundColor: 'transparent',
+    // backgroundColor: 'transparent',
   },
   smallMenuImage: {
     width: '100%',
