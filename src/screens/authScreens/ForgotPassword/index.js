@@ -13,15 +13,40 @@ import AppHeader from 'src/components/AppHeader';
 import { Images, Colors, Strings } from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
+import { forgotPasswordValidation } from 'src/common/authValidation';
+import { forgoatPassword } from 'src/services/authForgotPassword';
+import LoaderModal from 'src/components/LoaderModal';
+
 
 export default function ForgotPassword() {
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
+  const [loadingLocal, setLoadingLocal] = useState(false);
+
   const emailRef = useRef();
+
+  const handleForgotPassword = async () => {
+    if (forgotPasswordValidation(email)) {
+      try {
+        setLoadingLocal(true);
+        const user = await forgoatPassword(email);
+        console.log("updatePassword => ", user)
+        if (user === 'SUCCESS') {
+          // navigation.goBack(null)
+        }
+        setLoadingLocal(false);
+      } catch (error) {
+        console.log("Error => ", error)
+
+      } finally {
+        setLoadingLocal(false);
+      }
+    }
+  }
 
   return (
     <ImageBackground
-      source={Images.Background3}
+      source={Images.Background}
       resizeMode="cover"
       style={styles.container}>
       <StatusBar
@@ -53,9 +78,11 @@ export default function ForgotPassword() {
             returnKeyType={'next'}
             blurOnSubmit={true}
           />
-          <CustomButton blue={true} title={Strings.submit}   
-          Contianer={styles.blueButtonContainer}
-            txt={styles.blueButtonTxt} />
+          <CustomButton blue={true} title={Strings.submit}
+            Contianer={styles.blueButtonContainer}
+            txt={styles.blueButtonTxt}
+            onpress={() => handleForgotPassword()}
+          />
 
           <Text style={styles.accountTxt}>{Strings.dontAccount}</Text>
           <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
@@ -63,6 +90,8 @@ export default function ForgotPassword() {
           </TouchableOpacity>
         </View>
       </ScrollView>
+      <LoaderModal visible={loadingLocal} loadingText={''} />
+
     </ImageBackground>
   );
 }

@@ -81,3 +81,12 @@ export const otpValidation = (otp) => {
         return true;
     }
 }
+export const forgotPasswordValidation = (email) => {
+    if (checkValidation(email)) {
+        ShowMessage("Please enter email");
+    } else if (regEmail.test(email) === false) {
+        ShowMessage("Please enter valid email")
+    } else {
+        return true;
+    }
+}
