@@ -14,7 +14,7 @@ import {Images, Colors, Fonts, Strings} from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
-import {setGuest, setToken, setUser, setUserData} from 'src/store/types';
+import {setGuest, setJwtToken, setToken, setUser, setUserData} from 'src/store/types';
 import {userLogin} from 'src/services/authLogin';
 import {loginValidation} from 'src/common/authValidation';
 import LoaderModal from 'src/components/LoaderModal';
@@ -40,6 +40,7 @@ export default function Login() {
       try {
         setLoadingLocal(true);
         const user = await userLogin(email, password);
+        console.log(user?.accessToken?.jwtToken)
         user.id = user?.accessToken?.payload?.sub ?? '';
         setLoadingLocal(false);
         console.log(user)
@@ -47,6 +48,7 @@ export default function Login() {
           dispatch(setUser(true));
           dispatch(setGuest(false));
           dispatch(setToken(user?.idToken?.jwtToken))
+          dispatch(setJwtToken(user?.accessToken?.jwtToken))
           dispatch(setUserData(user?.idToken?.payload))
           setEmail('');
           setPassword('');

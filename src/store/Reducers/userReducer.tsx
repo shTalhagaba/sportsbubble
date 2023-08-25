@@ -5,6 +5,7 @@ const initialState = {
   lastName: '',
   id: '',
   token: '',
+  jwtToken: '',
   userData: {},
   user: false,
   eventList: [],
@@ -83,6 +84,18 @@ const user = (state = initialState, action: any) => {
         return {
           ...state,
           token: action.payload,
+        };
+      } catch (e) {
+        alert(e);
+        return state;
+      }
+      break;
+          // jwt token
+    case 'SET_JWT_TOKEN':
+      try {
+        return {
+          ...state,
+          jwtToken: action.payload,
         };
       } catch (e) {
         alert(e);

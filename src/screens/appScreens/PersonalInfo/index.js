@@ -43,10 +43,9 @@ export default function PersonalInfo() {
   useEffect(() => {
     if (data?.userData) {
       const user = data?.userData;
-      console.log('data?.userData', data?.userData);
       setFirstName(user?.given_name);
       setLastName(user?.family_name);
-      setDob(user?.birthdate);
+      // setDob(user?.birthdate);
       setEmail(user?.email);
     }
   }, [data?.userData]);
@@ -54,8 +53,8 @@ export default function PersonalInfo() {
   const handleUpdateProfile = async () => {
     try {
       setLoadingLocal(true);
-      const user = await userUpdateProfile(firstName, lastName, zipCode, dob);
-      console.log('Update user => ', user);
+      const test = await userUpdateProfile(data?.jwtToken,data?.token,email,firstName, lastName, zipCode, dob);
+      console.log('Update user => ', test);
       setLoadingLocal(false);
     } catch (error) {
       if (error.message.includes(':')) {
@@ -64,10 +63,13 @@ export default function PersonalInfo() {
         ShowMessage(error.message);
         console.log('error.message=>', error.message);
       }
-    } finally {
       setLoadingLocal(false);
-    }
+    } 
+    // finally {
+    //   setLoadingLocal(false);
+    // }
   };
+
   const handleDeleteAccount = async () => {
     try {
       setLoadingLocal(true);

@@ -26,6 +26,12 @@ export const setToken = (args: any) => {
   };
 };
 
+export const setJwtToken = (args: any) => {
+  return {
+    type: 'SET_JWT_TOKEN',
+    payload: args,
+  };
+};
 
 export const setGuest = (args: any) => {
   return {
