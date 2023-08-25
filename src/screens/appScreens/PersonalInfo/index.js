@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {
   ImageBackground,
   ScrollView,
@@ -7,23 +7,23 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import styles from './styles';
-import { Images, Colors } from 'src/utils';
-import { useNavigation } from '@react-navigation/native';
+import {Images, Colors} from 'src/utils';
+import {useNavigation} from '@react-navigation/native';
 import AppHeader from 'src/components/AppHeader';
 import Strings from 'src/utils/strings';
 import ContactHeaderTextInput from 'src/components/ContactHeaderTextInput';
 import ContactTextInput from 'src/components/ContactTextInput';
 import CustomButton from 'src/components/CustomButton';
 import CustomModalView from 'src/components/Modal/CustomModal';
-import { useSelector } from 'react-redux';
-import { userUpdateProfile } from 'src/services/updateProfile';
-import { userDelete, adminDeleteUser } from 'src/services/deleteAccount';
+import {useSelector} from 'react-redux';
+import {userUpdateProfile} from 'src/services/updateProfile';
+import {userDelete, adminDeleteUser} from 'src/services/deleteAccount';
 import LoaderModal from 'src/components/LoaderModal';
-import { ShowMessage } from 'src/components/ShowMessage';
+import {ShowMessage} from 'src/components/ShowMessage';
 
 export default function PersonalInfo() {
   const navigation = useNavigation();
-  const data = useSelector((state) => state.user);
+  const data = useSelector(state => state.user);
 
   const [firstName, setFirstName] = useState('Example');
   const [lastName, setLastName] = useState('Dichter');
@@ -42,58 +42,58 @@ export default function PersonalInfo() {
 
   useEffect(() => {
     if (data?.userData) {
-      const user = data?.userData
-      console.log("data?.userData", data?.userData)
-      setFirstName(user?.given_name)
-      setLastName(user?.family_name)
-      setDob(user?.birthdate)
-      setEmail(user?.email)
+      const user = data?.userData;
+      console.log('data?.userData', data?.userData);
+      setFirstName(user?.given_name);
+      setLastName(user?.family_name);
+      setDob(user?.birthdate);
+      setEmail(user?.email);
     }
-  }, [data?.userData])
+  }, [data?.userData]);
 
   const handleUpdateProfile = async () => {
-
     try {
       setLoadingLocal(true);
       const user = await userUpdateProfile(firstName, lastName, zipCode, dob);
-      console.log("Update user => ", user)
+      console.log('Update user => ', user);
       setLoadingLocal(false);
     } catch (error) {
       if (error.message.includes(':')) {
         const myArray = error.message.split(':');
       } else {
         ShowMessage(error.message);
-        console.log("error.message=>", error.message)
+        console.log('error.message=>', error.message);
       }
     } finally {
       setLoadingLocal(false);
     }
-
   };
   const handleDeleteAccount = async () => {
     try {
       setLoadingLocal(true);
       // const user = await userDelete(data?.userData?.email);
       const adminCredentials = {
-        username: data?.userData?.email,    // Replace with the actual admin username
-        password: "Qwerty@1234",    // Replace with the actual admin password
+        username: data?.userData?.email, // Replace with the actual admin username
+        password: 'Qwerty@1234', // Replace with the actual admin password
       };
-      console.log("adminCredentials => ", adminCredentials)
-      const user = await adminDeleteUser(adminCredentials, data?.userData?.email);
-      console.log("delete user => ", user)
+      console.log('adminCredentials => ', adminCredentials);
+      const user = await adminDeleteUser(
+        adminCredentials,
+        data?.userData?.email,
+      );
+      console.log('delete user => ', user);
       setLoadingLocal(false);
-      setCancelAccountModal(!cancelAccountModal)
+      setCancelAccountModal(!cancelAccountModal);
     } catch (error) {
       if (error.message.includes(':')) {
         const myArray = error.message.split(':');
       } else {
         ShowMessage(error.message);
-        console.log("error.message=>", error.message)
+        console.log('error.message=>', error.message);
       }
     } finally {
       setLoadingLocal(false);
     }
-
   };
 
   return (
@@ -110,7 +110,7 @@ export default function PersonalInfo() {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        customLeftImage={{ tintColor: Colors.orange }}
+        customLeftImage={{tintColor: Colors.orange}}
         SimpleView
       />
       <ScrollView style={styles.innerContainer}>
@@ -118,8 +118,8 @@ export default function PersonalInfo() {
         <ContactHeaderTextInput
           leftImage={Images.UserIcon}
           headerName={Strings.firstName}
-          Contianer={{ marginTop: 24 }}
-          customInputStyle={{ marginBottom: 5 }}
+          Contianer={{marginTop: 24}}
+          customInputStyle={{marginBottom: 5}}
           refInner={firstNameRef}
           // placeholderTextColor={Colors.white}
           // placeholder={Strings.firstName}
@@ -142,7 +142,7 @@ export default function PersonalInfo() {
           refInner={lastNameRef}
           // placeholder={Strings.lastName}
           // placeholderTextColor={Colors.white}
-          customInputStyle={{ marginBottom: 5 }}
+          customInputStyle={{marginBottom: 5}}
           multiline={false}
           headerTxtStyle={styles.headerTxtStyle}
           value={lastName}
@@ -163,7 +163,7 @@ export default function PersonalInfo() {
           // placeholderTextColor={Colors.white}
           // placeholder={Strings.zipCode}
           headerTxtStyle={styles.headerTxtStyle}
-          customInputStyle={{ marginBottom: 5 }}
+          customInputStyle={{marginBottom: 5}}
           multiline={false}
           value={zipCode}
           maxLength={6}
@@ -183,7 +183,7 @@ export default function PersonalInfo() {
           // placeholderTextColor={Colors.white}
           // placeholder={Strings.birthdate}
           headerTxtStyle={styles.headerTxtStyle}
-          customInputStyle={{ marginBottom: 5 }}
+          customInputStyle={{marginBottom: 5}}
           multiline={false}
           value={dob}
           maxLength={20}
@@ -224,7 +224,7 @@ export default function PersonalInfo() {
           // placeholderTextColor={Colors.white}
           // placeholder={Strings.email}
           headerTxtStyle={styles.headerTxtStyle}
-          customInputStyle={{ marginBottom: 8 }}
+          customInputStyle={{marginBottom: 8}}
           multiline={false}
           value={email}
           maxLength={50}
@@ -258,11 +258,9 @@ export default function PersonalInfo() {
         rowStyle={true}
         blackBtnPress={() => setCancelAccountModal(!cancelAccountModal)}
         ornageBtnPress={() => handleDeleteAccount()}
-        Contianer={{ backgroundColor: Colors.backBlack }}
+        Contianer={{backgroundColor: Colors.backBlack}}
       />
       <LoaderModal visible={loadingLocal} loadingText={''} />
-
     </ImageBackground>
-
   );
 }

@@ -80,7 +80,7 @@ const BottomTab = () => {
           tabBarIcon: ({focused}) => (
             <View style={styles.bottomContainer}>
               <Image
-                source={Images.Guide}
+                source={focused ? Images.GuideGreen : Images.Guide}
                 style={[
                   styles.iconImage,
                   {
@@ -121,7 +121,9 @@ const BottomTab = () => {
           tabBarIcon: ({focused}) => (
             <View style={styles.bottomContainer}>
               <Image
-                source={Images.SearchBottom}
+                source={
+                  focused ? Images.SearchBottomGreen : Images.SearchBottom
+                }
                 style={[
                   styles.iconImage,
                   {
@@ -142,7 +144,9 @@ const BottomTab = () => {
           tabBarIcon: ({focused}) => (
             <View style={styles.bottomContainer}>
               <Image
-                source={Images.SettingBottom}
+                source={
+                  focused ? Images.SettingBottomGreen : Images.SettingBottom
+                }
                 style={[
                   styles.iconImage,
                   {

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, {useRef, useState} from 'react';
 import {
   View,
   Text,
@@ -11,14 +11,14 @@ import {
 import styles from './styles';
 import ContactTextInput from 'src/components/ContactTextInput';
 import AppHeader from 'src/components/AppHeader';
-import { Images, Colors, Strings } from 'src/utils';
+import {Images, Colors, Strings} from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
-import { useNavigation } from '@react-navigation/native';
-import { signupValidation, otpValidation } from 'src/common/authValidation';
+import {useNavigation} from '@react-navigation/native';
+import {signupValidation, otpValidation} from 'src/common/authValidation';
 import LoaderModal from 'src/components/LoaderModal';
-import { ShowMessage } from 'src/components/ShowMessage';
-import { userSignup } from 'src/services/authSignup';
-import { resendCode, userOTP } from 'src/services/authOTP';
+import {ShowMessage} from 'src/components/ShowMessage';
+import {userSignup} from 'src/services/authSignup';
+import {resendCode, userOTP} from 'src/services/authOTP';
 import CustomVeriificationModal from 'src/components/Modal/CustomVeriificationModal';
 
 export default function Signup() {
@@ -59,7 +59,7 @@ export default function Signup() {
         setLoadingLocal(true);
         const user = await userSignup(fullName, lastName, email, password);
         setLoadingLocal(false);
-        setVerifyModal(!verifyModal)
+        setVerifyModal(!verifyModal);
       } catch (error) {
         if (error.message.includes(':')) {
           const myArray = error.message.split(':');
@@ -76,8 +76,13 @@ export default function Signup() {
       try {
         setLoadingLocal(true);
         const user = await userOTP(email, otp);
-        if(user === 'SUCCESS'){
-          setVerifyModal(false)
+        if (user === 'SUCCESS') {
+          setVerifyModal(false);
+          navigation.navigate('WelcomeAccount', {
+            fullName: fullName,
+            email: email,
+            password: password,
+          });
         }
         setLoadingLocal(false);
       } catch (error) {
@@ -90,24 +95,24 @@ export default function Signup() {
         setLoadingLocal(false);
       }
     }
-  }
+  };
   const handleResendCode = async () => {
-    console.log('handleResendCode : ')
-      try {
-        setLoadingLocal(true);
-        const user = await resendCode(email);
-        console.log("Userr => ", user)
-        setLoadingLocal(false);
-      } catch (error) {
-        if (error.message.includes(':')) {
-          const myArray = error.message.split(':');
-        } else {
-          ShowMessage(error.message);
-        }
-      } finally {
-        setLoadingLocal(false);
+    console.log('handleResendCode : ');
+    try {
+      setLoadingLocal(true);
+      const user = await resendCode(email);
+      console.log('Userr => ', user);
+      setLoadingLocal(false);
+    } catch (error) {
+      if (error.message.includes(':')) {
+        const myArray = error.message.split(':');
+      } else {
+        ShowMessage(error.message);
       }
-  }
+    } finally {
+      setLoadingLocal(false);
+    }
+  };
 
   return (
     <ImageBackground
@@ -130,7 +135,7 @@ export default function Signup() {
           <ContactTextInput
             leftImage={Images.UserIcon}
             refInner={fullNameRef}
-            Contianer={{ marginTop: 40 }}
+            Contianer={{marginTop: 40}}
             placeholderTextColor={Colors.white}
             placeholder={Strings.firstName}
             multiline={false}
@@ -224,11 +229,11 @@ export default function Signup() {
               {emailOptCheck && (
                 <Image
                   source={Images.Tick}
-                  style={{ tintColor: Colors.white, height: 10, width: 10 }}
+                  style={{tintColor: Colors.white, height: 10, width: 10}}
                 />
               )}
             </TouchableOpacity>
-            <Text style={[styles.checkBoxTxt, { marginStart: 10 }]}>
+            <Text style={[styles.checkBoxTxt, {marginStart: 10}]}>
               {Strings.signupTerm}
             </Text>
           </View>
@@ -239,7 +244,7 @@ export default function Signup() {
               {termsCheck && (
                 <Image
                   source={Images.Tick}
-                  style={{ tintColor: Colors.white, height: 10, width: 10 }}
+                  style={{tintColor: Colors.white, height: 10, width: 10}}
                 />
               )}
             </TouchableOpacity>
@@ -274,7 +279,7 @@ export default function Signup() {
             blackBtnTxt={'Resend Code'}
             otherBtnPress={() => handleVerify()}
             blackBtnPress={() => handleResendCode()}
-            onChangeText={(txt) => setOTP(txt)}
+            onChangeText={txt => setOTP(txt)}
             otpValue={otp}
           />
         </View>

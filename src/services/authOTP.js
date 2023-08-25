@@ -21,7 +21,7 @@ const userOTP = (email, otp, mfaSession) => {
         return;
       }
       console.log('call result: ' + result);
-      resolve();
+      resolve(result);
       return result;
     });
   });

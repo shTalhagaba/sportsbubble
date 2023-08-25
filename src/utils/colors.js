@@ -1,6 +1,6 @@
 export default {
     transparent: "transparent",
-    white: "#fff",
+    white: "#ffffff",
     white30: "rgba(256, 256, 256, 0.30)",
     white50: "rgba(256, 256, 256, 0.50)",
     white70: "rgba(256, 256, 256, 0.70)",

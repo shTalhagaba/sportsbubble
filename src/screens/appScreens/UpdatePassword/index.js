@@ -1,22 +1,21 @@
-import React, { useRef, useState } from 'react';
-import { View, Text, ScrollView, ImageBackground, StatusBar } from 'react-native';
+import React, {useRef, useState} from 'react';
+import {View, Text, ScrollView, ImageBackground, StatusBar} from 'react-native';
 import styles from './styles';
 import ContactTextInput from 'src/components/ContactTextInput';
 import AppHeader from 'src/components/AppHeader';
-import { Images, Colors } from 'src/utils';
+import {Images, Colors} from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import Strings from 'src/utils/strings';
-import { changePassword } from 'src/services/userProfile';
-import { useSelector } from 'react-redux';
+import {changePassword} from 'src/services/userProfile';
+import {useSelector} from 'react-redux';
 import LoaderModal from 'src/components/LoaderModal';
 import ShowMessage from 'src/components/ShowMessage';
-import { updatePasswordValidation } from 'src/common/authValidation';
-
+import {updatePasswordValidation} from 'src/common/authValidation';
 
 export default function UpdatePassword() {
   const navigation = useNavigation();
-  const data = useSelector((state) => state.user);
+  const data = useSelector(state => state.user);
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [newConfirmPassword, setNewConfirmPassword] = useState('');
@@ -31,22 +30,28 @@ export default function UpdatePassword() {
     useState(true);
 
   const updatePassword = async () => {
-    if (updatePasswordValidation(currentPassword, newPassword, newConfirmPassword)) {
+    if (
+      updatePasswordValidation(currentPassword, newPassword, newConfirmPassword)
+    ) {
       try {
         setLoadingLocal(true);
-        const user = await changePassword(data?.userData?.email, currentPassword, newPassword);
-        console.log("updatePassword => ", user)
+        const user = await changePassword(
+          data?.userData?.email,
+          currentPassword,
+          newPassword,
+        );
+        console.log('updatePassword => ', user);
         if (user === 'SUCCESS') {
-          navigation.goBack(null)
+          navigation.goBack(null);
         }
         setLoadingLocal(false);
       } catch (error) {
         if (error.message.includes(':')) {
           const myArray = error.message.split(':');
         } else {
-          console.log("error.message =>>", error.message)
-          if (error.message == "Incorrect username or password.") {
-            ShowMessage("Please enter valid current password");
+          console.log('error.message =>>', error.message);
+          if (error.message == 'Incorrect username or password.') {
+            ShowMessage('Please enter valid current password');
           } else {
             ShowMessage(error?.message);
           }
@@ -55,8 +60,7 @@ export default function UpdatePassword() {
         setLoadingLocal(false);
       }
     }
-
-  }
+  };
 
   return (
     <ImageBackground
@@ -72,11 +76,11 @@ export default function UpdatePassword() {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        customLeftImage={{ tintColor: Colors.darkOrange }}
+        customLeftImage={{tintColor: Colors.darkOrange}}
         SimpleView
       />
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={{ marginHorizontal: 20 }}>
+        <View style={{marginHorizontal: 20}}>
           <Text style={styles.loginTxt}>{Strings.updatePassword}</Text>
           <ContactTextInput
             leftImage={Images.LockIcon}
@@ -86,7 +90,7 @@ export default function UpdatePassword() {
             multiline={false}
             value={currentPassword}
             maxLength={50}
-            Contianer={{ marginTop: 24 }}
+            Contianer={{marginTop: 24}}
             onChangeText={txt => setCurrentPassword(txt)}
             keyboardType={'default'}
             autoCapitalize="none"
@@ -108,7 +112,7 @@ export default function UpdatePassword() {
             multiline={false}
             value={newPassword}
             maxLength={50}
-            Contianer={{ marginTop: 32 }}
+            Contianer={{marginTop: 32}}
             onChangeText={txt => setNewPassword(txt)}
             keyboardType={'default'}
             autoCapitalize="none"
@@ -130,7 +134,7 @@ export default function UpdatePassword() {
             multiline={false}
             value={newConfirmPassword}
             maxLength={50}
-            Contianer={{ marginTop: 16 }}
+            Contianer={{marginTop: 16}}
             onChangeText={txt => setNewConfirmPassword(txt)}
             keyboardType={'default'}
             autoCapitalize="none"

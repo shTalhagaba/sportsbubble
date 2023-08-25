@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, {useRef, useState} from 'react';
 import {
   View,
   Text,
@@ -11,8 +11,8 @@ import {
 } from 'react-native';
 import styles from './styles';
 import AppHeader from 'src/components/AppHeader';
-import { Images, Colors } from 'src/utils';
-import { useNavigation } from '@react-navigation/native';
+import {Images, Colors} from 'src/utils';
+import {useNavigation} from '@react-navigation/native';
 import Strings from 'src/utils/strings';
 import AppSearch from 'src/components/AppSearch';
 import CustomButton from 'src/components/CustomButton';
@@ -83,8 +83,8 @@ export default function SportStreaming() {
   const handleSelectSports = (item, index) => {
     let list = [...mySportData];
     list[index].selected = !list[index].selected;
-    let l = list.filter(item => item.selected)
-    setSelectedItems(l)
+    let l = list.filter(item => item.selected);
+    setSelectedItems(l);
     setSportData(list);
   };
 
@@ -102,7 +102,7 @@ export default function SportStreaming() {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        customLeftImage={{ tintColor: Colors.darkOrange }}
+        customLeftImage={{tintColor: Colors.darkOrange}}
         SimpleView
       />
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -121,7 +121,7 @@ export default function SportStreaming() {
           <FlatList
             data={mySportData}
             showsVerticalScrollIndicator={false}
-            renderItem={({ item, index }) => (
+            renderItem={({item, index}) => (
               <View style={styles.listContiner}>
                 <View style={styles.innerListContainer}>
                   <Image
@@ -134,7 +134,14 @@ export default function SportStreaming() {
                   </View>
                   <TouchableOpacity
                     onPress={() => handleSelectSports(item, index)}
-                    style={[styles.uncheckBox, { borderColor: item?.selected ? Colors.darkOrange : Colors.white }]}>
+                    style={[
+                      styles.uncheckBox,
+                      {
+                        borderColor: item?.selected
+                          ? Colors.darkOrange
+                          : Colors.white,
+                      },
+                    ]}>
                     {item?.selected && (
                       <Image source={Images.Tick} style={styles.tickImage} />
                     )}
