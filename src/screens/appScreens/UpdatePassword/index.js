@@ -40,8 +40,9 @@ export default function UpdatePassword() {
           currentPassword,
           newPassword,
         );
-        console.log('updatePassword => ', user);
+
         if (user === 'SUCCESS') {
+          ShowMessage('Password changed successfully.')
           navigation.goBack(null);
         }
         setLoadingLocal(false);
