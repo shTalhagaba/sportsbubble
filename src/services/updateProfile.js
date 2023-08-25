@@ -1,6 +1,6 @@
 import { CognitoUserPool, CognitoUserAttribute } from 'amazon-cognito-identity-js';
 
-const userUpdateProfile = (idToken, accessToken, fullName, lastName, zipCode, dob) => {
+const userUpdateProfile = (fullName, lastName, zipCode, dob) => {
   return new Promise((resolve, reject) => {
     const poolData = {
       UserPoolId: 'us-west-2_nTZIRvqNk',
@@ -12,8 +12,8 @@ const userUpdateProfile = (idToken, accessToken, fullName, lastName, zipCode, do
     const attributeList = [
       new CognitoUserAttribute({ Name: 'given_name', Value: fullName }),
       new CognitoUserAttribute({ Name: 'family_name', Value: lastName }),
-      new CognitoUserAttribute({ Name: 'zipcode', Value: zipCode }),
-      new CognitoUserAttribute({ Name: 'birthdate', Value: dob }),
+      // new CognitoUserAttribute({ Name: 'zipcode', Value: zipCode }),
+      // new CognitoUserAttribute({ Name: 'birthdate', Value: dob }),
     ];
 
     const cognitoUser = userPool.getCurrentUser();

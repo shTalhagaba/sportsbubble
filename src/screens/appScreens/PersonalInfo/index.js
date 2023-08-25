@@ -53,8 +53,11 @@ export default function PersonalInfo() {
   const handleUpdateProfile = async () => {
     try {
       setLoadingLocal(true);
-      const test = await userUpdateProfile(data?.jwtToken,data?.token,email,firstName, lastName, zipCode, dob);
-      console.log('Update user => ', test);
+      const test = await userUpdateProfile(email,firstName, lastName, zipCode, dob);
+      if(test === 'SUCCESS'){
+        ShowMessage('Profile updated successfully!!')
+        navigation.goBack()
+      }
       setLoadingLocal(false);
     } catch (error) {
       if (error.message.includes(':')) {
@@ -65,9 +68,6 @@ export default function PersonalInfo() {
       }
       setLoadingLocal(false);
     } 
-    // finally {
-    //   setLoadingLocal(false);
-    // }
   };
 
   const handleDeleteAccount = async () => {
