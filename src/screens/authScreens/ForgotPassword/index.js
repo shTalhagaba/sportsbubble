@@ -15,7 +15,6 @@ import CustomButton from 'src/components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import {forgotPasswordValidation} from 'src/common/authValidation';
 import {
-  confirmPasswordReset,
   initiateForgotPassword,
 } from 'src/services/authForgotPassword';
 import LoaderModal from 'src/components/LoaderModal';

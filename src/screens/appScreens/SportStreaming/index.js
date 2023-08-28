@@ -15,7 +15,6 @@ import {Images, Colors} from 'src/utils';
 import {useNavigation} from '@react-navigation/native';
 import Strings from 'src/utils/strings';
 import AppSearch from 'src/components/AppSearch';
-import CustomButton from 'src/components/CustomButton';
 
 const data = [
   {
@@ -152,12 +151,6 @@ export default function SportStreaming() {
           />
         </View>
       </ScrollView>
-      {/* {selectedItems && selectedItems.length>0?
-      <CustomButton
-            title={Strings.done}
-            Contianer={styles.doneButton}
-            // onpress={() => setVerifyModal(!verifyModal)}
-          />:null} */}
     </ImageBackground>
   );
 }

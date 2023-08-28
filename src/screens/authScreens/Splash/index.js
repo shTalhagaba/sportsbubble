@@ -67,12 +67,12 @@ export default function Splash() {
   });
 
   useEffect(() => {
+    // dispatch(setUser(false));
     if (
       !loading &&
       reduxData?.splashEventList &&
       reduxData?.splashEventList.length > 0
     ) {
-      dispatch(setUser(false));
       if (reduxData?.user) {
         setTimeout(() => {
           navigation.replace('Root');
@@ -83,7 +83,6 @@ export default function Splash() {
         }, 1000);
       }
     } else if (!loading) {
-      dispatch(setUser(false));
       if (reduxData?.user) {
         setTimeout(() => {
           navigation.replace('Root');

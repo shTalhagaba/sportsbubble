@@ -15,6 +15,11 @@ import {Images, Colors, Strings} from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import {signupComplete} from 'src/services/authSignup';
+import ShowMessage from 'src/components/ShowMessage';
+import LoaderModal from 'src/components/LoaderModal';
+import { completeProfileValidation } from 'src/common/authValidation';
+import dayjs from 'dayjs';
 
 export default function WelcomeAccount(props) {
   const navigation = useNavigation();
@@ -22,7 +27,12 @@ export default function WelcomeAccount(props) {
   const [birthday, setBirthday] = useState('');
   const [pronouns, setPronouns] = useState('');
   const [isOpen, setIsOpen] = useState(false);
-  const [firstName, setFirstName] = useState('First Name');
+  const [loadingLocal, setLoadingLocal] = useState(false);
+  const [firstName, setFirstName] = useState(
+    props?.route?.params?.fullName
+      ? props?.route?.params?.fullName
+      : 'First Name',
+  );
   const zipCodeRef = useRef();
   const birthdayRef = useRef();
   const pronounsRef = useRef();
@@ -48,8 +58,27 @@ export default function WelcomeAccount(props) {
   const handleDOBChange = (event, selectedDate) => {
     const currentDate = selectedDate || dob;
     setShowDatePicker(Platform.OS === 'ios');
-    setShowDatePicker(false)
+    setShowDatePicker(false);
     setDOB(currentDate);
+  };
+
+  const submitButton = async () => {
+    if (completeProfileValidation(zipCode, dob, pronouns)) {
+      setLoadingLocal(true);
+      const user = await signupComplete(
+        props?.route?.params?.email,
+        props?.route?.params?.password,
+        zipCode,
+        dayjs(dob).format('dd-mm-yyyy'),
+        pronouns,
+      );
+      if (user === 'SUCCESS') {
+        setLoadingLocal(false);
+        ShowMessage('Profile Completed Successfully!! Login to Continue.');
+        navigation.replace('Login');
+      }
+      setLoadingLocal(false);
+    }
   };
 
   const minimumDOB = new Date();
@@ -170,11 +199,12 @@ export default function WelcomeAccount(props) {
               title={Strings.continue}
               Contianer={styles.blueButtonContainer}
               txt={styles.blueButtonTxt}
-              onpress={() => navigation.replace('Login')}
+              onpress={() => submitButton()}
             />
           </View>
         </View>
       </ScrollView>
+      <LoaderModal visible={loadingLocal} loadingText={''} />
     </ImageBackground>
   );
 }

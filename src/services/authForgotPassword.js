@@ -1,16 +1,10 @@
-import { CognitoUser, CognitoUserPool } from 'amazon-cognito-identity-js';
+import {CognitoUser} from 'amazon-cognito-identity-js';
+import CognitoPool from '.';
 
-const initiateForgotPassword = async (username) => {
-  const poolData = {
-    UserPoolId: 'us-west-2_nTZIRvqNk',
-    ClientId: '2c4r8a30g1h8vu08kvad3mm7ov'
-  };
-
-  const userPool = new CognitoUserPool(poolData);
-
+const initiateForgotPassword = async username => {
   const userData = {
     Username: username,
-    Pool: userPool
+    Pool: CognitoPool,
   };
 
   const cognitoUser = new CognitoUser(userData);
@@ -21,9 +15,9 @@ const initiateForgotPassword = async (username) => {
         onSuccess: () => {
           resolve();
         },
-        onFailure: (err) => {
+        onFailure: err => {
           reject(`Failed to initiate password reset: ${err.message || err}`);
-        }
+        },
       });
     });
     return true; // Indicate that the initiation was successful
@@ -32,17 +26,15 @@ const initiateForgotPassword = async (username) => {
   }
 };
 
-const confirmPasswordReset = async (username, newPassword, verificationCode) => {
-  const poolData = {
-    UserPoolId: 'us-west-2_nTZIRvqNk',
-    ClientId: '2c4r8a30g1h8vu08kvad3mm7ov'
-  };
-
-  const userPool = new CognitoUserPool(poolData);
+const confirmPasswordReset = async (
+  username,
+  newPassword,
+  verificationCode,
+) => {
 
   const userData = {
     Username: username,
-    Pool: userPool
+    Pool: CognitoPool,
   };
 
   const cognitoUser = new CognitoUser(userData);
@@ -53,9 +45,9 @@ const confirmPasswordReset = async (username, newPassword, verificationCode) => 
         onSuccess: () => {
           resolve();
         },
-        onFailure: (err) => {
+        onFailure: err => {
           reject(`Failed to reset password: ${err.message || err}`);
-        }
+        },
       });
     });
     return true; // Indicate that the password reset was successful
@@ -64,4 +56,4 @@ const confirmPasswordReset = async (username, newPassword, verificationCode) => 
   }
 };
 
-export { initiateForgotPassword, confirmPasswordReset };
+export {initiateForgotPassword, confirmPasswordReset};

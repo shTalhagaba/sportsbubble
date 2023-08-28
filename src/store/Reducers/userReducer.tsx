@@ -18,7 +18,6 @@ const user = (state = initialState, action: any) => {
   switch (action.type) {
     // splash event list
     case 'SET_SPLASH_EVENT_LIST':
-      console.log('SET_SPLASH_EVENT_LIST : ', action.payload);
       try {
         return {
           ...state,

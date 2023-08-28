@@ -1,10 +1,12 @@
 import React, {useState, useRef, useEffect} from 'react';
 import {
+  FlatList,
   ImageBackground,
   ScrollView,
   StatusBar,
   Text,
   TouchableOpacity,
+  View,
 } from 'react-native';
 import styles from './styles';
 import {Images, Colors} from 'src/utils';
@@ -15,25 +17,32 @@ import ContactHeaderTextInput from 'src/components/ContactHeaderTextInput';
 import ContactTextInput from 'src/components/ContactTextInput';
 import CustomButton from 'src/components/CustomButton';
 import CustomModalView from 'src/components/Modal/CustomModal';
-import {useSelector} from 'react-redux';
-import {userUpdateProfile} from 'src/services/updateProfile';
-import {userDelete, adminDeleteUser} from 'src/services/deleteAccount';
+import {useDispatch, useSelector} from 'react-redux';
+import {deleteUser, userUpdateProfile} from 'src/services/updateProfile';
 import LoaderModal from 'src/components/LoaderModal';
 import {ShowMessage} from 'src/components/ShowMessage';
+import {updateProfileValidation} from 'src/common/authValidation';
+import {setUserData} from 'src/store/types';
 
 export default function PersonalInfo() {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const data = useSelector(state => state.user);
-
+  const [isOpen, setIsOpen] = useState(false);
   const [firstName, setFirstName] = useState('Example');
-  const [lastName, setLastName] = useState('Dichter');
-  const [zipCode, setZipcode] = useState('91364');
-  const [dob, setDob] = useState('05/22/1977');
+  const [lastName, setLastName] = useState('Example');
+  const [zipCode, setZipcode] = useState('');
+  const [dob, setDob] = useState('22-12-1977');
   const [pronouns, setPronouns] = useState('');
   const [email, setEmail] = useState('example@sportsbubble.io');
   const [loadingLocal, setLoadingLocal] = useState(false);
   const [cancelAccountModal, setCancelAccountModal] = useState(false);
-
+  const options = [
+    {id: 1, label: 'he/him', value: 'he/him'},
+    {id: 2, label: 'she/her', value: 'she/her'},
+    {id: 3, label: 'they/them', value: 'they/them'},
+    {id: 4, label: 'other', value: 'other'},
+  ];
   const firstNameRef = useRef();
   const lastNameRef = useRef();
   const zipCodeRef = useRef();
@@ -43,46 +52,70 @@ export default function PersonalInfo() {
   useEffect(() => {
     if (data?.userData) {
       const user = data?.userData;
-      setFirstName(user?.given_name);
+      setFirstName(user?.name);
       setLastName(user?.family_name);
-      // setDob(user?.birthdate);
+      setDob(user?.birthdate ? user?.birthdate : '22-12-1977');
+      setZipcode(user?.locale);
+      setPronouns(user?.gender);
       setEmail(user?.email);
     }
   }, [data?.userData]);
 
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleSelect = item => {
+    setPronouns(item?.label);
+    toggleDropdown();
+  };
+
   const handleUpdateProfile = async () => {
-    try {
-      setLoadingLocal(true);
-      const test = await userUpdateProfile(email,firstName, lastName, zipCode, dob);
-      if(test === 'SUCCESS'){
-        ShowMessage('Profile updated successfully!!')
-        navigation.goBack()
+    if (updateProfileValidation(firstName, lastName, zipCode, pronouns)) {
+      try {
+        setLoadingLocal(true);
+        const test = await userUpdateProfile(
+          email,
+          firstName,
+          lastName,
+          zipCode,
+          dob,
+          pronouns,
+        );
+        if (test === 'SUCCESS') {
+          const updatedProfile = {
+            ...data?.userData,
+            name: firstName,
+            family_name: lastName,
+            locale: zipCode,
+            gender: pronouns,
+          };
+          dispatch(setUserData(updatedProfile));
+          ShowMessage('Profile updated successfully!!');
+          navigation.goBack();
+        }
+        setLoadingLocal(false);
+      } catch (error) {
+        if (error.message.includes(':')) {
+          const myArray = error.message.split(':');
+        } else {
+          ShowMessage(error.message);
+          console.log('error.message=>', error.message);
+        }
+        setLoadingLocal(false);
       }
-      setLoadingLocal(false);
-    } catch (error) {
-      if (error.message.includes(':')) {
-        const myArray = error.message.split(':');
-      } else {
-        ShowMessage(error.message);
-        console.log('error.message=>', error.message);
-      }
-      setLoadingLocal(false);
-    } 
+    }
   };
 
   const handleDeleteAccount = async () => {
     try {
       setLoadingLocal(true);
-      // const user = await userDelete(data?.userData?.email);
       const adminCredentials = {
         username: data?.userData?.email, // Replace with the actual admin username
         password: 'Qwerty@1234', // Replace with the actual admin password
       };
       console.log('adminCredentials => ', adminCredentials);
-      const user = await adminDeleteUser(
-        adminCredentials,
-        data?.userData?.email,
-      );
+      const user = await deleteUser(email);
       console.log('delete user => ', user);
       setLoadingLocal(false);
       setCancelAccountModal(!cancelAccountModal);
@@ -188,6 +221,7 @@ export default function PersonalInfo() {
           customInputStyle={{marginBottom: 5}}
           multiline={false}
           value={dob}
+          editable={false}
           maxLength={20}
           onChangeText={txt => setDob(txt)}
           keyboardType={'number-pad'}
@@ -199,26 +233,41 @@ export default function PersonalInfo() {
             emailRef.current.focus();
           }}
         />
-        <ContactTextInput
-          leftImage={Images.Pronouns}
-          headerName={Strings.prounouns}
-          placeholderTextColor={Colors.white}
-          placeholder={Strings.prounouns}
-          multiline={false}
-          value={pronouns}
-          headerTxtStyle={styles.headerTxtStyle}
-          maxLength={20}
-          onChangeText={txt => setPronouns(txt)}
-          keyboardType={'number-pad'}
-          autoCapitalize="none"
-          returnKeyType={'next'}
-          editable={false}
-          blurOnSubmit={false}
-          rightImage={Images.DownArrow}
-          onSubmitEditing={() => {
-            emailRef.current.focus();
-          }}
-        />
+        <View
+          style={{
+            zIndex: 999,
+          }}>
+          <ContactTextInput
+            leftImage={Images.Pronouns}
+            headerName={Strings.prounouns}
+            placeholderTextColor={Colors.white}
+            placeholder={Strings.prounouns}
+            multiline={false}
+            value={pronouns}
+            headerTxtStyle={styles.headerTxtStyle}
+            onChangeText={txt => setPronouns(txt)}
+            autoCapitalize="none"
+            editable={false}
+            blurOnSubmit={false}
+            rightImage={Images.DownArrow}
+            pressRightImage={toggleDropdown}
+          />
+          {isOpen && (
+            <View style={styles.openStyle}>
+              <FlatList
+                data={options}
+                keyExtractor={item => item.id.toString()}
+                renderItem={({item}) => (
+                  <TouchableOpacity
+                    onPress={() => handleSelect(item)}
+                    style={styles.dropdownItem}>
+                    <Text style={styles.itemTitle}>{item.label}</Text>
+                  </TouchableOpacity>
+                )}
+              />
+            </View>
+          )}
+        </View>
         <ContactHeaderTextInput
           leftImage={Images.EmailIcon}
           headerName={Strings.email}

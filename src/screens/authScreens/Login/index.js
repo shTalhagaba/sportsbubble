@@ -40,7 +40,6 @@ export default function Login() {
       try {
         setLoadingLocal(true);
         const user = await userLogin(email, password);
-        console.log(user?.accessToken?.jwtToken)
         user.id = user?.accessToken?.payload?.sub ?? '';
         setLoadingLocal(false);
         console.log(user)

@@ -95,7 +95,6 @@ export default {
   code: "Code",
   wejustneed: "We just need a few more details to configure your account",
   welcomeName: "Welcome, __NAME__!",
-  done: "Done!",
   cancelAccount: "Cancel Account",
   saveChanges: "Save Changes",
   prounouns: "Prounouns",

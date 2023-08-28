@@ -1,22 +1,17 @@
-import { CognitoUserPool, CognitoUserAttribute } from 'amazon-cognito-identity-js';
+import {CognitoUserAttribute, CognitoUser} from 'amazon-cognito-identity-js';
+import CognitoPool from '.';
 
-const userUpdateProfile = (fullName, lastName, zipCode, dob) => {
+const userUpdateProfile = (fullName, lastName, zipCode, dob, pronouns) => {
   return new Promise((resolve, reject) => {
-    const poolData = {
-      UserPoolId: 'us-west-2_nTZIRvqNk',
-      ClientId: '2c4r8a30g1h8vu08kvad3mm7ov',
-    };
-
-    const userPool = new CognitoUserPool(poolData);
-
     const attributeList = [
-      new CognitoUserAttribute({ Name: 'given_name', Value: fullName }),
-      new CognitoUserAttribute({ Name: 'family_name', Value: lastName }),
-      // new CognitoUserAttribute({ Name: 'zipcode', Value: zipCode }),
-      // new CognitoUserAttribute({ Name: 'birthdate', Value: dob }),
+      new CognitoUserAttribute({Name: 'name', Value: fullName}),
+      new CognitoUserAttribute({Name: 'family_name', Value: lastName}),
+      new CognitoUserAttribute({Name: 'locale', Value: zipCode}), //zipcode
+      new CognitoUserAttribute({Name: 'birthdate', Value: dob}), //birthdate
+      new CognitoUserAttribute({Name: 'gender', Value: pronouns}), // pronouns
     ];
 
-    const cognitoUser = userPool.getCurrentUser();
+    const cognitoUser = CognitoPool.getCurrentUser();
 
     if (cognitoUser) {
       cognitoUser.getSession((error, session) => {
@@ -46,4 +41,28 @@ const userUpdateProfile = (fullName, lastName, zipCode, dob) => {
   });
 };
 
-export { userUpdateProfile };
+const deleteUser = username => {
+  const userData = {
+    Username: username,
+    Pool: CognitoPool,
+  };
+
+  const cognitoUser = new CognitoUser(userData);
+
+  if (cognitoUser) {
+    cognitoUser.deleteUser((err, result) => {
+      if (err) {
+        console.error('Error deleting user:', err);
+        alert(err.message || JSON.stringify(err));
+        return;
+      }
+      console.log('User deleted successfully:', result);
+      // Perform any necessary actions after user deletion
+    });
+  } else {
+    console.error('User not authenticated.');
+    alert('User not authenticated.');
+  }
+};
+
+export {userUpdateProfile, deleteUser};

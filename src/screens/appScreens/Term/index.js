@@ -1,31 +1,48 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  Image,
   ImageBackground,
   ScrollView,
   StatusBar,
   Text,
   View,
-  useWindowDimensions,
 } from 'react-native';
 import styles from './styles';
 import {Images, Colors, Strings} from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
-import {privacyPolicy, privacyPolicyCA, termsOfUse} from 'src/utils/term';
-import RenderHTML from 'react-native-render-html';
+import { fetchContentFulContent } from 'src/utils/contentful';
 
 export default function Term(props) {
-  const {width} = useWindowDimensions();
-  let source = {
-    html:
+  const [content, setContent] = useState({
+    termUse: null,
+    privacyPolicy: null,
+    californiaPolicy: null
+  });
+
+  useEffect(() => {
+    async function fetchPromotionContent () {
+      const termUse = await fetchContentFulContent('XuhxvmlTfU1MCjuELLHvY');
+      const privacyPolicy = await fetchContentFulContent('52UJuQgc1nZAm8kLrkAlke');
+      const californiaPolicy = await fetchContentFulContent('4QghRl8LFoRAvWRNyTDeX4');
+      
+      setContent({ 
+        termUse: termUse.fields.description.content[0].content[0].value,
+        privacyPolicy: privacyPolicy.fields.description.content[0].content[0].value,
+        californiaPolicy:  californiaPolicy.fields.description.content[0].content[0].value
+      });
+    }
+
+    fetchPromotionContent()
+  }, [])
+
+  let source = 
       props?.route?.params?.selected === Strings.termUse
-        ? termsOfUse
+        ? content.termUse
         : props?.route?.params?.selected === Strings.privacyPolicy
-        ? privacyPolicy
+        ? content.privacyPolicy
         : props?.route?.params?.selected === Strings.californiaPolicy
-        ? privacyPolicyCA
-        : termsOfUse,
-  };
+        ? content.californiaPolicy
+        : content.termUse
+  ;
   return (
     <ImageBackground
       source={Images.Background}
@@ -53,7 +70,11 @@ export default function Term(props) {
           contentInsetAdjustmentBehavior="automatic"
           style={{flex: 1, marginVertical: 25}}>
           <View>
-            <RenderHTML source={source} contentWidth={width} />
+            {
+              content.termUse && (
+                <Text style={styles.contentTxt}>{source}</Text>
+              )
+            }
           </View>
         </ScrollView>
       </View>

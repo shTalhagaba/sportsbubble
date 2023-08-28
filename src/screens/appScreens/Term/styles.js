@@ -42,4 +42,7 @@ export default ScaledSheet.create({
   btnContainer: {
     marginTop: '24@ms0.3',
   },
+  contentTxt: {
+    color: Colors.white
+  }
 });

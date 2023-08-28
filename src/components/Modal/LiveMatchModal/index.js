@@ -1,5 +1,5 @@
 import {Images, Strings} from 'src/utils';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Modal,
@@ -13,8 +13,20 @@ import styles from './styles';
 import BlackClose from 'src/assets/images/BlackClose.js';
 import GreenButton from 'src/components/GreenButton';
 import {Colors} from 'src/utils';
+import { fetchContentFulContent } from 'src/utils/contentful';
 
 const LiveMatch = ({setLiveMatchModal, liveMatchModal}) => {
+  const [content, setContent] = useState(null);
+
+  useEffect(() => {
+    async function fetchPromotionContent () {
+      const promotions = await fetchContentFulContent('67NvszQuZ1oltZJb9tNgOw');
+      setContent(promotions);
+    }
+
+    fetchPromotionContent()
+  }, [])
+
   return (
     <Modal animationType="slide" transparent={true} visible={liveMatchModal}>
       <StatusBar
@@ -32,7 +44,7 @@ const LiveMatch = ({setLiveMatchModal, liveMatchModal}) => {
             </TouchableOpacity>
             <Image source={Images.MatchTeam} style={styles.matchTeam} />
             <Text style={styles.liveTxt}>{Strings.liveNow}</Text>
-            <Text style={styles.matchNameTxt}>{Strings.womenQualifir}</Text>
+            {/* <Text style={styles.matchNameTxt}>{content.fields.event.line2}</Text> */}
             <View style={styles.logoContainer}>
               <Image
                 source={Images.Twitch_logo_2019}
