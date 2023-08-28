@@ -1,8 +1,8 @@
-import {Colors, Fonts} from 'src/utils';
-import {ScaledSheet} from 'react-native-size-matters';
-import {Dimensions, Platform} from 'react-native';
+import { Colors, Fonts } from 'src/utils';
+import { ScaledSheet } from 'react-native-size-matters';
+import { Dimensions, Platform } from 'react-native';
 const width = Dimensions.get('window').width;
-const {fontScale} = Dimensions.get('window');
+const { fontScale } = Dimensions.get('window');
 
 export default ScaledSheet.create({
   container: {
@@ -30,11 +30,16 @@ export default ScaledSheet.create({
     marginVertical: '0@ms0.3',
     paddingVertical: '4@ms0.3',
   },
+  fvrtIcon: {
+    height: '21@ms0.3',
+    width: '21@ms0.3',
+    marginRight: '15@ms0.3',
+  },
   innerContainer: {
     flexDirection: 'row',
     height: fontScale > 1 ? 57 * fontScale : '59@ms0.3',
     elevation: 3,
-    shadowOffset: {width: 0, height: 3},
+    shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.6,
     shadowRadius: 3,
     shadowColor: 'rgba(0, 0, 0, 0.4)',
@@ -50,7 +55,7 @@ export default ScaledSheet.create({
     height: fontScale > 1 ? 19 * fontScale : '20@ms0.3',
     elevation: 3,
     shadowColor: 'rgba(0, 0, 0, 0.15)',
-    shadowOffset: {width: 0, height: 1},
+    shadowOffset: { width: 0, height: 1 },
     shadowRadius: 3,
     shadowOpacity: 1,
     marginTop: '4@ms0.3',
@@ -77,7 +82,7 @@ export default ScaledSheet.create({
     alignSelf: 'center',
     elevation: 3,
     shadowColor: 'rgba(0, 0, 0, 0.15)',
-    shadowOffset: {width: 0, height: 1},
+    shadowOffset: { width: 0, height: 1 },
     shadowRadius: 3,
     shadowOpacity: 1,
   },
@@ -156,6 +161,7 @@ export default ScaledSheet.create({
     // lineHeight: '18@ms0.3',
     color: Colors.white,
     fontFamily: Fonts.Regular,
+    maxWidth: "90%"
   },
   eventTxt: {
     fontSize: '13@ms0.3',
@@ -164,6 +170,8 @@ export default ScaledSheet.create({
     color: Colors.white,
     fontFamily: Fonts.Regular,
     marginTop: '2@ms0.3',
+    maxWidth: "90%"
+
   },
   eventDateTxt: {
     fontSize: '13@ms0.3',
@@ -214,7 +222,7 @@ export default ScaledSheet.create({
     fontFamily: Fonts.Bold,
     fontStyle: 'italic',
     elevation: 3,
-    textShadowOffset: {width: 0, height: 1},
+    textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 8,
     textShadowColor: '#000000',
     marginBottom: '3@ms0.3',

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   ImageBackground,
   Text,
@@ -10,14 +10,14 @@ import {
   Dimensions,
 } from 'react-native';
 import styles from './styles';
-import {Images, Colors, Strings} from 'src/utils';
+import { Images, Colors, Strings } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import CustomModalView from 'src/components/Modal/CustomModal';
-import {moderateScale} from 'react-native-size-matters';
-import {useSelector} from 'react-redux';
+import { moderateScale } from 'react-native-size-matters';
+import { useSelector } from 'react-redux';
 const screenWidth = Dimensions.get('window').width;
-const {fontScale} = Dimensions.get('window');
+const { fontScale } = Dimensions.get('window');
 
 const data = [
   {
@@ -143,10 +143,10 @@ export default function Guide() {
     list[curremIndex].fvrtFlag = !list[curremIndex].fvrtFlag;
     setSportData(list);
     setFvrtModal(!fvrtModal);
-    navigation.navigate('withoutBottomtab', {screen: 'UpgradeAccount'});
+    navigation.navigate('withoutBottomtab', { screen: 'UpgradeAccount' });
   };
 
-  const handleSelectedCategory = (e, index) => {};
+  const handleSelectedCategory = (e, index) => { };
 
   return (
     <ImageBackground
@@ -162,24 +162,24 @@ export default function Guide() {
       <AppHeader centerImage={Images.Logo} />
       {/* Slider all pro  */}
       <View style={styles.sliderContainer}>
-      <FlatList
+        <FlatList
           horizontal
           data={categoryData}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={
             fontScale > 1
-              ? {justifyContent: 'center'}
-              : {justifyContent: 'center', flex: 1}
+              ? { justifyContent: 'center' }
+              : { justifyContent: 'center', flex: 1 }
           }
           scrollEnabled={fontScale > 1 ? true : false}
-          renderItem={({item, index}) => (
+          renderItem={({ item, index }) => (
             <TouchableOpacity
               onPress={() => handleSelectedCategory(item, index)}
               style={styles.sliderInnerContainer}>
               <View
                 style={[
                   styles.sliderInnerMainContainer,
-                  {borderWidth: item?.selected ? moderateScale(2, 0.3) : 0},
+                  { borderWidth: item?.selected ? moderateScale(2, 0.3) : 0 },
                 ]}>
                 {item?.selected && <View style={styles.rectangle2} />}
                 <ImageBackground
@@ -192,12 +192,12 @@ export default function Guide() {
                   imageStyle={
                     Platform.OS === 'android'
                       ? {
-                          borderRadius: moderateScale(22, 0.3),
-                          borderWidth: item?.selected
-                            ? 0
-                            : moderateScale(2.5, 0.3),
-                          borderColor: Colors.darkBlue,
-                        }
+                        borderRadius: moderateScale(22, 0.3),
+                        borderWidth: item?.selected
+                          ? 0
+                          : moderateScale(2.5, 0.3),
+                        borderColor: Colors.darkBlue,
+                      }
                       : {}
                   }
                   resizeMode={'stretch'}>
@@ -206,10 +206,10 @@ export default function Guide() {
                       index === 0
                         ? Images.Trophy
                         : index === 1
-                        ? Images.Crown
-                        : index === 2
-                        ? Images.College
-                        : Images.Game
+                          ? Images.Crown
+                          : index === 2
+                            ? Images.College
+                            : Images.Game
                     }
                     style={styles.sliderIcon}
                     resizeMode={'contain'}
@@ -231,7 +231,7 @@ export default function Guide() {
       <FlatList
         data={mySportData}
         showsVerticalScrollIndicator={false}
-        renderItem={({item, index}) => (
+        renderItem={({ item, index }) => (
           <View style={styles.listContiner}>
             <View style={styles.innerContainer}>
               <Image
@@ -261,7 +261,7 @@ export default function Guide() {
                   source={item?.fvrtFlag ? Images.FilledFvrt : Images.Favorite}
                   style={[
                     styles.fvrtIcon,
-                    {tintColor: item?.fvrtFlag && Colors.orange},
+                    { tintColor: item?.fvrtFlag && Colors.orange },
                   ]}
                   resizeMode={'contain'}
                 />

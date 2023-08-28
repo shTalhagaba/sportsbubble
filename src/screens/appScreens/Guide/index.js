@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ImageBackground,
   Text,
@@ -12,20 +12,20 @@ import {
   Platform,
 } from 'react-native';
 import styles from './styles';
-import {Images, Colors, Strings, Constants} from 'src/utils';
+import { Images, Colors, Strings, Constants } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import LiveMatchView from 'src/components/Modal/LiveMatchModal';
-import {useQuery} from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import dayjs from 'dayjs';
-import {GET_SORTED_EVENTS} from './queries';
-import {useDispatch, useSelector} from 'react-redux';
-import {setExpire, setGuest, setStoreEventList, setUser} from 'src/store/types';
-import {moderateScale} from 'react-native-size-matters';
+import { GET_SORTED_EVENTS } from './queries';
+import { useDispatch, useSelector } from 'react-redux';
+import { setExpire, setGuest, setStoreEventList, setUser } from 'src/store/types';
+import { moderateScale } from 'react-native-size-matters';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 import CustomMySportsModalView from 'src/components/Modal/CustomMySportsModalView';
 const screenWidth = Dimensions.get('window').width;
-const {width, fontScale} = Dimensions.get('window');
+const { width, fontScale } = Dimensions.get('window');
 
 // Sample data for the list
 const list = [
@@ -134,8 +134,10 @@ export default function Guide(props) {
   const [endSearchTime, setEndSearchTime] = useState(
     dayjs(new Date()).add(7, 'day').toISOString(),
   );
+  const data = useSelector(state => state.user);
+
   // Fetch data from API using Apollo useQuery hook
-  const {loading, refetch, error} = useQuery(GET_SORTED_EVENTS, {
+  const { loading, refetch, error } = useQuery(GET_SORTED_EVENTS, {
     variables: {
       startTime: startTime,
       endTime: dayjs(startTime)
@@ -157,7 +159,7 @@ export default function Guide(props) {
             return startEventA - startEventB;
           })
           .filter(event => {
-            const {line1, line2, startTime, endTime, logo1, rightsHolders} =
+            const { line1, line2, startTime, endTime, logo1, rightsHolders } =
               event;
             // Check if all required properties exist
             if (
@@ -207,7 +209,7 @@ export default function Guide(props) {
         data?.sortedEvents.length > 0
       ) {
         const filteredEvents = data?.sortedEvents.filter(event => {
-          const {line1, line2, startTime, endTime, logo1, rightsHolders} =
+          const { line1, line2, startTime, endTime, logo1, rightsHolders } =
             event;
           // Check if all required properties exist
           if (
@@ -352,22 +354,22 @@ export default function Guide(props) {
         selectedTimeIndex === 0
           ? eventList
           : eventList.filter(event =>
-              dayjs(event.startTime).isAfter(formattedTime),
-            );
+            dayjs(event.startTime).isAfter(formattedTime),
+          );
     } else {
       filteredEvents =
         selectedTimeIndex === 0
           ? eventList.filter(event =>
+            selectedCategoryValues.includes(
+              event.category.name.toLowerCase(),
+            ),
+          )
+          : eventList.filter(
+            event =>
               selectedCategoryValues.includes(
                 event.category.name.toLowerCase(),
-              ),
-            )
-          : eventList.filter(
-              event =>
-                selectedCategoryValues.includes(
-                  event.category.name.toLowerCase(),
-                ) && dayjs(event.startTime).isAfter(formattedTime),
-            );
+              ) && dayjs(event.startTime).isAfter(formattedTime),
+          );
       setSelectedCategory(selectedCategoryValues);
     }
 
@@ -440,7 +442,7 @@ export default function Guide(props) {
     setIsLive(true);
   };
 
-  const ItemComponent = React.memo(({item}) => {
+  const ItemComponent = React.memo(({ item }) => {
     return (
       // Render your item component here
       dayjs(item?.endTime).isAfter(currentDate) ? (
@@ -461,7 +463,7 @@ export default function Guide(props) {
                 },
               });
             } else {
-              navigation.navigate('Watch', {item: item});
+              navigation.navigate('Watch', { item: item });
             }
           }}>
           <View style={styles.innerContainer}>
@@ -497,7 +499,7 @@ export default function Guide(props) {
               <Text style={styles.titleTxt} numberOfLines={1}>
                 {item?.line2 ? item?.line2 : item?.title}
               </Text>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 <Text style={[styles.eventDateTxt]}>
                   {item?.startTime
                     ? dayjs(item?.startTime).format('ddd. MM/D')
@@ -508,12 +510,26 @@ export default function Guide(props) {
                   {' '}
                   {item?.startTime
                     ? `${dayjs(item?.startTime).format('h:mma')} - ${dayjs(
-                        item?.endTime,
-                      ).format('h:mma')}`
+                      item?.endTime,
+                    ).format('h:mma')}`
                     : item?.time}
                 </Text>
               </View>
             </View>
+            {!data?.guest &&
+              <TouchableOpacity
+                style={{ position: "absolute", right: 0, alignSelf: "center" }}
+              //  onPress={() => handleFvrt(item, index)}
+              >
+                <Image
+                  source={Images.Favorite}
+                  style={[
+                    styles.fvrtIcon,
+                  ]}
+                  resizeMode={'contain'}
+                />
+              </TouchableOpacity>
+            }
           </View>
         </TouchableOpacity>
       ) : null
@@ -540,18 +556,18 @@ export default function Guide(props) {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={
             fontScale > 1
-              ? {justifyContent: 'center'}
-              : {justifyContent: 'center', flex: 1}
+              ? { justifyContent: 'center' }
+              : { justifyContent: 'center', flex: 1 }
           }
           scrollEnabled={fontScale > 1 ? true : false}
-          renderItem={({item, index}) => (
+          renderItem={({ item, index }) => (
             <TouchableOpacity
               onPress={() => handleSelectedCategory(item, index)}
               style={styles.sliderInnerContainer}>
               <View
                 style={[
                   styles.sliderInnerMainContainer,
-                  {borderWidth: item?.selected ? moderateScale(2, 0.3) : 0},
+                  { borderWidth: item?.selected ? moderateScale(2, 0.3) : 0 },
                 ]}>
                 {item?.selected && <View style={styles.rectangle2} />}
                 <ImageBackground
@@ -564,12 +580,12 @@ export default function Guide(props) {
                   imageStyle={
                     Platform.OS === 'android'
                       ? {
-                          borderRadius: moderateScale(22, 0.3),
-                          borderWidth: item?.selected
-                            ? 0
-                            : moderateScale(2.5, 0.3),
-                          borderColor: Colors.darkBlue,
-                        }
+                        borderRadius: moderateScale(22, 0.3),
+                        borderWidth: item?.selected
+                          ? 0
+                          : moderateScale(2.5, 0.3),
+                        borderColor: Colors.darkBlue,
+                      }
                       : {}
                   }
                   resizeMode={'stretch'}>
@@ -578,10 +594,10 @@ export default function Guide(props) {
                       index === 0
                         ? Images.Trophy
                         : index === 1
-                        ? Images.Crown
-                        : index === 2
-                        ? Images.College
-                        : Images.Game
+                          ? Images.Crown
+                          : index === 2
+                            ? Images.College
+                            : Images.Game
                     }
                     style={styles.sliderIcon}
                     resizeMode={'contain'}
@@ -620,13 +636,13 @@ export default function Guide(props) {
         </View>
 
         <View
-          style={[styles.timeSliderInnerContainer, {width: screenWidth / 3}]}>
+          style={[styles.timeSliderInnerContainer, { width: screenWidth / 3 }]}>
           <FlatList
             horizontal
             data={timeData}
             showsHorizontalScrollIndicator={false}
             scrollEnabled={fontScale > 1 ? true : false}
-            renderItem={({item, index}) => {
+            renderItem={({ item, index }) => {
               const adjustedIndex = index + currentIndex; // Calculate the adjusted index based on the current index
               return (
                 <View
@@ -663,11 +679,11 @@ export default function Guide(props) {
       </View>
       {eventList && eventList.length > 0 ? (
         <TouchableOpacity style={styles.listContiner}>
-          <View style={[{backgroundColor: Colors.brandBlue, paddingBottom:5}]}>
+          <View style={[{ backgroundColor: Colors.brandBlue, paddingBottom: 5 }]}>
             <View
               style={[
                 styles.imageContainer,
-                {backgroundColor: Colors.brandBlue},
+                { backgroundColor: Colors.brandBlue },
               ]}>
               <ImageWithPlaceHolder
                 source={eventList?.[0]?.logo1}
@@ -696,7 +712,7 @@ export default function Guide(props) {
                 // backgroundColor: Colors.darkBlue,
               }}></View>
             <View style={styles.userNameContainer}>
-              <Text style={[styles.eventTxt, {marginTop: 5}]} numberOfLines={1}>
+              <Text style={[styles.eventTxt, { marginTop: 5 }]} numberOfLines={1}>
                 {eventList?.[0]?.line1}
               </Text>
               <Text style={styles.titleTxt} numberOfLines={1}>
@@ -704,7 +720,7 @@ export default function Guide(props) {
                   ? eventList?.[0]?.line2
                   : eventList?.[0]?.title}
               </Text>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 <Text style={[styles.eventDateTxt]}>
                   {' '}
                   {eventList?.[0]?.startTime
@@ -716,8 +732,8 @@ export default function Guide(props) {
                   {' '}
                   {eventList?.[0]?.startTime
                     ? `${dayjs(eventList?.[0]?.startTime).format(
-                        'h:mma',
-                      )} - ${dayjs(eventList?.[0]?.endTime).format('h:mma')}`
+                      'h:mma',
+                    )} - ${dayjs(eventList?.[0]?.endTime).format('h:mma')}`
                     : eventList?.[0]?.time}
                 </Text>
               </View>
@@ -727,7 +743,7 @@ export default function Guide(props) {
       ) : null}
       {/* main list  */}
       {loading && currentIndex ? (
-        <View style={{flex: 1, justifyContent: 'center'}}>
+        <View style={{ flex: 1, justifyContent: 'center' }}>
           <ActivityIndicator color={'#fff'} size={'large'} />
         </View>
       ) : (
@@ -737,12 +753,12 @@ export default function Guide(props) {
               ? eventList && eventList.length > 0
                 ? eventList
                 : selectedTimeIndex > 0
-                ? filteredEventList
-                : list
+                  ? filteredEventList
+                  : list
               : filteredEventList
           }
           showsVerticalScrollIndicator={true}
-          renderItem={({item}) => <ItemComponent item={item} />}
+          renderItem={({ item }) => <ItemComponent item={item} />}
           keyExtractor={item => item?.id}
           removeClippedSubviews={true} // Unmount components when outside of window
           initialNumToRender={50} // Reduce initial render amount
