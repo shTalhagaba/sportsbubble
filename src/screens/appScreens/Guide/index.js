@@ -462,7 +462,7 @@ export default function Guide(props) {
       // Render your item component here
       dayjs(item?.endTime).isAfter(currentDate) ? (
         <TouchableOpacity
-          style={styles.listContiner}
+          style={styles.listContainer}
           onPress={() => {
             if (
               item &&

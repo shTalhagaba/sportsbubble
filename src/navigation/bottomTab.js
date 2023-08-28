@@ -63,11 +63,11 @@ const BottomTab = () => {
           height:
             Platform.OS === 'android'
               ? moderateScale(72, 0.3)
-              : moderateScale(85, 0.3),
+              : moderateScale(80, 0.3),
           paddingTop:
             Platform.OS === 'android'
               ? moderateScale(2, 0.3)
-              : moderateScale(19, 0.3),
+              : moderateScale(15, 0.3),
           borderTopWidth: 2,
           borderTopColor: '#3E4349',
         },

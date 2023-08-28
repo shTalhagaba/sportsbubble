@@ -1,8 +1,8 @@
-import {Colors, Fonts} from 'src/utils';
-import {ScaledSheet} from 'react-native-size-matters';
-import {Dimensions, Platform} from 'react-native';
+import { Colors, Fonts } from 'src/utils';
+import { ScaledSheet } from 'react-native-size-matters';
+import { Dimensions, Platform } from 'react-native';
 const width = Dimensions.get('window').width;
-const {fontScale} = Dimensions.get('window');
+const { fontScale } = Dimensions.get('window');
 
 export default ScaledSheet.create({
   container: {
@@ -25,16 +25,16 @@ export default ScaledSheet.create({
     alignSelf: 'center',
     marginTop: '40@ms0.3',
   },
-  listContiner: {
+  listContainer: {
     paddingRight: '0@ms0.3',
     marginVertical: '0@ms0.3',
-    paddingVertical: '4@ms0.3',
+    paddingBottom: '4@ms0.3',
   },
   innerContainer: {
     flexDirection: 'row',
-    height: fontScale > 1 ? 57 * fontScale : '59@ms0.3',
+    height: fontScale > 1 ? 57 * fontScale : '52@ms0.3',
     elevation: 3,
-    shadowOffset: {width: 0, height: 3},
+    shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.6,
     shadowRadius: 3,
     shadowColor: 'rgba(0, 0, 0, 0.4)',
@@ -47,41 +47,43 @@ export default ScaledSheet.create({
     alignSelf: 'center',
     paddingHorizontal: '10@ms0.3',
     borderRadius: '20@ms0.3',
-    height: fontScale > 1 ? 19 * fontScale : '20@ms0.3',
+    height: fontScale > 1 ? 22 * fontScale : '20@ms0.3',
     elevation: 3,
     shadowColor: 'rgba(0, 0, 0, 0.15)',
-    shadowOffset: {width: 0, height: 1},
+    shadowOffset: { width: 0, height: 1 },
     shadowRadius: 3,
     shadowOpacity: 1,
-    marginTop: '4@ms0.3',
-    marginLeft: Platform.OS === 'android' ? '36@ms0.3' : '44@ms0.3',
+    marginTop: '0@ms0.3',
+    marginLeft: fontScale > 1.3 ? 25 * fontScale :
+      fontScale > 1 ? 45 * fontScale :
+        Platform.OS === 'android' ? '36@ms0.3' : '44@ms0.3',
   },
   liveMainContainer: {
-    width: fontScale > 1 ? (width / 5) * fontScale : width / 5,
+    width: fontScale > 1 ? (width / 6) * fontScale : width / 5,
     justifyContent: 'center',
     alignContent: 'center',
-    height: fontScale > 1 ? 20 * fontScale : '34@ms0.3',
-    marginTop: '2@ms0.3',
+    height: fontScale > 1 ? 25 * fontScale : '34@ms0.3',
+    marginTop: fontScale > 1 ? 5 * fontScale : '0@ms0.3'
   },
   liveTimeContainer: {
     backgroundColor: '#21365110', // Set a semi-transparent background color
     paddingHorizontal: '16@ms0.3',
     marginLeft: '8@ms0.3',
     borderRadius: '20@ms0.3',
-    height: fontScale > 1 ? 20 * fontScale : '22@ms0.3',
+    height: fontScale > 1 ? 22 * fontScale : '22@ms0.3',
     justifyContent: 'center',
     alignSelf: 'center',
     elevation: 3,
     shadowColor: 'rgba(0, 0, 0, 0.15)',
-    shadowOffset: {width: 0, height: 1},
+    shadowOffset: { width: 0, height: 1 },
     shadowRadius: 3,
-    shadowOpacity: 1,
+    shadowOpacity: 1
   },
   timeSliderContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignContent: 'center',
-    height: fontScale > 1 ? 20 * fontScale : '34@ms0.3',
+    height: fontScale > 1 ? 35 * fontScale : '33@ms0.3',
   },
   timeSliderInnerContainer: {
     flex: 1,
@@ -91,7 +93,7 @@ export default ScaledSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
     height: fontScale > 1 ? 20 * fontScale : '34@ms0.3',
-    marginTop: '2@ms0.3',
+    marginTop: fontScale > 1 ? 6 * fontScale : '-1@ms0.3',
   },
   nextContainer: {
     backgroundColor: Colors.brandBlue,
@@ -104,12 +106,12 @@ export default ScaledSheet.create({
     alignSelf: 'center',
   },
   rightIcon: {
-    height: '10@ms0.3',
-    width: '16@ms0.3',
+    height: fontScale > 1 ? 8 * fontScale : '8@ms0.3',
+    width: fontScale > 1 ? 14 * fontScale : '14@ms0.3',
   },
   imageContainer: {
-    height: fontScale > 1 ? 57 * fontScale : '59@ms0.3',
-    width: fontScale > 1 ? 55 * fontScale : '57@ms0.3',
+    height: fontScale > 1 ? 57 * fontScale : '52@ms0.3',
+    width: fontScale > 1 ? 55 * fontScale : '50@ms0.3',
     backgroundColor: Colors.mediumBlue,
     justifyContent: 'center',
     alignItems: 'center',
@@ -120,7 +122,7 @@ export default ScaledSheet.create({
     width: '47@ms0.3',
   },
   userNameContainer: {
-    paddingStart: '6@ms0.3',
+    paddingStart: '1@ms0.3',
     position: 'absolute',
     left: '60@ms0.3',
     width: '82%',
@@ -134,7 +136,7 @@ export default ScaledSheet.create({
     backgroundColor: Colors.blueGrey,
   },
   sliderActiveTimeTxt: {
-    fontSize: '13@ms0.3',
+    fontSize: fontScale > 1 ? 11 * fontScale : '11@ms0.3',
     fontWeight: '800',
     lineHeight: '22@ms0.3',
     color: Colors.white,
@@ -142,36 +144,36 @@ export default ScaledSheet.create({
     fontStyle: 'italic',
   },
   sliderInactiveTimeTxt: {
-    fontSize: '13@ms0.3',
+    fontSize: fontScale > 1 ? 11 * fontScale : '11@ms0.3',
     lineHeight: '20@ms0.3',
     color: Colors.white,
   },
   titleTxt: {
-    fontSize: '16@ms0.3',
+    fontSize: '14@ms0.3',
     fontWeight: '800',
     // lineHeight: '18@ms0.3',
     color: Colors.white,
     fontFamily: Fonts.Regular,
   },
   eventTxt: {
-    fontSize: '13@ms0.3',
+    fontSize: '11@ms0.3',
     fontWeight: '400',
-    lineHeight: '17@ms0.3',
+    lineHeight: '15@ms0.3',
     color: Colors.white,
     fontFamily: Fonts.Regular,
     marginTop: '2@ms0.3',
   },
   eventDateTxt: {
-    fontSize: '13@ms0.3',
+    fontSize: '11@ms0.3',
     fontWeight: '400',
-    lineHeight: '18@ms0.3',
+    lineHeight: '16@ms0.3',
     color: Colors.white,
     fontFamily: Fonts.Regular,
   },
   sliderContainer: {
     flexDirection: 'row',
     backgroundColor: Colors.mediumBlue,
-    height: fontScale > 1 ? (width / 4.4) * fontScale : '100@ms0.3',
+    height: fontScale > 1 ? 100 * fontScale : '85@ms0.3',
   },
   sliderInnerContainer: {
     // flex: 1,
@@ -196,24 +198,25 @@ export default ScaledSheet.create({
     overflow: 'visible',
   },
   sliderIcon: {
-    height: fontScale > 1 ? 25 * fontScale : '28@ms0.3',
-    width: fontScale > 1 ? 25 * fontScale : '28@ms0.3',
+    height: fontScale > 1 ? 30 * fontScale : '26@ms0.3',
+    width: fontScale > 1 ? 30 * fontScale : '26@ms0.3',
     paddingVertical: '12@ms0.3',
     tintColor: Colors.white,
     marginTop: '10@ms0.3',
   },
   sliderTxt: {
-    fontSize: '12@ms0.3',
+    fontSize: fontScale > 1 ? 13 * fontScale : '12@ms0.3',
     fontWeight: '900',
     lineHeight: '24@ms0.3',
     color: Colors.white,
     fontFamily: Fonts.Bold,
     fontStyle: 'italic',
     elevation: 3,
-    textShadowOffset: {width: 0, height: 1},
+    textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 8,
     textShadowColor: '#000000',
     marginBottom: '3@ms0.3',
+    marginTop: fontScale > 1 ? 5 * fontScale : '0@ms0.3'
   },
   rectangle2: {
     position: 'absolute',

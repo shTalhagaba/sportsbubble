@@ -26,8 +26,8 @@ const styles = ScaledSheet.create({
         alignItems: "center",
     },
     centerImage: {
-        height: "25@ms0.3",
-        width: "136@ms0.3",
+        height: "23@ms0.3",
+        width: "134@ms0.3",
     },
     iconContainer: {
         width: "25%",
