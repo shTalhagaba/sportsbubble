@@ -2,7 +2,7 @@ let regEmail = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
 let regName = /^[a-zA-Z ]*$/; // character and space allowed
 let regPassword =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-import {ShowMessage} from 'src/components/ShowMessage';
+import { ShowMessage } from 'src/components/ShowMessage';
 
 export const checkValidation = checkableValue => {
   if (
@@ -13,7 +13,6 @@ export const checkValidation = checkableValue => {
     return true;
   else return false;
 };
-
 export const signupValidation = (
   firstName,
   lastName,
@@ -74,7 +73,6 @@ export const signupValidation = (
     }
   }
 };
-
 export const loginValidation = (email, password) => {
   if (checkValidation(email)) {
     ShowMessage('Please enter email');
@@ -99,7 +97,6 @@ export const loginValidation = (email, password) => {
     }
   }
 };
-
 export const updatePasswordValidation = (
   currentPassword,
   newPassword,
@@ -134,7 +131,6 @@ export const otpValidation = otp => {
     return true;
   }
 };
-
 export const resetPasswordValidation = (otp, password) => {
   const trimmedPassword = password.trim();
   if (checkValidation(otp)) {
@@ -160,7 +156,6 @@ export const forgotPasswordValidation = email => {
     return true;
   }
 };
-
 export const updateProfileValidation = (
   firstName,
   lastName,
@@ -179,6 +174,23 @@ export const updateProfileValidation = (
     ShowMessage('Last name should be 3 characters');
   } else if (regName.test(lastName) === false) {
     ShowMessage('Name should accept only characters');
+  } else if (checkValidation(zipCode)) {
+    ShowMessage('Please enter zipCode.');
+  } else if (checkValidation(pronouns)) {
+    ShowMessage('Please select Pronouns.');
+  } else {
+    if (zipCode.length < 4) {
+      ShowMessage('Zip code is too short.');
+    } else {
+      return true;
+    }
+  }
+};
+export const completeProfileValidation = (zipCode, dob, pronouns) => {
+  if (checkValidation(zipCode)) {
+    ShowMessage('Please enter zipcode');
+  } else if (checkValidation(dob)) {
+    ShowMessage('Please select date of birth');
   } else if (checkValidation(zipCode)) {
     ShowMessage('Please enter zipCode.');
   } else if (checkValidation(pronouns)) {
