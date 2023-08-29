@@ -15,10 +15,10 @@ import AppHeader from 'src/components/AppHeader';
 import ButtonWithIcon from 'src/components/ButtonWithIcon';
 import Strings from 'src/utils/strings';
 import CustomModalView from 'src/components/Modal/CustomModal';
-import Instabug, {InvocationEvent} from 'instabug-reactnative';
-import {useDispatch, useSelector} from 'react-redux';
-import {setToken, setUser, setUserData} from 'src/store/types';
-import {signOut} from 'src/services/authOTP';
+import Instabug, { InvocationEvent } from 'instabug-reactnative';
+import { useDispatch, useSelector } from 'react-redux';
+import { setToken, setUser, setUserData } from 'src/store/types';
+import { signOut } from 'src/services/authOTP';
 import ShowMessage from 'src/components/ShowMessage';
 
 export default function Setting() {
@@ -85,7 +85,11 @@ export default function Setting() {
               />
             </>
           )}
-          <ButtonWithIcon title={Strings.aboutWatchSports} />
+          <ButtonWithIcon
+            title={Strings.aboutWatchSports}
+            onpress={() => navigation.navigate('About')}
+          />
+
           <ButtonWithIcon
             title={Strings.legal}
             onpress={() => navigation.navigate('Legal')}
@@ -125,7 +129,8 @@ export default function Setting() {
         ornageBtnPress={() => {
           setLogoutModal(!logoutModal);
           signOut()
-            .then(() => {
+            .then((response) => {
+              console.error('response', response);
               dispatch(setUser(false));
               dispatch(setUserData({}));
               dispatch(setToken(''));
@@ -134,6 +139,12 @@ export default function Setting() {
             .catch(error => {
               console.error('Error signing out:', error.message);
               ShowMessage(error.message)
+              if(error?.message === 'User not authenticated.'){
+                dispatch(setUser(false));
+                dispatch(setUserData({}));
+                dispatch(setToken(''));
+                navigation.replace('Auth');
+              }
             });
         }}
         Contianer={{ backgroundColor: Colors.backBlack }}

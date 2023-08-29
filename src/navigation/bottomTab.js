@@ -9,6 +9,7 @@ import Connect from 'src/screens/appScreens/Connect';
 import Search from 'src/screens/appScreens/Search';
 import Setting from 'src/screens/appScreens/Setting';
 import Legal from 'src/screens/appScreens/Legal';
+import About from 'src/screens/appScreens/About';
 import MySports from 'src/screens/appScreens/MySports';
 import {moderateScale, ScaledSheet} from 'react-native-size-matters';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -37,6 +38,7 @@ const SettingNavigation = () => {
         headerShown: false,
       }}>
       <SettingNavigator.Screen name="Setting" component={Setting} />
+      <SettingNavigator.Screen name="About" component={About} />
       <SettingNavigator.Screen name="Legal" component={Legal} />
     </SettingNavigator.Navigator>
   );

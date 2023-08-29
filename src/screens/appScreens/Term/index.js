@@ -27,7 +27,7 @@ export default function Term(props) {
       setContent({ 
         termUse: termUse.fields.description.content[0].content[0].value,
         privacyPolicy: privacyPolicy.fields.description.content[0].content[0].value,
-        californiaPolicy:  californiaPolicy.fields.description.content[0].content[0].value
+        californiaPolicy: californiaPolicy.fields.description.content[0].content[0].value
       });
     }
 

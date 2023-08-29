@@ -12,7 +12,7 @@ export default ScaledSheet.create({
   itemListContainer: {
     paddingRight: '0@ms0.3',
     marginVertical: '1@ms0.3',
-    paddingVertical: '5@ms0.3',
+    paddingVertical: '5@ms0.3'
   },
   itemInnerContainer: {
     flexDirection: 'row',
@@ -87,7 +87,7 @@ export default ScaledSheet.create({
     height: fontScale > 1 ? 76 * fontScale : '80@ms0.3',
     justifyContent: 'center',
     position: 'absolute',
-    left: '80@ms0.3',
+    left: '65@ms0.3',
   },
   listTitleTxt: {
     fontSize: '13@ms0.3',
@@ -126,7 +126,7 @@ export default ScaledSheet.create({
     fontFamily: Fonts.Regular,
   },
   titleTxt: {
-    fontSize: '16@ms0.3',
+    fontSize: '15@ms0.3',
     fontWeight: '800',
     lineHeight: '25@ms0.3',
     color: Colors.white,
@@ -151,35 +151,34 @@ export default ScaledSheet.create({
   watchOptions: {
     fontSize: '18@ms0.3',
     fontWeight: '800',
-    lineHeight: '26@ms0.3',
+    lineHeight: '18@ms0.3',
     color: Colors.lightGreen,
     fontFamily: Fonts.Regular,
     textTransform: 'uppercase',
-    marginTop: '40@ms0.3',
+    marginTop: '35@ms0.3',
     textAlign: 'center',
   },
   wayToWatch: {
-    fontSize: '22@ms0.3',
+    fontSize: '19@ms0.3',
     fontWeight: '900',
     lineHeight: '30@ms0.3',
     color: Colors.lightGreen,
     fontFamily: Fonts.Regular,
-    // textTransform: "uppercase",
     textAlign: 'center',
     color: 'white',
     marginTop: '8@ms0.3',
-    marginBottom: '12@ms0.3',
+    marginBottom: '10@ms0.3',
     fontStyle: 'italic',
   },
   conectTxt: {
-    fontSize: '18@ms0.3',
-    fontWeight: '800',
-    lineHeight: '22@ms0.3',
+    fontSize: '16@ms0.3',
+    fontWeight: '900',
+    lineHeight: '20@ms0.3',
     color: Colors.white,
     fontFamily: Fonts.Regular,
-    marginVertical: '16@ms0.3',
+    marginVertical: '14@ms0.3',
     textAlign: 'center',
-    maxWidth: '65%',
+    maxWidth: '70%',
     alignSelf: 'center',
     fontStyle: 'italic',
   },
@@ -198,7 +197,7 @@ export default ScaledSheet.create({
   sliderContainer: {
     flexDirection: 'row',
     backgroundColor: Colors.mediumBlue,
-    height: fontScale > 1 ? (screenWidth / 4.4) * fontScale : '100@ms0.3',
+    height: fontScale > 1 ? (screenWidth / 4.4) * fontScale : '90@ms0.3',
     alignItems: 'center',
     paddingHorizontal: '15@ms0.3',
     marginTop: '10@ms0.3',
@@ -243,7 +242,7 @@ export default ScaledSheet.create({
   },
   largeMenuImage: {
     width: '100%',
-    height: fontScale > 1 ? 210 * fontScale : '220@ms0.3',
+    height: fontScale > 1 ? 210 * fontScale : '190@ms0.3',
     alignItems: 'center',
     justifyContent: 'flex-start',
     paddingTop: '20@ms0.3',
@@ -307,7 +306,7 @@ export default ScaledSheet.create({
   },
   listMainContainer: {
     alignItems: 'center',
-    marginTop: '25@ms0.3',
+    marginTop: '12@ms0.3',
     marginRight: '10@ms0.3',
   },
   headerContainer: {

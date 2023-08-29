@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {
   FlatList,
   ImageBackground,
@@ -9,20 +9,20 @@ import {
   View,
 } from 'react-native';
 import styles from './styles';
-import { Images, Colors } from 'src/utils';
-import { useNavigation } from '@react-navigation/native';
+import {Images, Colors} from 'src/utils';
+import {useNavigation} from '@react-navigation/native';
 import AppHeader from 'src/components/AppHeader';
 import Strings from 'src/utils/strings';
 import ContactHeaderTextInput from 'src/components/ContactHeaderTextInput';
 import ContactTextInput from 'src/components/ContactTextInput';
 import CustomButton from 'src/components/CustomButton';
 import CustomModalView from 'src/components/Modal/CustomModal';
-import { useDispatch, useSelector } from 'react-redux';
-import { deleteUser, userUpdateProfile } from 'src/services/updateProfile';
+import {useDispatch, useSelector} from 'react-redux';
+import {deleteUser, userUpdateProfile} from 'src/services/updateProfile';
 import LoaderModal from 'src/components/LoaderModal';
-import { ShowMessage } from 'src/components/ShowMessage';
-import { updateProfileValidation } from 'src/common/authValidation';
-import { setUserData } from 'src/store/types';
+import {ShowMessage} from 'src/components/ShowMessage';
+import {updateProfileValidation} from 'src/common/authValidation';
+import {setToken, setUser, setUserData} from 'src/store/types';
 
 export default function PersonalInfo() {
   const navigation = useNavigation();
@@ -38,10 +38,10 @@ export default function PersonalInfo() {
   const [loadingLocal, setLoadingLocal] = useState(false);
   const [cancelAccountModal, setCancelAccountModal] = useState(false);
   const options = [
-    { id: 1, label: 'he/him', value: 'he/him' },
-    { id: 2, label: 'she/her', value: 'she/her' },
-    { id: 3, label: 'they/them', value: 'they/them' },
-    { id: 4, label: 'other', value: 'other' },
+    {id: 1, label: 'he/him', value: 'he/him'},
+    {id: 2, label: 'she/her', value: 'she/her'},
+    {id: 3, label: 'they/them', value: 'they/them'},
+    {id: 4, label: 'other', value: 'other'},
   ];
   const firstNameRef = useRef();
   const lastNameRef = useRef();
@@ -110,13 +110,16 @@ export default function PersonalInfo() {
   const handleDeleteAccount = async () => {
     try {
       setLoadingLocal(true);
-      const adminCredentials = {
-        username: data?.userData?.email, // Replace with the actual admin username
-        password: 'Qwerty@1234', // Replace with the actual admin password
-      };
-      console.log('adminCredentials => ', adminCredentials);
-      const user = await deleteUser(email);
+      const user = await deleteUser();
       console.log('delete user => ', user);
+      if(user === 'SUCCESS'){
+        dispatch(setUser(false));
+        dispatch(setUserData({}));
+        dispatch(setToken(''));
+        setLoadingLocal(false);
+        setCancelAccountModal(!cancelAccountModal);
+        navigation.replace('Auth');
+      }
       setLoadingLocal(false);
       setCancelAccountModal(!cancelAccountModal);
     } catch (error) {
@@ -125,9 +128,11 @@ export default function PersonalInfo() {
       } else {
         ShowMessage(error.message);
         console.log('error.message=>', error.message);
+        setCancelAccountModal(!cancelAccountModal);
       }
     } finally {
       setLoadingLocal(false);
+      setCancelAccountModal(!cancelAccountModal);
     }
   };
 
@@ -145,7 +150,7 @@ export default function PersonalInfo() {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        customLeftImage={{ tintColor: Colors.orange }}
+        customLeftImage={{tintColor: Colors.orange}}
         SimpleView
       />
       <ScrollView style={styles.innerContainer}>
@@ -153,8 +158,8 @@ export default function PersonalInfo() {
         <ContactHeaderTextInput
           leftImage={Images.UserIcon}
           headerName={Strings.firstName}
-          Contianer={{ marginTop: 24 }}
-          customInputStyle={{ marginBottom: 5 }}
+          Contianer={{marginTop: 24}}
+          customInputStyle={{marginBottom: 5}}
           refInner={firstNameRef}
           // placeholderTextColor={Colors.white}
           // placeholder={Strings.firstName}
@@ -177,7 +182,7 @@ export default function PersonalInfo() {
           refInner={lastNameRef}
           // placeholder={Strings.lastName}
           // placeholderTextColor={Colors.white}
-          customInputStyle={{ marginBottom: 5 }}
+          customInputStyle={{marginBottom: 5}}
           multiline={false}
           headerTxtStyle={styles.headerTxtStyle}
           value={lastName}
@@ -198,7 +203,7 @@ export default function PersonalInfo() {
           // placeholderTextColor={Colors.white}
           // placeholder={Strings.zipCode}
           headerTxtStyle={styles.headerTxtStyle}
-          customInputStyle={{ marginBottom: 5 }}
+          customInputStyle={{marginBottom: 5}}
           multiline={false}
           value={zipCode}
           maxLength={6}
@@ -218,7 +223,7 @@ export default function PersonalInfo() {
           // placeholderTextColor={Colors.white}
           // placeholder={Strings.birthdate}
           headerTxtStyle={styles.headerTxtStyle}
-          customInputStyle={{ marginBottom: 5 }}
+          customInputStyle={{marginBottom: 5}}
           multiline={false}
           value={dob}
           editable={false}
@@ -257,7 +262,7 @@ export default function PersonalInfo() {
               <FlatList
                 data={options}
                 keyExtractor={item => item.id.toString()}
-                renderItem={({ item }) => (
+                renderItem={({item}) => (
                   <TouchableOpacity
                     onPress={() => handleSelect(item)}
                     style={styles.dropdownItem}>
@@ -275,7 +280,7 @@ export default function PersonalInfo() {
           // placeholderTextColor={Colors.white}
           // placeholder={Strings.email}
           headerTxtStyle={styles.headerTxtStyle}
-          customInputStyle={{ marginBottom: 8 }}
+          customInputStyle={{marginBottom: 8}}
           multiline={false}
           value={email}
           maxLength={50}
@@ -309,7 +314,7 @@ export default function PersonalInfo() {
         rowStyle={true}
         blackBtnPress={() => setCancelAccountModal(!cancelAccountModal)}
         ornageBtnPress={() => handleDeleteAccount()}
-        Contianer={{ backgroundColor: Colors.backBlack }}
+        Contianer={{backgroundColor: Colors.backBlack}}
       />
       <LoaderModal visible={loadingLocal} loadingText={''} />
     </ImageBackground>

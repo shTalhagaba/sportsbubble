@@ -14,12 +14,10 @@ import {Images, Colors, Fonts, Strings} from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
-import {setGuest, setToken, setUser, setUserData} from 'src/store/types';
-import {userLogin} from 'src/services/authLogin';
-import {loginValidation} from 'src/common/authValidation';
+import {loginValidation, resetPasswordValidation} from 'src/common/authValidation';
 import LoaderModal from 'src/components/LoaderModal';
 import {ShowMessage} from 'src/components/ShowMessage';
-import { confirmPasswordReset } from 'src/services/authForgotPassword';
+import {confirmPasswordReset} from 'src/services/authForgotPassword';
 
 export default function ResetPassword(props) {
   const dispatch = useDispatch();
@@ -34,14 +32,18 @@ export default function ResetPassword(props) {
 
   const handleConfirmPassword = async () => {
     try {
-      if (otp && password) {
-        const resetSuccess = await confirmPasswordReset(props?.route?.params?.email, password, otp);
+      if (resetPasswordValidation(otp, password)) {
+        const resetSuccess = await confirmPasswordReset(
+          props?.route?.params?.email,
+          password,
+          otp,
+        );
         if (resetSuccess) {
-          ShowMessage('Password reset successful. You can now log in with your new password.');
-          navigation.replace('Login')
+          ShowMessage(
+            'Password reset successful. You can now log in with your new password.',
+          );
+          navigation.replace('Login');
         }
-      } else {
-        ShowMessage('Please enter verification code and new password.');
       }
     } catch (error) {
       ShowMessage(error);

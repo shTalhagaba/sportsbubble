@@ -41,28 +41,37 @@ const userUpdateProfile = (fullName, lastName, zipCode, dob, pronouns) => {
   });
 };
 
-const deleteUser = username => {
-  const userData = {
-    Username: username,
-    Pool: CognitoPool,
-  };
-
-  const cognitoUser = new CognitoUser(userData);
-
+const deleteUser = () => {
+  return new Promise((resolve, reject) => {
+  const cognitoUser = CognitoPool.getCurrentUser();
   if (cognitoUser) {
-    cognitoUser.deleteUser((err, result) => {
-      if (err) {
-        console.error('Error deleting user:', err);
-        alert(err.message || JSON.stringify(err));
+    cognitoUser.getSession((error, session) => {
+      if (error) {
+        reject(error);
         return;
       }
-      console.log('User deleted successfully:', result);
-      // Perform any necessary actions after user deletion
+      if (session.isValid()) {
+        cognitoUser.deleteUser((err, result) => {
+          if (err) {
+            console.error('Error deleting user:', err);
+            alert(err.message || JSON.stringify(err));
+            return;
+          }
+          console.log('User deleted successfully:', result);
+          resolve(result)
+          // Perform any necessary actions after user deletion
+        });
+      } else {
+        reject(new Error('User session is not valid.'));
+        console.error('User session is not valid.');
+      }
     });
   } else {
+    reject(new Error('User not authenticated.'));
     console.error('User not authenticated.');
-    alert('User not authenticated.');
   }
+});
 };
+
 
 export {userUpdateProfile, deleteUser};

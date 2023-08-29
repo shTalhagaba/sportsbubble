@@ -69,7 +69,7 @@ export default function WelcomeAccount(props) {
         props?.route?.params?.email,
         props?.route?.params?.password,
         zipCode,
-        dayjs(dob).format('dd-mm-yyyy'),
+        dayjs(dob).format('DD-MM-YYYY'),
         pronouns,
       );
       if (user === 'SUCCESS') {
