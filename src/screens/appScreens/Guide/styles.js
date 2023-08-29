@@ -47,22 +47,22 @@ export default ScaledSheet.create({
     alignSelf: 'center',
     paddingHorizontal: '10@ms0.3',
     borderRadius: '20@ms0.3',
-    height: fontScale > 1 ? 22 * fontScale : '20@ms0.3',
+    height: fontScale > 1 ? 24 * fontScale : '24@ms0.3',
     elevation: 3,
     shadowColor: 'rgba(0, 0, 0, 0.15)',
     shadowOffset: { width: 0, height: 1 },
     shadowRadius: 3,
     shadowOpacity: 1,
     marginTop: '0@ms0.3',
-    marginLeft: fontScale > 1.3 ? 25 * fontScale :
-      fontScale > 1 ? 45 * fontScale :
-        Platform.OS === 'android' ? '36@ms0.3' : '44@ms0.3',
+    marginLeft: fontScale > 1.3 ? 12 * fontScale :
+      fontScale > 1 ? 20 * fontScale :
+        Platform.OS === 'android' ? '25@ms0.3' : '28@ms0.3',
   },
   liveMainContainer: {
-    width: fontScale > 1 ? (width / 6) * fontScale : width / 5,
+    width: fontScale > 1 ? (width / 5) * fontScale : width / 4,
     justifyContent: 'center',
     alignContent: 'center',
-    height: fontScale > 1 ? 25 * fontScale : '34@ms0.3',
+    height: fontScale > 1 ? 30 * fontScale : '40@ms0.3',
     marginTop: fontScale > 1 ? 5 * fontScale : '0@ms0.3'
   },
   liveTimeContainer: {
@@ -70,7 +70,7 @@ export default ScaledSheet.create({
     paddingHorizontal: '16@ms0.3',
     marginLeft: '8@ms0.3',
     borderRadius: '20@ms0.3',
-    height: fontScale > 1 ? 22 * fontScale : '22@ms0.3',
+    height: fontScale > 1 ? 24 * fontScale : '24@ms0.3',
     justifyContent: 'center',
     alignSelf: 'center',
     elevation: 3,
@@ -83,7 +83,7 @@ export default ScaledSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignContent: 'center',
-    height: fontScale > 1 ? 35 * fontScale : '33@ms0.3',
+    height: fontScale > 1 ? 37 * fontScale : '42@ms0.3',
   },
   timeSliderInnerContainer: {
     flex: 1,
@@ -92,8 +92,8 @@ export default ScaledSheet.create({
     width: width / 5,
     justifyContent: 'center',
     alignContent: 'center',
-    height: fontScale > 1 ? 20 * fontScale : '34@ms0.3',
-    marginTop: fontScale > 1 ? 6 * fontScale : '-1@ms0.3',
+    height: fontScale > 1 ? 20 * fontScale : '38@ms0.3',
+    marginTop: fontScale > 1 ? 6 * fontScale : '1@ms0.3',
   },
   nextContainer: {
     backgroundColor: Colors.brandBlue,
@@ -106,8 +106,8 @@ export default ScaledSheet.create({
     alignSelf: 'center',
   },
   rightIcon: {
-    height: fontScale > 1 ? 8 * fontScale : '8@ms0.3',
-    width: fontScale > 1 ? 14 * fontScale : '14@ms0.3',
+    height: fontScale > 1 ? 10 * fontScale : '13@ms0.3',
+    width: fontScale > 1 ? 16 * fontScale : '19@ms0.3',
   },
   imageContainer: {
     height: fontScale > 1 ? 57 * fontScale : '52@ms0.3',
@@ -136,16 +136,17 @@ export default ScaledSheet.create({
     backgroundColor: Colors.blueGrey,
   },
   sliderActiveTimeTxt: {
-    fontSize: fontScale > 1 ? 11 * fontScale : '11@ms0.3',
-    fontWeight: '800',
+    fontSize: fontScale > 1 ? 15 * fontScale : '15@ms0.3',
+    fontWeight: '900',
     lineHeight: '22@ms0.3',
     color: Colors.white,
     fontFamily: Fonts.Regular,
     fontStyle: 'italic',
   },
   sliderInactiveTimeTxt: {
-    fontSize: fontScale > 1 ? 11 * fontScale : '11@ms0.3',
-    lineHeight: '20@ms0.3',
+    fontSize: fontScale > 1 ? 13 * fontScale : '15@ms0.3',
+    fontWeight: '700',
+    lineHeight: '23@ms0.3',
     color: Colors.white,
   },
   titleTxt: {

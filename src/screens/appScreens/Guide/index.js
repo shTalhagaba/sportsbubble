@@ -640,7 +640,7 @@ export default function Guide(props) {
           style={[styles.timeSliderInnerContainer, {width: screenWidth / 3}]}>
           <FlatList
             horizontal
-            data={timeData}
+            data={timeData.slice(0, 2)}
             showsHorizontalScrollIndicator={false}
             scrollEnabled={fontScale > 1 ? true : false}
             renderItem={({item, index}) => {
