@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ImageBackground,
   Text,
@@ -11,18 +11,18 @@ import {
   ScrollView,
 } from 'react-native';
 import styles from './styles';
-import {Images, Colors, Strings, Constants} from 'src/utils';
+import { Images, Colors, Strings, Constants } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 const screenWidth = Dimensions.get('window').width;
 
 const data = [
-  {id: 1, img: Images.NBALogo, title: 'Fubo'},
-  {id: 2, img: Images.NBALogo, title: 'ESPN'},
-  {id: 3, img: Images.NBALogo, title: 'Sling'},
-  {id: 4, img: Images.NBALogo, title: 'DAZN'},
+  { id: 1, img: Images.NBALogo, title: 'Fubo' },
+  { id: 2, img: Images.NBALogo, title: 'ESPN' },
+  { id: 3, img: Images.NBALogo, title: 'Sling' },
+  { id: 4, img: Images.NBALogo, title: 'DAZN' },
 ];
 
 export default function Watch(props) {
@@ -31,7 +31,7 @@ export default function Watch(props) {
   const [itemSelected, setItemSelected] = useState(props?.route?.params?.item);
   const [bottomMenu, setBottomMenu] = useState(false);
   const [bottomShow, setBottomShow] = useState(false);
-  const {searchFlag} = props?.route?.params;
+  const { searchFlag } = props?.route?.params;
 
   useEffect(() => {
     setItemSelected(props?.route?.params?.item);
@@ -53,7 +53,7 @@ export default function Watch(props) {
   }, [props?.route?.params?.item]);
 
   return (
-    <ImageBackground
+    <ImageBackgrounds
       source={Images.Background2}
       resizeMode="cover"
       style={styles.container}>
@@ -73,7 +73,7 @@ export default function Watch(props) {
       {/* Main View */}
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{paddingBottom: 20}}
+        contentContainerStyle={{ paddingBottom: 20 }}
         style={styles.flexOnly}>
         {/* after header card */}
         <View style={styles.sliderContainer}>
@@ -108,8 +108,8 @@ export default function Watch(props) {
                   <Text style={[styles.dateEventTxt]}>
                     {' ' + itemSelected?.startTime
                       ? dayjs(itemSelected?.startTime).format('h:mma') +
-                        ' - ' +
-                        dayjs(itemSelected?.endTime).format('h:mma')
+                      ' - ' +
+                      dayjs(itemSelected?.endTime).format('h:mma')
                       : itemSelected?.time}
                   </Text>
                 </View>
@@ -121,8 +121,8 @@ export default function Watch(props) {
         <Text style={styles.watchOptions}>{Strings.watchOptions}</Text>
         {/* right holder connection list */}
         {itemSelected &&
-        itemSelected?.rightsHoldersConnection?.edges &&
-        itemSelected?.rightsHoldersConnection?.totalCount > 1 ? (
+          itemSelected?.rightsHoldersConnection?.edges &&
+          itemSelected?.rightsHoldersConnection?.totalCount > 1 ? (
           <View style={styles.flatlistContainer}>
             <Text style={styles.conectTxt}>
               {dayjs(itemSelected?.startTime).isAfter(currentDate)
@@ -133,14 +133,14 @@ export default function Watch(props) {
               data={itemSelected?.rightsHoldersConnection?.edges || data}
               showsVerticalScrollIndicator={false}
               horizontal
-              contentContainerStyle={{flex: 1, justifyContent: 'center'}}
-              renderItem={({item, index}) => {
+              contentContainerStyle={{ flex: 1, justifyContent: 'center' }}
+              renderItem={({ item, index }) => {
                 return item?.node?.weight > 1000 ? (
                   <TouchableOpacity
                     onPress={() => {
                       navigation.navigate('withoutBottomtab', {
                         screen: 'Connect',
-                        params: {item: itemSelected, holderItem: item},
+                        params: { item: itemSelected, holderItem: item },
                       });
                     }}
                     style={styles.listMainContainer}>
@@ -184,9 +184,9 @@ export default function Watch(props) {
               <FlatList
                 data={itemSelected?.rightsHoldersConnection?.edges || data}
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={{justifyContent: 'center'}}
+                contentContainerStyle={{ justifyContent: 'center' }}
                 horizontal
-                renderItem={({item, index}) => {
+                renderItem={({ item, index }) => {
                   return item?.node?.weight === null ||
                     item?.node?.weight < 1000 ? (
                     <View style={styles.bottomListContainer}>
@@ -226,6 +226,6 @@ export default function Watch(props) {
             <Text style={styles.wayToWatch}>{Strings.otherWays}</Text>
           </ImageBackground>
         ))}
-    </ImageBackground>
+    </ImageBackgrounds>
   );
 }
