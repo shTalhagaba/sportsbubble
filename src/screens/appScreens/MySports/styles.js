@@ -6,7 +6,7 @@ export default ScaledSheet.create({
         flex: 1,
         backgroundColor: Colors.appColorBackground
     },
-    listContiner: {
+    listContainer: {
         marginVertical: "8@ms0.3",
         paddingVertical: "5@ms0.3",
         borderRadius: "16@ms0.3",
@@ -47,7 +47,7 @@ export default ScaledSheet.create({
     },
     sliderContainer: {
         flexDirection: 'row',
-        backgroundColor: Colors.mediumBlue,
+        backgroundColor: Colors.greyBackground,
         height: "120@ms0.3",
     },
     sliderInnerContainer: {

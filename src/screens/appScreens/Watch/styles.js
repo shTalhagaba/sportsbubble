@@ -213,7 +213,7 @@ export default ScaledSheet.create({
   },
   sliderContainer: {
     flexDirection: 'row',
-    backgroundColor: Colors.mediumBlue,
+    backgroundColor: Colors.greyBackground,
     height: fontScale > 1 ? (screenWidth / 4.4) * fontScale : '90@ms0.3',
     alignItems: 'center',
     paddingHorizontal: '15@ms0.3',

@@ -9,7 +9,7 @@ export default ScaledSheet.create({
     flex: 1,
     backgroundColor: Colors.appColorBackground
   },
-  listContiner: {
+  listContainer: {
     paddingRight: "0@ms0.3",
     marginVertical: "0@ms0.3",
     paddingVertical: "4@ms0.3",

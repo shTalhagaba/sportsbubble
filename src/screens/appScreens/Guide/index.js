@@ -27,60 +27,6 @@ import Config from 'react-native-config';
 const screenWidth = Dimensions.get('window').width;
 const {width, fontScale} = Dimensions.get('window');
 
-// Sample data for the list
-const list = [
-  {
-    id: 1,
-    img: Images.NBALogo,
-    companyName: "NCAA Women's Soccer",
-    title: 'Oregon at Washington',
-    day: 'Thu. 2/9',
-    time: '5:00pm - 7:30pm',
-    live: true,
-    percentage: '25%',
-  },
-  {
-    id: 2,
-    img: Images.NBALogo,
-    companyName: "NCAA Women's Soccer",
-    title: 'Oregon at Washington',
-    day: 'Thu. 2/9',
-    time: '5:00pm - 7:30pm',
-    live: true,
-    percentage: '35%',
-  },
-  {
-    id: 3,
-    img: Images.NBALogo,
-    companyName: "NCAA Women's Soccer",
-    title: 'Oregon at Washington',
-    day: 'Thu. 2/9',
-    time: '5:00pm - 7:30pm',
-    live: true,
-    percentage: '45%',
-  },
-  {
-    id: 4,
-    img: Images.NBALogo,
-    companyName: "NCAA Women's Soccer",
-    title: 'Oregon at Washington',
-    day: 'Thu. 2/9',
-    time: '5:00pm - 7:30pm',
-    live: false,
-    percentage: '55%',
-  },
-  {
-    id: 5,
-    img: Images.NBALogo,
-    companyName: "NCAA Women's Soccer",
-    title: 'Oregon at Washington',
-    day: 'Thu. 2/9',
-    time: '5:00pm - 7:30pm',
-    live: false,
-    percentage: '65%',
-  },
-];
-
 // Sample data for the category slider
 const categoryArr = [
   {
@@ -691,7 +637,7 @@ export default function Guide(props) {
                 ? eventList
                 : selectedTimeIndex > 0
                 ? filteredEventList
-                : list
+                : []
               : filteredEventList
           }
           showsVerticalScrollIndicator={true}

@@ -237,7 +237,7 @@ export default function Guide() {
         data={mySportData}
         showsVerticalScrollIndicator={false}
         renderItem={({ item, index }) => (
-          <View style={styles.listContiner}>
+          <View style={styles.listContainer}>
             <View style={styles.innerContainer}>
               <Image
                 source={item?.img}

@@ -85,7 +85,7 @@ export default function UpdatePassword() {
                         leftImage={Images.LockIcon}
                         refInner={newConfirmPasswordRef}
                         placeholderTextColor={Colors.white}
-                        placeholder={Strings.confrimNewPassword}
+                        placeholder={Strings.confirmNewPassword}
                         multiline={false}
                         value={newConfirmPassword}
                         maxLength={50}

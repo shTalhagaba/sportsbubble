@@ -35,7 +35,7 @@ export default {
   updatePassword: 'Update Password',
   currentPassword: 'Current Password',
   newPassword: 'New Password',
-  confrimNewPassword: 'Confrim New Password',
+  confirmNewPassword: 'Confirm New Password',
   saveChanges: 'Save Changes',
   cancel: 'Cancel',
   alert: 'Alert',
