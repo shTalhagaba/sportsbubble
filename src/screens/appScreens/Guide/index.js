@@ -445,7 +445,8 @@ export default function Guide(props) {
               style={{
                 width: endTimeWidth(item?.endTime),
                 backgroundColor: dayjs(item?.startTime).isAfter(currentDate)
-                  ? Colors.mediumBlue
+                  // ? Colors.mediumBlue
+                  ? Colors.greyBackground
                   : Colors.mediumGreen,
               }}></View>
             <View
@@ -478,7 +479,7 @@ export default function Guide(props) {
               </View>
             </View>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity >
       ) : null
     );
   });
