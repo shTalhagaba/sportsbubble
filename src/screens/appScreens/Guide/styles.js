@@ -54,16 +54,16 @@ export default ScaledSheet.create({
     shadowRadius: 3,
     shadowOpacity: 1,
     marginTop: '0@ms0.3',
-    marginLeft: fontScale > 1.3 ? 12 * fontScale :
-      fontScale > 1 ? 20 * fontScale :
-        Platform.OS === 'android' ? '25@ms0.3' : '28@ms0.3',
+    // marginLeft: fontScale > 1.3 ? 12 * fontScale :
+    //   fontScale > 1 ? 20 * fontScale :
+    //     Platform.OS === 'android' ? '25@ms0.3' : '28@ms0.3',
   },
   liveMainContainer: {
     width: fontScale > 1 ? (width / 5) * fontScale : width / 4,
     justifyContent: 'center',
     alignContent: 'center',
     height: fontScale > 1 ? 30 * fontScale : '40@ms0.3',
-    marginTop: fontScale > 1 ? 5 * fontScale : '0@ms0.3'
+    marginTop: fontScale > 1 ? 5 * fontScale : '0@ms0.3',
   },
   liveTimeContainer: {
     backgroundColor: '#21365110', // Set a semi-transparent background color
@@ -89,7 +89,8 @@ export default ScaledSheet.create({
     flex: 1,
   },
   rightIconStyle: {
-    width: width / 5,
+    // width: width / 5,
+    width: fontScale > 1 ? (width / 5) * fontScale : width / 4,
     justifyContent: 'center',
     alignContent: 'center',
     height: fontScale > 1 ? 20 * fontScale : '38@ms0.3',
