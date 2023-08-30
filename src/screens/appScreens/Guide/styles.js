@@ -123,8 +123,8 @@ export default ScaledSheet.create({
     marginRight: '1@ms0.3',
   },
   imageIcon: {
-    height: '48@ms0.3',
-    width: '47@ms0.3',
+    height: Platform.OS === "ios" ? '44@ms0.3' : '48@ms0.3',
+    width: Platform.OS === "ios" ? '44@ms0.3' : '47@ms0.3',
   },
   userNameContainer: {
     paddingStart: '6@ms0.3',
