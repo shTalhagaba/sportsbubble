@@ -244,9 +244,9 @@ export default function PersonalInfo() {
           }}>
           <ContactTextInput
             leftImage={Images.Pronouns}
-            headerName={Strings.prounouns}
+            headerName={Strings.pronouns}
             placeholderTextColor={Colors.white}
-            placeholder={Strings.prounouns}
+            placeholder={Strings.pronouns}
             multiline={false}
             value={pronouns}
             headerTxtStyle={styles.headerTxtStyle}

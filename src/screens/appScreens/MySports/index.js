@@ -16,7 +16,6 @@ import {useNavigation} from '@react-navigation/native';
 import CustomModalView from 'src/components/Modal/CustomModal';
 import {moderateScale} from 'react-native-size-matters';
 import {useSelector} from 'react-redux';
-const screenWidth = Dimensions.get('window').width;
 const {fontScale} = Dimensions.get('window');
 
 const data = [
@@ -232,7 +231,7 @@ export default function Guide() {
         data={mySportData}
         showsVerticalScrollIndicator={false}
         renderItem={({item, index}) => (
-          <View style={styles.listContiner}>
+          <View style={styles.listContainer}>
             <View style={styles.innerContainer}>
               <Image
                 source={item?.img}

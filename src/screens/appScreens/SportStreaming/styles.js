@@ -31,7 +31,7 @@ export default ScaledSheet.create({
         marginHorizontal: "15@ms0.3",
         marginTop: "5@ms0.3"
     },
-    listContiner: {
+    listContainer: {
         marginVertical: "4@ms0.3",
         paddingVertical: "6@ms0.3",
         borderRadius: "16@ms0.3",

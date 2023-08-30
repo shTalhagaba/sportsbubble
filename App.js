@@ -12,7 +12,7 @@ import createSagaMiddleware from 'redux-saga';
 import { Provider } from 'react-redux';
 import rootReducer from 'src/store/Reducers/rootReducer';
 import mySaga from 'src/store/sagas';
-import { LogBox, Platform } from 'react-native';
+import { LogBox } from 'react-native';
 import Toast from "react-native-toast-message";
 import { toastConfig } from "src/components/ToastConfig";
 // import Amplify, { Auth } from 'aws-amplify';
@@ -33,12 +33,11 @@ const store = createStore(persistedReducer, applyMiddleware(sagaMiddleware));
 sagaMiddleware.run(mySaga);
 const persistor = persistStore(store);
 
-
 const httpLink = createHttpLink({
   // uri: 'https://9oa4ll4zp8.execute-api.us-west-2.amazonaws.com/stage/graphql',
   // uri: 'https://cpbubzqq92.execute-api.us-west-2.amazonaws.com/dev/graphql', // same web link
   // uri: 'https://6953ptqg3b.execute-api.us-west-2.amazonaws.com/dev/graphql',
-  uri: Platform.OS === "ios" ? Config.BASE_URL : 'https://6953ptqg3b.execute-api.us-west-2.amazonaws.com/dev/graphql'
+  uri: Config.BASE_URL
 });
 
 const client = new ApolloClient({

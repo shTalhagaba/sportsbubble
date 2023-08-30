@@ -121,7 +121,7 @@ export default function SportStreaming() {
             data={mySportData}
             showsVerticalScrollIndicator={false}
             renderItem={({item, index}) => (
-              <View style={styles.listContiner}>
+              <View style={styles.listContainer}>
                 <View style={styles.innerListContainer}>
                   <Image
                     source={item?.img}

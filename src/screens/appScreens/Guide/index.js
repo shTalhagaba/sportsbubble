@@ -21,67 +21,12 @@ import {useQuery} from '@apollo/client';
 import dayjs from 'dayjs';
 import {GET_SORTED_EVENTS} from './queries';
 import {useDispatch, useSelector} from 'react-redux';
-import {
-  setExpire,
-  setGuest,
-  setStoreEventList,
-  setUser,
-  setUserData,
-} from 'src/store/types';
+import {setExpire, setGuest, setStoreEventList, setUser} from 'src/store/types';
 import {moderateScale} from 'react-native-size-matters';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 import CustomMySportsModalView from 'src/components/Modal/CustomMySportsModalView';
 const screenWidth = Dimensions.get('window').width;
 const {width, fontScale} = Dimensions.get('window');
-
-// Sample data for the list
-const list = [
-  {
-    id: 1,
-    img: Images.NBALogo,
-    companyName: "NCAA Women's Soccer",
-    title: 'Oregon at Washington',
-    day: 'Thu. 2/9',
-    time: '5:00pm - 7:30pm',
-    live: true,
-  },
-  {
-    id: 2,
-    img: Images.NBALogo,
-    companyName: "NCAA Women's Soccer",
-    title: 'Oregon at Washington',
-    day: 'Thu. 2/9',
-    time: '5:00pm - 7:30pm',
-    live: true,
-  },
-  {
-    id: 3,
-    img: Images.NBALogo,
-    companyName: "NCAA Women's Soccer",
-    title: 'Oregon at Washington',
-    day: 'Thu. 2/9',
-    time: '5:00pm - 7:30pm',
-    live: true,
-  },
-  {
-    id: 4,
-    img: Images.NBALogo,
-    companyName: "NCAA Women's Soccer",
-    title: 'Oregon at Washington',
-    day: 'Thu. 2/9',
-    time: '5:00pm - 7:30pm',
-    live: false,
-  },
-  {
-    id: 5,
-    img: Images.NBALogo,
-    companyName: "NCAA Women's Soccer",
-    title: 'Oregon at Washington',
-    day: 'Thu. 2/9',
-    time: '5:00pm - 7:30pm',
-    live: false,
-  },
-];
 
 // Sample data for the category slider
 const categoryArr = [
@@ -116,7 +61,6 @@ export default function Guide(props) {
   const currentDate = dayjs(); // Get the current date and time
   const reduxData = useSelector(state => state.user);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLive, setIsLive] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [liveMatchModal, setLiveMatchModal] = useState(false);
@@ -161,7 +105,6 @@ export default function Guide(props) {
           .sort((eventA, eventB) => {
             const startEventA = new Date(eventA.startTime).getTime();
             const startEventB = new Date(eventB.startTime).getTime();
-
             // Sort events in ascending order based on the start time
             return startEventA - startEventB;
           })
@@ -186,12 +129,10 @@ export default function Guide(props) {
             if (!hasLogoUrl) {
               return false;
             }
-
             return true;
           });
         setEventList(filteredEvents);
       }
-      setIsRefreshing(false);
     },
     onError: error => {
       console.log('error : ', error);
@@ -236,7 +177,6 @@ export default function Guide(props) {
           if (!hasLogoUrl) {
             return false;
           }
-
           return true;
         });
         dispatch(setStoreEventList(filteredEvents));
@@ -250,14 +190,11 @@ export default function Guide(props) {
 
   const getTimeList = () => {
     const daysList = [];
-
     const currentHour = currentDate.hour(); // Get the current hour
     const currentDay = currentDate.startOf('day'); // Start from the beginning of the current day
     const hoursList = [];
-
     for (let i = 0; i < 7; i++) {
       const day = currentDay.add(i, 'day');
-
       if (i === 0) {
         for (let j = currentHour + 1; j < 24; j++) {
           const hour = day.hour(j);
@@ -283,7 +220,6 @@ export default function Guide(props) {
           hoursList.push(hourObject);
         }
       }
-
       daysList.push(hoursList);
     }
 
@@ -300,7 +236,6 @@ export default function Guide(props) {
   useEffect(() => {
     if (eventList && eventList.length > 0) {
       let filteredEvents;
-
       if (selectedCategory.includes('all')) {
         // If "all" category is selected, no need to filter, keep all events
         filteredEvents = eventList;
@@ -310,7 +245,6 @@ export default function Guide(props) {
           selectedCategory.includes(event.category.name.toLowerCase()),
         );
       }
-
       setFilteredEventList(filteredEvents);
     }
   }, [eventList]);
@@ -324,10 +258,8 @@ export default function Guide(props) {
     const formattedTime = dayjs(selectedTime).format(
       'YYYY-MM-DDTHH:mm:ss.SSSZ',
     );
-
     // Toggle the selected category
     list[index].selected = !list[index].selected;
-
     if (index === 0) {
       // Deselect all other categories if 'all' category is selected
       list.forEach((element, idx) => {
@@ -344,13 +276,11 @@ export default function Guide(props) {
         list[0].selected = false;
       }
     }
-
     // Filter events based on selected categories and time
     const selectedCategories = list.filter(category => category.selected);
     const selectedCategoryValues = selectedCategories.map(
       category => category.value,
     );
-
     let filteredEvents = [];
     if (
       selectedCategories.length === 1 &&
@@ -379,7 +309,6 @@ export default function Guide(props) {
             );
       setSelectedCategory(selectedCategoryValues);
     }
-
     setCategoryData(list);
     setFilteredEventList(filteredEvents);
   };
@@ -391,7 +320,6 @@ export default function Guide(props) {
     } else {
       setStartTime(selectedTime);
     }
-
     const updatedTimeData = timeData.map((element, i) => ({
       ...element,
       selected: i === index,
@@ -436,19 +364,19 @@ export default function Guide(props) {
       return 0; // Return 0 for any other cases
     }
   };
-
+  // handle next timer to show next hour events
   const handleNext = () => {
     handleSelectTime(currentIndex + 1);
     setCurrentIndex(prevIndex => prevIndex + 1);
     setIsLive(false);
   };
-
+  // handle live events
   const handleLive = () => {
     handleSelectTime(0);
     setCurrentIndex(0);
     setIsLive(true);
   };
-
+  // handle to navigate to sign up for create account
   const handleCreateAccount = async () => {
     await setMySportModal(false);
     await dispatch(setGuest(false));
@@ -457,13 +385,13 @@ export default function Guide(props) {
       screen: 'Signup',
     });
   };
-
+  // event list item component
   const ItemComponent = React.memo(({item}) => {
     return (
       // Render your item component here
       dayjs(item?.endTime).isAfter(currentDate) ? (
         <TouchableOpacity
-          style={styles.listContiner}
+          style={styles.listContainer}
           onPress={() => {
             if (
               item &&
@@ -648,7 +576,6 @@ export default function Guide(props) {
             </Text>
           </TouchableOpacity>
         </View>
-
         <View
           style={[styles.timeSliderInnerContainer, {width: screenWidth / 3}]}>
           <FlatList
@@ -691,8 +618,9 @@ export default function Guide(props) {
           </TouchableOpacity>
         </View>
       </View>
+      {/* featured event */}
       {eventList && eventList.length > 0 ? (
-        <TouchableOpacity style={styles.listContiner}>
+        <TouchableOpacity style={styles.listContainer}>
           <View style={[{backgroundColor: Colors.brandBlue, paddingBottom: 5}]}>
             <View
               style={[
@@ -755,7 +683,7 @@ export default function Guide(props) {
           </View>
         </TouchableOpacity>
       ) : null}
-      {/* main list  */}
+      {/* main event list */}
       {loading && currentIndex ? (
         <View style={{flex: 1, justifyContent: 'center'}}>
           <ActivityIndicator color={'#fff'} size={'large'} />
@@ -769,7 +697,7 @@ export default function Guide(props) {
                   ? eventList
                   : selectedTimeIndex > 0
                   ? filteredEventList
-                  : list
+                  : []
                 : filteredEventList
             }
             showsVerticalScrollIndicator={false}

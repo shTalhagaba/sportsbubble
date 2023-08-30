@@ -2,7 +2,7 @@ let regEmail = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
 let regName = /^[a-zA-Z ]*$/; // character and space allowed
 let regPassword =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-import { ShowMessage } from 'src/components/ShowMessage';
+import {ShowMessage} from 'src/components/ShowMessage';
 
 export const checkValidation = checkableValue => {
   if (
@@ -13,6 +13,7 @@ export const checkValidation = checkableValue => {
     return true;
   else return false;
 };
+
 export const signupValidation = (
   firstName,
   lastName,
@@ -73,6 +74,7 @@ export const signupValidation = (
     }
   }
 };
+
 export const loginValidation = (email, password) => {
   if (checkValidation(email)) {
     ShowMessage('Please enter email');
@@ -97,6 +99,7 @@ export const loginValidation = (email, password) => {
     }
   }
 };
+
 export const updatePasswordValidation = (
   currentPassword,
   newPassword,
@@ -131,6 +134,7 @@ export const otpValidation = otp => {
     return true;
   }
 };
+
 export const resetPasswordValidation = (otp, password) => {
   const trimmedPassword = password.trim();
   if (checkValidation(otp)) {
@@ -156,6 +160,7 @@ export const forgotPasswordValidation = email => {
     return true;
   }
 };
+
 export const updateProfileValidation = (
   firstName,
   lastName,

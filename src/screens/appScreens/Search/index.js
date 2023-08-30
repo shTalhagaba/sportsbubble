@@ -217,7 +217,7 @@ export default function Search(props) {
           }
           renderItem={({item}) => (
             <TouchableOpacity
-              style={styles.listContiner}
+              style={styles.listContainer}
               onPress={() => {
                 if (
                   item &&

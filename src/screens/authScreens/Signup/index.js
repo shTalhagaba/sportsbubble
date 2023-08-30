@@ -209,7 +209,7 @@ export default function Signup() {
             leftImage={Images.LockIcon}
             refInner={confirmPasswordRef}
             placeholderTextColor={Colors.white}
-            placeholder={Strings.confrimPassword}
+            placeholder={Strings.confirmPassword}
             multiline={false}
             value={confirmPassword}
             maxLength={50}

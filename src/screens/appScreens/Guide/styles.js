@@ -25,7 +25,7 @@ export default ScaledSheet.create({
     alignSelf: 'center',
     marginTop: '40@ms0.3',
   },
-  listContiner: {
+  listContainer: {
     paddingRight: '0@ms0.3',
     marginVertical: '0@ms0.3',
     paddingVertical: '4@ms0.3',
@@ -117,7 +117,7 @@ export default ScaledSheet.create({
   imageContainer: {
     height: fontScale > 1 ? 57 * fontScale : '59@ms0.3',
     width: fontScale > 1 ? 55 * fontScale : '57@ms0.3',
-    backgroundColor: Colors.mediumBlue,
+    backgroundColor: Colors.greyBackground,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: '1@ms0.3',
@@ -181,7 +181,7 @@ export default ScaledSheet.create({
   },
   sliderContainer: {
     flexDirection: 'row',
-    backgroundColor: Colors.mediumBlue,
+    backgroundColor: Colors.greyBackground,
     height: fontScale > 1 ? (width / 4.4) * fontScale : '100@ms0.3',
   },
   sliderInnerContainer: {

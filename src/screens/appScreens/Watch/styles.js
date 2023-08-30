@@ -196,7 +196,7 @@ export default ScaledSheet.create({
   },
   sliderContainer: {
     flexDirection: 'row',
-    backgroundColor: Colors.mediumBlue,
+    backgroundColor: Colors.greyBackground,
     height: fontScale > 1 ? (screenWidth / 4.4) * fontScale : '90@ms0.3',
     alignItems: 'center',
     paddingHorizontal: '15@ms0.3',
@@ -266,11 +266,11 @@ export default ScaledSheet.create({
   bottomInnerContainer: {
     width: screenWidth / 4.5,
     height: screenWidth / 4.5,
-    backgroundColor: Colors.mediumBlue,
+    backgroundColor: Colors.greyBackground,
     borderWidth: '2@ms0.3',
     borderRadius: '16@ms0.3',
     overflow: 'hidden',
-    borderColor: Colors.mediumBlue,
+    borderColor: Colors.greyBackground,
     justifyContent: 'center',
   },
   bottomListBackground: {
@@ -297,11 +297,11 @@ export default ScaledSheet.create({
   listInnerContainer: {
     width: screenWidth / 4.5,
     height: screenWidth / 4.5,
-    backgroundColor: Colors.mediumBlue,
+    backgroundColor: Colors.greyBackground,
     borderWidth: '2@ms0.3',
     borderRadius: '16@ms0.3',
     overflow: 'hidden',
-    borderColor: Colors.mediumBlue,
+    borderColor: Colors.greyBackground,
     justifyContent: 'center',
   },
   listMainContainer: {

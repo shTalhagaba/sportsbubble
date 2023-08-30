@@ -18,7 +18,7 @@ export default function Connect(props) {
   const [item, setItem] = useState(props?.route?.params?.item);
   const {holderItem, eventFlag} = props?.route?.params;
   const currentDate = dayjs(new Date()).toISOString(); // Get the current date and time
-  
+
   useEffect(() => {
     setItem(props?.route?.params?.item);
   }, [props?.route?.params?.item]);

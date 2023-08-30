@@ -9,7 +9,7 @@ export default ScaledSheet.create({
     flex: 1,
     backgroundColor: Colors.appColorBackground,
   },
-  listContiner: {
+  listContainer: {
     marginVertical: '8@ms0.3',
     paddingVertical: '5@ms0.3',
     borderRadius: '16@ms0.3',
@@ -50,7 +50,7 @@ export default ScaledSheet.create({
   },
   sliderContainer: {
     flexDirection: 'row',
-    backgroundColor: Colors.mediumBlue,
+    backgroundColor: Colors.greyBackground,
     height: fontScale > 1 ? (width / 4.4) * fontScale : '100@ms0.3',
   },
   sliderImageBackground: {

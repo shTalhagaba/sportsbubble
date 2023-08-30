@@ -65,7 +65,7 @@ export default {
   signUp: "Sign Up",
   firstName: "First Name",
   lastName: "Last Name",
-  confrimPassword: "Confrim Password",
+  confirmPassword: "Confirm Password",
   signupTerm: "Email Opt-in lorem ipsum dolor sit amet consecteur.",
   haveRead: "I have read and agree to the",
   termsofService: "Terms of Service",
@@ -97,6 +97,5 @@ export default {
   welcomeName: "Welcome, __NAME__!",
   cancelAccount: "Cancel Account",
   saveChanges: "Save Changes",
-  prounouns: "Prounouns",
   submit: 'Submit',
 };
