@@ -37,7 +37,8 @@ const httpLink = createHttpLink({
   // uri: 'https://9oa4ll4zp8.execute-api.us-west-2.amazonaws.com/stage/graphql',
   // uri: 'https://cpbubzqq92.execute-api.us-west-2.amazonaws.com/dev/graphql', // same web link
   // uri: 'https://6953ptqg3b.execute-api.us-west-2.amazonaws.com/dev/graphql',
-  uri: Config.BASE_URL
+  uri: 'https://09a84a77s4.execute-api.us-west-2.amazonaws.com/dev/graphql', // new 
+  // uri: Config.BASE_URL
 });
 
 const client = new ApolloClient({

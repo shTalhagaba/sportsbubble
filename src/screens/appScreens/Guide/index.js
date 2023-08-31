@@ -92,8 +92,8 @@ export default function Guide(props) {
     variables: {
       startTime: startTime,
       endTime: dayjs(startTime)
-        .add(4, 'hours')
-        .set('minute', 0)
+        .add(2, 'hours')
+        .set('minutes', 59)
         .set('second', 0)
         .toISOString(),
     },
@@ -582,6 +582,7 @@ export default function Guide(props) {
             horizontal
             data={timeData.slice(0, 2)}
             showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{flex: 1, justifyContent: 'space-around'}}
             scrollEnabled={fontScale > 1 ? true : false}
             renderItem={({item, index}) => {
               const adjustedIndex = index + currentIndex; // Calculate the adjusted index based on the current index

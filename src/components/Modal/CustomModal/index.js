@@ -35,7 +35,7 @@ const CustomModal = props => {
                 {props.fillBefore && (
                   <CustomButton
                     title={props.blackBtnTxt}
-                    Contianer={
+                    Container={
                       props.rowStyle
                         ? styles.blackBtnContainer
                         : styles.blackBtnContainer2
@@ -46,7 +46,7 @@ const CustomModal = props => {
                 {props.orangrBTn ? (
                   <CustomButton
                     title={props.orangeBtnTxt}
-                    Contianer={
+                    Container={
                       props.rowStyle
                         ? styles.orangeBtnContainer
                         : styles.blackBtnContainer2
@@ -57,7 +57,7 @@ const CustomModal = props => {
                 ) : (
                   <CustomButton
                     blue={props.blue}
-                    Contianer={props.rowStyle ? {flex: 1} : null}
+                    Container={props.rowStyle ? {flex: 1} : null}
                     title={props.otherBtnTxt}
                     onpress={props.otherBtnPress}
                   />
@@ -65,7 +65,7 @@ const CustomModal = props => {
                 {!props.fillBefore && (
                   <CustomButton
                     title={props.blackBtnTxt}
-                    Contianer={
+                    Container={
                       props.rowStyle
                         ? styles.blackBtnContainer
                         : styles.blackBtnContainer2

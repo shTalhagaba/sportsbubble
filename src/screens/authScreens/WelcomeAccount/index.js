@@ -45,23 +45,23 @@ export default function WelcomeAccount(props) {
     {id: 3, label: 'they/them', value: 'they/them'},
     {id: 4, label: 'other', value: 'other'},
   ];
-
+  // Toggle the dropdown menu
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
-
+  // Handle the selection of an item in the dropdown menu
   const handleSelect = item => {
     setPronouns(item?.label);
     toggleDropdown();
   };
-
+  // Handle the change in the selected date in the date picker
   const handleDOBChange = (event, selectedDate) => {
     const currentDate = selectedDate || dob;
     setShowDatePicker(Platform.OS === 'ios');
     setShowDatePicker(false);
     setDOB(currentDate);
   };
-
+  // Handle the submission of the complete profile form
   const submitButton = async () => {
     if (completeProfileValidation(zipCode, dob, pronouns)) {
       setLoadingLocal(true);
@@ -74,7 +74,7 @@ export default function WelcomeAccount(props) {
       );
       if (user === 'SUCCESS') {
         setLoadingLocal(false);
-        ShowMessage('Profile Completed Successfully!! Login to Continue.');
+        ShowMessage(Strings.profileCompleted);
         navigation.replace('Login');
       }
       setLoadingLocal(false);
@@ -105,11 +105,12 @@ export default function WelcomeAccount(props) {
           <Text style={styles.welcomeTxt}>
             {Strings.welcomeName.replace('__NAME__', firstName)}
           </Text>
-          <Text style={styles.accountTxt}>{Strings.wejustneed}</Text>
+          <Text style={styles.accountTxt}>{Strings.weJustNeed}</Text>
+          {/* Zip Code Input */}
           <ContactTextInput
             leftImage={Images.Location}
             refInner={zipCodeRef}
-            Contianer={{marginTop: 30}}
+            Container={{marginTop: 30}}
             placeholderTextColor={Colors.white}
             placeholder={Strings.zipCode}
             multiline={false}
@@ -124,11 +125,12 @@ export default function WelcomeAccount(props) {
               birthdayRef.current.focus();
             }}
           />
-          <Text style={styles.sideTxt}>{Strings.sharingyourlocation}</Text>
+          <Text style={styles.sideTxt}>{Strings.sharingYourLocation}</Text>
+          {/* Date of Birth Input */}
           <ContactTextInput
             leftImage={Images.Birthday}
             refInner={birthdayRef}
-            Contianer={{marginTop: 30}}
+            Container={{marginTop: 30}}
             placeholderTextColor={Colors.white}
             placeholder={Strings.birthdate}
             multiline={false}
@@ -154,10 +156,11 @@ export default function WelcomeAccount(props) {
               onChange={handleDOBChange}
             />
           )}
-          <Text style={styles.sideTxt}>{Strings.youmustbe}</Text>
+          <Text style={styles.sideTxt}>{Strings.youMustBe}</Text>
+          {/* Pronouns Input */}
           <ContactTextInput
             leftImage={Images.Pronouns}
-            Contianer={{marginTop: 30}}
+            Container={{marginTop: 30}}
             refInner={pronounsRef}
             placeholderTextColor={Colors.white}
             placeholder={Strings.pronouns}
@@ -193,11 +196,11 @@ export default function WelcomeAccount(props) {
               />
             </View>
           )}
-          <Text style={styles.sideTxt}>{Strings.wordingforthistk}</Text>
+          <Text style={styles.sideTxt}>{Strings.wordingForThisTk}</Text>
           <View style={styles.btnContainer}>
             <CustomButton
               title={Strings.continue}
-              Contianer={styles.blueButtonContainer}
+              Container={styles.blueButtonContainer}
               txt={styles.blueButtonTxt}
               onpress={() => submitButton()}
             />

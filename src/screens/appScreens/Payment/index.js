@@ -62,7 +62,7 @@ export default function Payment() {
 
                 <View style={styles.payusingContainer}>
                     <View style={styles.line}></View>
-                    <Text style={styles.payusingTxt}>{Strings.payusing}</Text>
+                    <Text style={styles.payusingTxt}>{Strings.payUsing}</Text>
                     <View style={styles.line}></View>
                 </View>
                 <View style={styles.paymentList}>
@@ -91,7 +91,7 @@ export default function Payment() {
                     placeholderTextColor={Colors.white}
                     placeholder={Strings.cardNumber}
                     customInputStyle={styles.customInputStyle}
-                    Contianer={styles.ContactTextInputContainer}
+                    Container={styles.ContactTextInputContainer}
                     multiline={false}
                     value={cardNumber}
                     maxLength={16}
@@ -112,7 +112,7 @@ export default function Payment() {
                             refInner={expiryDateRef}
                             placeholderTextColor={Colors.white}
                             customInputStyle={styles.customInputStyle}
-                            Contianer={styles.ContactTextInputContainer}
+                            Container={styles.ContactTextInputContainer}
                             placeholder={"MM/YY"}
                             multiline={false}
                             value={expiryDate}
@@ -133,7 +133,7 @@ export default function Payment() {
                             refInner={cvvRef}
                             placeholderTextColor={Colors.white}
                             customInputStyle={styles.customInputStyle}
-                            Contianer={styles.ContactTextInputContainer}
+                            Container={styles.ContactTextInputContainer}
                             placeholder={Strings.CVV}
                             multiline={false}
                             value={cvv}
@@ -157,7 +157,7 @@ export default function Payment() {
                         :
                         <View style={styles.uncheckBox}></View>
                     }
-                    <Text style={styles.saveCardTxt}>{Strings.savethisCard}</Text>
+                    <Text style={styles.saveCardTxt}>{Strings.saveThisCard}</Text>
                 </TouchableOpacity>
                 <Text style={[styles.cardInformationTxt, { marginTop: 0 }]}>{Strings.countryRegion}</Text>
 
@@ -166,7 +166,7 @@ export default function Payment() {
                     placeholderTextColor={Colors.white}
                     placeholder={Strings.unitedStates}
                     customInputStyle={styles.customInputStyle}
-                    Contianer={styles.ContactTextInputContainer}
+                    Container={styles.ContactTextInputContainer}
                     multiline={false}
                     value={country}
                     maxLength={50}
@@ -180,7 +180,7 @@ export default function Payment() {
                     placeholderTextColor={Colors.white}
                     placeholder={Strings.zip}
                     customInputStyle={styles.customInputStyle}
-                    Contianer={styles.ContactTextInputContainer}
+                    Container={styles.ContactTextInputContainer}
                     multiline={false}
                     value={zip}
                     maxLength={50}

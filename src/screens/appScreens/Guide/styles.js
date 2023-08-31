@@ -59,9 +59,9 @@ export default ScaledSheet.create({
     shadowRadius: 3,
     shadowOpacity: 1,
     marginTop: '0@ms0.3',
-    marginLeft: fontScale > 1.3 ? 12 * fontScale :
-      fontScale > 1 ? 20 * fontScale :
-        Platform.OS === 'android' ? '25@ms0.3' : '28@ms0.3',
+    // marginLeft: fontScale > 1.3 ? 12 * fontScale :
+    //   fontScale > 1 ? 20 * fontScale :
+    //     Platform.OS === 'android' ? '25@ms0.3' : '28@ms0.3',
   },
   liveMainContainer: {
     width: fontScale > 1 ? (width / 5) * fontScale : width / 4,

@@ -127,7 +127,7 @@ export default function UpgradeAccount() {
           />
           <CustomButton
             title={Strings.noThanks}
-            Contianer={styles.blackBtnContainer}
+            Container={styles.blackBtnContainer}
             onpress={() => navigation.goBack()}
           />
         </View>

@@ -1,5 +1,7 @@
 import { Colors, Fonts } from 'src/utils';
 import { ScaledSheet } from 'react-native-size-matters';
+import { Dimensions } from 'react-native';
+const height = Dimensions.get('window').height;
 
 export default ScaledSheet.create({
   container: {
@@ -33,4 +35,14 @@ export default ScaledSheet.create({
     resizeMode: 'cover',
     tintColor: Colors.white,
   },
+  imageStyle: {
+    flex: 1,
+    alignSelf: 'center',
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: height / 4,
+  },
+  image: {height: 230, width: 230, alignSelf: 'center'},
+  
 });

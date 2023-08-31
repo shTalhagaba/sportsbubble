@@ -7,7 +7,7 @@ const GreenButton = props => {
   return (
     <TouchableOpacity
       onPress={props.onpress}
-      style={[styles.container, props.Contianer]}>
+      style={[styles.container, props.Container]}>
       <View style={[styles.innerContainer, props.innerContainer]}>
         <Text style={[styles.btnTxt,props.btnTxt]}>{props.title}</Text>
         {props.rightIcon &&

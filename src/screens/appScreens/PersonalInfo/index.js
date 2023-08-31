@@ -158,7 +158,7 @@ export default function PersonalInfo() {
         <ContactHeaderTextInput
           leftImage={Images.UserIcon}
           headerName={Strings.firstName}
-          Contianer={{marginTop: 24}}
+          Container={{marginTop: 24}}
           customInputStyle={{marginBottom: 5}}
           refInner={firstNameRef}
           // placeholderTextColor={Colors.white}
@@ -293,7 +293,7 @@ export default function PersonalInfo() {
         <CustomButton
           title={Strings.saveChanges}
           onpress={() => handleUpdateProfile()}
-          Contianer={styles.btnContainer}
+          Container={styles.btnContainer}
           txt={styles.btnContainerTxt}
         />
 
@@ -314,7 +314,7 @@ export default function PersonalInfo() {
         rowStyle={true}
         blackBtnPress={() => setCancelAccountModal(!cancelAccountModal)}
         ornageBtnPress={() => handleDeleteAccount()}
-        Contianer={{backgroundColor: Colors.backBlack}}
+        Container={{backgroundColor: Colors.backBlack}}
       />
       <LoaderModal visible={loadingLocal} loadingText={''} />
     </ImageBackground>

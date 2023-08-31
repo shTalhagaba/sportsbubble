@@ -9,7 +9,7 @@ const CustomButton = props => {
       onPress={props.onpress}
       style={[
         styles.container,
-        props.Contianer,
+        props.Container,
         props.blue ? {backgroundColor: Colors.brandBlue} : {},
       ]}>
       <View style={[styles.innerContainer, props.innerContainer]}>

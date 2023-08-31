@@ -68,14 +68,14 @@ const CustomVeriificationModal = props => {
             <View style={styles.columnBtn}>
               <CustomButton
                 blue={props.blue}
-                Contianer={styles.greenButtonContainer}
+                Container={styles.greenButtonContainer}
                 title={props.otherBtnTxt}
                 onpress={props.otherBtnPress}
                 txt={styles.greenButtonTxt}
               />
               <CustomButton
                 title={props.blackBtnTxt}
-                Contianer={styles.blackBtnContainer2}
+                Container={styles.blackBtnContainer2}
                 txt={styles.greenButtonTxt}
                 onpress={props.blackBtnPress}
               />

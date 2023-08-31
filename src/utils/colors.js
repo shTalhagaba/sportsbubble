@@ -30,7 +30,7 @@ export default {
     darkBlue95: 'rgba(22, 31, 42, 0.95)',
     darkBlue70: 'rgba(22, 31, 42, 0.7)',
     darkBlue80: 'rgba(22, 31, 42, 0.8)',
-    mediumBlue: "#21354F",
+    mediumBlue: "#3F5B80", // old - #21354F
     brandBlue: "#004EBC",
     brandBlue80: "rgba(0, 78, 188, 0.8)", 
     lightGreen: "#69A833",

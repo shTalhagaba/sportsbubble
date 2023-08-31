@@ -40,7 +40,7 @@ const CustomMySportsModalView = props => {
                 {props.orangrBTn ? (
                   <CustomButton
                     title={props.orangeBtnTxt}
-                    Contianer={
+                    Container={
                       props.rowStyle
                         ? styles.orangeBtnContainer
                         : styles.blackBtnContainer2
@@ -51,7 +51,7 @@ const CustomMySportsModalView = props => {
                 ) : (
                   <CustomButton
                     blue={props.blue}
-                    Contianer={props.rowStyle ? {flex: 1} : styles.buttonStyle}
+                    Container={props.rowStyle ? {flex: 1} : styles.buttonStyle}
                     title={props.otherBtnTxt}
                     txt={styles.buttonTxt}
                     onpress={props.otherBtnPress}
@@ -59,7 +59,7 @@ const CustomMySportsModalView = props => {
                 )}
                 <CustomButton
                   title={props.blackBtnTxt}
-                  Contianer={
+                  Container={
                     props.rowStyle
                       ? styles.blackBtnContainer
                       : styles.blackBtnContainer2

@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ImageBackground,
   StatusBar,
@@ -14,7 +14,7 @@ import DeviceInfo from 'react-native-device-info';
 import {useQuery} from '@apollo/client';
 import {GET_SORTED_EVENTS} from 'src/screens/appScreens/Guide/queries';
 import dayjs from 'dayjs';
-import {setGuest, setSplashEventList, setUser} from 'src/store/types';
+import {setSplashEventList} from 'src/store/types';
 import {useDispatch, useSelector} from 'react-redux';
 
 export default function Splash() {
@@ -25,19 +25,24 @@ export default function Splash() {
   const height = Dimensions.get('window').height;
   const version = DeviceInfo.getVersion();
 
+  // Apollo Client query for fetching sorted events
   const {loading, refetch, error} = useQuery(GET_SORTED_EVENTS, {
     variables: {
       startTime: startTime,
-      endTime: dayjs(startTime).add(4, 'hours').set('minute', 0).set('second', 0).toISOString(),
+      endTime: dayjs(startTime)
+        .add(2, 'hours')
+        .set('minutes', 59)
+        .set('second', 0)
+        .toISOString(),
     },
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
     onCompleted: data => {
       if (data && data?.sortedEvents) {
         const filteredEvents = data?.sortedEvents.filter(event => {
+          // Check if all required properties exist
           const {line1, line2, startTime, endTime, logo1, rightsHolders} =
             event;
-          // Check if all required properties exist
           if (
             !line1 ||
             !line2 ||
@@ -55,7 +60,6 @@ export default function Splash() {
           if (!hasLogoUrl) {
             return false;
           }
-
           return true;
         });
         dispatch(setSplashEventList(filteredEvents));
@@ -67,13 +71,13 @@ export default function Splash() {
   });
 
   useEffect(() => {
-    // dispatch(setUser(false));
+    // Check user status and navigate accordingly
     if (
       !loading &&
       reduxData?.splashEventList &&
       reduxData?.splashEventList.length > 0
     ) {
-      if (reduxData?.user) {
+      if (reduxData?.user || reduxData?.guest) {
         setTimeout(() => {
           navigation.replace('Root');
         }, 1000);
@@ -83,7 +87,7 @@ export default function Splash() {
         }, 1000);
       }
     } else if (!loading) {
-      if (reduxData?.user) {
+      if (reduxData?.user || reduxData?.guest) {
         setTimeout(() => {
           navigation.replace('Root');
         }, 1000);
@@ -111,18 +115,10 @@ export default function Splash() {
             barStyle="light-content"
           />
         </ImageBackground>
-        <View
-          style={{
-            flex: 1,
-            alignSelf: 'center',
-            position: 'absolute',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: height / 4,
-          }}>
+        <View style={styles.imageStyle}>
           <Image
             source={Images.LogoText}
-            style={{height: 230, width: 230, alignSelf: 'center'}}
+            style={styles.image}
             resizeMode="contain"
           />
         </View>
@@ -138,7 +134,6 @@ export default function Splash() {
             style={styles.powerImage}
             resizeMode="contain"
           />
-
           <Text style={styles.versionTxt}>v {version}</Text>
         </View>
       </ImageBackground>

@@ -6,7 +6,7 @@ import { Colors } from 'src/utils';
 
 const ContactTextInput = (props) => {
     return (
-        <View style={[styles.container, props.Contianer]}>
+        <View style={[styles.container, props.Container]}>
             <View style={[styles.innerContainer, props.innerContainer]}>
                 <Image source={props.leftImage} style={styles.leftIcon} resizeMode={"contain"} />
                 <TextInput

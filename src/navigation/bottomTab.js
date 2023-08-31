@@ -5,7 +5,6 @@ import {Image, Platform, View} from 'react-native';
 
 import Guide from 'src/screens/appScreens/Guide';
 import Watch from 'src/screens/appScreens/Watch';
-import Connect from 'src/screens/appScreens/Connect';
 import Search from 'src/screens/appScreens/Search';
 import Setting from 'src/screens/appScreens/Setting';
 import Legal from 'src/screens/appScreens/Legal';

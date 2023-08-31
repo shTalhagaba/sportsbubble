@@ -8,7 +8,7 @@ const ButtonWithIcon = props => {
     <TouchableOpacity
       activeOpacity={0.8}
       onPress={props.onpress}
-      style={[styles.container, props.Contianer]}>
+      style={[styles.container, props.Container]}>
       <View style={[styles.innerContainer, props.innerContainer]}>
         <Text style={[styles.headingTxt]}>{props.title}</Text>
         <Image

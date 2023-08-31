@@ -147,7 +147,7 @@ export default function Setting() {
               }
             });
         }}
-        Contianer={{ backgroundColor: Colors.backBlack }}
+        Container={{ backgroundColor: Colors.backBlack }}
       />
 
     </ImageBackground>

@@ -57,6 +57,7 @@ export default function UpdatePassword() {
             ShowMessage(error?.message);
           }
         }
+        setLoadingLocal(false);
       } finally {
         setLoadingLocal(false);
       }
@@ -91,7 +92,7 @@ export default function UpdatePassword() {
             multiline={false}
             value={currentPassword}
             maxLength={50}
-            Contianer={{marginTop: 24}}
+            Container={{marginTop: 24}}
             onChangeText={txt => setCurrentPassword(txt)}
             keyboardType={'default'}
             autoCapitalize="none"
@@ -113,7 +114,7 @@ export default function UpdatePassword() {
             multiline={false}
             value={newPassword}
             maxLength={50}
-            Contianer={{marginTop: 32}}
+            Container={{marginTop: 32}}
             onChangeText={txt => setNewPassword(txt)}
             keyboardType={'default'}
             autoCapitalize="none"
@@ -135,7 +136,7 @@ export default function UpdatePassword() {
             multiline={false}
             value={newConfirmPassword}
             maxLength={50}
-            Contianer={{marginTop: 16}}
+            Container={{marginTop: 16}}
             onChangeText={txt => setNewConfirmPassword(txt)}
             keyboardType={'default'}
             autoCapitalize="none"
@@ -149,13 +150,13 @@ export default function UpdatePassword() {
           />
           <CustomButton
             title={Strings.saveChanges}
-            Contianer={styles.saveBtnContainer}
+            Container={styles.saveBtnContainer}
             onpress={() => updatePassword()}
             txt={styles.btnContainerTxt}
           />
           <CustomButton
             title={Strings.cancel}
-            Contianer={styles.cancelBtnContainer}
+            Container={styles.cancelBtnContainer}
             txt={styles.btnTxt}
             onpress={() => navigation.goBack(null)}
           />

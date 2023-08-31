@@ -5,7 +5,7 @@ import {Images} from 'src/utils';
 
 const ContactHeaderTextInput = props => {
   return (
-    <View style={[styles.container, props.Contianer]}>
+    <View style={[styles.container, props.Container]}>
       <View style={[styles.innerContainer, props.innerContainer]}>
         <View style={[styles.headerContainer, props.headerContainer]}>
           <Image

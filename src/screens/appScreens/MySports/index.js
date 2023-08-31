@@ -117,17 +117,13 @@ export default function Guide() {
   const [reminderModal, setRemaindarModal] = useState(false);
   const [fvrtModal, setFvrtModal] = useState(false);
   const [mySportData, setSportData] = useState(data);
-  const [curremItem, setCurrentItem] = useState({});
   const [curremIndex, setCurrentIndex] = useState();
 
   const handleReminder = (item, index) => {
-    setCurrentItem(item);
     setCurrentIndex(index);
     setRemaindarModal(!reminderModal);
   };
   const handleFvrt = (item, index) => {
-    console.log(item);
-    setCurrentItem(item);
     setCurrentIndex(index);
     setFvrtModal(!fvrtModal);
   };
@@ -142,7 +138,7 @@ export default function Guide() {
     list[curremIndex].fvrtFlag = !list[curremIndex].fvrtFlag;
     setSportData(list);
     setFvrtModal(!fvrtModal);
-    navigation.navigate('withoutBottomtab', {screen: 'UpgradeAccount'});
+    navigation.navigate('Auth', {screen: 'Signup'});
   };
 
   const handleSelectedCategory = (e, index) => {};

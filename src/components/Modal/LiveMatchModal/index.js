@@ -56,7 +56,7 @@ const LiveMatch = ({setLiveMatchModal, liveMatchModal}) => {
             <GreenButton
               title={Strings.connecttoWatch}
               rightIcon={false}
-              Contianer={styles.greenButtonContainer}
+              Container={styles.greenButtonContainer}
               btnTxt={styles.greenButtonTxt}
               onpress={() => {}}
             />

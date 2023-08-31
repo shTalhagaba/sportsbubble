@@ -23,6 +23,7 @@ import CustomVeriificationModal from 'src/components/Modal/CustomVeriificationMo
 
 export default function Signup() {
   const navigation = useNavigation();
+  // State variables for user input and UI state
   const [fullName, setFullName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -33,16 +34,17 @@ export default function Signup() {
   const [verifyModal, setVerifyModal] = useState(false);
   const [loadingLocal, setLoadingLocal] = useState(false);
   const [otp, setOTP] = useState();
-
   const [displayPassword, setDisplayPassword] = useState(true);
   const [displayConfirmPassword, setDisplayConfirmPassword] = useState(true);
 
+  // Refs for input fields
   const fullNameRef = useRef();
   const lastNameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
 
+  // Function to show the verification modal
   const showVerifyModal = async () => {
     if (
       signupValidation(
@@ -71,6 +73,7 @@ export default function Signup() {
       }
     }
   };
+  // Function to handle verification
   const handleVerify = async () => {
     if (otpValidation(otp)) {
       try {
@@ -96,12 +99,11 @@ export default function Signup() {
       }
     }
   };
+  // Function to handle resending verification code
   const handleResendCode = async () => {
-    console.log('handleResendCode : ');
     try {
       setLoadingLocal(true);
       const user = await resendCode(email);
-      console.log('Userr => ', user);
       setLoadingLocal(false);
     } catch (error) {
       if (error.message.includes(':')) {
@@ -127,15 +129,17 @@ export default function Signup() {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
+        headerContainer={{marginTop: 10}}
         SimpleView
       />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.innerContainer}>
           <Text style={styles.signupTxt}>{Strings.signUp}</Text>
+          {/* Input field for full name */}
           <ContactTextInput
             leftImage={Images.UserIcon}
             refInner={fullNameRef}
-            Contianer={{marginTop: 40}}
+            Container={{marginTop: 40}}
             placeholderTextColor={Colors.white}
             placeholder={Strings.firstName}
             multiline={false}
@@ -150,6 +154,7 @@ export default function Signup() {
               lastNameRef.current.focus();
             }}
           />
+          {/* Input field for last name */}
           <ContactTextInput
             leftImage={Images.UserIcon}
             refInner={lastNameRef}
@@ -167,6 +172,8 @@ export default function Signup() {
               emailRef.current.focus();
             }}
           />
+
+          {/* Input field for email */}
           <ContactTextInput
             leftImage={Images.EmailIcon}
             refInner={emailRef}
@@ -184,6 +191,7 @@ export default function Signup() {
               passwordRef.current.focus();
             }}
           />
+          {/* Input field for password */}
           <ContactTextInput
             leftImage={Images.LockIcon}
             refInner={passwordRef}
@@ -205,6 +213,7 @@ export default function Signup() {
               confirmPasswordRef.current.focus();
             }}
           />
+          {/* Input field for confirming password */}
           <ContactTextInput
             leftImage={Images.LockIcon}
             refInner={confirmPasswordRef}
@@ -222,14 +231,19 @@ export default function Signup() {
             eyeOpen={displayConfirmPassword}
             onPress={() => setDisplayConfirmPassword(!displayConfirmPassword)}
           />
-          <View style={styles.chekboxContainer}>
+          {/* Checkbox for email opt-in */}
+          <View style={styles.checkboxContainer}>
             <TouchableOpacity
               onPress={() => setEmailOptCheck(!emailOptCheck)}
               style={styles.uncheckBox}>
               {emailOptCheck && (
                 <Image
                   source={Images.Tick}
-                  style={{tintColor: Colors.white, height: 10, width: 10}}
+                  style={{
+                    tintColor: Colors.white,
+                    height: 10,
+                    width: 10,
+                  }}
                 />
               )}
             </TouchableOpacity>
@@ -237,14 +251,19 @@ export default function Signup() {
               {Strings.signupTerm}
             </Text>
           </View>
-          <View style={styles.chekboxContainer}>
+          {/* Checkbox for terms and conditions */}
+          <View style={styles.checkboxContainer}>
             <TouchableOpacity
               onPress={() => setTermsCheck(!termsCheck)}
               style={styles.uncheckBox}>
               {termsCheck && (
                 <Image
                   source={Images.Tick}
-                  style={{tintColor: Colors.white, height: 10, width: 10}}
+                  style={{
+                    tintColor: Colors.white,
+                    height: 10,
+                    width: 10,
+                  }}
                 />
               )}
             </TouchableOpacity>
@@ -253,11 +272,11 @@ export default function Signup() {
               <Text style={styles.termsCondition}>
                 {Strings.haveRead}
                 <Text
-                  onPress={() => console.log('temrs')}
+                  onPress={() => console.log('terms')}
                   style={styles.termsConditionBold}>
                   {' ' + Strings.termsofService}
-                </Text>
-                {''} and {''}
+                </Text>{' '}
+                and{' '}
                 <Text
                   onPress={() => console.log('privacy policy')}
                   style={styles.termsConditionBold}>
@@ -266,10 +285,16 @@ export default function Signup() {
               </Text>
             </View>
           </View>
+          {/* Button to continue to verification */}
           <CustomButton
             title={Strings.continue}
             onpress={() => showVerifyModal()}
           />
+          <Text style={styles.accountTxt}>{Strings.alreadyAccount}</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+            <Text style={styles.signupTxt}>{Strings.login}</Text>
+          </TouchableOpacity>
+          {/* Verification Modal */}
           <CustomVeriificationModal
             visible={verifyModal}
             desTxt={Strings.pleaseCheckInbox}
@@ -284,6 +309,7 @@ export default function Signup() {
           />
         </View>
       </ScrollView>
+      {/* Loading modal */}
       <LoaderModal visible={loadingLocal} loadingText={''} />
     </ImageBackground>
   );

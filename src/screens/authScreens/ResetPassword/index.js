@@ -1,52 +1,46 @@
 import React, {useRef, useState} from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  ImageBackground,
-  StatusBar,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, ScrollView, ImageBackground, StatusBar} from 'react-native';
 import styles from './styles';
 import ContactTextInput from 'src/components/ContactTextInput';
 import AppHeader from 'src/components/AppHeader';
-import {Images, Colors, Fonts, Strings} from 'src/utils';
+import {Images, Colors, Strings} from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
-import {loginValidation, resetPasswordValidation} from 'src/common/authValidation';
+import {resetPasswordValidation} from 'src/common/authValidation';
 import LoaderModal from 'src/components/LoaderModal';
 import {ShowMessage} from 'src/components/ShowMessage';
 import {confirmPasswordReset} from 'src/services/authForgotPassword';
 
 export default function ResetPassword(props) {
-  const dispatch = useDispatch();
   const navigation = useNavigation();
+  // State variables for OTP and password
   const [otp, setOtp] = useState('');
   const [password, setPassword] = useState('');
   const [displayPassword, setDisplayPassword] = useState(true);
   const [loadingLocal, setLoadingLocal] = useState(false);
-
+  // Refs for input fields
   const emailRef = useRef();
   const passwordRef = useRef();
 
+  // Function to handle password reset confirmation
   const handleConfirmPassword = async () => {
     try {
       if (resetPasswordValidation(otp, password)) {
+        setLoadingLocal(true);
         const resetSuccess = await confirmPasswordReset(
           props?.route?.params?.email,
           password,
           otp,
         );
         if (resetSuccess) {
-          ShowMessage(
-            'Password reset successful. You can now log in with your new password.',
-          );
-          navigation.replace('Login');
+          ShowMessage(Strings.passwordResetSuccessfully);
+          navigation.replace('Login'); // Navigate to the login screen
         }
+        setLoadingLocal(false);
       }
     } catch (error) {
       ShowMessage(error);
+      setLoadingLocal(false);
     }
   };
 
@@ -69,6 +63,7 @@ export default function ResetPassword(props) {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.innerContainer}>
           <Text style={styles.loginTxt}>{Strings.resetPassword}</Text>
+          {/* Input field for OTP */}
           <ContactTextInput
             leftImage={Images.EmailIcon}
             refInner={emailRef}
@@ -86,6 +81,7 @@ export default function ResetPassword(props) {
               passwordRef.current.focus();
             }}
           />
+          {/* Input field for new password */}
           <ContactTextInput
             leftImage={Images.LockIcon}
             refInner={passwordRef}
@@ -104,15 +100,17 @@ export default function ResetPassword(props) {
             eyeOpen={displayPassword}
             onPress={() => setDisplayPassword(!displayPassword)}
           />
+          {/* Button to submit the password reset */}
           <CustomButton
             onpress={handleConfirmPassword}
             blue={true}
             title={Strings.submit}
-            Contianer={styles.blueButtonContainer}
+            Container={styles.blueButtonContainer}
             txt={styles.blueButtonTxt}
           />
         </View>
       </ScrollView>
+      {/* Loading modal */}
       <LoaderModal visible={loadingLocal} loadingText={''} />
     </ImageBackground>
   );
