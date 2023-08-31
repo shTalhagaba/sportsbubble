@@ -1,8 +1,8 @@
-import { Colors, Fonts } from 'src/utils';
-import { ScaledSheet } from 'react-native-size-matters';
-import { Dimensions, Platform } from 'react-native';
+import {Colors, Fonts} from 'src/utils';
+import {ScaledSheet} from 'react-native-size-matters';
+import {Dimensions, Platform} from 'react-native';
 const screenWidth = Dimensions.get('window').width;
-const { fontScale } = Dimensions.get('window');
+const {fontScale} = Dimensions.get('window');
 
 export default ScaledSheet.create({
   container: {
@@ -12,7 +12,7 @@ export default ScaledSheet.create({
   itemListContainer: {
     paddingRight: '0@ms0.3',
     marginVertical: '1@ms0.3',
-    paddingVertical: '5@ms0.3'
+    paddingVertical: '5@ms0.3',
   },
   itemInnerContainer: {
     flexDirection: 'row',
