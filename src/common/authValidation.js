@@ -1,17 +1,20 @@
-let regEmail = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
-let regName = /^[a-zA-Z ]*$/; // character and space allowed
-let regPassword =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 import {ShowMessage} from 'src/components/ShowMessage';
+
+const regEmail = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
+const regName = /^[a-zA-Z ]*$/; // Characters and spaces allowed
+const regPassword =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
 export const checkValidation = checkableValue => {
   if (
     checkableValue === null ||
     checkableValue === undefined ||
     String(checkableValue).trim() === ''
-  )
+  ) {
     return true;
-  else return false;
+  } else {
+    return false;
+  }
 };
 
 export const signupValidation = (
@@ -24,36 +27,38 @@ export const signupValidation = (
   termsCheck,
 ) => {
   if (checkValidation(firstName)) {
-    ShowMessage('Please enter first name');
-  } else if (firstName.length < 2) {
-    ShowMessage('First name should be 3 characters');
+    ShowMessage('Please Enter First Name.');
+  } else if (firstName.length < 3) {
+    ShowMessage('First Name should be at least 3 characters long.');
   } else if (regName.test(firstName) === false) {
-    ShowMessage('Name should accept only characters');
+    ShowMessage('Name should only contain letters and spaces.');
   } else if (checkValidation(lastName)) {
-    ShowMessage('Please enter last name');
-  } else if (firstName.length < 2) {
-    ShowMessage('Last name should be 3 characters');
+    ShowMessage('Please Enter Last Name.');
+  } else if (lastName.length < 3) {
+    ShowMessage('Last Name should be at least 3 characters long.');
   } else if (regName.test(lastName) === false) {
-    ShowMessage('Name should accept only characters');
+    ShowMessage('Name should only contain letters and spaces.');
   } else if (checkValidation(email)) {
-    ShowMessage('Please enter email');
+    ShowMessage('Please Enter Email Address.');
   } else {
     const trimmedEmail = email.trim();
     const trimmedPassword = password.trim();
     if (regEmail.test(trimmedEmail) === false) {
-      ShowMessage('Please enter valid email');
+      ShowMessage('Please Enter a Valid Email Address.');
     } else if (checkValidation(password)) {
-      ShowMessage('Please enter password');
+      ShowMessage('Please Enter Password.');
     } else if (password.length < 8) {
-      ShowMessage('Password should be 8 characters');
+      ShowMessage('Password should be at least 8 characters long.');
     } else if (regPassword.test(trimmedPassword) === false) {
-      ShowMessage('Password should have Upper case & symbol characters');
+      ShowMessage(
+        'Password should include uppercase letters, symbols, and numbers.',
+      );
     } else if (password !== confirmPassword) {
-      ShowMessage("Password don't match");
+      ShowMessage("Passwords don't match.");
     } else if (!emailOptCheck) {
-      ShowMessage('Please check email otp');
+      ShowMessage('Please check the Email Opt-In.');
     } else if (!termsCheck) {
-      ShowMessage('Please check terms and policy');
+      ShowMessage('Please accept the Terms and Policy.');
     } else {
       const trimmedEmail = email.trim();
       if (regEmail.test(trimmedEmail) === false) {
@@ -70,32 +75,27 @@ export const signupValidation = (
         ShowMessage('Please check terms and policy');
       } else {
         return true;
-      }
+      } 
     }
   }
 };
 
 export const loginValidation = (email, password) => {
   if (checkValidation(email)) {
-    ShowMessage('Please enter email');
+    ShowMessage('Please Enter Email Address.');
   } else {
     const trimmedEmail = email.trim();
     const trimmedPassword = password.trim();
     if (regEmail.test(trimmedEmail) === false) {
-      ShowMessage('Please enter valid email');
+      ShowMessage('Please Enter a Valid Email Address.');
     } else if (checkValidation(password)) {
-      ShowMessage('Please enter password');
+      ShowMessage('Please Enter Password.');
     } else if (regPassword.test(trimmedPassword) === false) {
-      ShowMessage('Password should have Upper case & symbol characters');
+      ShowMessage(
+        'Password should include uppercase letters, symbols, and numbers.',
+      );
     } else {
-      const trimmedEmail = email.trim();
-      if (regEmail.test(trimmedEmail) === false) {
-        ShowMessage('Please enter valid email');
-      } else if (checkValidation(password)) {
-        ShowMessage('Please enter password');
-      } else {
-        return true;
-      }
+      return true;
     }
   }
 };
@@ -108,28 +108,33 @@ export const updatePasswordValidation = (
   const trimmedCurrentPassword = currentPassword.trim();
   const trimmedNewPassword = newPassword.trim();
   if (checkValidation(currentPassword)) {
-    ShowMessage('Please enter current Password');
+    ShowMessage('Please Enter Current Password.');
   } else if (checkValidation(newPassword)) {
-    ShowMessage('Please enter new Password');
+    ShowMessage('Please Enter New Password.');
   } else if (newPassword?.length < 6) {
-    ShowMessage('Password should be 6 characters');
+    ShowMessage('Password should be at least 6 characters long.');
   } else if (checkValidation(newConfirmPassword)) {
-    ShowMessage('Please enter new Password');
+    ShowMessage('Please Enter New Password.');
   } else if (regPassword.test(trimmedCurrentPassword) === false) {
-    ShowMessage('Current Password should have Upper case & symbol characters');
+    ShowMessage(
+      'Current Password should include uppercase letters, symbols, and numbers.',
+    );
   } else if (regPassword.test(trimmedNewPassword) === false) {
-    ShowMessage('New Password should have Upper case & symbol characters');
+    ShowMessage(
+      'New Password should include uppercase letters, symbols, and numbers.',
+    );
   } else if (newPassword !== newConfirmPassword) {
-    ShowMessage("Password don't match");
+    ShowMessage("Passwords don't match.");
   } else {
     return true;
   }
 };
+
 export const otpValidation = otp => {
   if (checkValidation(otp)) {
-    ShowMessage('Please enter otp');
+    ShowMessage('Please Enter OTP.');
   } else if (otp.length < 6) {
-    ShowMessage('Please enter valid otp');
+    ShowMessage('Please Enter Valid OTP.');
   } else {
     return true;
   }
@@ -138,24 +143,27 @@ export const otpValidation = otp => {
 export const resetPasswordValidation = (otp, password) => {
   const trimmedPassword = password.trim();
   if (checkValidation(otp)) {
-    ShowMessage('Please enter otp');
+    ShowMessage('Please Enter OTP.');
   } else if (otp.length < 6) {
-    ShowMessage('Please enter valid otp');
+    ShowMessage('Please Enter Valid OTP.');
   } else if (checkValidation([password])) {
-    ShowMessage('Please enter new Password');
+    ShowMessage('Please Enter New Password.');
   } else if (password?.length < 8) {
-    ShowMessage('Password should be 8 characters');
+    ShowMessage('Password should be at least 8 characters long.');
   } else if (regPassword.test(trimmedPassword) === false) {
-    ShowMessage('New Password should have Upper case & symbol characters');
+    ShowMessage(
+      'New Password should include uppercase letters, symbols, and numbers.',
+    );
   } else {
     return true;
   }
 };
+
 export const forgotPasswordValidation = email => {
   if (checkValidation(email)) {
-    ShowMessage('Please enter email');
+    ShowMessage('Please Enter Email Address.');
   } else if (regEmail.test(email) === false) {
-    ShowMessage('Please enter valid email');
+    ShowMessage('Please Enter a Valid Email Address.');
   } else {
     return true;
   }
@@ -168,43 +176,38 @@ export const updateProfileValidation = (
   pronouns,
 ) => {
   if (checkValidation(firstName)) {
-    ShowMessage('Please enter first name');
-  } else if (firstName.length < 2) {
-    ShowMessage('First name should be 3 characters');
+    ShowMessage('Please Enter First Name.');
+  } else if (firstName.length < 3) {
+    ShowMessage('First Name should be at least 3 characters long.');
   } else if (regName.test(firstName) === false) {
-    ShowMessage('Name should accept only characters');
+    ShowMessage('Name should only contain letters and spaces.');
   } else if (checkValidation(lastName)) {
-    ShowMessage('Please enter last name');
-  } else if (firstName.length < 2) {
-    ShowMessage('Last name should be 3 characters');
+    ShowMessage('Please Enter Last Name.');
+  } else if (lastName.length < 3) {
+    ShowMessage('Last Name should be at least 3 characters long.');
   } else if (regName.test(lastName) === false) {
-    ShowMessage('Name should accept only characters');
+    ShowMessage('Name should only contain letters and spaces.');
   } else if (checkValidation(zipCode)) {
-    ShowMessage('Please enter zipCode.');
+    ShowMessage('Please Enter Zip Code.');
   } else if (checkValidation(pronouns)) {
-    ShowMessage('Please select Pronouns.');
+    ShowMessage('Please Select Pronouns.');
+  } else if (zipCode.length < 4) {
+    ShowMessage('Zip Code is too short.');
   } else {
-    if (zipCode.length < 4) {
-      ShowMessage('Zip code is too short.');
-    } else {
-      return true;
-    }
+    return true;
   }
 };
+
 export const completeProfileValidation = (zipCode, dob, pronouns) => {
   if (checkValidation(zipCode)) {
-    ShowMessage('Please enter zipcode');
+    ShowMessage('Please Enter Zip Code.');
   } else if (checkValidation(dob)) {
-    ShowMessage('Please select date of birth');
-  } else if (checkValidation(zipCode)) {
-    ShowMessage('Please enter zipCode.');
+    ShowMessage('Please Select Date of Birth.');
   } else if (checkValidation(pronouns)) {
-    ShowMessage('Please select Pronouns.');
+    ShowMessage('Please Select Pronouns.');
+  } else if (zipCode.length < 4) {
+    ShowMessage('Zip Code is too short.');
   } else {
-    if (zipCode.length < 4) {
-      ShowMessage('Zip code is too short.');
-    } else {
-      return true;
-    }
+    return true;
   }
 };

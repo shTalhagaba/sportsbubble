@@ -25,9 +25,9 @@ import {setExpire, setGuest, setStoreEventList, setUser} from 'src/store/types';
 import {moderateScale} from 'react-native-size-matters';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 import CustomMySportsModalView from 'src/components/Modal/CustomMySportsModalView';
+import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 const screenWidth = Dimensions.get('window').width;
 const {width, fontScale} = Dimensions.get('window');
-
 // Sample data for the category slider
 const categoryArr = [
   {
@@ -370,6 +370,15 @@ export default function Guide(props) {
     setCurrentIndex(prevIndex => prevIndex + 1);
     setIsLive(false);
   };
+  const handlePrevious = () => {
+    if(currentIndex > 0)
+    {
+      handleSelectTime(currentIndex - 1);
+      setCurrentIndex(prevIndex => prevIndex - 1);
+      setIsLive(false);
+    }
+ 
+  };
   // handle live events
   const handleLive = () => {
     handleSelectTime(0);
@@ -554,71 +563,84 @@ export default function Guide(props) {
         />
       </View>
       {/* time slider */}
-      <View style={styles.timeSliderContainer}>
-        <View style={styles.liveMainContainer}>
-          <TouchableOpacity
-            onPress={() => handleLive()}
-            style={[
-              styles.liveTimeContainer,
-              {
-                backgroundColor: isLive
-                  ? Colors?.mediumGreen
-                  : Colors.mediumBlue,
-              },
-            ]}>
-            <Text
-              style={
-                isLive
-                  ? styles.sliderActiveTimeTxt
-                  : styles.sliderInactiveTimeTxt
-              }>
-              {'Live'}
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <View
-          style={[styles.timeSliderInnerContainer, {width: screenWidth / 3}]}>
-          <FlatList
-            horizontal
-            data={timeData.slice(0, 2)}
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{flex: 1, justifyContent: 'space-around'}}
-            scrollEnabled={fontScale > 1 ? true : false}
-            renderItem={({item, index}) => {
-              const adjustedIndex = index + currentIndex; // Calculate the adjusted index based on the current index
-              return (
-                <View
-                  style={[
-                    styles.timeContainer,
-                    {
-                      backgroundColor: Colors.mediumBlue,
-                    },
-                  ]}>
-                  <Text style={styles.sliderInactiveTimeTxt}>
-                    {timeData[adjustedIndex]?.title}
-                  </Text>
-                </View>
-              );
-            }}
-          />
-        </View>
-        <View style={styles.rightIconStyle}>
-          <TouchableOpacity
-            onPress={() => handleNext()}
-            style={[
-              styles.liveTimeContainer,
-              {
-                backgroundColor: Colors.brandBlue,
-              },
-            ]}>
-            <Image
-              source={Images.Arrow}
-              style={styles.rightIcon}
-              resizeMode={'contain'}
+      <GestureRecognizer
+        onSwipeRight={state => {
+          handlePrevious();
+        }}
+        onSwipeLeft={state => {
+          handleNext();
+        }}
+        config={{
+          velocityThreshold: 0.3,
+          directionalOffsetThreshold: 100,
+          gestureIsClickThreshold:20
+        }}>
+        <View style={styles.timeSliderContainer}>
+          <View style={styles.liveMainContainer}>
+            <TouchableOpacity
+              onPress={() => handleLive()}
+              style={[
+                styles.liveTimeContainer,
+                {
+                  backgroundColor: isLive
+                    ? Colors?.mediumGreen
+                    : Colors.mediumBlue,
+                },
+              ]}>
+              <Text
+                style={
+                  isLive
+                    ? styles.sliderActiveTimeTxt
+                    : styles.sliderInactiveTimeTxt
+                }>
+                {'Live'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View
+            style={[styles.timeSliderInnerContainer, {width: screenWidth / 3}]}>
+            <FlatList
+              horizontal
+              data={timeData.slice(0, 2)}
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{flex: 1, justifyContent: 'space-around'}}
+              scrollEnabled={fontScale > 1 ? true : false}
+              renderItem={({item, index}) => {
+                const adjustedIndex = index + currentIndex; // Calculate the adjusted index based on the current index
+                return (
+                  <View
+                    style={[
+                      styles.timeContainer,
+                      {
+                        backgroundColor: Colors.mediumBlue,
+                      },
+                    ]}>
+                    <Text style={styles.sliderInactiveTimeTxt}>
+                      {timeData[adjustedIndex]?.title}
+                    </Text>
+                  </View>
+                );
+              }}
             />
-          </TouchableOpacity>
+          </View>
+          <View style={styles.rightIconStyle}>
+            <TouchableOpacity
+              onPress={() => handleNext()}
+              style={[
+                styles.liveTimeContainer,
+                {
+                  backgroundColor: Colors.brandBlue,
+                },
+              ]}>
+              <Image
+                source={Images.Arrow}
+                style={styles.rightIcon}
+                resizeMode={'contain'}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      </GestureRecognizer>
       {/* featured event */}
       {eventList && eventList.length > 0 ? (
         <TouchableOpacity style={styles.listContainer}>

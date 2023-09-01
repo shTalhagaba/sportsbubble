@@ -16,6 +16,7 @@ import AppHeader from 'src/components/AppHeader';
 import {useNavigation} from '@react-navigation/native';
 import dayjs from 'dayjs';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
+import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 const screenWidth = Dimensions.get('window').width;
 
 const data = [
@@ -70,6 +71,22 @@ export default function Watch(props) {
         SimpleView
         headerContainer={styles.headerContainer}
       />
+      <GestureRecognizer
+      style={{
+        flex:1
+      }}
+        onSwipeDown={state => {
+         setBottomMenu(false)
+        }}
+        onSwipeUp={state => {
+        
+           setBottomMenu(true)
+        }}
+        config={{
+          velocityThreshold: 0.1,
+          directionalOffsetThreshold: 18,
+          gestureIsClickThreshold:20
+        }}>
       {/* Main View */}
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -168,6 +185,8 @@ export default function Watch(props) {
           <Text style={styles.orangeTxt}>{Strings.connectToWatchEmpty}</Text>
         )}
       </ScrollView>
+
+      <View>
       {bottomShow &&
         (bottomMenu ? (
           <ImageBackground
@@ -224,6 +243,8 @@ export default function Watch(props) {
             <Text style={styles.wayToWatch}>{Strings.otherWays}</Text>
           </ImageBackground>
         ))}
+      </View>
+      </GestureRecognizer>
     </ImageBackground>
   );
 }

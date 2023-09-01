@@ -190,4 +190,11 @@ export default ScaledSheet.create({
     left: '80@ms0.3',
     alignSelf: 'center',
   },
+  headerContainer: {
+    height: Platform.OS === 'ios' ? '90@ms0.3' : '70@ms0.3',
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Colors.transparent,
+    paddingTop: Platform.OS === 'ios' ? '48@ms0.3' : '22@ms0.3',
+  },
 });
