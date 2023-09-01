@@ -13,6 +13,10 @@ export default ScaledSheet.create({
         textAlign: "center",
         color: Colors.white
     },
+    innerContainer: {
+        marginHorizontal: '16@ms0.3',
+        flex: 1,
+    },
     signupTxt: {
         fontSize: "13@ms0.3",
         fontWeight: "bold",
@@ -50,7 +54,7 @@ export default ScaledSheet.create({
         color: Colors.white,
         marginVertical: "30@ms0.3",
     },
-      btnContainerTxt: {
+    btnContainerTxt: {
         fontSize: '14@ms0.3',
-      },
+    },
 });

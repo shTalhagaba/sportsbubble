@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -7,40 +7,41 @@ import {
   TouchableOpacity,
   StatusBar,
 } from 'react-native';
-import styles from './styles'; 
+import styles from './styles';
 import ContactTextInput from 'src/components/ContactTextInput';
 import AppHeader from 'src/components/AppHeader';
-import {Images, Colors, Strings} from 'src/utils'; 
+import { Images, Colors, Strings } from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
-import {useNavigation} from '@react-navigation/native';
-import {forgotPasswordValidation} from 'src/common/authValidation';
-import {initiateForgotPassword} from 'src/services/authForgotPassword'; 
+import { useNavigation } from '@react-navigation/native';
+import { forgotPasswordValidation } from 'src/common/authValidation';
+import { initiateForgotPassword } from 'src/services/authForgotPassword';
 import LoaderModal from 'src/components/LoaderModal';
 import ShowMessage from 'src/components/ShowMessage';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default function ForgotPassword() {
-  const navigation = useNavigation(); 
-  const [email, setEmail] = useState(''); 
-  const [loadingLocal, setLoadingLocal] = useState(false); 
-  const emailRef = useRef(); 
+  const navigation = useNavigation();
+  const [email, setEmail] = useState('');
+  const [loadingLocal, setLoadingLocal] = useState(false);
+  const emailRef = useRef();
 
   // Function to handle forgot password request
   const handleForgotPassword = async () => {
     if (forgotPasswordValidation(email)) {
       try {
         setLoadingLocal(true);
-        const user = await initiateForgotPassword(email); 
+        const user = await initiateForgotPassword(email);
         if (user === 'SUCCESS' || user) {
-          setLoadingLocal(false); 
+          setLoadingLocal(false);
           ShowMessage(Strings.passwordResetInitiation);
           navigation.replace('ResetPassword', {
             email: email,
           });
         }
-        setLoadingLocal(false); 
+        setLoadingLocal(false);
       } catch (error) {
         console.log('Error => ', error);
-        ShowMessage(error); 
+        ShowMessage(error);
       } finally {
         setLoadingLocal(false);
       }
@@ -63,12 +64,14 @@ export default function ForgotPassword() {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        headerContainer={{marginTop: 10}}
+        headerContainer={{ marginTop: 10 }}
         SimpleView
       />
       {/* Scrollable content */}
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={{marginHorizontal: 20}}>
+      <KeyboardAwareScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ flexGrow: 1, paddingBottom: 30 }}>
+        <View style={{ marginHorizontal: 20 }}>
           {/* Forgot Password text */}
           <Text style={styles.loginTxt}>{Strings.forgotPassword}</Text>
           {/* Email input */}
@@ -92,7 +95,7 @@ export default function ForgotPassword() {
             title={Strings.submit}
             Container={styles.blueButtonContainer}
             txt={styles.blueButtonTxt}
-            onpress={() => handleForgotPassword()} 
+            onpress={() => handleForgotPassword()}
           />
           <Text style={styles.accountTxt}>{Strings.dontAccount}</Text>
           {/* Sign Up button */}
@@ -100,7 +103,8 @@ export default function ForgotPassword() {
             <Text style={styles.signupTxt}>{Strings.signUp}</Text>
           </TouchableOpacity>
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
+
       {/* Loader modal */}
       <LoaderModal visible={loadingLocal} loadingText={''} />
     </ImageBackground>

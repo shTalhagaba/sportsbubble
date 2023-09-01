@@ -9,7 +9,7 @@ export default ScaledSheet.create({
     },
     innerContainer: {
         marginTop: "10@ms0.3",
-        marginHorizontal: "20@ms0.3"
+        marginHorizontal: "16@ms0.3"
     },
     checkoutTxt: {
         fontSize: "24@ms0.3",

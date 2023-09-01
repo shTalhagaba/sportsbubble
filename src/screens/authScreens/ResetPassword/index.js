@@ -1,15 +1,16 @@
-import React, {useRef, useState} from 'react';
-import {View, Text, ScrollView, ImageBackground, StatusBar} from 'react-native';
+import React, { useRef, useState } from 'react';
+import { View, Text, ScrollView, ImageBackground, StatusBar } from 'react-native';
 import styles from './styles';
 import ContactTextInput from 'src/components/ContactTextInput';
 import AppHeader from 'src/components/AppHeader';
-import {Images, Colors, Strings} from 'src/utils';
+import { Images, Colors, Strings } from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
-import {useNavigation} from '@react-navigation/native';
-import {resetPasswordValidation} from 'src/common/authValidation';
+import { useNavigation } from '@react-navigation/native';
+import { resetPasswordValidation } from 'src/common/authValidation';
 import LoaderModal from 'src/components/LoaderModal';
-import {ShowMessage} from 'src/components/ShowMessage';
-import {confirmPasswordReset} from 'src/services/authForgotPassword';
+import { ShowMessage } from 'src/components/ShowMessage';
+import { confirmPasswordReset } from 'src/services/authForgotPassword';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default function ResetPassword(props) {
   const navigation = useNavigation();
@@ -57,10 +58,12 @@ export default function ResetPassword(props) {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        headerContainer={{marginTop: 10}}
+        headerContainer={{ marginTop: 10 }}
         SimpleView
       />
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <KeyboardAwareScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ flexGrow: 1, paddingBottom: 30 }}>
         <View style={styles.innerContainer}>
           <Text style={styles.loginTxt}>{Strings.resetPassword}</Text>
           {/* Input field for OTP */}
@@ -109,7 +112,8 @@ export default function ResetPassword(props) {
             txt={styles.blueButtonTxt}
           />
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
+
       {/* Loading modal */}
       <LoaderModal visible={loadingLocal} loadingText={''} />
     </ImageBackground>

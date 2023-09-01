@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -11,15 +11,16 @@ import {
 import styles from './styles';
 import ContactTextInput from 'src/components/ContactTextInput';
 import AppHeader from 'src/components/AppHeader';
-import {Images, Colors, Strings} from 'src/utils';
+import { Images, Colors, Strings } from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {signupComplete} from 'src/services/authSignup';
+import { signupComplete } from 'src/services/authSignup';
 import ShowMessage from 'src/components/ShowMessage';
 import LoaderModal from 'src/components/LoaderModal';
-import {completeProfileValidation} from 'src/common/authValidation';
+import { completeProfileValidation } from 'src/common/authValidation';
 import dayjs from 'dayjs';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default function WelcomeAccount(props) {
   const navigation = useNavigation();
@@ -40,10 +41,10 @@ export default function WelcomeAccount(props) {
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   const options = [
-    {id: 1, label: 'he/him', value: 'he/him'},
-    {id: 2, label: 'she/her', value: 'she/her'},
-    {id: 3, label: 'they/them', value: 'they/them'},
-    {id: 4, label: 'other', value: 'other'},
+    { id: 1, label: 'he/him', value: 'he/him' },
+    { id: 2, label: 'she/her', value: 'she/her' },
+    { id: 3, label: 'they/them', value: 'they/them' },
+    { id: 4, label: 'other', value: 'other' },
   ];
   // Toggle the dropdown menu
   const toggleDropdown = () => {
@@ -97,10 +98,12 @@ export default function WelcomeAccount(props) {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        headerContainer={{marginTop: 10}}
+        headerContainer={{ marginTop: 10 }}
         SimpleView
       />
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <KeyboardAwareScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ flexGrow: 1, paddingBottom: 30 }}>
         <View style={styles.innerContainer}>
           <Text style={styles.welcomeTxt}>
             {Strings.welcomeName.replace('__NAME__', firstName)}
@@ -110,7 +113,7 @@ export default function WelcomeAccount(props) {
           <ContactTextInput
             leftImage={Images.Location}
             refInner={zipCodeRef}
-            Container={{marginTop: 30}}
+            Container={{ marginTop: 30 }}
             placeholderTextColor={Colors.white}
             placeholder={Strings.zipCode}
             multiline={false}
@@ -130,7 +133,7 @@ export default function WelcomeAccount(props) {
           <ContactTextInput
             leftImage={Images.Birthday}
             refInner={birthdayRef}
-            Container={{marginTop: 30}}
+            Container={{ marginTop: 30 }}
             placeholderTextColor={Colors.white}
             placeholder={Strings.birthdate}
             multiline={false}
@@ -160,7 +163,7 @@ export default function WelcomeAccount(props) {
           {/* Pronouns Input */}
           <ContactTextInput
             leftImage={Images.Pronouns}
-            Container={{marginTop: 30}}
+            Container={{ marginTop: 30 }}
             refInner={pronounsRef}
             placeholderTextColor={Colors.white}
             placeholder={Strings.pronouns}
@@ -186,7 +189,7 @@ export default function WelcomeAccount(props) {
               <FlatList
                 data={options}
                 keyExtractor={item => item.id.toString()}
-                renderItem={({item}) => (
+                renderItem={({ item }) => (
                   <TouchableOpacity
                     onPress={() => handleSelect(item)}
                     style={styles.dropdownItem}>
@@ -206,7 +209,7 @@ export default function WelcomeAccount(props) {
             />
           </View>
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
       <LoaderModal visible={loadingLocal} loadingText={''} />
     </ImageBackground>
   );

@@ -1,17 +1,19 @@
-import React, {useRef, useState} from 'react';
-import {View, Text, ScrollView, ImageBackground, StatusBar} from 'react-native';
+import React, { useRef, useState } from 'react';
+import { View, Text, ScrollView, ImageBackground, StatusBar } from 'react-native';
 import styles from './styles';
 import ContactTextInput from 'src/components/ContactTextInput';
 import AppHeader from 'src/components/AppHeader';
-import {Images, Colors} from 'src/utils';
+import { Images, Colors } from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import Strings from 'src/utils/strings';
-import {changePassword} from 'src/services/userProfile';
-import {useSelector} from 'react-redux';
+import { changePassword } from 'src/services/userProfile';
+import { useSelector } from 'react-redux';
 import LoaderModal from 'src/components/LoaderModal';
 import ShowMessage from 'src/components/ShowMessage';
-import {updatePasswordValidation} from 'src/common/authValidation';
+import { updatePasswordValidation } from 'src/common/authValidation';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 
 export default function UpdatePassword() {
   const navigation = useNavigation();
@@ -78,11 +80,13 @@ export default function UpdatePassword() {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        customLeftImage={{tintColor: Colors.darkOrange}}
+        customLeftImage={{ tintColor: Colors.darkOrange }}
         SimpleView
       />
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={{marginHorizontal: 20}}>
+      <KeyboardAwareScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ flexGrow: 1, paddingBottom: 30 }}>
+        <View style={styles.innerContainer}>
           <Text style={styles.loginTxt}>{Strings.updatePassword}</Text>
           <ContactTextInput
             leftImage={Images.LockIcon}
@@ -92,7 +96,7 @@ export default function UpdatePassword() {
             multiline={false}
             value={currentPassword}
             maxLength={50}
-            Container={{marginTop: 24}}
+            Container={{ marginTop: 24 }}
             onChangeText={txt => setCurrentPassword(txt)}
             keyboardType={'default'}
             autoCapitalize="none"
@@ -114,7 +118,7 @@ export default function UpdatePassword() {
             multiline={false}
             value={newPassword}
             maxLength={50}
-            Container={{marginTop: 32}}
+            Container={{ marginTop: 32 }}
             onChangeText={txt => setNewPassword(txt)}
             keyboardType={'default'}
             autoCapitalize="none"
@@ -136,7 +140,7 @@ export default function UpdatePassword() {
             multiline={false}
             value={newConfirmPassword}
             maxLength={50}
-            Container={{marginTop: 16}}
+            Container={{ marginTop: 16 }}
             onChangeText={txt => setNewConfirmPassword(txt)}
             keyboardType={'default'}
             autoCapitalize="none"
@@ -161,7 +165,7 @@ export default function UpdatePassword() {
             onpress={() => navigation.goBack(null)}
           />
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
       <LoaderModal visible={loadingLocal} loadingText={''} />
     </ImageBackground>
   );

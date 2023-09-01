@@ -1,5 +1,5 @@
-import {ScaledSheet} from 'react-native-size-matters';
-import {Colors, Fonts} from 'src/utils';
+import { ScaledSheet } from 'react-native-size-matters';
+import { Colors, Fonts } from 'src/utils';
 
 export default ScaledSheet.create({
   container: {
@@ -31,7 +31,7 @@ export default ScaledSheet.create({
     fontSize: '14@ms0.3',
   },
   innerContainer: {
-    marginHorizontal: '20@ms0.3',
+    marginHorizontal: '16@ms0.3',
     flex: 1,
   },
   headerTxtStyle: {

@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -11,16 +11,16 @@ import {
 import styles from './styles';
 import ContactTextInput from 'src/components/ContactTextInput';
 import AppHeader from 'src/components/AppHeader';
-import {Images, Colors, Strings} from 'src/utils';
+import { Images, Colors, Strings } from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
-import {useNavigation} from '@react-navigation/native';
-import {signupValidation, otpValidation} from 'src/common/authValidation';
+import { useNavigation } from '@react-navigation/native';
+import { signupValidation, otpValidation } from 'src/common/authValidation';
 import LoaderModal from 'src/components/LoaderModal';
-import {ShowMessage} from 'src/components/ShowMessage';
-import {userSignup} from 'src/services/authSignup';
-import {resendCode, userOTP} from 'src/services/authOTP';
+import { ShowMessage } from 'src/components/ShowMessage';
+import { userSignup } from 'src/services/authSignup';
+import { resendCode, userOTP } from 'src/services/authOTP';
 import CustomVeriificationModal from 'src/components/Modal/CustomVeriificationModal';
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 export default function Signup() {
   const navigation = useNavigation();
   // State variables for user input and UI state
@@ -129,17 +129,19 @@ export default function Signup() {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        headerContainer={{marginTop: 10}}
+        headerContainer={{ marginTop: 10 }}
         SimpleView
       />
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <KeyboardAwareScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ flexGrow: 1, paddingBottom: 30 }}>
         <View style={styles.innerContainer}>
           <Text style={styles.signupTxt}>{Strings.signUp}</Text>
           {/* Input field for full name */}
           <ContactTextInput
             leftImage={Images.UserIcon}
             refInner={fullNameRef}
-            Container={{marginTop: 40}}
+            Container={{ marginTop: 40 }}
             placeholderTextColor={Colors.white}
             placeholder={Strings.firstName}
             multiline={false}
@@ -232,7 +234,7 @@ export default function Signup() {
             onPress={() => setDisplayConfirmPassword(!displayConfirmPassword)}
           />
           {/* Checkbox for email opt-in */}
-          <View style={styles.checkboxContainer}>
+          <View style={[styles.checkboxContainer, { marginTop: 30 }]}>
             <TouchableOpacity
               onPress={() => setEmailOptCheck(!emailOptCheck)}
               style={styles.uncheckBox}>
@@ -247,12 +249,12 @@ export default function Signup() {
                 />
               )}
             </TouchableOpacity>
-            <Text style={[styles.checkBoxTxt, {marginStart: 10}]}>
+            <Text style={[styles.checkBoxTxt, { marginStart: 10 }]}>
               {Strings.signupTerm}
             </Text>
           </View>
           {/* Checkbox for terms and conditions */}
-          <View style={styles.checkboxContainer}>
+          <View style={[styles.checkboxContainer]}>
             <TouchableOpacity
               onPress={() => setTermsCheck(!termsCheck)}
               style={styles.uncheckBox}>
@@ -308,9 +310,9 @@ export default function Signup() {
             otpValue={otp}
           />
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
       {/* Loading modal */}
       <LoaderModal visible={loadingLocal} loadingText={''} />
-    </ImageBackground>
+    </ImageBackground >
   );
 }

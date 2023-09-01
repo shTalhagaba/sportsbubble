@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -10,10 +10,10 @@ import {
 import styles from './styles';
 import ContactTextInput from 'src/components/ContactTextInput';
 import AppHeader from 'src/components/AppHeader';
-import {Images, Colors, Strings} from 'src/utils';
+import { Images, Colors, Strings } from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
-import {useNavigation} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 import {
   setGuest,
   setJwtToken,
@@ -21,10 +21,11 @@ import {
   setUser,
   setUserData,
 } from 'src/store/types';
-import {userLogin} from 'src/services/authLogin';
-import {loginValidation} from 'src/common/authValidation';
+import { userLogin } from 'src/services/authLogin';
+import { loginValidation } from 'src/common/authValidation';
 import LoaderModal from 'src/components/LoaderModal';
-import {ShowMessage} from 'src/components/ShowMessage';
+import { ShowMessage } from 'src/components/ShowMessage';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -90,10 +91,12 @@ export default function Login() {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        headerContainer={{marginTop: 10}}
+        headerContainer={{ marginTop: 10 }}
         SimpleView
       />
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <KeyboardAwareScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ flexGrow: 1, paddingBottom: 30 }}>
         <View style={styles.innerContainer}>
           <Text style={styles.loginTxt}>{Strings.login}</Text>
           {/* Input field for email */}
@@ -153,7 +156,8 @@ export default function Login() {
             <Text style={styles.signupTxt}>{Strings.signUp}</Text>
           </TouchableOpacity>
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
+
       {/* Loading modal */}
       <LoaderModal visible={loadingLocal} loadingText={''} />
     </ImageBackground>

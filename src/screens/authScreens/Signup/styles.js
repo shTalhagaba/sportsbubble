@@ -1,5 +1,5 @@
-import {Colors, Fonts} from 'src/utils';
-import {ScaledSheet} from 'react-native-size-matters';
+import { Colors, Fonts } from 'src/utils';
+import { ScaledSheet } from 'react-native-size-matters';
 
 export default ScaledSheet.create({
   container: {
@@ -44,6 +44,10 @@ export default ScaledSheet.create({
     flexDirection: 'row',
     marginStart: '10@ms0.3',
     maxWidth: '80%',
+  },
+  checkboxContainer: {
+    flexDirection: "row",
+    marginTop: 15
   },
   termsCondition: {
     color: Colors.white,
