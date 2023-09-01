@@ -57,7 +57,7 @@ export default function Setting() {
         <Text style={styles.loginTxt}>{Strings.settings}</Text>
         <View style={styles.innerContainer}>
           {/* changes for next version */}
-          {!data?.guest && (
+          {data?.user && (
             <>
               <ButtonWithIcon
                 title={Strings.personalInfo}
@@ -98,7 +98,7 @@ export default function Setting() {
             title={Strings.reportProblem}
             onpress={() => Instabug.show()}
           />
-          {!data?.guest && (
+          {data?.user && (
             <TouchableOpacity
               onPress={() => setLogoutModal(!logoutModal)}
               style={{
@@ -139,7 +139,7 @@ export default function Setting() {
             .catch(error => {
               console.error('Error signing out:', error.message);
               ShowMessage(error.message)
-              if(error?.message === 'User not authenticated.'){
+              if (error?.message === 'User not authenticated.') {
                 dispatch(setUser(false));
                 dispatch(setUserData({}));
                 dispatch(setToken(''));
