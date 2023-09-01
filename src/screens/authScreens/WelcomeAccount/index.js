@@ -21,14 +21,18 @@ import LoaderModal from 'src/components/LoaderModal';
 import { completeProfileValidation } from 'src/common/authValidation';
 import dayjs from 'dayjs';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-
+import DateTimePickerModal from "react-native-modal-datetime-picker"
 export default function WelcomeAccount(props) {
   const navigation = useNavigation();
   const [zipCode, setZipCode] = useState('');
   const [birthday, setBirthday] = useState('');
   const [pronouns, setPronouns] = useState('');
+  const [date, setDate] = useState('')
+
   const [isOpen, setIsOpen] = useState(false);
   const [loadingLocal, setLoadingLocal] = useState(false);
+  const [isDatePickerVisible, setDatePickerVisible] = useState(false);
+
   const [firstName, setFirstName] = useState(
     props?.route?.params?.fullName
       ? props?.route?.params?.fullName
@@ -80,6 +84,20 @@ export default function WelcomeAccount(props) {
       }
       setLoadingLocal(false);
     }
+  };
+  const handleShowDatePicker = () => {
+    setDatePickerVisible(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisible(false);
+  };
+  const handleConfirm = (date) => {
+    console.log("Date ", date)
+    // const selectedDate = moment(date).format('DD MMMM YYYY');
+    setDate(date)
+    setDOB(date)
+    hideDatePicker();
   };
 
   const minimumDOB = new Date();
@@ -146,19 +164,13 @@ export default function WelcomeAccount(props) {
             returnKeyType={'next'}
             blurOnSubmit={false}
             rightImage={Images.Calendar}
-            pressRightImage={() => setShowDatePicker(!showDatePicker)}
+            pressRightImage={() => handleShowDatePicker()}
+            // pressRightImage={() => setShowDatePicker(!showDatePicker)}
             onSubmitEditing={() => {
               pronounsRef.current.focus();
             }}
           />
-          {showDatePicker && (
-            <DateTimePicker
-              value={dob}
-              mode="date"
-              maximumDate={minimumDOB} // Restrict selecting future dates
-              onChange={handleDOBChange}
-            />
-          )}
+
           <Text style={styles.sideTxt}>{Strings.youMustBe}</Text>
           {/* Pronouns Input */}
           <ContactTextInput
@@ -211,6 +223,15 @@ export default function WelcomeAccount(props) {
         </View>
       </KeyboardAwareScrollView>
       <LoaderModal visible={loadingLocal} loadingText={''} />
+      <DateTimePickerModal
+        isVisible={isDatePickerVisible}
+        mode="date"
+        onConfirm={handleConfirm}
+        onCancel={hideDatePicker}
+        maximumDate={minimumDOB}
+      // maximumDate={new Date()}
+      // minimumDOB={minimumDOB}
+      />
     </ImageBackground>
   );
 }
