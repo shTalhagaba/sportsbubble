@@ -274,13 +274,13 @@ export default function Signup() {
               <Text style={styles.termsCondition}>
                 {Strings.haveRead}
                 <Text
-                  onPress={() => console.log('terms')}
+                  onPress={() => navigation.navigate('Term', { selected: Strings.termUse })}
                   style={styles.termsConditionBold}>
                   {' ' + Strings.termsofService}
                 </Text>{' '}
                 and{' '}
                 <Text
-                  onPress={() => console.log('privacy policy')}
+                  onPress={() => navigation.navigate('Term', { selected: Strings.privacyPolicy })}
                   style={styles.termsConditionBold}>
                   {Strings.privacyPolicy2}
                 </Text>

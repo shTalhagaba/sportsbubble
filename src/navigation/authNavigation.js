@@ -6,6 +6,8 @@ import ForgotPassword from 'src/screens/authScreens/ForgotPassword';
 import WelcomeAccount from 'src/screens/authScreens/WelcomeAccount';
 import WelcomeScreen from 'src/screens/authScreens/WelcomeScreen';
 import ResetPassword from 'src/screens/authScreens/ResetPassword';
+import Term from 'src/screens/appScreens/Term';
+
 
 const AuthNavigator = createNativeStackNavigator();
 
@@ -21,6 +23,7 @@ const AuthNavigation = () => {
             <AuthNavigator.Screen name="ForgotPassword" component={ForgotPassword} />
             <AuthNavigator.Screen name="ResetPassword" component={ResetPassword} />
             <AuthNavigator.Screen name="WelcomeAccount" component={WelcomeAccount} />
+            <AuthNavigator.Screen name="Term" component={Term} />
         </AuthNavigator.Navigator>
     );
 }
