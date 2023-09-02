@@ -744,7 +744,7 @@ export default function Guide(props) {
       />
       {/* My Sport Popup for guest  */}
       <CustomMySportsModalView
-        visible={mySportModal}
+        visible={!mySportModal}
         desTxt={Strings.accessFeatures}
         blackBtnTxt={Strings.noThanks}
         otherBtnTxt={Strings.createFreeAccount}
