@@ -74,13 +74,18 @@ export default function WelcomeAccount(props) {
         props?.route?.params?.email,
         props?.route?.params?.password,
         zipCode,
-        dayjs(dob).format('DD-MM-YYYY'),
+        dayjs(dob).format('DD/MM/YYYY'),
         pronouns,
       );
       if (user === 'SUCCESS') {
         setLoadingLocal(false);
         ShowMessage(Strings.profileCompleted);
         navigation.replace('Login');
+        setZipCode('')
+        setDOB('')
+        setPronouns('')
+        setDate('')
+        set
       }
       setLoadingLocal(false);
     }

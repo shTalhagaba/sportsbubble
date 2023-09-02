@@ -24,7 +24,7 @@ import { ShowMessage } from 'src/components/ShowMessage';
 import { updateProfileValidation } from 'src/common/authValidation';
 import { setToken, setUser, setUserData } from 'src/store/types';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-
+import dayjs from 'dayjs';
 export default function PersonalInfo() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -53,6 +53,7 @@ export default function PersonalInfo() {
   useEffect(() => {
     if (data?.userData) {
       const user = data?.userData;
+      console.log("Dataa => ", user)
       setFirstName(user?.name);
       setLastName(user?.family_name);
       setDob(user?.birthdate ? user?.birthdate : '22-12-1977');
@@ -228,7 +229,7 @@ export default function PersonalInfo() {
             // placeholderTextColor={Colors.white}
             // placeholder={Strings.birthdate}
             headerTxtStyle={styles.headerTxtStyle}
-            customInputStyle={{ marginBottom: 5 }}
+            customInputStyle={{ marginBottom: 5, opacity: 0.7 }}
             multiline={false}
             value={dob}
             editable={false}
@@ -247,11 +248,12 @@ export default function PersonalInfo() {
             style={{
               zIndex: 999,
             }}>
-            <ContactTextInput
+            <ContactHeaderTextInput
               leftImage={Images.Pronouns}
               headerName={Strings.pronouns}
               placeholderTextColor={Colors.white}
               placeholder={Strings.pronouns}
+              customInputStyle={{ marginBottom: 5 }}
               multiline={false}
               value={pronouns}
               headerTxtStyle={styles.headerTxtStyle}
@@ -285,7 +287,6 @@ export default function PersonalInfo() {
             // placeholderTextColor={Colors.white}
             // placeholder={Strings.email}
             headerTxtStyle={styles.headerTxtStyle}
-            customInputStyle={{ marginBottom: 8 }}
             multiline={false}
             value={email}
             maxLength={50}
@@ -293,6 +294,8 @@ export default function PersonalInfo() {
             keyboardType={'email-address'}
             autoCapitalize="none"
             returnKeyType={'done'}
+            customInputStyle={{ marginBottom: 5, opacity: 0.7 }}
+
             editable={false}
           />
           <CustomButton

@@ -62,6 +62,11 @@ export default function Signup() {
         const user = await userSignup(fullName, lastName, email, password);
         setLoadingLocal(false);
         setVerifyModal(!verifyModal);
+        setFullName('')
+        setLastName('')
+        setConfirmPassword('')
+        setEmailOptCheck(false)
+        setTermsCheck(false)
       } catch (error) {
         if (error.message.includes(':')) {
           const myArray = error.message.split(':');
@@ -86,6 +91,7 @@ export default function Signup() {
             email: email,
             password: password,
           });
+          setOTP("")
         }
         setLoadingLocal(false);
       } catch (error) {
