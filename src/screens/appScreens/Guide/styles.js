@@ -156,6 +156,7 @@ export default ScaledSheet.create({
     // lineHeight: '18@ms0.3',
     color: Colors.white,
     fontFamily: Fonts.Regular,
+    marginStart: Platform.OS === "android" ? fontScale > 1 ? "20@ms0.3" : "0@ms0.3" : "0@ms0.3"
   },
   eventTxt: {
     fontSize: '11@ms0.3',
@@ -164,6 +165,8 @@ export default ScaledSheet.create({
     color: Colors.white,
     fontFamily: Fonts.Regular,
     marginTop: '2@ms0.3',
+    marginStart: Platform.OS === "android" ? fontScale > 1 ? "20@ms0.3" : "0@ms0.3" : "0@ms0.3"
+
   },
   eventDateTxt: {
     fontSize: '11@ms0.3',
@@ -171,6 +174,8 @@ export default ScaledSheet.create({
     lineHeight: '16@ms0.3',
     color: Colors.white,
     fontFamily: Fonts.Regular,
+    marginStart: Platform.OS === "android" ? fontScale > 1 ? "20@ms0.3" : "0@ms0.3" : "0@ms0.3"
+
   },
   sliderContainer: {
     flexDirection: 'row',
