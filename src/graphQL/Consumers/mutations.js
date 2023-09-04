@@ -2,13 +2,17 @@ import { gql } from 'graphql-tag';
 
 export const CREATE_CONSUMER = gql`
 mutation CreateConsumer($input: [ConsumerCreateInput!]!) {
-    createConsumers(input: $input) {
-      consumers {
-        ...ConsumerDetail
-      }
+  createConsumers(input: $input) {
+    consumers {
+      billingZip
+      cognitoZip
+      cognitoId
+      dob
+      oktaId
+      pronouns
     }
   }
-`;
+}`;
 
   export const CONSUMER_DETAIL = gql`
   fragment ConsumerDetail on Consumer {
@@ -16,6 +20,8 @@ mutation CreateConsumer($input: [ConsumerCreateInput!]!) {
       billingZip
       pronouns
       dob
+      cognitoId
+      cognitoZip
   }
   `;
 

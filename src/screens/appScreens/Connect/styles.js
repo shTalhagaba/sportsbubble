@@ -1,7 +1,8 @@
 import {Colors, Fonts} from 'src/utils';
 import {ScaledSheet} from 'react-native-size-matters';
 import {Dimensions} from 'react-native';
-const {screenWidth, fontScale} = Dimensions.get('window');
+const {fontScale} = Dimensions.get('window');
+const screenWidth = Dimensions.get('window').width;
 
 export default ScaledSheet.create({
   container: {
@@ -39,6 +40,7 @@ export default ScaledSheet.create({
     alignSelf: 'center',
     margin: '10@ms0.3',
     borderRadius: 16,
+    marginTop: '20@ms0.3',
   },
   imageContainer: {
     height: '70@ms0.3',
@@ -59,7 +61,7 @@ export default ScaledSheet.create({
     lineHeight: '23@ms0.3',
     color: Colors.white,
     fontFamily: Fonts.Regular,
-    width: Platform.OS === 'android' ? screenWidth - 110 : '88%',
+    maxWidth: Platform.OS === 'android' ? screenWidth - 110 : screenWidth - 110,
   },
   eventTxt: {
     fontSize: '13@ms0.3',
@@ -67,7 +69,7 @@ export default ScaledSheet.create({
     lineHeight: '18@ms0.3',
     color: Colors.white,
     fontFamily: Fonts.Regular,
-    width: Platform.OS === 'android' ? screenWidth - 110 : '88%',
+    width: Platform.OS === 'android' ? screenWidth - 110 : screenWidth - 110,
   },
   dateEventTxt: {
     fontSize: '13@ms0.3',
@@ -111,7 +113,7 @@ export default ScaledSheet.create({
   sliderContainer: {
     flexDirection: 'row',
     backgroundColor: Colors.greyBackground,
-    height: fontScale > 1 ? 90 * fontScale : '100@ms0.3',
+    height: fontScale > 1 ? (screenWidth / 4.4) * fontScale : (screenWidth / 3.6),
     alignItems: 'center',
     paddingHorizontal: '13@ms0.3',
   },
@@ -184,17 +186,17 @@ export default ScaledSheet.create({
   },
   userNameContainer: {
     paddingStart: '13@ms0.3',
-    height: '90@ms0.3',
+    height: fontScale > 1 ? 76 * fontScale : '80@ms0.3',
     justifyContent: 'center',
     position: 'absolute',
-    left: '80@ms0.3',
+    left: '65@ms0.3',
     alignSelf: 'center',
   },
   headerContainer: {
-    height: Platform.OS === 'ios' ? '90@ms0.3' : '70@ms0.3',
+    height: Platform.OS === 'ios' ? '100@ms0.3' : '70@ms0.3',
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: Colors.transparent,
-    paddingTop: Platform.OS === 'ios' ? '48@ms0.3' : '22@ms0.3',
+    paddingTop: Platform.OS === 'ios' ? '40@ms0.3' : '22@ms0.3',
   },
 });

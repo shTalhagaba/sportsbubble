@@ -8,7 +8,6 @@ import CustomButton from 'src/components/CustomButton';
 import ContactTextInput from 'src/components/ContactTextInput'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-
 const data = [
     { id: 1, name: "Credit", selected: false },
     { id: 2, name: "Debit", selected: false },

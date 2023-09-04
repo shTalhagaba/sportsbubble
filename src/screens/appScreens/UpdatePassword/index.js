@@ -1,19 +1,18 @@
-import React, { useRef, useState } from 'react';
-import { View, Text, ScrollView, ImageBackground, StatusBar } from 'react-native';
+import React, {useRef, useState} from 'react';
+import {View, Text, ScrollView, ImageBackground, StatusBar} from 'react-native';
 import styles from './styles';
 import ContactTextInput from 'src/components/ContactTextInput';
 import AppHeader from 'src/components/AppHeader';
-import { Images, Colors } from 'src/utils';
+import {Images, Colors} from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import Strings from 'src/utils/strings';
-import { changePassword } from 'src/services/userProfile';
-import { useSelector } from 'react-redux';
+import {changePassword} from 'src/services/userProfile';
+import {useSelector} from 'react-redux';
 import LoaderModal from 'src/components/LoaderModal';
 import ShowMessage from 'src/components/ShowMessage';
-import { updatePasswordValidation } from 'src/common/authValidation';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-
+import {updatePasswordValidation} from 'src/common/authValidation';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 export default function UpdatePassword() {
   const navigation = useNavigation();

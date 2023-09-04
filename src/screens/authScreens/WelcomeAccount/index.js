@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react';
 import {
   View,
   Text,
-  ScrollView,
   ImageBackground,
   StatusBar,
   FlatList,
@@ -22,7 +21,11 @@ import { completeProfileValidation } from 'src/common/authValidation';
 import dayjs from 'dayjs';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DateTimePickerModal from "react-native-modal-datetime-picker"
+import { gql, useMutation } from '@apollo/client';
+import { CREATE_CONSUMER } from 'src/graphQL';
+
 export default function WelcomeAccount(props) {
+  const [createConsumerMutation, { loading, error }] = useMutation(CREATE_CONSUMER);
   const navigation = useNavigation();
   const [zipCode, setZipCode] = useState('');
   const [birthday, setBirthday] = useState('');
@@ -66,10 +69,22 @@ export default function WelcomeAccount(props) {
     setShowDatePicker(false);
     setDOB(currentDate);
   };
+  console.log('props?.route?.params?.client : ',props?.route?.params?.client)
   // Handle the submission of the complete profile form
   const submitButton = async () => {
     if (completeProfileValidation(zipCode, dob, pronouns)) {
       setLoadingLocal(true);
+      const inputData = {
+        oktaId: 'exampleOktaId',
+        billingZip: 12345,
+        pronouns: pronouns,
+        dob: dayjs(dob).format('YYYY-MM-DD'),
+        cognitoId: props?.route?.params?.client,
+        cognitoZip: zipCode,
+      };
+      console.log('inputData : ',inputData)
+      await handleFormSubmit(inputData)
+      // Define your input data structure
       const user = await signupComplete(
         props?.route?.params?.email,
         props?.route?.params?.password,
@@ -85,11 +100,23 @@ export default function WelcomeAccount(props) {
         setDOB('')
         setPronouns('')
         setDate('')
-        set
       }
       setLoadingLocal(false);
     }
   };
+    // Define the function to handle the form submission
+    const handleFormSubmit = async (inputData) => {
+      try {
+        const { data } = await createConsumerMutation({
+          variables: { input: inputData },
+        });
+  
+        // Handle the response data as needed
+        console.log('Consumer created:', data);
+      } catch (err) {
+        console.error('Error creating consumer:', err);
+      }
+    };
   const handleShowDatePicker = () => {
     setDatePickerVisible(true);
   };

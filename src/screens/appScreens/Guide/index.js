@@ -67,6 +67,7 @@ export default function Guide(props) {
   const [timeData, setTimeData] = useState([]);
   const [categoryData, setCategoryData] = useState(categoryArr);
   const [selectedTimeIndex, setSelectedTimeIndex] = useState(0);
+  const [featuredEvent, setFeaturedEvent] = useState({});
   const [mySportModal, setMySportModal] = useState(
     reduxData?.guest === true ? true : false,
   );
@@ -235,6 +236,8 @@ export default function Guide(props) {
 
   useEffect(() => {
     if (eventList && eventList.length > 0) {
+      let featured = eventList.filter(item => item?.isFeatured === null)
+      setFeaturedEvent(featured[0])
       let filteredEvents;
       if (selectedCategory.includes('all')) {
         // If "all" category is selected, no need to filter, keep all events
@@ -641,7 +644,7 @@ export default function Guide(props) {
         </View>
       </GestureRecognizer>
       {/* featured event */}
-      {eventList && eventList.length > 0 ? (
+      {featuredEvent && featuredEvent?.logo1 && (selectedCategory === 'all' || selectedCategory.includes(featuredEvent?.category?.name.toLowerCase())) ? (
         <TouchableOpacity style={styles.listContainer}>
           <View style={[{ backgroundColor: Colors.brandBlue, paddingBottom: 5 }]}>
             <View
@@ -650,7 +653,7 @@ export default function Guide(props) {
                 { backgroundColor: Colors.brandBlue },
               ]}>
               <ImageWithPlaceHolder
-                source={eventList?.[0]?.logo1}
+                source={featuredEvent?.logo1}
                 placeholderSource={Constants.placeholder_trophy_icon}
                 style={styles.imageIcon}
                 resizeMode="contain"
@@ -658,15 +661,15 @@ export default function Guide(props) {
             </View>
             <View
               style={{
-                width: eventList?.[0]?.startTime
-                  ? startTimeWidth(eventList?.[0]?.startTime)
+                width: featuredEvent?.startTime
+                  ? startTimeWidth(featuredEvent?.startTime)
                   : 0,
                 // backgroundColor: Colors.darkBlue,
               }}></View>
             <View
               style={{
-                width: endTimeWidth(eventList?.[0]?.endTime),
-                // backgroundColor: dayjs(eventList?.[0]?.startTime).isAfter(currentDate)
+                width: endTimeWidth(featuredEvent?.endTime),
+                // backgroundColor: dayjs(featuredEvent?.startTime).isAfter(currentDate)
                 //   ? Colors.mediumBlue
                 //   : Colors.mediumGreen,
               }}></View>
@@ -677,28 +680,28 @@ export default function Guide(props) {
               }}></View>
             <View style={styles.userNameContainer}>
               <Text style={[styles.eventTxt, { marginTop: 5 }]} numberOfLines={1}>
-                {eventList?.[0]?.line1}
+                {featuredEvent?.line1}
               </Text>
               <Text style={styles.titleTxt} numberOfLines={1}>
-                {eventList?.[0]?.line2
-                  ? eventList?.[0]?.line2
-                  : eventList?.[0]?.title}
+                {featuredEvent?.line2
+                  ? featuredEvent?.line2
+                  : featuredEvent?.title}
               </Text>
               <View style={{ flexDirection: 'row' }}>
                 <Text style={[styles.eventDateTxt]}>
                   {' '}
-                  {eventList?.[0]?.startTime
-                    ? dayjs(eventList?.[0]?.startTime).format('ddd. MM/D')
-                    : eventList?.[0]?.day}
+                  {featuredEvent?.startTime
+                    ? dayjs(featuredEvent?.startTime).format('ddd. MM/D')
+                    : featuredEvent?.day}
                   {'  l '}
                 </Text>
                 <Text style={[styles.eventDateTxt]}>
                   {' '}
-                  {eventList?.[0]?.startTime
-                    ? `${dayjs(eventList?.[0]?.startTime).format(
+                  {featuredEvent?.startTime
+                    ? `${dayjs(featuredEvent?.startTime).format(
                       'h:mma',
-                    )} - ${dayjs(eventList?.[0]?.endTime).format('h:mma')}`
-                    : eventList?.[0]?.time}
+                    )} - ${dayjs(featuredEvent?.endTime).format('h:mma')}`
+                    : featuredEvent?.time}
                 </Text>
               </View>
             </View>
@@ -744,7 +747,7 @@ export default function Guide(props) {
       />
       {/* My Sport Popup for guest  */}
       <CustomMySportsModalView
-        visible={!mySportModal}
+        visible={mySportModal}
         desTxt={Strings.accessFeatures}
         blackBtnTxt={Strings.noThanks}
         otherBtnTxt={Strings.createFreeAccount}

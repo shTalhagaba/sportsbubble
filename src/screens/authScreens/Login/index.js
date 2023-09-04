@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react';
 import {
   View,
   Text,
-  ScrollView,
   ImageBackground,
   StatusBar,
   TouchableOpacity,
@@ -52,6 +51,7 @@ export default function Login() {
         setLoadingLocal(true);
         const user = await userLogin(email, password);
         user.id = user?.accessToken?.payload?.sub ?? '';
+        console.log('user : ',user)
         setLoadingLocal(false);
         // Check if user login was successful
         if (user?.idToken?.payload) {
@@ -157,7 +157,6 @@ export default function Login() {
           </TouchableOpacity>
         </View>
       </KeyboardAwareScrollView>
-
       {/* Loading modal */}
       <LoaderModal visible={loadingLocal} loadingText={''} />
     </ImageBackground>

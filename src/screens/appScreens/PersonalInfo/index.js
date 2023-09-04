@@ -24,7 +24,7 @@ import { ShowMessage } from 'src/components/ShowMessage';
 import { updateProfileValidation } from 'src/common/authValidation';
 import { setToken, setUser, setUserData } from 'src/store/types';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import dayjs from 'dayjs';
+
 export default function PersonalInfo() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -53,7 +53,6 @@ export default function PersonalInfo() {
   useEffect(() => {
     if (data?.userData) {
       const user = data?.userData;
-      console.log("Dataa => ", user)
       setFirstName(user?.name);
       setLastName(user?.family_name);
       setDob(user?.birthdate ? user?.birthdate : '22-12-1977');
@@ -295,7 +294,6 @@ export default function PersonalInfo() {
             autoCapitalize="none"
             returnKeyType={'done'}
             customInputStyle={{ marginBottom: 5, opacity: 0.7 }}
-
             editable={false}
           />
           <CustomButton

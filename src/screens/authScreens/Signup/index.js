@@ -21,6 +21,7 @@ import { userSignup } from 'src/services/authSignup';
 import { resendCode, userOTP } from 'src/services/authOTP';
 import CustomVeriificationModal from 'src/components/Modal/CustomVeriificationModal';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 export default function Signup() {
   const navigation = useNavigation();
   // State variables for user input and UI state
@@ -36,6 +37,7 @@ export default function Signup() {
   const [otp, setOTP] = useState();
   const [displayPassword, setDisplayPassword] = useState(true);
   const [displayConfirmPassword, setDisplayConfirmPassword] = useState(true);
+  const [client, setClient] = useState('');
 
   // Refs for input fields
   const fullNameRef = useRef();
@@ -60,11 +62,9 @@ export default function Signup() {
       try {
         setLoadingLocal(true);
         const user = await userSignup(fullName, lastName, email, password);
+        setClient(user?.pool?.clientId)
         setLoadingLocal(false);
         setVerifyModal(!verifyModal);
-        setFullName('')
-        setLastName('')
-        setConfirmPassword('')
         setEmailOptCheck(false)
         setTermsCheck(false)
       } catch (error) {
@@ -80,6 +80,7 @@ export default function Signup() {
   };
   // Function to handle verification
   const handleVerify = async () => {
+    console.log('client : ',client)
     if (otpValidation(otp)) {
       try {
         setLoadingLocal(true);
@@ -90,7 +91,14 @@ export default function Signup() {
             fullName: fullName,
             email: email,
             password: password,
+            client: client
           });
+          setFullName('')
+          setLastName('')
+          setEmail('')
+          setPassword('')
+          setClient('')
+          setConfirmPassword('')
           setOTP("")
         }
         setLoadingLocal(false);
