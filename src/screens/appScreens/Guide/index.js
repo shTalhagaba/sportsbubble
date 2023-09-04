@@ -252,6 +252,7 @@ export default function Guide(props) {
 
   useEffect(() => {
     getTimeList();
+    console.log("FontScale => ", fontScale)
   }, []);
 
   useEffect(() => {
@@ -560,7 +561,8 @@ export default function Guide(props) {
                     style={styles.sliderIcon}
                     resizeMode={'contain'}
                   />
-                  <Text style={styles.sliderTxt}>
+                  <Text numberOfLines={1}
+                    style={[styles.sliderTxt, { maxWidth: Platform.OS === "android" ? fontScale > 1 ? "80%" : "100%" : "100%" }]}>
                     {item?.title.toUpperCase()}
                   </Text>
                 </ImageBackground>

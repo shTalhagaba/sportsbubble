@@ -1,8 +1,8 @@
-import {Colors, Fonts} from 'src/utils';
-import {ScaledSheet} from 'react-native-size-matters';
-import {Dimensions, Platform} from 'react-native';
+import { Colors, Fonts } from 'src/utils';
+import { ScaledSheet } from 'react-native-size-matters';
+import { Dimensions, Platform } from 'react-native';
 const width = Dimensions.get('window').width;
-const {fontScale} = Dimensions.get('window');
+const { fontScale } = Dimensions.get('window');
 
 export default ScaledSheet.create({
   container: {
@@ -34,7 +34,7 @@ export default ScaledSheet.create({
     flexDirection: 'row',
     height: fontScale > 1 ? 57 * fontScale : '52@ms0.3',
     elevation: 3,
-    shadowOffset: {width: 0, height: 3},
+    shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.6,
     shadowRadius: 3,
     shadowColor: 'rgba(0, 0, 0, 0.4)',
@@ -50,7 +50,7 @@ export default ScaledSheet.create({
     height: fontScale > 1 ? 24 * fontScale : '24@ms0.3',
     elevation: 3,
     shadowColor: 'rgba(0, 0, 0, 0.15)',
-    shadowOffset: {width: 0, height: 1},
+    shadowOffset: { width: 0, height: 1 },
     shadowRadius: 3,
     shadowOpacity: 1,
     marginTop: '0@ms0.3',
@@ -75,7 +75,7 @@ export default ScaledSheet.create({
     alignSelf: 'center',
     elevation: 3,
     shadowColor: 'rgba(0, 0, 0, 0.15)',
-    shadowOffset: {width: 0, height: 1},
+    shadowOffset: { width: 0, height: 1 },
     shadowRadius: 3,
     shadowOpacity: 1,
   },
@@ -214,11 +214,12 @@ export default ScaledSheet.create({
     fontFamily: Fonts.Bold,
     fontStyle: 'italic',
     elevation: 3,
-    textShadowOffset: {width: 0, height: 1},
+    textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 8,
     textShadowColor: '#000000',
     marginBottom: '3@ms0.3',
     marginTop: fontScale > 1 ? 5 * fontScale : '0@ms0.3',
+
   },
   rectangle2: {
     position: 'absolute',
