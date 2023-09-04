@@ -192,11 +192,10 @@ export default ScaledSheet.create({
     alignSelf: 'center',
   },
   headerContainer: {
-    // height: Platform.OS === 'ios' ? '85@ms0.3' : '70@ms0.3',
-    height: fontScale > 1 ? (screenWidth / 4.4) * fontScale : '100@ms0.3',
+    height: Platform.OS === 'ios' ? '100@ms0.3' : '70@ms0.3',
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: Colors.transparent,
-    paddingTop: Platform.OS === 'ios' ? '35@ms0.3' : '22@ms0.3',
+    paddingTop: Platform.OS === 'ios' ? '40@ms0.3' : '22@ms0.3',
   },
 });

@@ -24,6 +24,7 @@ import {setExpire, setStoreEventList} from 'src/store/types';
 import {moderateScale} from 'react-native-size-matters';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 import Config from 'react-native-config';
+import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 const screenWidth = Dimensions.get('window').width;
 const {width, fontScale} = Dimensions.get('window');
 
@@ -160,15 +161,17 @@ export default function Guide(props) {
       },
     },
     onCompleted: data => {
-      const currentTime = Date.now();
+      // const currentTime = Date.now();
       if (
-        ((reduxData && reduxData?.expire === currentTime) ||
-          (reduxData &&
-            reduxData?.eventList &&
-            reduxData?.eventList.length <= 0)) &&
+        // (
+          // (reduxData && reduxData?.expire === currentTime) ||
+          // (reduxData &&
+          //   reduxData?.eventList &&
+          //   reduxData?.eventList.length <= 0)) &&
         data &&
         data?.sortedEvents.length > 0
       ) {
+        console.log('data : ',data?.sortedEvents.length)
         const filteredEvents = data?.sortedEvents.filter(event => {
           const {line1, line2, startTime, endTime, logo1, rightsHolders} =
             event;
@@ -391,10 +394,18 @@ export default function Guide(props) {
     }
   };
 
+  // handle next timer to show next hour events
   const handleNext = () => {
     handleSelectTime(currentIndex + 1);
     setCurrentIndex(prevIndex => prevIndex + 1);
     setIsLive(false);
+  };
+  const handlePrevious = () => {
+    if (currentIndex > 0) {
+      handleSelectTime(currentIndex - 1);
+      setCurrentIndex(prevIndex => prevIndex - 1);
+      setIsLive(false);
+    }
   };
 
   const handleLive = () => {
@@ -559,72 +570,84 @@ export default function Guide(props) {
         />
       </View>
       {/* time slider */}
-      <View style={styles.timeSliderContainer}>
-        <View style={styles.liveMainContainer}>
-          <TouchableOpacity
-            onPress={() => handleLive()}
-            style={[
-              styles.liveTimeContainer,
-              {
-                backgroundColor: isLive
-                  ? Colors?.mediumGreen
-                  : Colors.mediumBlue,
-              },
-            ]}>
-            <Text
-              style={
-                isLive
-                  ? styles.sliderActiveTimeTxt
-                  : styles.sliderInactiveTimeTxt
-              }>
-              {'Live'}
-            </Text>
-          </TouchableOpacity>
-        </View>
+      <GestureRecognizer
+        onSwipeRight={state => {
+          handlePrevious();
+        }}
+        onSwipeLeft={state => {
+          handleNext();
+        }}
+        config={{
+          velocityThreshold: 0.3,
+          directionalOffsetThreshold: 100,
+          gestureIsClickThreshold: 20,
+        }}>
+        <View style={styles.timeSliderContainer}>
+          <View style={styles.liveMainContainer}>
+            <TouchableOpacity
+              onPress={() => handleLive()}
+              style={[
+                styles.liveTimeContainer,
+                {
+                  backgroundColor: isLive
+                    ? Colors?.mediumGreen
+                    : Colors.mediumBlue,
+                },
+              ]}>
+              <Text
+                style={
+                  isLive
+                    ? styles.sliderActiveTimeTxt
+                    : styles.sliderInactiveTimeTxt
+                }>
+                {'Live'}
+              </Text>
+            </TouchableOpacity>
+          </View>
 
-        <View
-          style={[styles.timeSliderInnerContainer, {width: screenWidth / 3}]}>
-          <FlatList
-            horizontal
-            data={timeData.slice(0, 2)}
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{flex: 1, justifyContent: 'space-around'}}
-            scrollEnabled={fontScale > 1 ? true : false}
-            renderItem={({item, index}) => {
-              const adjustedIndex = index + currentIndex; // Calculate the adjusted index based on the current index
-              return (
-                <View
-                  style={[
-                    styles.timeContainer,
-                    {
-                      backgroundColor: Colors.mediumBlue,
-                    },
-                  ]}>
-                  <Text style={styles.sliderInactiveTimeTxt}>
-                    {timeData[adjustedIndex]?.title}
-                  </Text>
-                </View>
-              );
-            }}
-          />
-        </View>
-        <View style={styles.rightIconStyle}>
-          <TouchableOpacity
-            onPress={() => handleNext()}
-            style={[
-              styles.liveTimeContainer,
-              {
-                backgroundColor: Colors.brandBlue,
-              },
-            ]}>
-            <Image
-              source={Images.Arrow}
-              style={styles.rightIcon}
-              resizeMode={'contain'}
+          <View
+            style={[styles.timeSliderInnerContainer, {width: screenWidth / 3}]}>
+            <FlatList
+              horizontal
+              data={timeData.slice(0, 2)}
+              showsHorizontalScrollIndicator={false}
+              scrollEnabled={fontScale > 1 ? true : false}
+              renderItem={({item, index}) => {
+                const adjustedIndex = index + currentIndex; // Calculate the adjusted index based on the current index
+                return (
+                  <View
+                    style={[
+                      styles.timeContainer,
+                      {
+                        backgroundColor: Colors.mediumBlue,
+                      },
+                    ]}>
+                    <Text style={styles.sliderInactiveTimeTxt}>
+                      {timeData[adjustedIndex]?.title}
+                    </Text>
+                  </View>
+                );
+              }}
             />
-          </TouchableOpacity>
+          </View>
+          <View style={styles.rightIconStyle}>
+            <TouchableOpacity
+              onPress={() => handleNext()}
+              style={[
+                styles.liveTimeContainer,
+                {
+                  backgroundColor: Colors.brandBlue,
+                },
+              ]}>
+              <Image
+                source={Images.Arrow}
+                style={styles.rightIcon}
+                resizeMode={'contain'}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      </GestureRecognizer>
       {/* main list  */}
       {loading && currentIndex ? (
         <View style={{flex: 1, justifyContent: 'center'}}>

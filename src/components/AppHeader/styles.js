@@ -11,8 +11,8 @@ const styles = ScaledSheet.create({
         paddingTop: Platform.OS === 'ios' ? "35@ms0.3" : "22@ms0.3",
     },
     leftArrowIcon: {
-        width: "23@ms0.3",
-        height: "23@ms0.3",
+        width: "24@ms0.3",
+        height: "24@ms0.3",
         resizeMode: "cover",
     },
     rightIcon: {
@@ -26,7 +26,7 @@ const styles = ScaledSheet.create({
         alignItems: "center",
     },
     centerImage: {
-        height: "23@ms0.3",
+        height: "24@ms0.3",
         width: "134@ms0.3",
     },
     iconContainer: {
