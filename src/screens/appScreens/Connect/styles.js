@@ -40,6 +40,7 @@ export default ScaledSheet.create({
     alignSelf: 'center',
     margin: '10@ms0.3',
     borderRadius: 16,
+    marginTop: '20@ms0.3',
   },
   imageContainer: {
     height: '70@ms0.3',

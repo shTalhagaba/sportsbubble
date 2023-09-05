@@ -95,7 +95,10 @@ export default function Connect(props) {
             style={styles.imageStyle}
           />
         </View>
+        {dayjs(currentDate).isAfter(item?.startTime) &&
+          dayjs(currentDate).isBefore(item?.endTime) ? (
         <Text style={styles.connectingText}>{Strings.connecting}</Text>
+        ) : null}
         <View style={styles.logoImageContainer}>
           <ImageWithPlaceHolder
             source={
