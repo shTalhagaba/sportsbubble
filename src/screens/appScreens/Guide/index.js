@@ -15,7 +15,7 @@ import {
 import styles from './styles';
 import { Images, Colors, Strings, Constants } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 import LiveMatchView from 'src/components/Modal/LiveMatchModal';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import dayjs from 'dayjs';
@@ -61,6 +61,7 @@ const expireTime = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 export default function Guide(props) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const isFocused = useIsFocused();
   const currentDate = dayjs(); // Get the current date and time
   const reduxData = useSelector(state => state.user);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -193,57 +194,57 @@ export default function Guide(props) {
   });
 
   // Define a function to execute the mutation
-  const updateConsumers = async (categories,sport) => {
-    if(categories?.id && sport?.id){
-    const updateData = {
-      where: {
-        cognitoId: reduxData?.userData?.sub
-      },
-      create: {
-        favoriteSports: [
-          {
-            node: {
-              notifications: true,
-              sport: {
-                connect: {
-                  where: {
-                    node: {
-                      id: sport?.id
-                    }
-                  }
-                }
-              },
-              categories: {
-                connect: [
-                  {
+  const updateConsumers = async (categories, sport) => {
+    if (categories?.id && sport?.id) {
+      const updateData = {
+        where: {
+          cognitoId: reduxData?.userData?.sub
+        },
+        create: {
+          favoriteSports: [
+            {
+              node: {
+                notifications: true,
+                sport: {
+                  connect: {
                     where: {
                       node: {
-                        id: categories?.id
+                        id: sport?.id
                       }
                     }
                   }
-                ]
+                },
+                categories: {
+                  connect: [
+                    {
+                      where: {
+                        node: {
+                          id: categories?.id
+                        }
+                      }
+                    }
+                  ]
+                }
               }
             }
-          }
-        ]
+          ]
+        }
+      };
+      try {
+        const { data } = await updateConsumersMutation({
+          variables: updateData,
+        });
+        if (!loadingFavourite && data?.updateConsumers?.consumers) {
+          ShowMessage('Added to Favorites successfully!')
+        }
+        // Handle the response data as needed
+        console.log('Updated consumer:', data?.updateConsumers?.consumers);
+      } catch (err) {
+        console.error('Error updating consumer:', err);
       }
-    };
-    try {
-      const { data } = await updateConsumersMutation({
-        variables: updateData,
-      });
-      if(!loadingFavourite && data?.updateConsumers?.consumers){
-        ShowMessage('Added to Favorites successfully!')
-      }
-      // Handle the response data as needed
-      console.log('Updated consumer:', data?.updateConsumers?.consumers);
-    } catch (err) {
-      console.error('Error updating consumer:', err);
+    } else {
+      ShowMessage('Invalid data')
     }
-  }else{
-    ShowMessage('Invalid data')
-  }
   };
 
   const getTimeList = () => {
@@ -290,6 +291,10 @@ export default function Guide(props) {
   useEffect(() => {
     getTimeList();
   }, []);
+  useEffect(() => {
+    if (isFocused)
+      getTimeList();
+  }, [isFocused]);
 
   useEffect(() => {
     if (eventList && eventList.length > 0) {
