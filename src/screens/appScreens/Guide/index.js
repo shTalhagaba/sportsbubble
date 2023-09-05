@@ -460,99 +460,179 @@ export default function Guide(props) {
       screen: 'Signup',
     });
   };
-  // event list item component
   const ItemComponent = React.memo(({ item }) => {
     return (
       // Render your item component here
       dayjs(item?.endTime).isAfter(currentDate) ? (
-        item?.isFeatured ? null :
-          <TouchableOpacity
-            style={styles.listContainer}
-            onPress={() => {
-              if (
-                item &&
-                item?.rightsHoldersConnection &&
-                item?.rightsHoldersConnection?.totalCount === 1
-              ) {
-                navigation.navigate('withoutBottomtab', {
-                  screen: 'Connect',
-                  params: {
-                    item: item,
-                    holderItem: item?.rightsHoldersConnection,
-                    eventFlag: true,
-                  },
-                });
-              } else {
-                navigation.navigate('Watch', { item: item });
-              }
-            }}>
-            <View style={styles.innerContainer}>
-              <View style={styles.imageContainer}>
-                <ImageWithPlaceHolder
-                  source={item?.logo1}
-                  placeholderSource={Constants.placeholder_trophy_icon}
-                  style={styles.imageIcon}
-                  resizeMode="contain"
-                />
-              </View>
-              <View
-                style={{
-                  width: item?.startTime ? startTimeWidth(item?.startTime) : 0,
-                  backgroundColor: Colors.darkBlue,
-                }}></View>
-              <View
-                style={{
-                  width: endTimeWidth(item?.endTime),
-                  backgroundColor: dayjs(item?.startTime).isAfter(currentDate)
-                    ? Colors.mediumBlue
-                    : Colors.mediumGreen,
-                }}></View>
-              <View
-                style={{
-                  flex: 1,
-                  backgroundColor: Colors.darkBlue,
-                }}></View>
-              <View style={styles.userNameContainer}>
-                <Text style={[styles.eventTxt]} numberOfLines={1}>
-                  {item?.line1 ? item?.line1 : item?.companyName}
-                </Text>
-                <Text style={styles.titleTxt} numberOfLines={1}>
-                  {item?.line2 ? item?.line2 : item?.title}
-                </Text>
-                <View style={{ flexDirection: 'row' }}>
-                  <Text style={[styles.eventDateTxt]}>
-                    {item?.startTime
-                      ? dayjs(item?.startTime).format('ddd. MM/D')
-                      : item?.day}
-                    {'  l '}
-                  </Text>
-                  <Text style={[styles.eventDateTxt]}>
-                    {' '}
-                    {item?.startTime
-                      ? `${dayjs(item?.startTime).format('h:mma')} - ${dayjs(
-                        item?.endTime,
-                      ).format('h:mma')}`
-                      : item?.time}
-                  </Text>
-                </View>
-              </View>
-              {!reduxData?.guest && (
-                <TouchableOpacity
-                  style={{ position: 'absolute', right: 0, alignSelf: 'center' }}
-                  onPress={() => updateConsumers(item?.category, item?.sport)}
-                >
-                  <Image
-                    source={Images.Favorite}
-                    style={[styles.fvrtIcon]}
-                    resizeMode={'contain'}
-                  />
-                </TouchableOpacity>
-              )}
+        <TouchableOpacity
+          style={styles.listContainer}
+          onPress={() => {
+            if (
+              item &&
+              item?.rightsHoldersConnection &&
+              item?.rightsHoldersConnection?.totalCount === 1
+            ) {
+              navigation.navigate('withoutBottomtab', {
+                screen: 'Connect',
+                params: {
+                  item: item,
+                  holderItem: item?.rightsHoldersConnection,
+                  eventFlag: true,
+                },
+              });
+            } else {
+              navigation.navigate('Watch', { item: item });
+            }
+          }}>
+          <View style={styles.innerContainer}>
+            <View style={styles.imageContainer}>
+              <ImageWithPlaceHolder
+                source={item?.logo1}
+                placeholderSource={Constants.placeholder_trophy_icon}
+                style={styles.imageIcon}
+                resizeMode="contain"
+              />
             </View>
-          </TouchableOpacity>
+            <View
+              style={{
+                width: item?.startTime ? startTimeWidth(item?.startTime) : 0,
+                backgroundColor: Colors.darkBlue,
+              }}></View>
+            <View
+              style={{
+                width: endTimeWidth(item?.endTime),
+                backgroundColor: dayjs(item?.startTime).isAfter(currentDate)
+                  ? Colors.greyBackground
+                  : Colors.mediumGreen,
+              }}></View>
+            <View
+              style={{
+                flex: 1,
+                backgroundColor: Colors.darkBlue,
+              }}></View>
+            <View style={styles.userNameContainer}>
+              <Text style={[styles.eventTxt]} numberOfLines={1}>
+                {item?.line1 ? item?.line1 : item?.companyName}
+              </Text>
+              <Text style={styles.titleTxt} numberOfLines={1}>
+                {item?.line2 ? item?.line2 : item?.title}
+              </Text>
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={[styles.eventDateTxt]}>
+                  {item?.startTime
+                    ? dayjs(item?.startTime).format('ddd. MM/D')
+                    : item?.day}
+                  {'  l '}
+                </Text>
+                <Text style={[styles.eventDateTxt]}>
+                  {' '}
+                  {item?.startTime
+                    ? `${dayjs(item?.startTime).format('h:mma')} - ${dayjs(
+                      item?.endTime,
+                    ).format('h:mma')}`
+                    : item?.time}
+                </Text>
+              </View>
+            </View>
+          </View>
+        </TouchableOpacity>
       ) : null
     );
   });
+
+  // event list item component
+  // const ItemComponent = React.memo(({ item }) => {
+  //   return (
+  //     // Render your item component here
+  //     dayjs(item?.endTime).isAfter(currentDate) ? (
+  //       item?.isFeatured ? null :
+  //         <TouchableOpacity
+  //           style={styles.listContainer}
+  //           onPress={() => {
+  //             if (
+  //               item &&
+  //               item?.rightsHoldersConnection &&
+  //               item?.rightsHoldersConnection?.totalCount === 1
+  //             ) {
+  //               navigation.navigate('withoutBottomtab', {
+  //                 screen: 'Connect',
+  //                 params: {
+  //                   item: item,
+  //                   holderItem: item?.rightsHoldersConnection,
+  //                   eventFlag: true,
+  //                 },
+  //               });
+  //             } else {
+  //               navigation.navigate('Watch', { item: item });
+  //             }
+  //           }}>
+  //           <View style={styles.innerContainer}>
+  //             <View style={styles.imageContainer}>
+  //               <ImageWithPlaceHolder
+  //                 source={item?.logo1}
+  //                 placeholderSource={Constants.placeholder_trophy_icon}
+  //                 style={styles.imageIcon}
+  //                 resizeMode="contain"
+  //               />
+  //             </View>
+  //             <View
+  //               style={{
+  //                 width: item?.startTime ? startTimeWidth(item?.startTime) : 0,
+  //                 backgroundColor: Colors.darkBlue,
+  //               }}></View>
+  //             <View
+  //               style={{
+  //                 width: endTimeWidth(item?.endTime),
+  //                 backgroundColor: dayjs(item?.startTime).isAfter(currentDate)
+  //                   ? Colors.mediumBlue
+  //                   : Colors.mediumGreen,
+  //               }}></View>
+  //             <View
+  //               style={{
+  //                 flex: 1,
+  //                 backgroundColor: Colors.darkBlue,
+  //               }}></View>
+  //             <View style={styles.userNameContainer}>
+  //               <Text style={[styles.eventTxt]} numberOfLines={1}>
+  //                 {item?.line1 ? item?.line1 : item?.companyName}
+  //               </Text>
+  //               <Text style={styles.titleTxt} numberOfLines={1}>
+  //                 {item?.line2 ? item?.line2 : item?.title}
+  //               </Text>
+  //               <View style={{ flexDirection: 'row' }}>
+  //                 <Text style={[styles.eventDateTxt]}>
+  //                   {item?.startTime
+  //                     ? dayjs(item?.startTime).format('ddd. MM/D')
+  //                     : item?.day}
+  //                   {'  l '}
+  //                 </Text>
+  //                 <Text style={[styles.eventDateTxt]}>
+  //                   {' '}
+  //                   {item?.startTime
+  //                     ? `${dayjs(item?.startTime).format('h:mma')} - ${dayjs(
+  //                       item?.endTime,
+  //                     ).format('h:mma')}`
+  //                     : item?.time}
+  //                 </Text>
+  //               </View>
+  //             </View>
+  //             {!reduxData?.guest && (
+  //               <TouchableOpacity
+  //                 style={{ position: 'absolute', right: 0, alignSelf: 'center' }}
+  //                 onPress={() => updateConsumers(item?.category, item?.sport)}
+  //               >
+  //                 <Image
+  //                   source={Images.Favorite}
+  //                   style={[styles.fvrtIcon]}
+  //                   resizeMode={'contain'}
+  //                 />
+  //               </TouchableOpacity>
+  //             )}
+  //           </View>
+  //         </TouchableOpacity>
+  //     ) : null
+  //   );
+  // });
 
   return (
     <ImageBackground
@@ -620,9 +700,11 @@ export default function Guide(props) {
                     style={styles.sliderIcon}
                     resizeMode={'contain'}
                   />
-                  <Text style={styles.sliderTxt}>
+                  <Text numberOfLines={1}
+                    style={[styles.sliderTxt, { maxWidth: Platform.OS === "android" ? fontScale > 1 ? "80%" : "100%" : "100%" }]}>
                     {item?.title.toUpperCase()}
                   </Text>
+
                 </ImageBackground>
               </View>
             </TouchableOpacity>
