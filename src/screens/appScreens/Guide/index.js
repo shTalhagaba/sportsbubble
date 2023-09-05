@@ -257,10 +257,10 @@ export default function Guide(props) {
   }, []);
   useEffect(() => {
     if (isFocused) {
+      refetch()
       getTimeList();
     }
   }, [isFocused]);
-
   useEffect(() => {
     if (eventList && eventList.length > 0) {
       let filteredEvents;
