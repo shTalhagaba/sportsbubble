@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   ImageBackground,
   Text,
@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   StatusBar,
   Dimensions,
+  RefreshControl
 } from 'react-native';
 import styles from './styles';
 import { Images, Colors, Strings } from 'src/utils';
@@ -82,6 +83,8 @@ export default function Guide() {
   const [curremIndex, setCurrentIndex] = useState();
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [filteredEventList, setFilteredEventList] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+
 
   const { loading, refetch, error } = useQuery(GET_MY_SPORT, {
     variables: {
@@ -113,7 +116,7 @@ export default function Guide() {
   });
 
   useEffect(() => {
-    if(isFocused){
+    if (isFocused) {
       refetch()
     }
   }, [isFocused])
@@ -198,6 +201,15 @@ export default function Guide() {
     setFilteredEventList(filteredEvents);
   };
 
+  const wait = timeout => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  };
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    refetch()
+    console.log("Refreddd")
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
 
   return (
     <ImageBackground
@@ -284,6 +296,11 @@ export default function Guide() {
           ? mySportData : filteredEventList
         }
         showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />}
         renderItem={({ item, index }) => (
           item?.sport?.name && item?.categories?.[0]?.name ?
             <View style={styles.listContainer}>
@@ -296,7 +313,7 @@ export default function Guide() {
                 <View style={styles.userNameContainer}>
                   <Text style={styles.titleTxt}>{item?.sport?.name || item?.title}</Text>
                 </View>
-                <TouchableOpacity 
+                <TouchableOpacity
                 // onPress={() => handleReminder(item, index)}
                 >
                   <Image
@@ -312,7 +329,7 @@ export default function Guide() {
                     ]}
                   />
                 </TouchableOpacity>
-                <TouchableOpacity 
+                <TouchableOpacity
                 // onPress={() => handleFvrt(item, index)}
                 >
                   <Image

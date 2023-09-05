@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   ImageBackground,
   Text,
@@ -11,6 +11,7 @@ import {
   Dimensions,
   Platform,
   ScrollView,
+  RefreshControl
 } from 'react-native';
 import styles from './styles';
 import { Images, Colors, Strings, Constants } from 'src/utils';
@@ -72,6 +73,8 @@ export default function Guide(props) {
   const [categoryData, setCategoryData] = useState(categoryArr);
   const [selectedTimeIndex, setSelectedTimeIndex] = useState(0);
   const [featuredEvent, setFeaturedEvent] = useState({});
+  const [refreshing, setRefreshing] = useState(false);
+
   const [mySportModal, setMySportModal] = useState(
     reduxData?.guest === true ? true : false,
   );
@@ -288,6 +291,15 @@ export default function Guide(props) {
     return timeData;
   };
 
+  const wait = timeout => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  };
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    getTimeList();
+    console.log("Refreddd")
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
   useEffect(() => {
     getTimeList();
   }, []);
@@ -779,6 +791,11 @@ export default function Guide(props) {
                     : []
                 : filteredEventList
             }
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+              />}
             showsVerticalScrollIndicator={false}
             renderItem={({ item }) => <ItemComponent item={item} />}
             keyExtractor={item => item?.id}
