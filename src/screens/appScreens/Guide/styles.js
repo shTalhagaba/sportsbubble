@@ -160,24 +160,26 @@ export default ScaledSheet.create({
     // lineHeight: '18@ms0.3',
     color: Colors.white,
     fontFamily: Fonts.Regular,
-    maxWidth: "90%"
+    marginStart: Platform.OS === "android" ? fontScale > 1 ? "20@ms0.3" : "0@ms0.3" : "0@ms0.3"
   },
   eventTxt: {
     fontSize: '13@ms0.3',
     fontWeight: '400',
-    lineHeight: '17@ms0.3',
+    lineHeight: '15@ms0.3',
     color: Colors.white,
     fontFamily: Fonts.Regular,
     marginTop: '2@ms0.3',
-    maxWidth: "90%"
+    marginStart: Platform.OS === "android" ? fontScale > 1 ? "20@ms0.3" : "0@ms0.3" : "0@ms0.3"
 
   },
   eventDateTxt: {
     fontSize: '13@ms0.3',
     fontWeight: '400',
-    lineHeight: '18@ms0.3',
+    lineHeight: '16@ms0.3',
     color: Colors.white,
     fontFamily: Fonts.Regular,
+    marginStart: Platform.OS === "android" ? fontScale > 1 ? "20@ms0.3" : "0@ms0.3" : "0@ms0.3"
+
   },
   sliderContainer: {
     flexDirection: 'row',
