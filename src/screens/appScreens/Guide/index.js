@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   ImageBackground,
   Text,
@@ -10,6 +10,7 @@ import {
   FlatList,
   Dimensions,
   Platform,
+  RefreshControl
 } from 'react-native';
 import styles from './styles';
 import { Images, Colors, Strings, Constants } from 'src/utils';
@@ -70,6 +71,8 @@ export default function Guide(props) {
   const [timeData, setTimeData] = useState([]);
   const [categoryData, setCategoryData] = useState(categoryArr);
   const [selectedTimeIndex, setSelectedTimeIndex] = useState(0);
+  const [refreshing, setRefreshing] = useState(false);
+
   const [eventList, setEventList] = useState(
     reduxData &&
       reduxData?.splashEventList &&
@@ -251,6 +254,14 @@ export default function Guide(props) {
 
     return timeData;
   };
+  const wait = timeout => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  };
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    getTimeList();
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
 
   useEffect(() => {
     getTimeList();
@@ -673,6 +684,11 @@ export default function Guide(props) {
               : filteredEventList
           }
           showsVerticalScrollIndicator={true}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+            />}
           renderItem={({ item }) => <ItemComponent item={item} />}
           keyExtractor={item => item?.id}
           removeClippedSubviews={true} // Unmount components when outside of window
