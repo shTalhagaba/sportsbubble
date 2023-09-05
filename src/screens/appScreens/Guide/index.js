@@ -14,7 +14,7 @@ import {
 import styles from './styles';
 import { Images, Colors, Strings, Constants } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 import LiveMatchView from 'src/components/Modal/LiveMatchModal';
 import { useQuery } from '@apollo/client';
 import dayjs from 'dayjs';
@@ -58,6 +58,8 @@ const expireTime = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 export default function Guide(props) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  let isFocused = useIsFocused()
+
   const currentDate = dayjs(); // Get the current date and time
   const reduxData = useSelector(state => state.user);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -252,8 +254,12 @@ export default function Guide(props) {
 
   useEffect(() => {
     getTimeList();
-    console.log("FontScale => ", fontScale)
   }, []);
+  useEffect(() => {
+    if (isFocused) {
+      getTimeList();
+    }
+  }, [isFocused]);
 
   useEffect(() => {
     if (eventList && eventList.length > 0) {
