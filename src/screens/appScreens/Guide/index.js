@@ -292,8 +292,10 @@ export default function Guide(props) {
     getTimeList();
   }, []);
   useEffect(() => {
-    if (isFocused)
+    if (isFocused) {
+      refetch()
       getTimeList();
+    }
   }, [isFocused]);
 
   useEffect(() => {
