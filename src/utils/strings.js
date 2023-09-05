@@ -101,4 +101,5 @@ export default {
   passwordResetInitiation: 'Password reset initiation successfully. Check your email for instructions.',
   alreadyAccount: "Already have an account?",
   profileCompleted: 'Profile Completed Successfully!! Login to Continue.',
+  emptyFavoriteSportList: "You haven't added any favorite sports yet. Tap 'Star Icon' to choose your favorite sports and get personalized event listings.",
 };

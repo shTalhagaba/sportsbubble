@@ -17,7 +17,7 @@ import { Images, Colors, Strings, Constants } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
 import { useNavigation } from '@react-navigation/native';
 import LiveMatchView from 'src/components/Modal/LiveMatchModal';
-import { useQuery } from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
 import dayjs from 'dayjs';
 import { GET_SORTED_EVENTS } from './queries';
 import { useDispatch, useSelector } from 'react-redux';
@@ -25,9 +25,11 @@ import { setExpire, setGuest, setStoreEventList, setUser } from 'src/store/types
 import { moderateScale } from 'react-native-size-matters';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 import CustomMySportsModalView from 'src/components/Modal/CustomMySportsModalView';
-import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures';
+import GestureRecognizer from 'react-native-swipe-gestures';
+import { UPDATE_CONSUMERS } from 'src/graphQL';
+import ShowMessage from 'src/components/ShowMessage';
 const screenWidth = Dimensions.get('window').width;
-const { width, fontScale } = Dimensions.get('window');
+const { fontScale } = Dimensions.get('window');
 // Sample data for the category slider
 const categoryArr = [
   {
@@ -54,6 +56,7 @@ const categoryArr = [
 ];
 
 const expireTime = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+
 
 export default function Guide(props) {
   const navigation = useNavigation();
@@ -86,7 +89,7 @@ export default function Guide(props) {
   const [endSearchTime, setEndSearchTime] = useState(
     dayjs(new Date()).add(7, 'day').toISOString(),
   );
-  const data = useSelector(state => state.user);
+  const [updateConsumersMutation, { loading: loadingFavourite, error: errorFavourite }] = useMutation(UPDATE_CONSUMERS);
 
   // Fetch data from API using Apollo useQuery hook
   const { loading, refetch, error } = useQuery(GET_SORTED_EVENTS, {
@@ -189,6 +192,60 @@ export default function Guide(props) {
     },
   });
 
+  // Define a function to execute the mutation
+  const updateConsumers = async (categories,sport) => {
+    if(categories?.id && sport?.id){
+    const updateData = {
+      where: {
+        cognitoId: reduxData?.userData?.sub
+      },
+      create: {
+        favoriteSports: [
+          {
+            node: {
+              notifications: true,
+              sport: {
+                connect: {
+                  where: {
+                    node: {
+                      id: sport?.id
+                    }
+                  }
+                }
+              },
+              categories: {
+                connect: [
+                  {
+                    where: {
+                      node: {
+                        id: categories?.id
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    };
+    try {
+      const { data } = await updateConsumersMutation({
+        variables: updateData,
+      });
+      if(!loadingFavourite && data?.updateConsumers?.consumers){
+        ShowMessage('Added to Favorites successfully!')
+      }
+      // Handle the response data as needed
+      console.log('Updated consumer:', data?.updateConsumers?.consumers);
+    } catch (err) {
+      console.error('Error updating consumer:', err);
+    }
+  }else{
+    ShowMessage('Invalid data')
+  }
+  };
+
   const getTimeList = () => {
     const daysList = [];
     const currentHour = currentDate.hour(); // Get the current hour
@@ -236,7 +293,7 @@ export default function Guide(props) {
 
   useEffect(() => {
     if (eventList && eventList.length > 0) {
-      let featured = eventList.filter(item => item?.isFeatured === null)
+      let featured = eventList.filter(item => item?.isFeatured)
       setFeaturedEvent(featured[0])
       let filteredEvents;
       if (selectedCategory.includes('all')) {
@@ -401,90 +458,91 @@ export default function Guide(props) {
     return (
       // Render your item component here
       dayjs(item?.endTime).isAfter(currentDate) ? (
-        <TouchableOpacity
-          style={styles.listContainer}
-          onPress={() => {
-            if (
-              item &&
-              item?.rightsHoldersConnection &&
-              item?.rightsHoldersConnection?.totalCount === 1
-            ) {
-              navigation.navigate('withoutBottomtab', {
-                screen: 'Connect',
-                params: {
-                  item: item,
-                  holderItem: item?.rightsHoldersConnection,
-                  eventFlag: true,
-                },
-              });
-            } else {
-              navigation.navigate('Watch', { item: item });
-            }
-          }}>
-          <View style={styles.innerContainer}>
-            <View style={styles.imageContainer}>
-              <ImageWithPlaceHolder
-                source={item?.logo1}
-                placeholderSource={Constants.placeholder_trophy_icon}
-                style={styles.imageIcon}
-                resizeMode="contain"
-              />
-            </View>
-            <View
-              style={{
-                width: item?.startTime ? startTimeWidth(item?.startTime) : 0,
-                backgroundColor: Colors.darkBlue,
-              }}></View>
-            <View
-              style={{
-                width: endTimeWidth(item?.endTime),
-                backgroundColor: dayjs(item?.startTime).isAfter(currentDate)
-                  ? Colors.mediumBlue
-                  : Colors.mediumGreen,
-              }}></View>
-            <View
-              style={{
-                flex: 1,
-                backgroundColor: Colors.darkBlue,
-              }}></View>
-            <View style={styles.userNameContainer}>
-              <Text style={[styles.eventTxt]} numberOfLines={1}>
-                {item?.line1 ? item?.line1 : item?.companyName}
-              </Text>
-              <Text style={styles.titleTxt} numberOfLines={1}>
-                {item?.line2 ? item?.line2 : item?.title}
-              </Text>
-              <View style={{ flexDirection: 'row' }}>
-                <Text style={[styles.eventDateTxt]}>
-                  {item?.startTime
-                    ? dayjs(item?.startTime).format('ddd. MM/D')
-                    : item?.day}
-                  {'  l '}
-                </Text>
-                <Text style={[styles.eventDateTxt]}>
-                  {' '}
-                  {item?.startTime
-                    ? `${dayjs(item?.startTime).format('h:mma')} - ${dayjs(
-                      item?.endTime,
-                    ).format('h:mma')}`
-                    : item?.time}
-                </Text>
-              </View>
-            </View>
-            {!data?.guest && (
-              <TouchableOpacity
-                style={{ position: 'absolute', right: 0, alignSelf: 'center' }}
-              //  onPress={() => handleFvrt(item, index)}
-              >
-                <Image
-                  source={Images.Favorite}
-                  style={[styles.fvrtIcon]}
-                  resizeMode={'contain'}
+        item?.isFeatured ? null :
+          <TouchableOpacity
+            style={styles.listContainer}
+            onPress={() => {
+              if (
+                item &&
+                item?.rightsHoldersConnection &&
+                item?.rightsHoldersConnection?.totalCount === 1
+              ) {
+                navigation.navigate('withoutBottomtab', {
+                  screen: 'Connect',
+                  params: {
+                    item: item,
+                    holderItem: item?.rightsHoldersConnection,
+                    eventFlag: true,
+                  },
+                });
+              } else {
+                navigation.navigate('Watch', { item: item });
+              }
+            }}>
+            <View style={styles.innerContainer}>
+              <View style={styles.imageContainer}>
+                <ImageWithPlaceHolder
+                  source={item?.logo1}
+                  placeholderSource={Constants.placeholder_trophy_icon}
+                  style={styles.imageIcon}
+                  resizeMode="contain"
                 />
-              </TouchableOpacity>
-            )}
-          </View>
-        </TouchableOpacity>
+              </View>
+              <View
+                style={{
+                  width: item?.startTime ? startTimeWidth(item?.startTime) : 0,
+                  backgroundColor: Colors.darkBlue,
+                }}></View>
+              <View
+                style={{
+                  width: endTimeWidth(item?.endTime),
+                  backgroundColor: dayjs(item?.startTime).isAfter(currentDate)
+                    ? Colors.mediumBlue
+                    : Colors.mediumGreen,
+                }}></View>
+              <View
+                style={{
+                  flex: 1,
+                  backgroundColor: Colors.darkBlue,
+                }}></View>
+              <View style={styles.userNameContainer}>
+                <Text style={[styles.eventTxt]} numberOfLines={1}>
+                  {item?.line1 ? item?.line1 : item?.companyName}
+                </Text>
+                <Text style={styles.titleTxt} numberOfLines={1}>
+                  {item?.line2 ? item?.line2 : item?.title}
+                </Text>
+                <View style={{ flexDirection: 'row' }}>
+                  <Text style={[styles.eventDateTxt]}>
+                    {item?.startTime
+                      ? dayjs(item?.startTime).format('ddd. MM/D')
+                      : item?.day}
+                    {'  l '}
+                  </Text>
+                  <Text style={[styles.eventDateTxt]}>
+                    {' '}
+                    {item?.startTime
+                      ? `${dayjs(item?.startTime).format('h:mma')} - ${dayjs(
+                        item?.endTime,
+                      ).format('h:mma')}`
+                      : item?.time}
+                  </Text>
+                </View>
+              </View>
+              {!reduxData?.guest && (
+                <TouchableOpacity
+                  style={{ position: 'absolute', right: 0, alignSelf: 'center' }}
+                  onPress={() => updateConsumers(item?.category, item?.sport)}
+                >
+                  <Image
+                    source={Images.Favorite}
+                    style={[styles.fvrtIcon]}
+                    resizeMode={'contain'}
+                  />
+                </TouchableOpacity>
+              )}
+            </View>
+          </TouchableOpacity>
       ) : null
     );
   });

@@ -20,6 +20,7 @@ export default {
     buttonBlue: "#014EBD",
     greenText: "#69A833",
     greyText: "rgba(255, 255, 255, 0.7)",
+    greyText50: "rgba(255, 255, 255, 0.5)",
     greyText90: "rgba(255, 255, 255, 0.9)",
     greyBackground: "#3F5B80",
     orange: "#fe9d0d",

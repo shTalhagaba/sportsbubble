@@ -7,3 +7,26 @@ export const GET_CONSUMER = gql`
   }
   }
 `;
+
+export const GET_MY_SPORT = gql`
+query Query($where: FavoriteSportWhere, $consumersWhere2: ConsumerWhere) {
+  consumers(where: $consumersWhere2) {
+    name
+    id
+    cognitoId
+    favoriteSports(where: $where) {
+      id
+      sport {
+        id
+        name
+      }
+      notifications
+      categories {
+        id
+        name
+      }
+    }
+    createdAt
+  }
+}
+`;

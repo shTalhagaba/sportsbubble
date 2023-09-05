@@ -173,7 +173,6 @@ export const updateProfileValidation = (
   firstName,
   lastName,
   zipCode,
-  pronouns,
 ) => {
   if (checkValidation(firstName)) {
     ShowMessage('Please Enter First Name.');
@@ -189,9 +188,7 @@ export const updateProfileValidation = (
     ShowMessage('Name should only contain letters and spaces.');
   } else if (checkValidation(zipCode)) {
     ShowMessage('Please Enter Zip Code.');
-  } else if (checkValidation(pronouns)) {
-    ShowMessage('Please Select Pronouns.');
-  } else if (zipCode.length < 4) {
+  }  else if (zipCode.length < 4) {
     ShowMessage('Zip Code is too short.');
   } else {
     return true;

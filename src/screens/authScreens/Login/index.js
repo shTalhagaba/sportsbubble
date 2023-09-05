@@ -51,7 +51,6 @@ export default function Login() {
         setLoadingLocal(true);
         const user = await userLogin(email, password);
         user.id = user?.accessToken?.payload?.sub ?? '';
-        console.log('user : ',user)
         setLoadingLocal(false);
         // Check if user login was successful
         if (user?.idToken?.payload) {

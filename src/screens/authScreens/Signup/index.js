@@ -80,7 +80,6 @@ export default function Signup() {
   };
   // Function to handle verification
   const handleVerify = async () => {
-    console.log('client : ',client)
     if (otpValidation(otp)) {
       try {
         setLoadingLocal(true);

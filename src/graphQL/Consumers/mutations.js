@@ -14,6 +14,32 @@ mutation CreateConsumer($input: [ConsumerCreateInput!]!) {
   }
 }`;
 
+export const UPDATE_CONSUMERS = gql`
+  mutation UpdateConsumers($where: ConsumerWhere, $create: ConsumerRelationInput, $connectOrCreate: ConsumerConnectOrCreateInput) {
+    updateConsumers(where: $where, create: $create, connectOrCreate: $connectOrCreate) {
+      consumers {
+        id
+        name
+        favoriteSports {
+          id
+          notifications
+          sport {
+            id
+            name
+            genre
+            weight
+          }
+          categories {
+            id
+            name
+          }
+        }
+        cognitoId
+      }
+    }
+  }
+`;
+
   export const CONSUMER_DETAIL = gql`
   fragment ConsumerDetail on Consumer {
       oktaId

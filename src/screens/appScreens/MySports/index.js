@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ImageBackground,
   Text,
@@ -12,74 +12,35 @@ import {
 import styles from './styles';
 import { Images, Colors, Strings } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import CustomModalView from 'src/components/Modal/CustomModal';
 import { moderateScale } from 'react-native-size-matters';
 import { useSelector } from 'react-redux';
 import ShowMessage from 'src/components/ShowMessage';
+import { useQuery } from '@apollo/client';
+import { GET_MY_SPORT } from 'src/graphQL';
+import LoaderModal from 'src/components/LoaderModal';
 const { fontScale } = Dimensions.get('window');
 
 const data = [
   {
     id: 1,
     img: Images.BaseBall,
-    title: 'Baseball',
+    name: 'Baseball',
     notifcationFlag: false,
     fvrtFlag: false,
   },
   {
     id: 2,
     img: Images.BasketBall,
-    title: 'Basketball',
+    name: 'Basketball',
     notifcationFlag: false,
     fvrtFlag: false,
   },
   {
     id: 3,
     img: Images.BaseBall,
-    title: 'Boxing',
-    notifcationFlag: false,
-    fvrtFlag: false,
-  },
-  {
-    id: 4,
-    img: Images.BasketBall,
-    title: 'Baseball',
-    notifcationFlag: false,
-    fvrtFlag: false,
-  },
-  {
-    id: 5,
-    img: Images.BaseBall,
-    title: 'Basketball',
-    notifcationFlag: false,
-    fvrtFlag: false,
-  },
-  {
-    id: 6,
-    img: Images.BasketBall,
-    title: 'Basketball',
-    notifcationFlag: false,
-    fvrtFlag: false,
-  },
-  {
-    id: 7,
-    img: Images.BaseBall,
-    title: 'Boxing',
-    notifcationFlag: false,
-    fvrtFlag: false,
-  },
-  {
-    id: 8,
-    img: Images.BasketBall,
-    title: 'Baseball',
-    notifcationFlag: false,
-    fvrtFlag: false,
-  },
-  {
-    id: 9,
-    img: Images.BaseBall,
-    title: 'Basketball',
+    name: 'Boxing',
     notifcationFlag: false,
     fvrtFlag: false,
   },
@@ -113,12 +74,49 @@ const categoryArr = [
 export default function Guide() {
   const navigation = useNavigation();
   const reduxData = useSelector(state => state.user);
-
+  const isFocused = useIsFocused();
   const [categoryData, setCategoryData] = useState(categoryArr);
   const [reminderModal, setRemaindarModal] = useState(false);
   const [fvrtModal, setFvrtModal] = useState(false);
   const [mySportData, setSportData] = useState(data);
   const [curremIndex, setCurrentIndex] = useState();
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [filteredEventList, setFilteredEventList] = useState([]);
+
+  const { loading, refetch, error } = useQuery(GET_MY_SPORT, {
+    variables: {
+      consumersWhere2: {
+        cognitoId: reduxData?.userData?.sub,
+      },
+    },
+    fetchPolicy: 'network-only',
+    notifyOnNetworkStatusChange: true,
+    onCompleted: data => {
+      console.log('data?.consumers?.[0]?.favoriteSports : ', data?.consumers?.[0]?.favoriteSportssq)
+      if (!loading && data && data?.consumers && data?.consumers.length > 0) {
+        const filteredEvents = data?.consumers?.[0]?.favoriteSports.filter(element => {
+          const { sport, categories } = element;
+          // Check if all required properties exist
+          if (sport?.name
+            && categories && categories.length > 0
+          ) {
+            return true;
+          }
+          return false;
+        });
+        setSportData(filteredEvents)
+      }
+    },
+    onError: error => {
+      console.log('error : ', error);
+    },
+  });
+
+  useEffect(() => {
+    if(isFocused){
+      refetch()
+    }
+  }, [isFocused])
 
   const handleReminder = (item, index) => {
     setCurrentIndex(index);
@@ -146,7 +144,60 @@ export default function Guide() {
     navigation.navigate('Auth', { screen: 'Signup' });
   };
 
-  const handleSelectedCategory = (e, index) => { };
+  const handleSelectedCategory = (e, index) => {
+    if (index === 0 && selectedCategory === 'all') {
+      return;
+    }
+
+    let list = [...categoryData];
+
+    // Toggle the selected category
+    list[index].selected = !list[index].selected;
+
+    if (index === 0) {
+      // Deselect all other categories if 'all' category is selected
+      list.forEach((element, idx) => {
+        if (idx !== 0) {
+          element.selected = false;
+        }
+      });
+    } else {
+      // Check if all other categories are deselected
+      const otherSelected = list.slice(1).some(element => element.selected);
+      if (!otherSelected) {
+        list[0].selected = true;
+      } else {
+        list[0].selected = false;
+      }
+    }
+
+    // Filter events based on selected categories
+    const selectedCategories = list.filter(category => category.selected);
+    const selectedCategoryValues = selectedCategories.map(
+      category => category.value
+    );
+
+    let filteredEvents = [];
+
+    if (selectedCategories.length === 1 && selectedCategoryValues[0] === 'all') {
+      setSelectedCategory('all');
+      filteredEvents = mySportData; // Use all data when 'all' category is selected
+    } else {
+      filteredEvents = mySportData.filter(item => {
+        // Extract the names from item.categories
+        const categoryNames = item.categories.map(category => category.name);
+        // Check if at least one of the selected categories matches any category name in the item
+        return selectedCategoryValues.some(selectedCategory =>
+          categoryNames.includes(selectedCategory)
+        );
+      });
+
+    }
+    setSelectedCategory(selectedCategoryValues);
+    setCategoryData(list);
+    setFilteredEventList(filteredEvents);
+  };
+
 
   return (
     <ImageBackground
@@ -229,46 +280,58 @@ export default function Guide() {
       </View>
       {/* main list */}
       <FlatList
-        data={mySportData}
+        data={selectedCategory === 'all' && mySportData && mySportData.length > 0
+          ? mySportData : filteredEventList
+        }
         showsVerticalScrollIndicator={false}
         renderItem={({ item, index }) => (
-          <View style={styles.listContainer}>
-            <View style={styles.innerContainer}>
-              <Image
-                source={item?.img}
-                style={styles.imageIcon}
-                resizeMode={'contain'}
-              />
-              <View style={styles.userNameContainer}>
-                <Text style={styles.titleTxt}>{item?.title}</Text>
+          item?.sport?.name && item?.categories?.[0]?.name ?
+            <View style={styles.listContainer}>
+              <View style={styles.innerContainer}>
+                <Image
+                  source={Images.BaseBall}
+                  style={styles.imageIcon}
+                  resizeMode={'contain'}
+                />
+                <View style={styles.userNameContainer}>
+                  <Text style={styles.titleTxt}>{item?.sport?.name || item?.title}</Text>
+                </View>
+                <TouchableOpacity 
+                // onPress={() => handleReminder(item, index)}
+                >
+                  <Image
+                    source={Images.Bell}
+                    resizeMode={'contain'}
+                    style={[
+                      styles.bellIcon,
+                      {
+                        tintColor: item?.notifications || item?.notifcationFlag
+                          ? Colors.darkOrange
+                          : Colors.white,
+                      },
+                    ]}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity 
+                // onPress={() => handleFvrt(item, index)}
+                >
+                  <Image
+                    source={!item?.fvrtFlag ? Images.FilledFvrt : Images.Favorite}
+                    style={[
+                      styles.fvrtIcon,
+                      { tintColor: item?.fvrtFlag && Colors.orange },
+                    ]}
+                    resizeMode={'contain'}
+                  />
+                </TouchableOpacity>
               </View>
-              <TouchableOpacity onPress={() => handleReminder(item, index)}>
-                <Image
-                  source={Images.Bell}
-                  resizeMode={'contain'}
-                  style={[
-                    styles.bellIcon,
-                    {
-                      tintColor: item?.notifcationFlag
-                        ? Colors.darkOrange
-                        : Colors.white,
-                    },
-                  ]}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => handleFvrt(item, index)}>
-                <Image
-                  source={item?.fvrtFlag ? Images.FilledFvrt : Images.Favorite}
-                  style={[
-                    styles.fvrtIcon,
-                    { tintColor: item?.fvrtFlag && Colors.orange },
-                  ]}
-                  resizeMode={'contain'}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
+            </View> : null
         )}
+        ListEmptyComponent={
+          <View>
+            <Text style={styles.emptyTxt}>{Strings.emptyFavoriteSportList}</Text>
+          </View>
+        }
       />
       {/* event reminder pop up  */}
       <CustomModalView
@@ -298,6 +361,7 @@ export default function Guide() {
         blackBtnPress={() => setFvrtModal(!fvrtModal)}
         otherBtnPress={() => handleFvrtAlert()}
       />
+      <LoaderModal visible={loading} loadingText={''} />
     </ImageBackground>
   );
 }

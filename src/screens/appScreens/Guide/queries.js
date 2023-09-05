@@ -11,6 +11,11 @@ export const GET_SORTED_EVENTS = gql`
       logo1
       isFeatured
       category {
+        id
+        name
+      }
+      sport {
+        id
         name
       }
       rightsHolders {

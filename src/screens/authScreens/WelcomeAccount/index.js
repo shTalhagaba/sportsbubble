@@ -69,7 +69,6 @@ export default function WelcomeAccount(props) {
     setShowDatePicker(false);
     setDOB(currentDate);
   };
-  console.log('props?.route?.params?.client : ',props?.route?.params?.client)
   // Handle the submission of the complete profile form
   const submitButton = async () => {
     if (completeProfileValidation(zipCode, dob, pronouns)) {
@@ -81,6 +80,8 @@ export default function WelcomeAccount(props) {
         dob: dayjs(dob).format('YYYY-MM-DD'),
         cognitoId: props?.route?.params?.client,
         cognitoZip: zipCode,
+        email: props?.route?.params?.email,
+        name: props?.route?.params?.fullName
       };
       console.log('inputData : ',inputData)
       await handleFormSubmit(inputData)

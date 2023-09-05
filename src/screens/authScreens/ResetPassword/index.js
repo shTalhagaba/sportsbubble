@@ -35,6 +35,7 @@ export default function ResetPassword(props) {
         );
         if (resetSuccess) {
           ShowMessage(Strings.passwordResetSuccessfully);
+          setLoadingLocal(false);
           navigation.replace('Login'); // Navigate to the login screen
         }
         setLoadingLocal(false);

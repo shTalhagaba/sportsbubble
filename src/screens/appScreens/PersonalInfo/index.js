@@ -30,6 +30,7 @@ export default function PersonalInfo() {
   const dispatch = useDispatch();
   const data = useSelector(state => state.user);
   const [isOpen, setIsOpen] = useState(false);
+  const [buttonDisable, setButtonDisable] = useState(true);
   const [firstName, setFirstName] = useState('Example');
   const [lastName, setLastName] = useState('Example');
   const [zipCode, setZipcode] = useState('');
@@ -62,6 +63,16 @@ export default function PersonalInfo() {
     }
   }, [data?.userData]);
 
+  useEffect(() => {
+    const user = data?.userData;
+    if (user?.name === firstName && user?.family_name === lastName
+      && user?.locale === zipCode && user?.gender === pronouns) {
+      setButtonDisable(true)
+    } else {
+      setButtonDisable(false)
+    }
+  }, [firstName, lastName, zipCode, pronouns]);
+
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
@@ -72,38 +83,45 @@ export default function PersonalInfo() {
   };
 
   const handleUpdateProfile = async () => {
-    if (updateProfileValidation(firstName, lastName, zipCode, pronouns)) {
-      try {
-        setLoadingLocal(true);
-        const test = await userUpdateProfile(
-          email,
-          firstName,
-          lastName,
-          zipCode,
-          dob,
-          pronouns,
-        );
-        if (test === 'SUCCESS') {
-          const updatedProfile = {
-            ...data?.userData,
-            name: firstName,
-            family_name: lastName,
-            locale: zipCode,
-            gender: pronouns,
-          };
-          dispatch(setUserData(updatedProfile));
-          ShowMessage('Profile updated successfully!!');
-          navigation.goBack();
+    if (updateProfileValidation(firstName, lastName, zipCode)) {
+      const user = data?.userData;
+      if (user?.name === firstName && user?.family_name === lastName
+        && user?.locale === zipCode && user?.gender === pronouns) {
+        ShowMessage('Not saving any data successfully');
+        navigation.goBack();
+      } else {
+        try {
+          setLoadingLocal(true);
+          const test = await userUpdateProfile(
+            email,
+            firstName,
+            lastName,
+            zipCode,
+            dob,
+            pronouns,
+          );
+          if (test === 'SUCCESS') {
+            const updatedProfile = {
+              ...data?.userData,
+              name: firstName,
+              family_name: lastName,
+              locale: zipCode,
+              gender: pronouns,
+            };
+            dispatch(setUserData(updatedProfile));
+            ShowMessage('Profile updated successfully!!');
+            navigation.goBack();
+          }
+          setLoadingLocal(false);
+        } catch (error) {
+          if (error.message.includes(':')) {
+            const myArray = error.message.split(':');
+          } else {
+            ShowMessage(error.message);
+            console.log('error.message=>', error.message);
+          }
+          setLoadingLocal(false);
         }
-        setLoadingLocal(false);
-      } catch (error) {
-        if (error.message.includes(':')) {
-          const myArray = error.message.split(':');
-        } else {
-          ShowMessage(error.message);
-          console.log('error.message=>', error.message);
-        }
-        setLoadingLocal(false);
       }
     }
   };
@@ -137,6 +155,15 @@ export default function PersonalInfo() {
     }
   };
 
+  const handleBack = () => {
+    if (!buttonDisable) {
+      ShowMessage('Not saving any data successfully');
+      navigation.goBack()
+    } else {
+      navigation.goBack()
+    }
+  }
+
   return (
     <ImageBackground
       source={Images.Background}
@@ -153,6 +180,7 @@ export default function PersonalInfo() {
         LeftImage={Images.LeftIcon}
         customLeftImage={{ tintColor: Colors.orange }}
         SimpleView
+        onPressBack={handleBack}
       />
       <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
@@ -301,6 +329,8 @@ export default function PersonalInfo() {
             onpress={() => handleUpdateProfile()}
             Container={styles.btnContainer}
             txt={styles.btnContainerTxt}
+            disabled={buttonDisable}
+            blue={true}
           />
 
           <TouchableOpacity
