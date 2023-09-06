@@ -137,7 +137,8 @@ export default ScaledSheet.create({
     backgroundColor: Colors.blueGrey,
   },
   sliderActiveTimeTxt: {
-    fontSize: fontScale > 1 ? 15 * fontScale : '15@ms0.3',
+    fontSize: '15@ms0.3',
+    // fontSize: fontScale > 1 ? 15 * fontScale : '15@ms0.3',
     fontWeight: '900',
     lineHeight: '22@ms0.3',
     color: Colors.white,
@@ -145,7 +146,8 @@ export default ScaledSheet.create({
     fontStyle: 'italic',
   },
   sliderInactiveTimeTxt: {
-    fontSize: fontScale > 1 ? 13 * fontScale : '15@ms0.3',
+    // fontSize: fontScale > 1 ? 13 * fontScale : '15@ms0.3',
+    fontSize: "15@ms0.3",
     fontWeight: '700',
     lineHeight: '23@ms0.3',
     color: Colors.white,
@@ -212,7 +214,8 @@ export default ScaledSheet.create({
     marginTop: '10@ms0.3',
   },
   sliderTxt: {
-    fontSize: fontScale > 1 ? 13 * fontScale : '12@ms0.3',
+    fontSize: '12@ms0.3',
+    // fontSize: fontScale > 1 ? 13 * fontScale : '12@ms0.3',
     fontWeight: '900',
     lineHeight: '24@ms0.3',
     color: Colors.white,

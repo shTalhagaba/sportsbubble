@@ -1,13 +1,13 @@
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import {View, TouchableOpacity, Image} from 'react-native';
+import { View, TouchableOpacity, Image } from 'react-native';
 import styles from './styles';
 
 const AppHeader = props => {
   const navigation = useNavigation();
 
   return (
-    <View style={[styles.headerContainer, props.headerContainer]}>
+    <View style={[styles.headerContainer, props.headerContainer, props?.connect ? styles.headerContainer2 : {}]}>
       {props.LeftImage ? (
         <TouchableOpacity
           onPress={
@@ -46,3 +46,4 @@ const AppHeader = props => {
   );
 };
 export default AppHeader;
+

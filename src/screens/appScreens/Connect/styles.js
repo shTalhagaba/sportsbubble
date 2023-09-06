@@ -1,8 +1,8 @@
-import {Colors, Fonts} from 'src/utils';
-import {ScaledSheet} from 'react-native-size-matters';
-import {Dimensions} from 'react-native';
+import { Colors, Fonts } from 'src/utils';
+import { ScaledSheet } from 'react-native-size-matters';
+import { Dimensions } from 'react-native';
 const screenWidth = Dimensions.get('window').width;
-const {fontScale} = Dimensions.get('window');
+const { fontScale } = Dimensions.get('window');
 
 export default ScaledSheet.create({
   container: {
@@ -61,7 +61,8 @@ export default ScaledSheet.create({
     lineHeight: '23@ms0.3',
     color: Colors.white,
     fontFamily: Fonts.Regular,
-    width: Platform.OS === 'android' ? screenWidth - 110 :  screenWidth - 110 ,
+    width: Platform.OS === 'android' ? screenWidth - 110 : screenWidth - 110,
+
   },
   eventTxt: {
     fontSize: '13@ms0.3',
@@ -69,7 +70,7 @@ export default ScaledSheet.create({
     lineHeight: '18@ms0.3',
     color: Colors.white,
     fontFamily: Fonts.Regular,
-    width: Platform.OS === 'android' ? screenWidth - 110 :  screenWidth - 110 ,
+    width: Platform.OS === 'android' ? screenWidth - 110 : screenWidth - 110,
   },
   dateEventTxt: {
     fontSize: '13@ms0.3',
