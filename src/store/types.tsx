@@ -47,6 +47,13 @@ export const setStoreEventList = (args: any) => {
   };
 };
 
+export const setSportsList = (args: any) => {
+  return {
+    type: 'SET_SPORTS_LIST',
+    payload: args,
+  };
+};
+
 export const setSplashEventList = (args: any) => {
   return {
     type: 'SET_SPLASH_EVENT_LIST',

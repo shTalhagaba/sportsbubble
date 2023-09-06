@@ -130,7 +130,7 @@ export default ScaledSheet.create({
     paddingStart: '6@ms0.3',
     position: 'absolute',
     left: '60@ms0.3',
-    width: '82%',
+    width: '72%',
   },
   leftContainer: {
     flex: 1,

@@ -40,7 +40,33 @@ export const UPDATE_CONSUMERS = gql`
   }
 `;
 
-  export const CONSUMER_DETAIL = gql`
+export const DELETE_CONSUMERS = gql`
+mutation UpdateConsumers($where: ConsumerWhere, $delete: ConsumerDeleteInput) {
+  updateConsumers(where: $where, delete: $delete) {
+    consumers {
+      id
+      name
+      favoriteSports {
+        id
+        notifications
+        sport {
+          id
+          name
+          genre
+          weight
+        }
+        categories {
+          id
+          name
+        }
+      }
+      cognitoId
+    }
+  }
+}
+`;
+
+export const CONSUMER_DETAIL = gql`
   fragment ConsumerDetail on Consumer {
       oktaId
       billingZip
@@ -51,7 +77,7 @@ export const UPDATE_CONSUMERS = gql`
   }
   `;
 
-  export const EDIT_CONSUMER = gql`
+export const EDIT_CONSUMER = gql`
   mutation EditConsumer($oktaId: String, $update: ConsumerUpdateInput!) {
     updateConsumers(update: $update, where: {oktaId: $oktaId} ) {
       consumers {

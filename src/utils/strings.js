@@ -50,7 +50,7 @@ export default {
   sportStreamingDes: 'Please share how you watch to help us improve our service',
   alertDes: 'Are you sure you want to cancel your account? This will erase your favorites and notification preferences.',
   emptyGuideList: "There are no live events in our schedule during this time period. Tap 'Live' above to see live event listings or swipe right to see upcoming event listings",
-  emptySearchList: "Search by Event, Team, League or Sport to Find Event Watch Information",
+  emptySearchList: "Search by Event, Team, League or Sport to Find Upcoming Event Schedule and Watch Information",
   welcome: "Welcome to",
   liveSportsEventGuide: "Live Sports Event Guide",
   welcomeCreateAccount: "Create an account for fast access to Pro, College, Olympic and Esports event information & viewing",

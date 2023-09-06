@@ -7,7 +7,6 @@ import {
   FlatList,
   TouchableOpacity,
   StatusBar,
-  Dimensions,
   ScrollView,
 } from 'react-native';
 import styles from './styles';
@@ -16,8 +15,7 @@ import AppHeader from 'src/components/AppHeader';
 import {useNavigation} from '@react-navigation/native';
 import dayjs from 'dayjs';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
-import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
-const screenWidth = Dimensions.get('window').width;
+import GestureRecognizer from 'react-native-swipe-gestures';
 
 const data = [
   {id: 1, img: Images.NBALogo, title: 'Fubo'},
@@ -33,6 +31,7 @@ export default function Watch(props) {
   const [bottomMenu, setBottomMenu] = useState(false);
   const [bottomShow, setBottomShow] = useState(false);
   const {searchFlag} = props?.route?.params;
+
 
   useEffect(() => {
     setItemSelected(props?.route?.params?.item);

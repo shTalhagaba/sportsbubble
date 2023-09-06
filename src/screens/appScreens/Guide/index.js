@@ -18,7 +18,7 @@ import { Images, Colors, Strings, Constants } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 import LiveMatchView from 'src/components/Modal/LiveMatchModal';
-import { gql, useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import dayjs from 'dayjs';
 import { GET_SORTED_EVENTS } from './queries';
 import { useDispatch, useSelector } from 'react-redux';
@@ -27,7 +27,7 @@ import { moderateScale } from 'react-native-size-matters';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 import CustomMySportsModalView from 'src/components/Modal/CustomMySportsModalView';
 import GestureRecognizer from 'react-native-swipe-gestures';
-import { UPDATE_CONSUMERS } from 'src/graphQL';
+import { GET_MY_SPORT, UPDATE_CONSUMERS } from 'src/graphQL';
 import ShowMessage from 'src/components/ShowMessage';
 const screenWidth = Dimensions.get('window').width;
 const { fontScale } = Dimensions.get('window');
@@ -196,6 +196,35 @@ export default function Guide(props) {
     },
   });
 
+  const { loading: getLoading, refetch: getRefetch, error: getError } = useQuery(GET_MY_SPORT, {
+    variables: {
+      consumersWhere2: {
+        cognitoId: reduxData?.userData?.sub,
+      },
+    },
+    fetchPolicy: 'network-only',
+    notifyOnNetworkStatusChange: true,
+    onCompleted: data => {
+      if (reduxData?.user && !getLoading && data && data?.consumers && data?.consumers.length > 0) {
+        const filteredEvents = data?.consumers?.[0]?.favoriteSports.filter(element => {
+          const { sport, categories } = element;
+          // Check if all required properties exist
+          if (sport?.name
+            && categories && categories.length > 0
+          ) {
+            return true;
+          }
+          return false;
+        });
+        dispatch(setSportsList(filteredEvents));
+      }
+    },
+    onError: error => {
+      console.log('error : ', error);
+    },
+  });
+
+
   // Define a function to execute the mutation
   const updateConsumers = async (categories, sport) => {
     if (categories?.id && sport?.id) {
@@ -294,15 +323,17 @@ export default function Guide(props) {
   const wait = timeout => {
     return new Promise(resolve => setTimeout(resolve, timeout));
   };
+
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     getTimeList();
-    console.log("Refreddd")
     wait(2000).then(() => setRefreshing(false));
   }, []);
+
   useEffect(() => {
     getTimeList();
   }, []);
+
   useEffect(() => {
     if (isFocused) {
       refetch()
@@ -473,81 +504,95 @@ export default function Guide(props) {
     });
   };
   const ItemComponent = React.memo(({ item }) => {
+    const sportsIds = reduxData?.sportsList.map(item => item?.sport?.id);
     return (
       // Render your item component here
       dayjs(item?.endTime).isAfter(currentDate) ? (
-        <TouchableOpacity
-          style={styles.listContainer}
-          onPress={() => {
-            if (
-              item &&
-              item?.rightsHoldersConnection &&
-              item?.rightsHoldersConnection?.totalCount === 1
-            ) {
-              navigation.navigate('withoutBottomtab', {
-                screen: 'Connect',
-                params: {
-                  item: item,
-                  holderItem: item?.rightsHoldersConnection,
-                  eventFlag: true,
-                },
-              });
-            } else {
-              navigation.navigate('Watch', { item: item });
-            }
-          }}>
-          <View style={styles.innerContainer}>
-            <View style={styles.imageContainer}>
-              <ImageWithPlaceHolder
-                source={item?.logo1}
-                placeholderSource={Constants.placeholder_trophy_icon}
-                style={styles.imageIcon}
-                resizeMode="contain"
-              />
-            </View>
-            <View
-              style={{
-                width: item?.startTime ? startTimeWidth(item?.startTime) : 0,
-                backgroundColor: Colors.darkBlue,
-              }}></View>
-            <View
-              style={{
-                width: endTimeWidth(item?.endTime),
-                backgroundColor: dayjs(item?.startTime).isAfter(currentDate)
-                  ? Colors.greyBackground
-                  : Colors.mediumGreen,
-              }}></View>
-            <View
-              style={{
-                flex: 1,
-                backgroundColor: Colors.darkBlue,
-              }}></View>
-            <View style={styles.userNameContainer}>
-              <Text style={[styles.eventTxt]} numberOfLines={1}>
-                {item?.line1 ? item?.line1 : item?.companyName}
-              </Text>
-              <Text style={styles.titleTxt} numberOfLines={1}>
-                {item?.line2 ? item?.line2 : item?.title}
-              </Text>
-              <View style={{ flexDirection: 'row' }}>
-                <Text style={[styles.eventDateTxt]}>
-                  {item?.startTime
-                    ? dayjs(item?.startTime).format('ddd. MM/D')
-                    : item?.day}
-                  {'  l '}
-                </Text>
-                <Text style={[styles.eventDateTxt]}>
-                  {' '}
-                  {item?.startTime
-                    ? `${dayjs(item?.startTime).format('h:mma')} - ${dayjs(
-                      item?.endTime,
-                    ).format('h:mma')}`
-                    : item?.time}
-                </Text>
+        item?.isFeatured ? null :
+          <TouchableOpacity
+            style={styles.listContainer}
+            onPress={() => {
+              if (
+                item &&
+                item?.rightsHoldersConnection &&
+                item?.rightsHoldersConnection?.totalCount === 1
+              ) {
+                navigation.navigate('withoutBottomtab', {
+                  screen: 'Connect',
+                  params: {
+                    item: item,
+                    holderItem: item?.rightsHoldersConnection,
+                    eventFlag: true,
+                  },
+                });
+              } else {
+                navigation.navigate('Watch', { item: item });
+              }
+            }}>
+            <View style={styles.innerContainer}>
+              <View style={styles.imageContainer}>
+                <ImageWithPlaceHolder
+                  source={item?.logo1}
+                  placeholderSource={Constants.placeholder_trophy_icon}
+                  style={styles.imageIcon}
+                  resizeMode="contain"
+                />
               </View>
+              <View
+                style={{
+                  width: item?.startTime ? startTimeWidth(item?.startTime) : 0,
+                  backgroundColor: Colors.darkBlue,
+                }}></View>
+              <View
+                style={{
+                  width: endTimeWidth(item?.endTime),
+                  backgroundColor: dayjs(item?.startTime).isAfter(currentDate)
+                    ? Colors.greyBackground
+                    : Colors.mediumGreen,
+                }}></View>
+              <View
+                style={{
+                  flex: 1,
+                  backgroundColor: Colors.darkBlue,
+                }}></View>
+              <View style={styles.userNameContainer}>
+                <Text style={[styles.eventTxt]} numberOfLines={1}>
+                  {item?.line1 ? item?.line1 : item?.companyName}
+                </Text>
+                <Text style={styles.titleTxt} numberOfLines={1}>
+                  {item?.line2 ? item?.line2 : item?.title}
+                </Text>
+                <View style={{ flexDirection: 'row' }}>
+                  <Text style={[styles.eventDateTxt]}>
+                    {item?.startTime
+                      ? dayjs(item?.startTime).format('ddd. MM/D')
+                      : item?.day}
+                    {'  l '}
+                  </Text>
+                  <Text style={[styles.eventDateTxt]}>
+                    {' '}
+                    {item?.startTime
+                      ? `${dayjs(item?.startTime).format('h:mma')} - ${dayjs(
+                        item?.endTime,
+                      ).format('h:mma')}`
+                      : item?.time}
+                  </Text>
+                </View>
+              </View>
+              {reduxData?.user && (
+                <TouchableOpacity
+                  style={{ position: 'absolute', right: 0, alignSelf: 'center' }}
+                  onPress={() => updateConsumers(item?.category, item?.sport)}
+                >
+                  <Image
+                    source={sportsIds.includes(item?.sport?.id) ? Images.FilledFvrt : Images.Favorite}
+                    style={[styles.fvrtIcon]}
+                    resizeMode={'contain'}
+                  />
+                </TouchableOpacity>
+              )}
             </View>
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
       ) : null
     );
   });

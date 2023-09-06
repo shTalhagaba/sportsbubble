@@ -10,6 +10,7 @@ const initialState = {
   user: false,
   eventList: [],
   splashEventList: [],
+  sportsList: [],
   expire: '',
   guest: false,
 };
@@ -22,6 +23,19 @@ const user = (state = initialState, action: any) => {
         return {
           ...state,
           splashEventList: action.payload,
+        };
+      } catch (e) {
+        alert(e);
+        return state;
+      }
+      break;
+     // set sportss list
+    case 'SET_SPORTS_LIST':
+      console.log('SET_SPORTS_LIST : ', action.payload);
+      try {
+        return {
+          ...state,
+          sportsList: action.payload,
         };
       } catch (e) {
         alert(e);
