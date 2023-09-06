@@ -504,7 +504,8 @@ export default function Guide(props) {
     });
   };
   const ItemComponent = React.memo(({ item }) => {
-    const sportsIds = reduxData?.sportsList.map(item => item?.sport?.id);
+    const sportsIds = reduxData?.sportsList?.map(item => item?.sport?.id) || [];
+
     return (
       // Render your item component here
       dayjs(item?.endTime).isAfter(currentDate) ? (

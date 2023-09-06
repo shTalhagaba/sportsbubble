@@ -45,7 +45,7 @@ export default function Connect(props) {
         LeftImage={Images.LeftIcon}
         customLeftImage={{ tintColor: Colors.orange }}
         SimpleView
-        headerContainer={styles.headerContainer}
+      // headerContainer={styles.headerContainer}
       />
       {/* Main View */}
       <View style={styles.flexOnly}>
