@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ImageBackground,
   StatusBar,
@@ -8,14 +8,14 @@ import {
   Text,
 } from 'react-native';
 import styles from './styles';
-import {Images, Colors} from 'src/utils';
-import {useNavigation} from '@react-navigation/native';
+import { Images, Colors } from 'src/utils';
+import { useNavigation } from '@react-navigation/native';
 import DeviceInfo from 'react-native-device-info';
-import {useQuery} from '@apollo/client';
-import {GET_SORTED_EVENTS} from 'src/screens/appScreens/Guide/queries';
+import { useQuery } from '@apollo/client';
+import { GET_SORTED_EVENTS } from 'src/screens/appScreens/Guide/queries';
 import dayjs from 'dayjs';
-import {setSplashEventList} from 'src/store/types';
-import {useDispatch, useSelector} from 'react-redux';
+import { setSplashEventList } from 'src/store/types';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function Splash() {
   const navigation = useNavigation();
@@ -26,7 +26,7 @@ export default function Splash() {
   const version = DeviceInfo.getVersion();
 
   // Apollo Client query for fetching sorted events
-  const {loading, refetch, error} = useQuery(GET_SORTED_EVENTS, {
+  const { loading, refetch, error } = useQuery(GET_SORTED_EVENTS, {
     variables: {
       startTime: startTime,
       endTime: dayjs(startTime)
@@ -41,7 +41,7 @@ export default function Splash() {
       if (data && data?.sortedEvents) {
         const filteredEvents = data?.sortedEvents.filter(event => {
           // Check if all required properties exist
-          const {line1, line2, startTime, endTime, logo1, rightsHolders} =
+          const { line1, line2, startTime, endTime, logo1, rightsHolders } =
             event;
           if (
             !line1 ||
@@ -72,22 +72,11 @@ export default function Splash() {
 
   useEffect(() => {
     // Check user status and navigate accordingly
-    if (
-      !loading &&
-      reduxData?.splashEventList &&
-      reduxData?.splashEventList.length > 0
-    ) {
-      if (reduxData?.user || reduxData?.guest) {
-        setTimeout(() => {
-          navigation.replace('Root');
-        }, 1000);
-      } else {
-        setTimeout(() => {
-          navigation.replace('Auth');
-        }, 1000);
-      }
-    } else if (!loading) {
-      if (reduxData?.user || reduxData?.guest) {
+    if (!loading) {
+      if ((reduxData?.user || reduxData?.guest) &&
+        reduxData?.splashEventList &&
+        reduxData?.splashEventList.length > 0
+      ) {
         setTimeout(() => {
           navigation.replace('Root');
         }, 1000);
@@ -103,11 +92,11 @@ export default function Splash() {
     <View style={styles.container}>
       <ImageBackground
         source={Images.Background}
-        style={{height: '100%', width: '100%'}}
+        style={{ height: '100%', width: '100%' }}
         resizeMode="cover">
         <ImageBackground
           source={Images.SplashBackTop}
-          style={{height: height / 2.5}}
+          style={{ height: height / 2.5 }}
           resizeMode="cover">
           <StatusBar
             backgroundColor={Colors.transparent}

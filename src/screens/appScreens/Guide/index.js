@@ -22,7 +22,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import dayjs from 'dayjs';
 import { GET_SORTED_EVENTS } from './queries';
 import { useDispatch, useSelector } from 'react-redux';
-import { setExpire, setGuest, setStoreEventList, setUser } from 'src/store/types';
+import { setExpire, setGuest, setSportsList, setStoreEventList, setUser } from 'src/store/types';
 import { moderateScale } from 'react-native-size-matters';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 import CustomMySportsModalView from 'src/components/Modal/CustomMySportsModalView';
@@ -74,6 +74,8 @@ export default function Guide(props) {
   const [selectedTimeIndex, setSelectedTimeIndex] = useState(0);
   const [featuredEvent, setFeaturedEvent] = useState({});
   const [refreshing, setRefreshing] = useState(false);
+  const [reload, setReload] = useState(false);
+  const [list, setList] = useState([]);
 
   const [mySportModal, setMySportModal] = useState(
     reduxData?.guest === true ? true : false,
@@ -224,6 +226,12 @@ export default function Guide(props) {
     },
   });
 
+  useEffect(() => {
+    setList(reduxData?.sportsList)
+    setReload(!reload)
+    setEventList(eventList)
+  }, [reduxData?.sportsList])
+
 
   // Define a function to execute the mutation
   const updateConsumers = async (categories, sport) => {
@@ -268,6 +276,10 @@ export default function Guide(props) {
         });
         if (!loadingFavourite && data?.updateConsumers?.consumers) {
           ShowMessage('Added to Favorites successfully!')
+          if (data?.updateConsumers?.consumers?.[0]?.favoriteSports && data?.updateConsumers?.consumers?.[0]?.favoriteSports.length > 0) {
+            setList(data?.updateConsumers?.consumers?.[0]?.favoriteSports)
+            dispatch(setSportsList(data?.updateConsumers?.consumers?.[0]?.favoriteSports));
+          }
         }
         // Handle the response data as needed
         console.log('Updated consumer:', data?.updateConsumers?.consumers);
@@ -497,15 +509,14 @@ export default function Guide(props) {
   // handle to navigate to sign up for create account
   const handleCreateAccount = async () => {
     await setMySportModal(false);
-    await dispatch(setGuest(false));
     await dispatch(setUser(false));
     navigation.navigate('Auth', {
       screen: 'Signup',
     });
   };
-  const ItemComponent = React.memo(({ item }) => {
-    const sportsIds = reduxData?.sportsList?.map(item => item?.sport?.id) || [];
 
+  const ItemComponent = (({ item }) => {
+    const sportsIds = list && list.length > 0 ? list.map(item => item?.sport?.id) : [];
     return (
       // Render your item component here
       dayjs(item?.endTime).isAfter(currentDate) ? (
@@ -583,7 +594,7 @@ export default function Guide(props) {
               {reduxData?.user && (
                 <TouchableOpacity
                   style={{ position: 'absolute', right: 0, alignSelf: 'center' }}
-                  onPress={() => updateConsumers(item?.category, item?.sport)}
+                  onPress={() => { sportsIds && sportsIds.length > 0 && sportsIds.includes(item?.sport?.id) ? {} : updateConsumers(item?.category, item?.sport) }}
                 >
                   <Image
                     source={sportsIds.includes(item?.sport?.id) ? Images.FilledFvrt : Images.Favorite}
@@ -863,6 +874,7 @@ export default function Guide(props) {
         liveMatchModal={liveMatchModal}
       />
       {/* My Sport Popup for guest  */}
+      {mySportModal?
       <CustomMySportsModalView
         visible={mySportModal}
         desTxt={Strings.accessFeatures}
@@ -877,7 +889,7 @@ export default function Guide(props) {
         otherBtnPress={() => {
           handleCreateAccount();
         }}
-      />
+      />:null}
     </ImageBackground>
   );
 }

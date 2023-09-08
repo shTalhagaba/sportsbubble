@@ -19,7 +19,7 @@ import { moderateScale } from 'react-native-size-matters';
 import { useDispatch, useSelector } from 'react-redux';
 import ShowMessage from 'src/components/ShowMessage';
 import { useMutation, useQuery } from '@apollo/client';
-import { DELETE_CONSUMERS, GET_MY_SPORT } from 'src/graphQL';
+import { DELETE_CONSUMERS, GET_MY_SPORT, GET_MY_SPORT_LIST, UPDATE_CONSUMERS, UPDATE_NOTIFICATION_CONSUMERS } from 'src/graphQL';
 import LoaderModal from 'src/components/LoaderModal';
 import { setSportsList, setUser } from 'src/store/types';
 const { fontScale } = Dimensions.get('window');
@@ -79,15 +79,75 @@ export default function Guide() {
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const [categoryData, setCategoryData] = useState(categoryArr);
-  const [reminderModal, setRemaindarModal] = useState(false);
+  const [reminderModal, setReminderModal] = useState(false);
   const [fvrtModal, setFvrtModal] = useState(reduxData?.guest === true ? true : false);
   const [mySportData, setSportData] = useState(data);
-  const [curremIndex, setCurrentIndex] = useState();
+  const [currentIndex, setCurrentIndex] = useState();
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [filteredEventList, setFilteredEventList] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
-  const [updateConsumersMutation, { loading: loadingFavourite, error: errorFavourite }] = useMutation(DELETE_CONSUMERS);
+  const [deleteConsumersMutation, { loading: loadingDelete, error: errorDelete }] = useMutation(DELETE_CONSUMERS);
+  const [updateConsumersMutation, { loading: loadingFavourite, error: errorFavourite }] = useMutation(UPDATE_CONSUMERS);
+  const [updateNotificationMutation, { loading: loadingNotification, error: errorNotification }] = useMutation(UPDATE_NOTIFICATION_CONSUMERS);
+
+  // Define a function to execute the mutation
+  const updateConsumers = async (categories, sport, flag) => {
+    if (categories?.id && sport?.id) {
+      const updateData = {
+        where: {
+          cognitoId: reduxData?.userData?.sub
+        },
+        create: {
+          favoriteSports: [
+            {
+              node: {
+                notifications: flag ? flag : true,
+                sport: {
+                  connect: {
+                    where: {
+                      node: {
+                        id: sport?.id
+                      }
+                    }
+                  }
+                },
+                categories: {
+                  connect: [
+                    {
+                      where: {
+                        node: {
+                          id: categories?.id
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      };
+      try {
+        const { data } = await updateConsumersMutation({
+          variables: updateData,
+        });
+        if (!loadingFavourite && data?.updateConsumers?.consumers) {
+          ShowMessage('Added to Favorites successfully!')
+          if (data?.updateConsumers?.consumers?.[0]?.favoriteSports && data?.updateConsumers?.consumers?.[0]?.favoriteSports.length > 0) {
+            dispatch(setSportsList(data?.updateConsumers?.consumers?.[0]?.favoriteSports));
+          }
+        }
+        // Handle the response data as needed
+        console.log('Updated consumer:', data?.updateConsumers?.consumers);
+      } catch (err) {
+        console.error('Error updating consumer:', err);
+      }
+    } else {
+      ShowMessage('Invalid data')
+    }
+  };
+
 
   // Define a function to execute the mutation
   const deleteConsumers = async (id) => {
@@ -109,11 +169,53 @@ export default function Guide() {
         },
       };
       try {
-        const { data } = await updateConsumersMutation({
+        const { data } = await deleteConsumersMutation({
+          variables: updateData,
+        });
+        if (!loadingDelete && data?.updateConsumers?.consumers) {
+          ShowMessage('Remove from Favorites successfully!')
+          refetch()
+        }
+        // Handle the response data as needed
+        console.log('Remove consumer:', data?.updateConsumers?.consumers?.[0]?.favoriteSports);
+      } catch (err) {
+        console.error('Error updating consumer:', err);
+      }
+    } else {
+      ShowMessage('Invalid data')
+    }
+  };
+
+  // Define a function to execute the mutation
+  const updateNotificationConsumers = async (id, flag) => {
+    if (id) {
+      const updateData = {
+        where: {
+          cognitoId: reduxData?.userData?.sub
+        },
+        update: {
+          favoriteSports: [
+            {
+              update: {
+                node: {
+                  notifications: !flag
+                }
+              },
+              where: {
+                node: {
+                  id: id
+                }
+              }
+            }
+          ]
+        },
+      };
+      try {
+        const { data } = await updateNotificationMutation({
           variables: updateData,
         });
         if (!loadingFavourite && data?.updateConsumers?.consumers) {
-          ShowMessage('Remove from Favorites successfully!')
+          ShowMessage(flag ? 'Notification is inActive.' : 'Notification is Active')
           refetch()
         }
         // Handle the response data as needed
@@ -135,7 +237,6 @@ export default function Guide() {
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
     onCompleted: data => {
-      console.log('Updated consumer:', data?.consumers?.[0]?.favoriteSports.length);
       if (reduxData?.user && !loading && data && data?.consumers && data?.consumers.length > 0) {
         const filteredEvents = data?.consumers?.[0]?.favoriteSports.filter(element => {
           const { sport, categories } = element;
@@ -147,7 +248,6 @@ export default function Guide() {
           }
           return false;
         });
-        setSportData(filteredEvents)
         dispatch(setSportsList(filteredEvents));
       }
     },
@@ -155,41 +255,100 @@ export default function Guide() {
       console.log('error : ', error);
     },
   });
-  
+
+  const { loading: listLoading, refetch: listRefetch, error: listError } = useQuery(GET_MY_SPORT_LIST, {
+    variables: {
+      where: {
+        showInPassport: true
+      }
+    },
+    fetchPolicy: 'network-only',
+    notifyOnNetworkStatusChange: true,
+    onCompleted: data => {
+      if (reduxData?.user && !listLoading && data && data?.sports && data?.sports.length > 0) {
+        const filteredEvents = data?.sports.filter(element => {
+          const { name, categories } = element;
+          // Check if all required properties exist
+          if (name
+            && categories && categories.length > 0
+          ) {
+            return true;
+          }
+          return false;
+        });
+        setSportData(filteredEvents)
+      }
+    },
+    onError: error => {
+      console.log('error : ', error);
+    },
+  });
+
   useEffect(() => {
     if (isFocused) {
-      if(reduxData?.guest){
+      if (reduxData?.guest) {
         setFvrtModal(true);
       }
       refetch()
+      listRefetch()
     }
   }, [isFocused])
 
-  const handleReminder = (item, index) => {
-    setCurrentIndex(index);
-    setRemaindarModal(!reminderModal);
+  useEffect(() => {
+    let list = [...categoryData];
+    // Filter events based on selected categories
+    const selectedCategories = list.filter(category => category.selected);
+    const selectedCategoryValues = selectedCategories.map(
+      category => category.value
+    );
+
+    let filteredEvents = [];
+
+    if (selectedCategories.length === 1 && selectedCategoryValues[0] === 'all') {
+      setSelectedCategory('all');
+      filteredEvents = mySportData; // Use all data when 'all' category is selected
+    } else {
+      filteredEvents = mySportData.filter(item => {
+        // Extract the names from item.categories
+        const categoryNames = item?.categories.map(category => category.name);
+        // Check if at least one of the selected categories matches any category name in the item
+        return selectedCategoryValues.some(selectedCategory =>
+          categoryNames.includes(selectedCategory)
+        );
+      });
+
+    }
+    setFilteredEventList(filteredEvents);
+  }, [mySportData])
+
+  const handleReminder = (item, index, selectedItem) => {
+    console.log('item?.categories?.[0] : ', item?.categories?.[0], selectedItem)
+    if (!selectedItem || !selectedItem?.[0]?.notifications) {
+      updateConsumers(item?.categories?.[0], item, flag, selectedItem?.[0]?.notifications)
+    }
+    setCurrentIndex(selectedItem?.[0]);
+    setReminderModal(!reminderModal);
   };
-  const handleFvrt = (item, index) => {
-    setCurrentIndex(index);
+
+  const handleFvrt = (item,selectedItem) => {
+    console.log('handleFvrt item : ', selectedItem)
     if (reduxData?.user) {
-      console.log(reduxData?.userData?.sub,' sub ' ,item?.id)
-      deleteConsumers(item?.id)
+      setCurrentIndex(selectedItem?.[0]);
+      if (selectedItem && selectedItem.length > 0) {
+        deleteConsumers(selectedItem?.[0]?.id)
+      } else {
+        updateConsumers(item?.categories?.[0], item, selectedItem?.[0]?.notifications)
+      }
     } else {
       setFvrtModal(!fvrtModal);
     }
   };
+
   const handleNotificationAlert = () => {
-    let list = [...mySportData];
-    list[curremIndex].notifcationFlag = !list[curremIndex].notifcationFlag;
-    setSportData(list);
-    setRemaindarModal(!reminderModal);
-  };
-  const handleFvrtAlert = () => {
-    let list = [...mySportData];
-    list[curremIndex].fvrtFlag = !list[curremIndex].fvrtFlag;
-    setSportData(list);
-    setFvrtModal(!fvrtModal);
-    navigation.navigate('Auth', { screen: 'Signup' });
+    if (currentIndex != -1) {
+      updateNotificationConsumers(currentIndex?.id, currentIndex?.notifications)
+    }
+    setReminderModal(!reminderModal);
   };
 
   const handleSelectedCategory = (e, index) => {
@@ -256,14 +415,14 @@ export default function Guide() {
     wait(2000).then(() => setRefreshing(false));
   }, []);
 
-    // handle to navigate to sign up for create account
-    const handleCreateAccount = async () => {
-      setFvrtModal(!fvrtModal)
-      await dispatch(setUser(false));
-      navigation.navigate('Auth', {
-        screen: 'Signup',
-      });
-    };
+  // handle to navigate to sign up for create account
+  const handleCreateAccount = async () => {
+    setFvrtModal(!fvrtModal)
+    await dispatch(setUser(false));
+    navigation.navigate('Auth', {
+      screen: 'Signup',
+    });
+  };
 
   return (
     <ImageBackground
@@ -355,49 +514,53 @@ export default function Guide() {
             refreshing={refreshing}
             onRefresh={onRefresh}
           />}
-        renderItem={({ item, index }) => (
-          (reduxData?.user && item?.sport?.name && item?.categories?.[0]?.name) || item?.name ?
-            <View style={styles.listContainer}>
-              <View style={styles.innerContainer}>
-                <Image
-                  source={Images.BaseBall}
-                  style={styles.imageIcon}
-                  resizeMode={'contain'}
-                />
-                <View style={styles.userNameContainer}>
-                  <Text style={styles.titleTxt}>{item?.sport?.name || item?.name}</Text>
+        renderItem={({ item, index }) => {
+          const sportsIds = reduxData?.sportsList && reduxData?.sportsList.length > 0 ? reduxData?.sportsList.map(element => element?.sport?.id) : [];
+          const selectedItem = reduxData?.sportsList && reduxData?.sportsList.length > 0 ? reduxData?.sportsList.filter(element => element?.sport?.id === item?.id) : [];
+          return (
+            (reduxData?.user && item?.name && item?.categories?.[0]?.name) || item?.name ?
+              <View style={styles.listContainer}>
+                <View style={styles.innerContainer}>
+                  <Image
+                    source={Images.BaseBall}
+                    style={styles.imageIcon}
+                    resizeMode={'contain'}
+                  />
+                  <View style={styles.userNameContainer}>
+                    <Text style={styles.titleTxt}>{item?.name || item?.name}</Text>
+                  </View>
+                  <TouchableOpacity
+                    onPress={() => handleReminder(item, index, selectedItem)}
+                  >
+                    <Image
+                      source={Images.Bell}
+                      resizeMode={'contain'}
+                      style={[
+                        styles.bellIcon,
+                        {
+                          tintColor: selectedItem?.[0]?.notifications || item?.notifcationFlag
+                            ? Colors.darkOrange
+                            : Colors.white,
+                        },
+                      ]}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => handleFvrt(item, selectedItem)}
+                  >
+                    <Image
+                      source={sportsIds && sportsIds.length > 0 && sportsIds.includes(item?.id) ? Images.FilledFvrt : Images.Favorite}
+                      style={[
+                        styles.fvrtIcon,
+                        { tintColor: item?.fvrtFlag && Colors.orange },
+                      ]}
+                      resizeMode={'contain'}
+                    />
+                  </TouchableOpacity>
                 </View>
-                <TouchableOpacity
-                // onPress={() => handleReminder(item, index)}
-                >
-                  <Image
-                    source={Images.Bell}
-                    resizeMode={'contain'}
-                    style={[
-                      styles.bellIcon,
-                      {
-                        tintColor: item?.notifications || item?.notifcationFlag
-                          ? Colors.darkOrange
-                          : Colors.white,
-                      },
-                    ]}
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity
-                onPress={() => handleFvrt(item, index)}
-                >
-                  <Image
-                    source={!item?.fvrtFlag ? Images.FilledFvrt : Images.Favorite}
-                    style={[
-                      styles.fvrtIcon,
-                      { tintColor: item?.fvrtFlag && Colors.orange },
-                    ]}
-                    resizeMode={'contain'}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View> : null
-        )}
+              </View> : null
+          )
+        }}
         ListEmptyComponent={
           <View>
             <Text style={styles.emptyTxt}>{Strings.emptyFavoriteSportList}</Text>
@@ -417,7 +580,7 @@ export default function Guide() {
         btn
         rowStyle={true}
         blue
-        blackBtnPress={() => setRemaindarModal(!reminderModal)}
+        blackBtnPress={() => setReminderModal(!reminderModal)}
         otherBtnPress={() => handleNotificationAlert()}
       />
       {/* Access Features pop up  */}
@@ -429,8 +592,9 @@ export default function Guide() {
         fillBefore={false}
         btn
         rowStyle={false}
-        blackBtnPress={() => {setFvrtModal(!fvrtModal)
-        navigation.navigate('Guide')
+        blackBtnPress={() => {
+          setFvrtModal(!fvrtModal)
+          navigation.navigate('Guide')
         }}
         otherBtnPress={() => handleCreateAccount()}
       />

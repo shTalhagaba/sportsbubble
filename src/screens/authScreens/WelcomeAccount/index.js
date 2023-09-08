@@ -74,14 +74,8 @@ export default function WelcomeAccount(props) {
     if (completeProfileValidation(zipCode, dob, pronouns)) {
       setLoadingLocal(true);
       const inputData = {
-        oktaId: 'exampleOktaId',
-        billingZip: 12345,
-        pronouns: pronouns,
-        dob: dayjs(dob).format('YYYY-MM-DD'),
         cognitoId: props?.route?.params?.client,
         cognitoZip: zipCode,
-        email: props?.route?.params?.email,
-        name: props?.route?.params?.fullName
       };
       console.log('inputData : ',inputData)
       await handleFormSubmit(inputData)

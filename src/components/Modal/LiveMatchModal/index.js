@@ -1,4 +1,4 @@
-import {Images, Strings} from 'src/utils';
+import { Images, Strings } from 'src/utils';
 import React, { useState, useEffect } from 'react';
 import {
   View,
@@ -12,14 +12,14 @@ import {
 import styles from './styles';
 import BlackClose from 'src/assets/images/BlackClose.js';
 import GreenButton from 'src/components/GreenButton';
-import {Colors} from 'src/utils';
+import { Colors } from 'src/utils';
 import { fetchContentFulContent } from 'src/utils/contentful';
 
-const LiveMatch = ({setLiveMatchModal, liveMatchModal}) => {
+const LiveMatch = ({ setLiveMatchModal, liveMatchModal }) => {
   const [content, setContent] = useState(null);
 
   useEffect(() => {
-    async function fetchPromotionContent () {
+    async function fetchPromotionContent() {
       const promotions = await fetchContentFulContent('67NvszQuZ1oltZJb9tNgOw');
       setContent(promotions);
     }
@@ -42,23 +42,33 @@ const LiveMatch = ({setLiveMatchModal, liveMatchModal}) => {
               onPress={() => setLiveMatchModal(!liveMatchModal)}>
               <BlackClose />
             </TouchableOpacity>
-            <Image source={Images.MatchTeam} style={styles.matchTeam} />
+            <Image source={content?.fields?.promoImage?.fields?.file?.url ? {
+              uri: content?.fields?.promoImage?.fields?.file?.url?.replaceAll(
+                '//',
+                'https://'
+              )
+            } : Images.MatchTeam} style={styles.matchTeam} />
             <Text style={styles.liveTxt}>{Strings.liveNow}</Text>
-            {/* <Text style={styles.matchNameTxt}>{content.fields.event.line2}</Text> */}
+            <Text style={styles.matchNameTxt}>{content?.fields?.event?.line1}</Text>
             <View style={styles.logoContainer}>
-              <Image
-                source={Images.Twitch_logo_2019}
-                style={styles.logoImage}
-              />
-              <Image source={Images.ESPN_Plus} style={styles.logoImage} />
-              <Image source={Images.FuboTV_logo} style={styles.logoImage} />
+              {content && content?.fields &&
+                content?.fields?.event?.rightsHoldersConnection?.edges?.map(
+                  (channel, index) => (
+                    channel?.node?.logoUrl != null ?
+                      <Image
+                        source={channel?.node?.logoUrl != null ? { uri: channel?.node?.logoUrl } : Images.Twitch_logo_2019}
+                        style={styles.logoImage}
+                      // key={index}
+                      /> : null
+                  )
+                )}
             </View>
             <GreenButton
               title={Strings.connecttoWatch}
               rightIcon={false}
               Container={styles.greenButtonContainer}
               btnTxt={styles.greenButtonTxt}
-              onpress={() => {}}
+              onpress={() => { }}
             />
           </View>
         </View>

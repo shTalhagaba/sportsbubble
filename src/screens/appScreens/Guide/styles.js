@@ -28,7 +28,7 @@ export default ScaledSheet.create({
   listContainer: {
     paddingRight: '0@ms0.3',
     marginVertical: '0@ms0.3',
-    paddingVertical: '4@ms0.3',
+    paddingVertical: '4.5@ms0.3',
   },
   fvrtIcon: {
     height: '21@ms0.3',

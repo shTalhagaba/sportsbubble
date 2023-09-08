@@ -30,3 +30,17 @@ query Query($where: FavoriteSportWhere, $consumersWhere2: ConsumerWhere) {
   }
 }
 `;
+
+export const GET_MY_SPORT_LIST = gql`
+query($options: SportOptions, $where: SportWhere) {
+  sports(options: $options, where: $where)  {
+    name
+    id
+    showInPassport
+    categories {
+      id
+      name
+    }
+  }
+}
+`;

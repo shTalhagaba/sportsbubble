@@ -4,12 +4,8 @@ export const CREATE_CONSUMER = gql`
 mutation CreateConsumer($input: [ConsumerCreateInput!]!) {
   createConsumers(input: $input) {
     consumers {
-      billingZip
       cognitoZip
       cognitoId
-      dob
-      oktaId
-      pronouns
     }
   }
 }`;
@@ -43,6 +39,32 @@ export const UPDATE_CONSUMERS = gql`
 export const DELETE_CONSUMERS = gql`
 mutation UpdateConsumers($where: ConsumerWhere, $delete: ConsumerDeleteInput) {
   updateConsumers(where: $where, delete: $delete) {
+    consumers {
+      id
+      name
+      favoriteSports {
+        id
+        notifications
+        sport {
+          id
+          name
+          genre
+          weight
+        }
+        categories {
+          id
+          name
+        }
+      }
+      cognitoId
+    }
+  }
+}
+`;
+
+export const UPDATE_NOTIFICATION_CONSUMERS = gql`
+mutation UpdateConsumers($where: ConsumerWhere, $update: ConsumerUpdateInput) {
+  updateConsumers(where: $where, update: $update) {
     consumers {
       id
       name
