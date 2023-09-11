@@ -51,6 +51,7 @@ export default function Term(props) {
         </Text>
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
+          indicatorStyle={'white'}
           style={{flex: 1, marginVertical: 25}}>
           <View>
             <RenderHTML source={source} contentWidth={width} />

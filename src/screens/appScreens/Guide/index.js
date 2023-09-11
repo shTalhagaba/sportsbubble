@@ -10,7 +10,8 @@ import {
   FlatList,
   Dimensions,
   Platform,
-  RefreshControl
+  RefreshControl,
+  ScrollView
 } from 'react-native';
 import styles from './styles';
 import { Images, Colors, Strings, Constants } from 'src/utils';
@@ -95,7 +96,7 @@ export default function Guide(props) {
       startTime: startTime,
       endTime: dayjs(startTime)
         .add(2, 'hours')
-        .set('minutes', 59)
+        .set('minutes', 0)
         .set('second', 0)
         .toISOString(),
     },
@@ -442,7 +443,9 @@ export default function Guide(props) {
             if (
               item &&
               item?.rightsHoldersConnection &&
-              item?.rightsHoldersConnection?.totalCount === 1
+              item?.rightsHoldersConnection?.totalCount === 1 &&
+              dayjs(currentDate).isAfter(item?.startTime) &&
+              dayjs(currentDate).isBefore(item?.endTime)
             ) {
               navigation.navigate('withoutBottomtab', {
                 screen: 'Connect',
@@ -630,7 +633,7 @@ export default function Guide(props) {
               data={timeData.slice(0, 2)}
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={{ flex: 1, justifyContent: 'space-around' }}
-              scrollEnabled={fontScale > 1 ? true : false}
+              scrollEnabled={fontScale > 1.2 ? true : false}
               renderItem={({ item, index }) => {
                 const adjustedIndex = index + currentIndex; // Calculate the adjusted index based on the current index
                 return (
@@ -673,6 +676,7 @@ export default function Guide(props) {
           <ActivityIndicator color={'#fff'} size={'large'} />
         </View>
       ) : (
+        <ScrollView indicatorStyle={'white'}>
         <FlatList
           data={
             selectedCategory === 'all' && selectedTimeIndex >= 0
@@ -683,7 +687,7 @@ export default function Guide(props) {
                   : []
               : filteredEventList
           }
-          showsVerticalScrollIndicator={true}
+          showsVerticalScrollIndicator={false}
           refreshControl={
             <RefreshControl
               refreshing={refreshing}
@@ -702,6 +706,7 @@ export default function Guide(props) {
             </View>
           }
         />
+        </ScrollView>
       )}
       <LiveMatchView
         setLiveMatchModal={setLiveMatchModal}

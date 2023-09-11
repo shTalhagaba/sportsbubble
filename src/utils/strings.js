@@ -15,7 +15,7 @@ export default {
   termUse: 'Terms of Use',
   privacyPolicy: 'Privacy Policy/Info We Collect',
   californiaPolicy: 'California Policy',
-  watchNow: 'Watch Now',
+  watchNow: 'Go!',
   personalInfo: 'Personal Info',
   changePassword: 'Change Password',
   savethisCard: 'Save this card for future payments',

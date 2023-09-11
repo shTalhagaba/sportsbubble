@@ -28,7 +28,7 @@ export default ScaledSheet.create({
   listContainer: {
     paddingRight: '0@ms0.3',
     marginVertical: '0@ms0.3',
-    paddingBottom: '4@ms0.3',
+    paddingBottom: '5@ms0.3',
   },
   innerContainer: {
     flexDirection: 'row',
