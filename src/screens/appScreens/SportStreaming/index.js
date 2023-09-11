@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -8,13 +8,15 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
+  TextInput
 } from 'react-native';
 import styles from './styles';
 import AppHeader from 'src/components/AppHeader';
-import {Images, Colors} from 'src/utils';
-import {useNavigation} from '@react-navigation/native';
+import { Images, Colors } from 'src/utils';
+import { useNavigation } from '@react-navigation/native';
 import Strings from 'src/utils/strings';
 import AppSearch from 'src/components/AppSearch';
+import strings from 'src/utils/strings';
 
 const data = [
   {
@@ -78,6 +80,11 @@ export default function SportStreaming() {
 
   const [mySportData, setSportData] = useState(data);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [isFocused, setIsFocused] = useState(true);
+  const [searchText, setSearchText] = useState('');
+  const [searchFlag, setSearchFlag] = useState(true);
+
+
 
   const handleSelectSports = (item, index) => {
     let list = [...mySportData];
@@ -85,6 +92,26 @@ export default function SportStreaming() {
     let l = list.filter(item => item.selected);
     setSelectedItems(l);
     setSportData(list);
+  };
+
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+  };
+  const handleInputChange = text => {
+    setSearchText(text);
+
+  };
+  const handleDone = () => {
+    setIsFocused(false);
+  };
+  const handleClear = () => {
+    setSearchText('');
+    setIsFocused(false);
+    setSearchFlag(false);
   };
 
   return (
@@ -101,7 +128,7 @@ export default function SportStreaming() {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        customLeftImage={{tintColor: Colors.darkOrange}}
+        customLeftImage={{ tintColor: Colors.darkOrange }}
         SimpleView
       />
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -109,18 +136,71 @@ export default function SportStreaming() {
         <Text style={styles.desTxt}>{Strings.sportStreamingDes}</Text>
         {/* Search text box */}
         <View style={styles.innerContainer}>
-          <AppSearch
-            searchImage={Images.Search}
-            placeHolderColor={Colors.white}
-            placeHolder={Strings.search}
-            closeImage={Images.Cross}
-            customContainer={styles.searchContainer}
-          />
+          {/* Search text box */}
+          <TouchableOpacity
+            onPress={() => setIsFocused(true)}
+            style={[
+              styles.searchContainer,
+              isFocused ? styles.focus : styles.blur,
+            ]}>
+            <View style={{ flex: 1 }}>
+              {isFocused && (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginTop: Platform.OS === 'ios' ? -5 : 5,
+                    marginLeft: 15,
+                    alignItems: 'center',
+                  }}>
+                  <Image
+                    source={Images.Search}
+                    style={styles.searchImageTwo}
+                    resizeMode={'contain'}
+                  />
+                  <Text style={styles.searchTxt}>{strings.search}</Text>
+                </View>
+              )}
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignSelf: 'center',
+                  alignItems: 'center',
+                  marginLeft: 12,
+                  marginTop: 3,
+                }}>
+                {!isFocused && (
+                  <Image
+                    source={Images.Search}
+                    style={styles.searchImage}
+                    resizeMode={'contain'}
+                  />
+                )}
+                <TextInput
+                  style={styles.inputField}
+                  onFocus={handleFocus}
+                  autoFocus={true}
+                  placeholder={!isFocused ? 'Search' : ''}
+                  placeholderTextColor={Colors.white}
+                  value={searchText}
+                  onChangeText={handleInputChange}
+                  onSubmitEditing={handleDone}
+                />
+              </View>
+            </View>
+            <TouchableOpacity onPress={handleClear}>
+              <Image
+                source={Images.Cross}
+                style={styles.crossImage}
+                resizeMode={'contain'}
+              />
+            </TouchableOpacity>
+          </TouchableOpacity>
+
           {/* main list */}
           <FlatList
             data={mySportData}
             showsVerticalScrollIndicator={false}
-            renderItem={({item, index}) => (
+            renderItem={({ item, index }) => (
               <View style={styles.listContainer}>
                 <View style={styles.innerListContainer}>
                   <Image

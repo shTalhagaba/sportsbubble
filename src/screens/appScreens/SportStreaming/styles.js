@@ -23,10 +23,10 @@ export default ScaledSheet.create({
         lineHeight: "25@ms0.3",
         textAlign: "center"
     },
-    searchContainer: {
-        height: "56@ms0.3",
-        paddingRight: "15@ms0.3",
-    },
+    // searchContainer: {
+    //     height: "56@ms0.3",
+    //     paddingRight: "15@ms0.3",
+    // },
     innerContainer: {
         marginHorizontal: "15@ms0.3",
         marginTop: "5@ms0.3"
@@ -74,8 +74,58 @@ export default ScaledSheet.create({
         alignSelf: "center"
     },
     doneButton: {
-        position:'absolute',
+        position: 'absolute',
         bottom: "40@ms0.3",
         marginHorizontal: "20@ms0.3",
-    }
+    },
+
+    searchContainer: {
+        flexDirection: 'row',
+        height: '53@ms0.3',
+        borderRadius: '15@ms0.3',
+        justifyContent: 'center',
+        backgroundColor: Colors.mediumBlue,
+        marginBottom: '8@ms0.3',
+        alignSelf: "center",
+        alignItems: "center"
+    },
+    searchImage: {
+        height: '18@ms0.3',
+        width: '18@ms0.3',
+        marginStart: '10@ms0.3',
+        tintColor: Colors.white,
+    },
+    searchImageTwo: {
+        height: '12@ms0.3',
+        width: '12@ms0.3',
+        marginStart: '5@ms0.3',
+        tintColor: Colors.white,
+        opacity: 0.7
+    },
+    searchTxt: {
+        letterSpacing: 0.75,
+        color: Colors.white,
+        fontSize: '14@ms0.3',
+        flex: 1,
+        fontWeight: '500',
+        fontFamily: Fonts.Regular,
+        marginStart: 10,
+        opacity: 0.7
+    },
+    inputField: {
+        letterSpacing: 0.75,
+        color: Colors.white,
+        fontSize: '16@ms0.3',
+        flex: 1,
+        fontWeight: '600',
+        padding: '0@ms0.3',
+        fontFamily: Fonts.Regular,
+        marginStart: '10@ms0.3',
+    },
+    crossImage: {
+        height: '12@ms0.3',
+        width: '12@ms0.3',
+        marginHorizontal: '10@ms0.3',
+        tintColor: Colors.white,
+    },
 });
