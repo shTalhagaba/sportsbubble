@@ -767,110 +767,111 @@ export default function Guide(props) {
             </TouchableOpacity>
           </View>
         </View>
-      </GestureRecognizer>
-      {/* featured event */}
-      {featuredEvent && featuredEvent?.logo1 && (selectedCategory === 'all' || selectedCategory.includes(featuredEvent?.category?.name.toLowerCase())) ? (
-        <TouchableOpacity style={styles.listContainer}>
-          <View style={[{ backgroundColor: Colors.brandBlue, paddingBottom: 5 }]}>
-            <View
-              style={[
-                styles.imageContainer,
-                { backgroundColor: Colors.brandBlue },
-              ]}>
-              <ImageWithPlaceHolder
-                source={featuredEvent?.logo1}
-                placeholderSource={Constants.placeholder_trophy_icon}
-                style={styles.imageIcon}
-                resizeMode="contain"
-              />
-            </View>
-            <View
-              style={{
-                width: featuredEvent?.startTime
-                  ? startTimeWidth(featuredEvent?.startTime)
-                  : 0,
-                // backgroundColor: Colors.darkBlue,
-              }}></View>
-            <View
-              style={{
-                width: endTimeWidth(featuredEvent?.endTime),
-                // backgroundColor: dayjs(featuredEvent?.startTime).isAfter(currentDate)
-                //   ? Colors.mediumBlue
-                //   : Colors.mediumGreen,
-              }}></View>
-            <View
-              style={{
-                flex: 1,
-                // backgroundColor: Colors.darkBlue,
-              }}></View>
-            <View style={styles.userNameContainer}>
-              <Text style={[styles.eventTxt, { marginTop: 5 }]} numberOfLines={1}>
-                {featuredEvent?.line1}
-              </Text>
-              <Text style={styles.titleTxt} numberOfLines={1}>
-                {featuredEvent?.line2
-                  ? featuredEvent?.line2
-                  : featuredEvent?.title}
-              </Text>
-              <View style={{ flexDirection: 'row' }}>
-                <Text style={[styles.eventDateTxt]}>
-                  {' '}
-                  {featuredEvent?.startTime
-                    ? dayjs(featuredEvent?.startTime).format('ddd. MM/D')
-                    : featuredEvent?.day}
-                  {'  l '}
+        {/* featured event */}
+        {featuredEvent && featuredEvent?.logo1 && (selectedCategory === 'all' || selectedCategory.includes(featuredEvent?.category?.name.toLowerCase())) ? (
+          <TouchableOpacity style={styles.listContainer}>
+            <View style={[{ backgroundColor: Colors.brandBlue, paddingBottom: 5 }]}>
+              <View
+                style={[
+                  styles.imageContainer,
+                  { backgroundColor: Colors.brandBlue },
+                ]}>
+                <ImageWithPlaceHolder
+                  source={featuredEvent?.logo1}
+                  placeholderSource={Constants.placeholder_trophy_icon}
+                  style={styles.imageIcon}
+                  resizeMode="contain"
+                />
+              </View>
+              <View
+                style={{
+                  width: featuredEvent?.startTime
+                    ? startTimeWidth(featuredEvent?.startTime)
+                    : 0,
+                  // backgroundColor: Colors.darkBlue,
+                }}></View>
+              <View
+                style={{
+                  width: endTimeWidth(featuredEvent?.endTime),
+                  // backgroundColor: dayjs(featuredEvent?.startTime).isAfter(currentDate)
+                  //   ? Colors.mediumBlue
+                  //   : Colors.mediumGreen,
+                }}></View>
+              <View
+                style={{
+                  flex: 1,
+                  // backgroundColor: Colors.darkBlue,
+                }}></View>
+              <View style={styles.userNameContainer}>
+                <Text style={[styles.eventTxt, { marginTop: 5 }]} numberOfLines={1}>
+                  {featuredEvent?.line1}
                 </Text>
-                <Text style={[styles.eventDateTxt]}>
-                  {' '}
-                  {featuredEvent?.startTime
-                    ? `${dayjs(featuredEvent?.startTime).format(
-                      'h:mma',
-                    )} - ${dayjs(featuredEvent?.endTime).format('h:mma')}`
-                    : featuredEvent?.time}
+                <Text style={styles.titleTxt} numberOfLines={1}>
+                  {featuredEvent?.line2
+                    ? featuredEvent?.line2
+                    : featuredEvent?.title}
                 </Text>
+                <View style={{ flexDirection: 'row' }}>
+                  <Text style={[styles.eventDateTxt]}>
+                    {' '}
+                    {featuredEvent?.startTime
+                      ? dayjs(featuredEvent?.startTime).format('ddd. MM/D')
+                      : featuredEvent?.day}
+                    {'  l '}
+                  </Text>
+                  <Text style={[styles.eventDateTxt]}>
+                    {' '}
+                    {featuredEvent?.startTime
+                      ? `${dayjs(featuredEvent?.startTime).format(
+                        'h:mma',
+                      )} - ${dayjs(featuredEvent?.endTime).format('h:mma')}`
+                      : featuredEvent?.time}
+                  </Text>
+                </View>
               </View>
             </View>
+          </TouchableOpacity>
+        ) : null}
+        {/* main event list */}
+        {loading && currentIndex ? (
+          <View style={{ flex: 1, justifyContent: 'center' }}>
+            <ActivityIndicator color={'#fff'} size={'large'} />
           </View>
-        </TouchableOpacity>
-      ) : null}
-      {/* main event list */}
-      {loading && currentIndex ? (
-        <View style={{ flex: 1, justifyContent: 'center' }}>
-          <ActivityIndicator color={'#fff'} size={'large'} />
-        </View>
-      ) : (
-        <ScrollView indicatorStyle={'white'}>
-          <FlatList
-            data={
-              selectedCategory === 'all' && selectedTimeIndex >= 0
-                ? eventList && eventList.length > 0
-                  ? eventList
-                  : selectedTimeIndex > 0
-                    ? filteredEventList
-                    : []
-                : filteredEventList
-            }
-            refreshControl={
-              <RefreshControl
-                refreshing={refreshing}
-                onRefresh={onRefresh}
-              />}
-            showsVerticalScrollIndicator={false}
-            renderItem={({ item }) => <ItemComponent item={item} />}
-            keyExtractor={item => item?.id}
-            removeClippedSubviews={true} // Unmount components when outside of window
-            initialNumToRender={50} // Reduce initial render amount
-            maxToRenderPerBatch={20} // Reduce number in each render batch
-            updateCellsBatchingPeriod={20} // Increase time between renders
-            windowSize={20} // Reduce the window size
-            ListEmptyComponent={
-              <View>
-                <Text style={styles.emptyTxt}>{Strings.emptyGuideList}</Text>
-              </View>
-            }
-          />
-        </ScrollView>
-      )}
+        ) : (
+          <ScrollView indicatorStyle={'white'}>
+            <FlatList
+              data={
+                selectedCategory === 'all' && selectedTimeIndex >= 0
+                  ? eventList && eventList.length > 0
+                    ? eventList
+                    : selectedTimeIndex > 0
+                      ? filteredEventList
+                      : []
+                  : filteredEventList
+              }
+              refreshControl={
+                <RefreshControl
+                  refreshing={refreshing}
+                  onRefresh={onRefresh}
+                />}
+              showsVerticalScrollIndicator={false}
+              renderItem={({ item }) => <ItemComponent item={item} />}
+              keyExtractor={item => item?.id}
+              removeClippedSubviews={true} // Unmount components when outside of window
+              initialNumToRender={50} // Reduce initial render amount
+              maxToRenderPerBatch={20} // Reduce number in each render batch
+              updateCellsBatchingPeriod={20} // Increase time between renders
+              windowSize={20} // Reduce the window size
+              ListEmptyComponent={
+                <View>
+                  <Text style={styles.emptyTxt}>{Strings.emptyGuideList}</Text>
+                </View>
+              }
+            />
+          </ScrollView>
+        )}
+      </GestureRecognizer>
+
       <LiveMatchView
         setLiveMatchModal={setLiveMatchModal}
         liveMatchModal={liveMatchModal}
