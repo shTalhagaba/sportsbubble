@@ -93,7 +93,7 @@ export default function PersonalInfo() {
         try {
           setLoadingLocal(true);
           const test = await userUpdateProfile(
-            email,
+            // email,
             firstName,
             lastName,
             zipCode,

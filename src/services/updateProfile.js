@@ -1,14 +1,15 @@
-import {CognitoUserAttribute, CognitoUser} from 'amazon-cognito-identity-js';
+import { CognitoUserAttribute, CognitoUser } from 'amazon-cognito-identity-js';
 import CognitoPool from '.';
 
 const userUpdateProfile = (fullName, lastName, zipCode, dob, pronouns) => {
+  console.log("dob => ", dob)
   return new Promise((resolve, reject) => {
     const attributeList = [
-      new CognitoUserAttribute({Name: 'name', Value: fullName}),
-      new CognitoUserAttribute({Name: 'family_name', Value: lastName}),
-      new CognitoUserAttribute({Name: 'locale', Value: zipCode}), //zipcode
-      new CognitoUserAttribute({Name: 'birthdate', Value: dob}), //birthdate
-      new CognitoUserAttribute({Name: 'gender', Value: pronouns}), // pronouns
+      new CognitoUserAttribute({ Name: 'name', Value: fullName }),
+      new CognitoUserAttribute({ Name: 'family_name', Value: lastName }),
+      new CognitoUserAttribute({ Name: 'locale', Value: zipCode }), //zipcode
+      new CognitoUserAttribute({ Name: 'birthdate', Value: dob }), //birthdate
+      new CognitoUserAttribute({ Name: 'gender', Value: pronouns }), // pronouns
     ];
 
     const cognitoUser = CognitoPool.getCurrentUser();
@@ -43,35 +44,35 @@ const userUpdateProfile = (fullName, lastName, zipCode, dob, pronouns) => {
 
 const deleteUser = () => {
   return new Promise((resolve, reject) => {
-  const cognitoUser = CognitoPool.getCurrentUser();
-  if (cognitoUser) {
-    cognitoUser.getSession((error, session) => {
-      if (error) {
-        reject(error);
-        return;
-      }
-      if (session.isValid()) {
-        cognitoUser.deleteUser((err, result) => {
-          if (err) {
-            console.error('Error deleting user:', err);
-            alert(err.message || JSON.stringify(err));
-            return;
-          }
-          console.log('User deleted successfully:', result);
-          resolve(result)
-          // Perform any necessary actions after user deletion
-        });
-      } else {
-        reject(new Error('User session is not valid.'));
-        console.error('User session is not valid.');
-      }
-    });
-  } else {
-    reject(new Error('User not authenticated.'));
-    console.error('User not authenticated.');
-  }
-});
+    const cognitoUser = CognitoPool.getCurrentUser();
+    if (cognitoUser) {
+      cognitoUser.getSession((error, session) => {
+        if (error) {
+          reject(error);
+          return;
+        }
+        if (session.isValid()) {
+          cognitoUser.deleteUser((err, result) => {
+            if (err) {
+              console.error('Error deleting user:', err);
+              alert(err.message || JSON.stringify(err));
+              return;
+            }
+            console.log('User deleted successfully:', result);
+            resolve(result)
+            // Perform any necessary actions after user deletion
+          });
+        } else {
+          reject(new Error('User session is not valid.'));
+          console.error('User session is not valid.');
+        }
+      });
+    } else {
+      reject(new Error('User not authenticated.'));
+      console.error('User not authenticated.');
+    }
+  });
 };
 
 
-export {userUpdateProfile, deleteUser};
+export { userUpdateProfile, deleteUser };
