@@ -18,8 +18,8 @@ const userSignup = async (fullName, lastName, email, password) => {
         reject(err);
         return;
       }
-      const cognitoUser = result.user;
-      console.log('Successfully signed up. User:', cognitoUser.getUsername());
+      const cognitoUser = result;
+      console.log('Successfully signed up. User:',JSON.stringify(result));
       resolve(cognitoUser);
     });
   });

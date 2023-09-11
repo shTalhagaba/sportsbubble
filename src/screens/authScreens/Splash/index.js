@@ -31,7 +31,7 @@ export default function Splash() {
       startTime: startTime,
       endTime: dayjs(startTime)
         .add(2, 'hours')
-        .set('minutes', 59)
+        .set('minutes', 0)
         .set('second', 0)
         .toISOString(),
     },

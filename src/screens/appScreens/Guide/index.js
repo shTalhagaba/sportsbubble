@@ -103,7 +103,7 @@ export default function Guide(props) {
       startTime: startTime,
       endTime: dayjs(startTime)
         .add(2, 'hours')
-        .set('minutes', 59)
+        .set('minutes', 0)
         .set('second', 0)
         .toISOString(),
     },
@@ -240,7 +240,7 @@ export default function Guide(props) {
         where: {
           cognitoId: reduxData?.userData?.sub
         },
-        create: {
+        update: {
           favoriteSports: [
             {
               node: {
@@ -527,7 +527,9 @@ export default function Guide(props) {
               if (
                 item &&
                 item?.rightsHoldersConnection &&
-                item?.rightsHoldersConnection?.totalCount === 1
+                item?.rightsHoldersConnection?.totalCount === 1 &&
+                dayjs(currentDate).isAfter(item?.startTime) &&
+                dayjs(currentDate).isBefore(item?.endTime)
               ) {
                 navigation.navigate('withoutBottomtab', {
                   screen: 'Connect',
@@ -592,16 +594,16 @@ export default function Guide(props) {
                 </View>
               </View>
               {reduxData?.user && (
-                <TouchableOpacity
+                <View
                   style={{ position: 'absolute', right: 0, alignSelf: 'center' }}
-                  onPress={() => { sportsIds && sportsIds.length > 0 && sportsIds.includes(item?.sport?.id) ? {} : updateConsumers(item?.category, item?.sport) }}
+                // onPress={() => { sportsIds && sportsIds.length > 0 && sportsIds.includes(item?.sport?.id) ? {} : updateConsumers(item?.category, item?.sport) }}
                 >
                   <Image
                     source={sportsIds.includes(item?.sport?.id) ? Images.FilledFvrt : Images.Favorite}
                     style={[styles.fvrtIcon]}
                     resizeMode={'contain'}
                   />
-                </TouchableOpacity>
+                </View>
               )}
             </View>
           </TouchableOpacity>
@@ -874,22 +876,22 @@ export default function Guide(props) {
         liveMatchModal={liveMatchModal}
       />
       {/* My Sport Popup for guest  */}
-      {mySportModal?
-      <CustomMySportsModalView
-        visible={mySportModal}
-        desTxt={Strings.accessFeatures}
-        blackBtnTxt={Strings.noThanks}
-        otherBtnTxt={Strings.createFreeAccount}
-        btn
-        rowStyle={false}
-        blackBtnPress={() => {
-          setMySportModal(!mySportModal);
-          setLiveMatchModal(true);
-        }}
-        otherBtnPress={() => {
-          handleCreateAccount();
-        }}
-      />:null}
+      {mySportModal ?
+        <CustomMySportsModalView
+          visible={mySportModal}
+          desTxt={Strings.accessFeatures}
+          blackBtnTxt={Strings.noThanks}
+          otherBtnTxt={Strings.createFreeAccount}
+          btn
+          rowStyle={false}
+          blackBtnPress={() => {
+            setMySportModal(!mySportModal);
+            setLiveMatchModal(true);
+          }}
+          otherBtnPress={() => {
+            handleCreateAccount();
+          }}
+        /> : null}
     </ImageBackground>
   );
 }

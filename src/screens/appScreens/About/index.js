@@ -39,6 +39,7 @@ export default function About(props) {
         <Text style={styles.loginTxt}>{Strings.aboutWatchSports}</Text>
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
+          indicatorStyle={'white'}
           style={{flex: 1, marginVertical: 25}}>
           <View>
             {content && <Text style={styles.contentTxt}>{content}</Text>}

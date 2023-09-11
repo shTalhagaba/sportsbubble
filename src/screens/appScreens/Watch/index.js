@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   StatusBar,
   ScrollView,
+  Dimensions,
 } from 'react-native';
 import styles from './styles';
 import { Images, Colors, Strings, Constants } from 'src/utils';
@@ -16,6 +17,7 @@ import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 import GestureRecognizer from 'react-native-swipe-gestures';
+const screeHeight = Dimensions.get('window').height;
 
 const data = [
   { id: 1, img: Images.NBALogo, title: 'Fubo' },
@@ -43,7 +45,7 @@ export default function Watch(props) {
         props?.route?.params?.item?.rightsHoldersConnection?.edges.filter(
           item => {
             const rightsHolder = item?.node;
-            return rightsHolder && rightsHolder.weight > 1000;
+            return rightsHolder && rightsHolder.weight < 1000;
           },
         );
       if (list && list.length > 0) {
@@ -51,6 +53,106 @@ export default function Watch(props) {
       }
     }
   }, [props?.route?.params?.item]);
+
+  const mainView = () => {
+    return (
+      <>
+        {/* after header card */}
+        <View style={styles.sliderContainer}>
+          <View style={styles.itemListContainer}>
+            <View style={styles.itemInnerContainer}>
+              <View style={styles.itemContainer}>
+                <ImageWithPlaceHolder
+                  source={itemSelected?.logo1}
+                  placeholderSource={Constants.placeholder_trophy_icon}
+                  style={styles.imageIcon}
+                  resizeMode="contain"
+                />
+              </View>
+              <View style={[styles.userNameContainer]}>
+                <Text style={styles.eventTxt}>
+                  {itemSelected?.line1
+                    ? itemSelected?.line1
+                    : itemSelected?.companyName}
+                </Text>
+                <Text style={styles.titleTxt}>
+                  {itemSelected?.line2
+                    ? itemSelected?.line2
+                    : itemSelected?.title}
+                </Text>
+                <View style={styles.itemInnerContainer}>
+                  <Text style={[styles.dateEventTxt]}>
+                    {' ' + itemSelected?.startTime
+                      ? dayjs(itemSelected?.startTime).format('ddd. MM/D')
+                      : itemSelected?.day}
+                    {'  l '}
+                  </Text>
+                  <Text style={[styles.dateEventTxt]}>
+                    {' ' + itemSelected?.startTime
+                      ? dayjs(itemSelected?.startTime).format('h:mma') +
+                      ' - ' +
+                      dayjs(itemSelected?.endTime).format('h:mma')
+                      : itemSelected?.time}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+        {/* Watch option text */}
+        <Text style={styles.watchOptions}>{Strings.watchOptions}</Text>
+        {/* right holder connection list */}
+        {itemSelected &&
+          itemSelected?.rightsHoldersConnection?.edges &&
+          itemSelected?.rightsHoldersConnection?.totalCount > 0 ? (
+          <View style={styles.flatlistContainer}>
+            {dayjs(itemSelected?.startTime).isAfter(currentDate) ? null : (
+              <Text style={styles.conectTxt}>{Strings.connectToWatch}</Text>
+            )}
+            <FlatList
+              data={itemSelected?.rightsHoldersConnection?.edges || data}
+              showsVerticalScrollIndicator={false}
+              horizontal
+              contentContainerStyle={{ flex: 1, justifyContent: 'center' }}
+              renderItem={({ item, index }) => {
+                return item?.node?.weight > 1000 ? (
+                  <TouchableOpacity
+                    onPress={() => {
+                      dayjs(currentDate).isAfter(itemSelected?.startTime) &&
+                        dayjs(currentDate).isBefore(itemSelected?.endTime) ? (
+                        navigation.navigate('withoutBottomtab', {
+                          screen: 'Connect',
+                          params: { item: itemSelected, holderItem: item },
+                        })) : {}
+                    }}
+                    style={styles.listMainContainer}>
+                    <View style={styles.listInnerContainer}>
+                      <View style={styles.listBackground} />
+                      <View style={styles.imageContainer}>
+                        <ImageWithPlaceHolder
+                          source={item?.node?.logoUrl}
+                          placeholderSource={Constants.placeholder_trophy_icon}
+                          style={styles.imageRightsIcon}
+                          logoUrl={true}
+                          widthLogo={50}
+                          heightLogo={50}
+                          resizeMode="contain"
+                        />
+                      </View>
+                    </View>
+                    {/* <Text style={styles.listTitleTxt} numberOfLines={1}>
+                      {item?.node?.name || item?.title}
+                    </Text> */}
+                  </TouchableOpacity>
+                ) : null;
+              }}
+            />
+          </View>
+        ) : (
+          <Text style={styles.orangeTxt}>{Strings.connectToWatchEmpty}</Text>
+        )}
+      </>)
+  }
 
   return (
     <ImageBackground
@@ -87,103 +189,18 @@ export default function Watch(props) {
           gestureIsClickThreshold: 20
         }}>
         {/* Main View */}
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 20 }}
-          style={styles.flexOnly}>
-          {/* after header card */}
-          <View style={styles.sliderContainer}>
-            <View style={styles.itemListContainer}>
-              <View style={styles.itemInnerContainer}>
-                <View style={styles.itemContainer}>
-                  <ImageWithPlaceHolder
-                    source={itemSelected?.logo1}
-                    placeholderSource={Constants.placeholder_trophy_icon}
-                    style={styles.imageIcon}
-                    resizeMode="contain"
-                  />
-                </View>
-                <View style={[styles.userNameContainer]}>
-                  <Text style={styles.eventTxt}>
-                    {itemSelected?.line1
-                      ? itemSelected?.line1
-                      : itemSelected?.companyName}
-                  </Text>
-                  <Text style={styles.titleTxt}>
-                    {itemSelected?.line2
-                      ? itemSelected?.line2
-                      : itemSelected?.title}
-                  </Text>
-                  <View style={styles.itemInnerContainer}>
-                    <Text style={[styles.dateEventTxt]}>
-                      {' ' + itemSelected?.startTime
-                        ? dayjs(itemSelected?.startTime).format('ddd. MM/D')
-                        : itemSelected?.day}
-                      {'  l '}
-                    </Text>
-                    <Text style={[styles.dateEventTxt]}>
-                      {' ' + itemSelected?.startTime
-                        ? dayjs(itemSelected?.startTime).format('h:mma') +
-                        ' - ' +
-                        dayjs(itemSelected?.endTime).format('h:mma')
-                        : itemSelected?.time}
-                    </Text>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </View>
-          {/* Watch option text */}
-          <Text style={styles.watchOptions}>{Strings.watchOptions}</Text>
-          {/* right holder connection list */}
-          {itemSelected &&
-            itemSelected?.rightsHoldersConnection?.edges &&
-            itemSelected?.rightsHoldersConnection?.totalCount > 1 ? (
-            <View style={styles.flatlistContainer}>
-              {dayjs(itemSelected?.startTime).isAfter(currentDate) ? null : (
-                <Text style={styles.conectTxt}>{Strings.connectToWatch}</Text>
-              )}
-              <FlatList
-                data={itemSelected?.rightsHoldersConnection?.edges || data}
-                showsVerticalScrollIndicator={false}
-                horizontal
-                contentContainerStyle={{ flex: 1, justifyContent: 'center' }}
-                renderItem={({ item, index }) => {
-                  return item?.node?.weight > 1000 ? (
-                    <TouchableOpacity
-                      onPress={() => {
-                        navigation.navigate('withoutBottomtab', {
-                          screen: 'Connect',
-                          params: { item: itemSelected, holderItem: item },
-                        });
-                      }}
-                      style={styles.listMainContainer}>
-                      <View style={styles.listInnerContainer}>
-                        <View style={styles.listBackground} />
-                        <View style={styles.imageContainer}>
-                          <ImageWithPlaceHolder
-                            source={item?.node?.logoUrl}
-                            placeholderSource={Constants.placeholder_trophy_icon}
-                            style={styles.imageRightsIcon}
-                            logoUrl={true}
-                            widthLogo={50}
-                            heightLogo={50}
-                            resizeMode="contain"
-                          />
-                        </View>
-                      </View>
-                      {/* <Text style={styles.listTitleTxt} numberOfLines={1}>
-                      {item?.node?.name || item?.title}
-                    </Text> */}
-                    </TouchableOpacity>
-                  ) : null;
-                }}
-              />
-            </View>
-          ) : (
-            <Text style={styles.orangeTxt}>{Strings.connectToWatchEmpty}</Text>
-          )}
-        </ScrollView>
+        {screeHeight < 600 ?
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: 20 }}
+            style={styles.flexOnly}>
+            {mainView()}
+          </ScrollView>
+          :
+          <View
+            style={styles.flexOnly}>
+            {mainView()}
+          </View>}
 
         <View>
           {bottomShow &&

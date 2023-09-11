@@ -31,7 +31,6 @@ const user = (state = initialState, action: any) => {
       break;
      // set sportss list
     case 'SET_SPORTS_LIST':
-      console.log('SET_SPORTS_LIST : ', action.payload);
       try {
         return {
           ...state,

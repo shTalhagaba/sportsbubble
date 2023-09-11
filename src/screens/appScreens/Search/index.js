@@ -222,7 +222,9 @@ export default function Search(props) {
                 if (
                   item &&
                   item?.rightsHoldersConnection &&
-                  item?.rightsHoldersConnection?.totalCount === 1
+                  item?.rightsHoldersConnection?.totalCount === 1 &&
+                  dayjs(currentDate).isAfter(item?.startTime) &&
+                  dayjs(currentDate).isBefore(item?.endTime)
                 ) {
                   navigation.navigate('withoutBottomtab', {
                     screen: 'Connect',

@@ -105,7 +105,6 @@ export default function WelcomeAccount(props) {
         const { data } = await createConsumerMutation({
           variables: { input: inputData },
         });
-  
         // Handle the response data as needed
         console.log('Consumer created:', data);
       } catch (err) {

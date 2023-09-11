@@ -17,7 +17,7 @@ import Strings from 'src/utils/strings';
 import CustomModalView from 'src/components/Modal/CustomModal';
 import Instabug, { InvocationEvent } from 'instabug-reactnative';
 import { useDispatch, useSelector } from 'react-redux';
-import { setToken, setUser, setUserData } from 'src/store/types';
+import { setSportsList, setToken, setUser, setUserData } from 'src/store/types';
 import { signOut } from 'src/services/authOTP';
 import ShowMessage from 'src/components/ShowMessage';
 
@@ -134,6 +134,7 @@ export default function Setting() {
               dispatch(setUser(false));
               dispatch(setUserData({}));
               dispatch(setToken(''));
+              dispatch(setSportsList([]));
               navigation.replace('Auth');
             })
             .catch(error => {

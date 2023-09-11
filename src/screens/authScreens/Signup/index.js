@@ -62,7 +62,7 @@ export default function Signup() {
       try {
         setLoadingLocal(true);
         const user = await userSignup(fullName, lastName, email, password);
-        setClient(user?.pool?.clientId)
+        setClient(user?.userSub)
         setLoadingLocal(false);
         setVerifyModal(!verifyModal);
         setEmailOptCheck(false)
