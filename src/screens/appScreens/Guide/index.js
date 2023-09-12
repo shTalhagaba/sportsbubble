@@ -73,6 +73,7 @@ export default function Guide(props) {
   const [categoryData, setCategoryData] = useState(categoryArr);
   const [selectedTimeIndex, setSelectedTimeIndex] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
+  const stageToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJodHRwczovL2Rldi0zNTM5MjYyLm9rdGEuY29tL29hdXRoMi92MS90b2tlbiIsImlzcyI6IjBvYTlrN2RpYWRqOUxJN0tkNWQ2Iiwic3ViIjoiMG9hOWs3ZGlhZGo5TEk3S2Q1ZDYifQ.sJCxcymR_X_OtWCZxJ5_AfUbWvKkd1ML8JW-Wl91xV8uJ2paw067kEgfR7QYz6dk3-1-egBjyf1Mifm1cTN1S8JPpkd1NN1Aw6uuky3lt5jmjeHwwqL-XHzIkSjLN_t8zdO5OpDqtlbEqyNGtJFCONJ9K-hCjp7u5FWCZ1nKwIK3X1w-FVjRDLbvJrTrh8IJriqPhiWHfkGbz-jm6yStYXMw3uhcKd164RA2l8utz4jnVRn9ebcOiN_BQb3yvtqBc0CsxB6YKQmmW7Rbpg8cRU3B1zfLfMMu2QVPLYr5vDD2mhK1PwixUZ6UnYrYirXWNNTqyZquGZPQWpIlY9sIwA'
 
   const [eventList, setEventList] = useState(
     reduxData &&
@@ -104,9 +105,11 @@ export default function Guide(props) {
     notifyOnNetworkStatusChange: true,
     context: {
       headers: {
-        authorization: Config?.BEARER_TOKEN
-          ? `Bearer ${Config.BEARER_TOKEN}`
-          : '',
+        authorization:
+          Platform.OS === "android" ? `Bearer ${stageToken}` :
+            Config?.BEARER_TOKEN
+              ? `Bearer ${Config.BEARER_TOKEN}`
+              : '',
       },
     },
     onCompleted: data => {
@@ -163,9 +166,11 @@ export default function Guide(props) {
     notifyOnNetworkStatusChange: true,
     context: {
       headers: {
-        authorization: Config?.BEARER_TOKEN
-          ? `Bearer ${Config.BEARER_TOKEN}`
-          : '',
+        authorization:
+          Platform.OS === "android" ? `Bearer ${stageToken}` :
+            Config?.BEARER_TOKEN
+              ? `Bearer ${Config.BEARER_TOKEN}`
+              : '',
       },
     },
     onCompleted: data => {
