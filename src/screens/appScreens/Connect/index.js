@@ -13,6 +13,7 @@ import AppHeader from 'src/components/AppHeader';
 import GreenButton from 'src/components/GreenButton';
 import dayjs from 'dayjs';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
+import SvgWithPlaceHolder from '../../../components/SvgWithPlaceHolder';
 
 export default function Connect(props) {
   const [item, setItem] = useState(props?.route?.params?.item);
@@ -28,6 +29,22 @@ export default function Connect(props) {
       Linking.openURL(url);
     }
   };
+
+  const checkSvg = async (url) => {
+     await fetch(url, { method: 'HEAD' })
+      .then(response => {
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('image/svg+xml')) {
+          return true
+        } else {
+          return false
+        }
+      })
+      .catch(error => {
+        console.error('Error checking SVG:', error);
+        setIsSvg(false);
+      });
+  }
 
   return (
     <ImageBackground
@@ -95,19 +112,33 @@ export default function Connect(props) {
             style={styles.imageStyle}
           />
         </View>
-          <Text numberOfLines={1} style={styles.connectingText}>{Strings.connecting}</Text>
+        <Text numberOfLines={1} style={styles.connectingText}>{Strings.connecting}</Text>
         <View style={styles.logoImageContainer}>
-          <ImageWithPlaceHolder
-            source={
-              eventFlag && holderItem?.edges?.[0]?.node?.logoUrl
-                ? holderItem?.edges?.[0]?.node?.logoUrl
-                : holderItem?.node?.logoUrl
-            }
-            placeholderSource={Constants.placeholder_trophy_icon}
-            style={styles.logoImageStyle}
-            logoUrl={true}
-            resizeMode="contain"
-          />
+          {eventFlag && checkSvg(holderItem?.edges?.[0]?.node?.logoUrl
+            ? holderItem?.edges?.[0]?.node?.logoUrl
+            : holderItem?.node?.logoUrl)?
+            <SvgWithPlaceHolder
+              source={
+                eventFlag && holderItem?.edges?.[0]?.node?.logoUrl
+                  ? holderItem?.edges?.[0]?.node?.logoUrl
+                  : holderItem?.node?.logoUrl
+              }
+              placeholderSource={Constants.placeholder_trophy_icon}
+              style={styles.logoImageStyle}
+              logoUrl={true}
+              resizeMode="contain"
+            /> :
+            <ImageWithPlaceHolder
+              source={
+                eventFlag && holderItem?.edges?.[0]?.node?.logoUrl
+                  ? holderItem?.edges?.[0]?.node?.logoUrl
+                  : holderItem?.node?.logoUrl
+              }
+              placeholderSource={Constants.placeholder_trophy_icon}
+              style={styles.logoImageStyle}
+              logoUrl={true}
+              resizeMode="contain"
+            />}
         </View>
         <View style={styles.buttonContainer}>
           {dayjs(currentDate).isAfter(item?.startTime) &&

@@ -46,7 +46,18 @@ export default function Splash() {
     },
     onCompleted: data => {
       if (data && data?.sortedEvents) {
-        const filteredEvents = data?.sortedEvents.filter(event => {
+        const filteredEvents = data?.sortedEvents
+        .filter((event) => {
+          const eventStart = dayjs(event.startTime);
+          const eventEnd = dayjs(event.endTime);
+          const currentTime = dayjs();
+          return (
+            eventEnd.diff(currentTime, 'minute') > 0 &&
+            event?.rightsHoldersConnection?.edges?.length > 0 &&
+            eventStart.diff(currentTime, 'hour') <= 4 &&
+            (categories?.includes(event?.category?.name) || categories?.includes('all'))
+          );
+        }).filter(event => {
           const {line1, line2, startTime, endTime, logo1, rightsHolders} =
             event;
           // Check if all required properties exist

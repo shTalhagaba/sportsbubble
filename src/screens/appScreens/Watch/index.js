@@ -17,6 +17,7 @@ import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 import GestureRecognizer from 'react-native-swipe-gestures';
+import SvgWithPlaceHolder from '../../../components/SvgWithPlaceHolder';
 const screeHeight = Dimensions.get('window').height;
 
 const data = [
@@ -33,6 +34,7 @@ export default function Watch(props) {
   const [bottomMenu, setBottomMenu] = useState(false);
   const [bottomShow, setBottomShow] = useState(false);
   const { searchFlag } = props?.route?.params;
+  const [svgFlag, setSvgFlag] = useState(false);
 
   useEffect(() => {
     setItemSelected(props?.route?.params?.item);
@@ -52,6 +54,26 @@ export default function Watch(props) {
       }
     }
   }, [props?.route?.params?.item]);
+
+
+  const checkSvg = async (url) => {
+    await fetch(url, { method: 'HEAD' })
+      .then(response => {
+        const contentType = response.headers.get('content-type');
+        console.log("contentType.includes('image/svg+xml') ",contentType.includes('image/svg+xml'))
+        if (contentType && contentType.includes('image/svg+xml')) {
+          setSvgFlag(true)
+          return true
+        } else {
+          setSvgFlag(false)
+          return false
+        }
+      })
+      .catch(error => {
+        console.error('Error checking SVG:', error);
+        setIsSvg(false);
+      });
+  }
 
   const mainView = () => {
     return (
@@ -131,17 +153,28 @@ export default function Watch(props) {
                     <View style={styles.listInnerContainer}>
                       <View style={styles.listBackground} />
                       <View style={styles.imageContainer}>
-                        <ImageWithPlaceHolder
-                          source={item?.node?.logoUrl}
-                          placeholderSource={
-                            Constants.placeholder_trophy_icon
-                          }
-                          style={styles.imageRightsIcon}
-                          logoUrl={true}
-                          widthLogo={50}
-                          heightLogo={50}
-                          resizeMode="contain"
-                        />
+                        {item?.node && item?.node?.logoUrl && (checkSvg(item?.node?.logoUrl) === true || svgFlag)?
+                          <SvgWithPlaceHolder
+                            source={item?.node?.logoUrl
+                            }
+                            placeholderSource={Constants.placeholder_trophy_icon}
+                            style={styles.imageRightsIcon}
+                            logoUrl={true}
+                            widthLogo={47}
+                            heightLogo={47}
+                            resizeMode="contain"
+                          /> :
+                          <ImageWithPlaceHolder
+                            source={item?.node?.logoUrl}
+                            placeholderSource={
+                              Constants.placeholder_trophy_icon
+                            }
+                            style={styles.imageRightsIcon}
+                            logoUrl={true}
+                            widthLogo={50}
+                            heightLogo={50}
+                            resizeMode="contain"
+                          />}
                       </View>
                     </View>
                     {/* <Text style={styles.listTitleTxt} numberOfLines={1}>

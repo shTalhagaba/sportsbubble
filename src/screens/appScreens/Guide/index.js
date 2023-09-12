@@ -112,14 +112,18 @@ export default function Guide(props) {
     onCompleted: data => {
       if (data && data?.sortedEvents) {
         const filteredEvents = data?.sortedEvents
-          .sort((eventA, eventB) => {
-            const startEventA = new Date(eventA.startTime).getTime();
-            const startEventB = new Date(eventB.startTime).getTime();
+          .filter((event) => {
+            const eventStart = dayjs(event.startTime);
+            const eventEnd = dayjs(event.endTime);
+            const currentTime = dayjs();
 
-            // Sort events in ascending order based on the start time
-            return startEventA - startEventB;
-          })
-          .filter(event => {
+            return (
+              eventEnd.diff(currentTime, 'minute') > 0 &&
+              event?.rightsHoldersConnection?.edges?.length > 0 &&
+              eventStart.diff(currentTime, 'hour') <= 4 &&
+              (categories?.includes(event?.category?.name) || categories?.includes('all'))
+            );
+          }).filter(event => {
             const { line1, line2, startTime, endTime, logo1, rightsHolders } =
               event;
             // Check if all required properties exist
@@ -593,6 +597,7 @@ export default function Guide(props) {
       </View>
       {/* time slider */}
       <GestureRecognizer
+        style={{ flex: 1 }}
         onSwipeRight={state => {
           handlePrevious();
         }}
@@ -669,45 +674,45 @@ export default function Guide(props) {
             </TouchableOpacity>
           </View>
         </View>
+        {/* main list  */}
+        {loading && currentIndex ? (
+          <View style={{ flex: 1, justifyContent: 'center' }}>
+            <ActivityIndicator color={'#fff'} size={'large'} />
+          </View>
+        ) : (
+          <ScrollView indicatorStyle={'white'}>
+            <FlatList
+              data={
+                selectedCategory === 'all' && selectedTimeIndex >= 0
+                  ? eventList && eventList.length > 0
+                    ? eventList
+                    : selectedTimeIndex > 0
+                      ? filteredEventList
+                      : []
+                  : filteredEventList
+              }
+              showsVerticalScrollIndicator={false}
+              refreshControl={
+                <RefreshControl
+                  refreshing={refreshing}
+                  onRefresh={onRefresh}
+                />}
+              renderItem={({ item }) => <ItemComponent item={item} />}
+              keyExtractor={item => item?.id}
+              removeClippedSubviews={true} // Unmount components when outside of window
+              initialNumToRender={50} // Reduce initial render amount
+              maxToRenderPerBatch={20} // Reduce number in each render batch
+              updateCellsBatchingPeriod={20} // Increase time between renders
+              windowSize={20} // Reduce the window size
+              ListEmptyComponent={
+                <View>
+                  <Text style={styles.emptyTxt}>{Strings.emptyGuideList}</Text>
+                </View>
+              }
+            />
+          </ScrollView>
+        )}
       </GestureRecognizer>
-      {/* main list  */}
-      {loading && currentIndex ? (
-        <View style={{ flex: 1, justifyContent: 'center' }}>
-          <ActivityIndicator color={'#fff'} size={'large'} />
-        </View>
-      ) : (
-        <ScrollView indicatorStyle={'white'}>
-        <FlatList
-          data={
-            selectedCategory === 'all' && selectedTimeIndex >= 0
-              ? eventList && eventList.length > 0
-                ? eventList
-                : selectedTimeIndex > 0
-                  ? filteredEventList
-                  : []
-              : filteredEventList
-          }
-          showsVerticalScrollIndicator={false}
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={onRefresh}
-            />}
-          renderItem={({ item }) => <ItemComponent item={item} />}
-          keyExtractor={item => item?.id}
-          removeClippedSubviews={true} // Unmount components when outside of window
-          initialNumToRender={50} // Reduce initial render amount
-          maxToRenderPerBatch={20} // Reduce number in each render batch
-          updateCellsBatchingPeriod={20} // Increase time between renders
-          windowSize={20} // Reduce the window size
-          ListEmptyComponent={
-            <View>
-              <Text style={styles.emptyTxt}>{Strings.emptyGuideList}</Text>
-            </View>
-          }
-        />
-        </ScrollView>
-      )}
       <LiveMatchView
         setLiveMatchModal={setLiveMatchModal}
         liveMatchModal={liveMatchModal}
