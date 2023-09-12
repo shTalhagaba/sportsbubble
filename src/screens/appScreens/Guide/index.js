@@ -119,7 +119,7 @@ export default function Guide(props) {
 
             return (
               eventEnd.diff(currentTime, 'minute') > 0 &&
-              eventStart.diff(currentTime, 'hour') <= 4 
+              eventStart.diff(currentTime, 'hour') <= 3
             );
           }).filter(event => {
             const { line1, line2, startTime, endTime, logo1, rightsHolders } =
