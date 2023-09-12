@@ -53,9 +53,7 @@ export default function Splash() {
           const currentTime = dayjs();
           return (
             eventEnd.diff(currentTime, 'minute') > 0 &&
-            event?.rightsHoldersConnection?.edges?.length > 0 &&
-            eventStart.diff(currentTime, 'hour') <= 4 &&
-            (categories?.includes(event?.category?.name) || categories?.includes('all'))
+            eventStart.diff(currentTime, 'hour') <= 4
           );
         }).filter(event => {
           const {line1, line2, startTime, endTime, logo1, rightsHolders} =
