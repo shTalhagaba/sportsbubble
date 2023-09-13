@@ -94,12 +94,18 @@ export default function Guide(props) {
   // Fetch data from API using Apollo useQuery hook
   const { loading, refetch, error } = useQuery(GET_SORTED_EVENTS, {
     variables: {
-      startTime: startTime,
-      endTime: dayjs(startTime)
+      startTime: isLive ? startTime : dayjs(startTime)
+        .subtract(1, 'hours')
+        .set('minutes', 0),
+      endTime: isLive ? dayjs(startTime)
         .add(2, 'hours')
-        .set('minutes', 0)
+        .set('minutes', 59)
         .set('second', 0)
-        .toISOString(),
+        .toISOString() : dayjs(startTime)
+          .add(1, 'hours')
+          .set('minutes', 59)
+          .set('second', 0)
+          .toISOString(),
     },
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
@@ -114,40 +120,42 @@ export default function Guide(props) {
     },
     onCompleted: data => {
       if (data && data?.sortedEvents) {
-        const filteredEvents = data?.sortedEvents
-          .filter((event) => {
-            const eventStart = dayjs(event.startTime);
-            const eventEnd = dayjs(event.endTime);
-            const currentTime = dayjs();
+        const filteredEvents = (data?.sortedEvents || []).filter(event => {
+          const eventStart = dayjs(event.startTime);
+          const eventEnd = dayjs(event.endTime);
+          const currentTime = dayjs();
+          return (
+            eventEnd.diff(currentTime, 'minute') > 0 &&
+            eventStart.diff(currentTime, 'hour') <= 4 &&
+            // event.line1 &&
+            // event.line2 &&
+            // event.startTime &&
+            // event.endTime &&
+            // event.logo1 &&
+            event.rightsHolders.some(rightsholder => rightsholder.logoUrl)
+          );
+        }).sort((eventA, eventB) => {
+          const startEventA = new Date(eventA.startTime).getTime()
+          const startEventB = new Date(eventB.startTime).getTime()
+          return startEventA - startEventB
+        })
 
-            return (
-              eventEnd.diff(currentTime, 'minute') > 0 &&
-              eventStart.diff(currentTime, 'hour') <= 3
-            );
-          }).filter(event => {
-            const { line1, line2, startTime, endTime, logo1, rightsHolders } =
-              event;
-            // Check if all required properties exist
-            if (
-              !line1 ||
-              !line2 ||
-              !startTime ||
-              !endTime ||
-              !logo1 ||
-              !rightsHolders
-            ) {
-              return false;
-            }
-            // Check if at least one rightsholder has a logoUrl
-            const hasLogoUrl = rightsHolders.some(
-              rightsholder => rightsholder.logoUrl,
-            );
-            if (!hasLogoUrl) {
-              return false;
-            }
+        // filteredEvents.sort((eventA, eventB) => {
+        //   const startTimeA = dayjs(eventA.startTime);
+        //   const startTimeB = dayjs(eventB.startTime);
 
-            return true;
-          });
+        //   if (startTimeA.isBefore(startTimeB)) {
+        //     return -1;
+        //   } else if (startTimeA.isAfter(startTimeB)) {
+        //     return 1;
+        //   } else {
+        //     const endTimeA = dayjs(eventA.endTime);
+        //     const endTimeB = dayjs(eventB.endTime);
+
+        //     return endTimeA - endTimeB;
+        //   }
+        // });
+
         setEventList(filteredEvents);
       }
       setIsRefreshing(false);
@@ -184,7 +192,6 @@ export default function Guide(props) {
         data &&
         data?.sortedEvents.length > 0
       ) {
-        console.log('data : ', data?.sortedEvents.length)
         const filteredEvents = data?.sortedEvents.filter(event => {
           const { line1, line2, startTime, endTime, logo1, rightsHolders } =
             event;
@@ -280,6 +287,7 @@ export default function Guide(props) {
       getTimeList();
     }
   }, [isFocused]);
+
   useEffect(() => {
     if (eventList && eventList.length > 0) {
       let filteredEvents;
@@ -393,7 +401,7 @@ export default function Guide(props) {
         minutesDiffference < 0 ? 60 + minutesDiffference : minutesDiffference;
       return w === 0 ? '26%' : `${w / 2 - 4}%`;
     } else {
-      let wid = minutesDiffference / 2 + 22;
+      let wid = minutesDiffference / 2 + 26;
       return `${wid}%`;
     }
   };
@@ -443,82 +451,82 @@ export default function Guide(props) {
   const ItemComponent = React.memo(({ item }) => {
     return (
       // Render your item component here
-      dayjs(item?.endTime).isAfter(currentDate) ? (
-        <TouchableOpacity
-          style={styles.listContainer}
-          onPress={() => {
-            if (
-              item &&
-              item?.rightsHoldersConnection &&
-              item?.rightsHoldersConnection?.totalCount === 1 &&
-              dayjs(currentDate).isAfter(item?.startTime) &&
-              dayjs(currentDate).isBefore(item?.endTime)
-            ) {
-              navigation.navigate('withoutBottomtab', {
-                screen: 'Connect',
-                params: {
-                  item: item,
-                  holderItem: item?.rightsHoldersConnection,
-                  eventFlag: true,
-                },
-              });
-            } else {
-              navigation.navigate('Watch', { item: item });
-            }
-          }}>
-          <View style={styles.innerContainer}>
-            <View style={styles.imageContainer}>
-              <ImageWithPlaceHolder
-                source={item?.logo1}
-                placeholderSource={Constants.placeholder_trophy_icon}
-                style={styles.imageIcon}
-                resizeMode="contain"
-              />
-            </View>
-            <View
-              style={{
-                width: item?.startTime ? startTimeWidth(item?.startTime) : 0,
-                backgroundColor: Colors.darkBlue,
-              }}></View>
-            <View
-              style={{
-                width: endTimeWidth(item?.endTime),
-                backgroundColor: dayjs(item?.startTime).isAfter(currentDate)
-                  ? Colors.greyBackground
-                  : Colors.mediumGreen,
-              }}></View>
-            <View
-              style={{
-                flex: 1,
-                backgroundColor: Colors.darkBlue,
-              }}></View>
-            <View style={styles.userNameContainer}>
-              <Text style={[styles.eventTxt]} numberOfLines={1}>
-                {item?.line1 ? item?.line1 : item?.companyName}
+      // dayjs(item?.endTime).isAfter(currentDate) ? (
+      <TouchableOpacity
+        style={styles.listContainer}
+        onPress={() => {
+          if (
+            item &&
+            item?.rightsHoldersConnection &&
+            item?.rightsHoldersConnection?.totalCount === 1 &&
+            dayjs(currentDate).isAfter(item?.startTime) &&
+            dayjs(currentDate).isBefore(item?.endTime)
+          ) {
+            navigation.navigate('withoutBottomtab', {
+              screen: 'Connect',
+              params: {
+                item: item,
+                holderItem: item?.rightsHoldersConnection,
+                eventFlag: true,
+              },
+            });
+          } else {
+            navigation.navigate('Watch', { item: item });
+          }
+        }}>
+        <View style={styles.innerContainer}>
+          <View style={styles.imageContainer}>
+            <ImageWithPlaceHolder
+              source={item?.logo1}
+              placeholderSource={Constants.placeholder_trophy_icon}
+              style={styles.imageIcon}
+              resizeMode="contain"
+            />
+          </View>
+          <View
+            style={{
+              width: item?.startTime ? startTimeWidth(item?.startTime) : 0,
+              backgroundColor: Colors.darkBlue,
+            }}></View>
+          <View
+            style={{
+              width: endTimeWidth(item?.endTime),
+              backgroundColor: dayjs(item?.startTime).isAfter(currentDate)
+                ? Colors.greyBackground
+                : Colors.mediumGreen,
+            }}></View>
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: Colors.darkBlue,
+            }}></View>
+          <View style={styles.userNameContainer}>
+            <Text style={[styles.eventTxt]} numberOfLines={1}>
+              {item?.line1 ? item?.line1 : item?.companyName}
+            </Text>
+            <Text style={styles.titleTxt} numberOfLines={1}>
+              {item?.line2 ? item?.line2 : item?.title}
+            </Text>
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={[styles.eventDateTxt]}>
+                {item?.startTime
+                  ? dayjs(item?.startTime).format('ddd. MM/D')
+                  : item?.day}
+                {'  l '}
               </Text>
-              <Text style={styles.titleTxt} numberOfLines={1}>
-                {item?.line2 ? item?.line2 : item?.title}
+              <Text style={[styles.eventDateTxt]}>
+                {' '}
+                {item?.startTime
+                  ? `${dayjs(item?.startTime).format('h:mma')} - ${dayjs(
+                    item?.endTime,
+                  ).format('h:mma')}`
+                  : item?.time}
               </Text>
-              <View style={{ flexDirection: 'row' }}>
-                <Text style={[styles.eventDateTxt]}>
-                  {item?.startTime
-                    ? dayjs(item?.startTime).format('ddd. MM/D')
-                    : item?.day}
-                  {'  l '}
-                </Text>
-                <Text style={[styles.eventDateTxt]}>
-                  {' '}
-                  {item?.startTime
-                    ? `${dayjs(item?.startTime).format('h:mma')} - ${dayjs(
-                      item?.endTime,
-                    ).format('h:mma')}`
-                    : item?.time}
-                </Text>
-              </View>
             </View>
           </View>
-        </TouchableOpacity>
-      ) : null
+        </View>
+      </TouchableOpacity>
+      // ) : null
     );
   });
 

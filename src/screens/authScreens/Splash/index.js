@@ -34,7 +34,7 @@ export default function Splash() {
       startTime: startTime,
       endTime: dayjs(startTime)
         .add(2, 'hours')
-        .set('minutes', 0)
+        .set('minutes', 59)
         .set('second', 0)
         .toISOString(),
     },
@@ -51,39 +51,26 @@ export default function Splash() {
     },
     onCompleted: data => {
       if (data && data?.sortedEvents) {
-        const filteredEvents = data?.sortedEvents
-          .filter((event) => {
-            const eventStart = dayjs(event.startTime);
-            const eventEnd = dayjs(event.endTime);
-            const currentTime = dayjs();
-            return (
-              eventEnd.diff(currentTime, 'minute') > 0 &&
-              eventStart.diff(currentTime, 'hour') <= 3
-            );
-          }).filter(event => {
-            const { line1, line2, startTime, endTime, logo1, rightsHolders } =
-              event;
-            // Check if all required properties exist
-            if (
-              !line1 ||
-              !line2 ||
-              !startTime ||
-              !endTime ||
-              !logo1 ||
-              !rightsHolders
-            ) {
-              return false;
-            }
-            // Check if at least one rightsholder has a logoUrl
-            const hasLogoUrl = rightsHolders.some(
-              rightsholder => rightsholder.logoUrl,
-            );
-            if (!hasLogoUrl) {
-              return false;
-            }
+        const filteredEvents = (data?.sortedEvents || []).filter(event => {
+          const eventStart = dayjs(event.startTime);
+          const eventEnd = dayjs(event.endTime);
+          const currentTime = dayjs();
+          return (
+            eventEnd.diff(currentTime, 'minute') > 0 &&
+            eventStart.diff(currentTime, 'hour') <= 2 &&
+            // event.line1 &&
+            // event.line2 &&
+            // event.startTime &&
+            // event.endTime &&
+            // event.logo1 &&
+            event.rightsHolders.some(rightsholder => rightsholder.logoUrl)
+          );
+        }).sort((eventA, eventB) => {
+          const startEventA = new Date(eventA.startTime).getTime()
+          const startEventB = new Date(eventB.startTime).getTime()
+          return startEventA - startEventB
+        })
 
-            return true;
-          });
         dispatch(setSplashEventList(filteredEvents));
       }
     },
