@@ -94,18 +94,12 @@ export default function Guide(props) {
   // Fetch data from API using Apollo useQuery hook
   const { loading, refetch, error } = useQuery(GET_SORTED_EVENTS, {
     variables: {
-      startTime: isLive ? startTime : dayjs(startTime)
-        .subtract(1, 'hours')
-        .set('minutes', 0),
-      endTime: isLive ? dayjs(startTime)
+      startTime: startTime,
+      endTime: dayjs(startTime)
         .add(2, 'hours')
         .set('minutes', 59)
         .set('second', 0)
-        .toISOString() : dayjs(startTime)
-          .add(1, 'hours')
-          .set('minutes', 59)
-          .set('second', 0)
-          .toISOString(),
+        .toISOString()
     },
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
@@ -121,21 +115,36 @@ export default function Guide(props) {
     onCompleted: data => {
       if (data && data?.sortedEvents) {
         const filteredEvents = (data?.sortedEvents || []).filter(event => {
-          const eventStart = dayjs(event.startTime);
-          const eventEnd = dayjs(event.endTime);
-          const currentTime = dayjs();
-          return (
-            eventEnd.diff(currentTime, 'minute') > 0 &&
-            eventStart.diff(currentTime, 'hour') <= 4 &&
-            event?.id !== '9f25117c-78ed-4af1-a2fb-ed5cef8ed414' && 
-            event?.rightsHoldersConnection?.edges?.length >= 1
+          const { line1, line2, startTime, endTime, rightsHolders, id, rightsHoldersConnection } = event;
+          // Check if the event should be excluded based on id and rightsHoldersConnection
+          if (
+            id === '9f25117c-78ed-4af1-a2fb-ed5cef8ed414' ||
+            !rightsHoldersConnection ||
+            rightsHoldersConnection.edges.length < 1
+          ) {
+            return false;
+          }
+          // Check if all required properties exist
+          if (
+            !line1 ||
+            !line2 ||
+            !startTime ||
+            !endTime ||
+            !rightsHolders
+          ) {
+            return false;
+          }
+          // Check if at least one rightsholder has a logoUrl
+          const hasLogoUrl = rightsHolders.some(
+            rightsholder => rightsholder.logoUrl,
           );
-        })
-        // .sort((eventA, eventB) => {
-        //   const startEventA = new Date(eventA.startTime).getTime()
-        //   const startEventB = new Date(eventB.startTime).getTime()
-        //   return startEventA - startEventB
-        // })
+          if (!hasLogoUrl) {
+            return false;
+          }
+        
+          return true;
+        });
+        
         setEventList(filteredEvents);
       }
       setIsRefreshing(false);
@@ -155,7 +164,7 @@ export default function Guide(props) {
     context: {
       headers: {
         authorization:
-          Platform.OS === "android" ? `Bearer ${stageToken}` :
+          Platform.OS === "ios" ? `Bearer ${stageToken}` :
             Config?.BEARER_TOKEN
               ? `Bearer ${Config.BEARER_TOKEN}`
               : '',
@@ -368,7 +377,7 @@ export default function Guide(props) {
     }
   };
 
-  const startTimeWidth = (start,label) => {
+  const startTimeWidth = (start, label) => {
     const matchTime = dayjs(timeData[currentIndex]?.datetime);
     const startTime = dayjs(start);
     const timeDifference = startTime.diff(matchTime); // Calculate the total time difference in milliseconds
@@ -413,82 +422,82 @@ export default function Guide(props) {
   const ItemComponent = React.memo(({ item }) => {
     return (
       // Render your item component here
-      dayjs(item?.endTime).isAfter(currentDate) ? (
-        <TouchableOpacity
-          style={styles.listContainer}
-          onPress={() => {
-            if (
-              item &&
-              item?.rightsHoldersConnection &&
-              item?.rightsHoldersConnection?.totalCount === 1 &&
-              dayjs(currentDate).isAfter(item?.startTime) &&
-              dayjs(currentDate).isBefore(item?.endTime)
-            ) {
-              navigation.navigate('withoutBottomtab', {
-                screen: 'Connect',
-                params: {
-                  item: item,
-                  holderItem: item?.rightsHoldersConnection,
-                  eventFlag: true,
-                },
-              });
-            } else {
-              navigation.navigate('Watch', { item: item });
-            }
-          }}>
-          <View style={styles.innerContainer}>
-            <View style={styles.imageContainer}>
-              <ImageWithPlaceHolder
-                source={item?.logo1}
-                placeholderSource={Constants.placeholder_trophy_icon}
-                style={styles.imageIcon}
-                resizeMode="contain"
-              />
-            </View>
-            <View
-              style={{
-                width: item?.startTime ? startTimeWidth(item?.startTime,item?.line1) : 0,
-                backgroundColor: Colors.darkBlue,
-              }}></View>
-            <View
-              style={{
-                width: endTimeWidth(item?.endTime),
-                backgroundColor: dayjs(item?.startTime).isAfter(currentDate)
-                  ? Colors.greyBackground
-                  : Colors.mediumGreen,
-              }}></View>
-            <View
-              style={{
-                flex: 1,
-                backgroundColor: Colors.darkBlue,
-              }}></View>
-            <View style={styles.userNameContainer}>
-              <Text style={[styles.eventTxt]} numberOfLines={1}>
-                {item?.line1 ? item?.line1 : item?.companyName}
+      // dayjs(item?.endTime).isAfter(currentDate) ? (
+      <TouchableOpacity
+        style={styles.listContainer}
+        onPress={() => {
+          if (
+            item &&
+            item?.rightsHoldersConnection &&
+            item?.rightsHoldersConnection?.totalCount === 1 &&
+            dayjs(currentDate).isAfter(item?.startTime) &&
+            dayjs(currentDate).isBefore(item?.endTime)
+          ) {
+            navigation.navigate('withoutBottomtab', {
+              screen: 'Connect',
+              params: {
+                item: item,
+                holderItem: item?.rightsHoldersConnection,
+                eventFlag: true,
+              },
+            });
+          } else {
+            navigation.navigate('Watch', { item: item });
+          }
+        }}>
+        <View style={styles.innerContainer}>
+          <View style={styles.imageContainer}>
+            <ImageWithPlaceHolder
+              source={item?.logo1}
+              placeholderSource={Constants.placeholder_trophy_icon}
+              style={styles.imageIcon}
+              resizeMode="contain"
+            />
+          </View>
+          <View
+            style={{
+              width: item?.startTime ? startTimeWidth(item?.startTime, item?.line1) : 0,
+              backgroundColor: Colors.darkBlue,
+            }}></View>
+          <View
+            style={{
+              width: endTimeWidth(item?.endTime),
+              backgroundColor: dayjs(item?.startTime).isAfter(currentDate)
+                ? Colors.greyBackground
+                : Colors.mediumGreen,
+            }}></View>
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: Colors.darkBlue,
+            }}></View>
+          <View style={styles.userNameContainer}>
+            <Text style={[styles.eventTxt]} numberOfLines={1}>
+              {item?.line1 ? item?.line1 : item?.companyName}
+            </Text>
+            <Text style={styles.titleTxt} numberOfLines={1}>
+              {item?.line2 ? item?.line2 : item?.title}
+            </Text>
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={[styles.eventDateTxt]}>
+                {item?.startTime
+                  ? dayjs(item?.startTime).format('ddd. MM/D')
+                  : item?.day}
+                {'  l '}
               </Text>
-              <Text style={styles.titleTxt} numberOfLines={1}>
-                {item?.line2 ? item?.line2 : item?.title}
+              <Text style={[styles.eventDateTxt]}>
+                {' '}
+                {item?.startTime
+                  ? `${dayjs(item?.startTime).format('h:mma')} - ${dayjs(
+                    item?.endTime,
+                  ).format('h:mma')}`
+                  : item?.time}
               </Text>
-              <View style={{ flexDirection: 'row' }}>
-                <Text style={[styles.eventDateTxt]}>
-                  {item?.startTime
-                    ? dayjs(item?.startTime).format('ddd. MM/D')
-                    : item?.day}
-                  {'  l '}
-                </Text>
-                <Text style={[styles.eventDateTxt]}>
-                  {' '}
-                  {item?.startTime
-                    ? `${dayjs(item?.startTime).format('h:mma')} - ${dayjs(
-                      item?.endTime,
-                    ).format('h:mma')}`
-                    : item?.time}
-                </Text>
-              </View>
             </View>
           </View>
-        </TouchableOpacity>
-      ) : null
+        </View>
+      </TouchableOpacity>
+      // ) : null
     );
   });
 
@@ -569,123 +578,123 @@ export default function Guide(props) {
         />
       </View>
       {/* time slider */}
-        <GestureRecognizer
-          style={{ flex: 1 }}
-          onSwipeRight={state => {
-            handlePrevious();
-          }}
-          onSwipeLeft={state => {
-            handleNext();
-          }}
-          config={{
-            velocityThreshold: 0.3,
-            directionalOffsetThreshold: 100,
-            gestureIsClickThreshold: 20,
-          }}>
-          <View style={styles.timeSliderContainer}>
-            <View style={styles.liveMainContainer}>
-              <TouchableOpacity
-                onPress={() => handleLive()}
-                style={[
-                  styles.liveTimeContainer,
-                  {
-                    backgroundColor: isLive
-                      ? Colors?.mediumGreen
-                      : Colors.mediumBlue,
-                  },
-                ]}>
-                <Text
-                  style={
-                    isLive
-                      ? styles.sliderActiveTimeTxt
-                      : styles.sliderInactiveTimeTxt
-                  }>
-                  {'Live'}
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <View
-              style={[styles.timeSliderInnerContainer, { width: screenWidth / 3 }]}>
-              <FlatList
-                horizontal
-                data={timeData.slice(0, 2)}
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{ flex: 1, justifyContent: 'space-around' }}
-                scrollEnabled={fontScale > 1.2 ? true : false}
-                renderItem={({ item, index }) => {
-                  const adjustedIndex = index + currentIndex; // Calculate the adjusted index based on the current index
-                  return (
-                    <View
-                      style={[
-                        styles.timeContainer,
-                        {
-                          backgroundColor: Colors.mediumBlue,
-                        },
-                      ]}>
-                      <Text style={styles.sliderInactiveTimeTxt}>
-                        {timeData[adjustedIndex]?.title}
-                      </Text>
-                    </View>
-                  );
-                }}
-              />
-            </View>
-            <View style={styles.rightIconStyle}>
-              <TouchableOpacity
-                onPress={() => handleNext()}
-                style={[
-                  styles.liveTimeContainer,
-                  {
-                    backgroundColor: Colors.brandBlue,
-                  },
-                ]}>
-                <Image
-                  source={Images.Arrow}
-                  style={styles.rightIcon}
-                  resizeMode={'contain'}
-                />
-              </TouchableOpacity>
-            </View>
+      <GestureRecognizer
+        style={{ flex: 1 }}
+        onSwipeRight={state => {
+          handlePrevious();
+        }}
+        onSwipeLeft={state => {
+          handleNext();
+        }}
+        config={{
+          velocityThreshold: 0.3,
+          directionalOffsetThreshold: 100,
+          gestureIsClickThreshold: 20,
+        }}>
+        <View style={styles.timeSliderContainer}>
+          <View style={styles.liveMainContainer}>
+            <TouchableOpacity
+              onPress={() => handleLive()}
+              style={[
+                styles.liveTimeContainer,
+                {
+                  backgroundColor: isLive
+                    ? Colors?.mediumGreen
+                    : Colors.mediumBlue,
+                },
+              ]}>
+              <Text
+                style={
+                  isLive
+                    ? styles.sliderActiveTimeTxt
+                    : styles.sliderInactiveTimeTxt
+                }>
+                {'Live'}
+              </Text>
+            </TouchableOpacity>
           </View>
-          {/* main list  */}
-          {loading && currentIndex ? (
-            <View style={{ flex: 1, justifyContent: 'center' }}>
-              <ActivityIndicator color={'#fff'} size={'large'} />
-            </View>
-          ) : (
-            // <ScrollView indicatorStyle={'white'}>
+          <View
+            style={[styles.timeSliderInnerContainer, { width: screenWidth / 3 }]}>
             <FlatList
-              data={
-                selectedCategory === 'all' && selectedTimeIndex >= 0
-                  ? eventList && eventList.length > 0
-                    ? eventList
-                    : selectedTimeIndex > 0
-                      ? filteredEventList
-                      : []
-                  : filteredEventList
-              }
-              showsVerticalScrollIndicator={false}
-              refreshControl={
-                <RefreshControl
-                  refreshing={refreshing}
-                  onRefresh={onRefresh}
-                />}
-              renderItem={({ item }) => <ItemComponent item={item} />}
-              keyExtractor={item => item?.id}
-              removeClippedSubviews={true} // Unmount components when outside of window
-              initialNumToRender={50} // Reduce initial render amount
-              maxToRenderPerBatch={20} // Reduce number in each render batch
-              updateCellsBatchingPeriod={20} // Increase time between renders
-              windowSize={20} // Reduce the window size
-              ListEmptyComponent={
-                <View>
-                  <Text style={styles.emptyTxt}>{Strings.emptyGuideList}</Text>
-                </View>
-              }
+              horizontal
+              data={timeData.slice(0, 2)}
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{ flex: 1, justifyContent: 'space-around' }}
+              scrollEnabled={fontScale > 1.2 ? true : false}
+              renderItem={({ item, index }) => {
+                const adjustedIndex = index + currentIndex; // Calculate the adjusted index based on the current index
+                return (
+                  <View
+                    style={[
+                      styles.timeContainer,
+                      {
+                        backgroundColor: Colors.mediumBlue,
+                      },
+                    ]}>
+                    <Text style={styles.sliderInactiveTimeTxt}>
+                      {timeData[adjustedIndex]?.title}
+                    </Text>
+                  </View>
+                );
+              }}
             />
-            // </ScrollView>
-          )}
-        </GestureRecognizer>
+          </View>
+          <View style={styles.rightIconStyle}>
+            <TouchableOpacity
+              onPress={() => handleNext()}
+              style={[
+                styles.liveTimeContainer,
+                {
+                  backgroundColor: Colors.brandBlue,
+                },
+              ]}>
+              <Image
+                source={Images.Arrow}
+                style={styles.rightIcon}
+                resizeMode={'contain'}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+        {/* main list  */}
+        {loading && currentIndex ? (
+          <View style={{ flex: 1, justifyContent: 'center' }}>
+            <ActivityIndicator color={'#fff'} size={'large'} />
+          </View>
+        ) : (
+          // <ScrollView indicatorStyle={'white'}>
+          <FlatList
+            data={
+              selectedCategory === 'all' && selectedTimeIndex >= 0
+                ? eventList && eventList.length > 0
+                  ? eventList
+                  : selectedTimeIndex > 0
+                    ? filteredEventList
+                    : []
+                : filteredEventList
+            }
+            showsVerticalScrollIndicator={false}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+              />}
+            renderItem={({ item }) => <ItemComponent item={item} />}
+            keyExtractor={item => item?.id}
+            removeClippedSubviews={true} // Unmount components when outside of window
+            initialNumToRender={50} // Reduce initial render amount
+            maxToRenderPerBatch={20} // Reduce number in each render batch
+            updateCellsBatchingPeriod={20} // Increase time between renders
+            windowSize={20} // Reduce the window size
+            ListEmptyComponent={
+              <View>
+                <Text style={styles.emptyTxt}>{Strings.emptyGuideList}</Text>
+              </View>
+            }
+          />
+          // </ScrollView>
+        )}
+      </GestureRecognizer>
       <LiveMatchView
         setLiveMatchModal={setLiveMatchModal}
         liveMatchModal={liveMatchModal}

@@ -52,21 +52,36 @@ export default function Splash() {
     onCompleted: data => {
       if (data && data?.sortedEvents) {
         const filteredEvents = (data?.sortedEvents || []).filter(event => {
-          const eventStart = dayjs(event.startTime);
-          const eventEnd = dayjs(event.endTime);
-          const currentTime = dayjs();
-          return (
-            eventEnd.diff(currentTime, 'minute') > 0 &&
-            eventStart.diff(currentTime, 'hour') <= 4 &&
-            event?.id !== '9f25117c-78ed-4af1-a2fb-ed5cef8ed414' && 
-            event?.rightsHoldersConnection?.edges?.length >= 1
+          const { line1, line2, startTime, endTime, rightsHolders, id, rightsHoldersConnection } = event;
+          // Check if the event should be excluded based on id and rightsHoldersConnection
+          if (
+            id === '9f25117c-78ed-4af1-a2fb-ed5cef8ed414' ||
+            !rightsHoldersConnection ||
+            rightsHoldersConnection.edges.length < 1
+          ) {
+            return false;
+          }
+          // Check if all required properties exist
+          if (
+            !line1 ||
+            !line2 ||
+            !startTime ||
+            !endTime ||
+            !rightsHolders
+          ) {
+            return false;
+          }
+          // Check if at least one rightsholder has a logoUrl
+          const hasLogoUrl = rightsHolders.some(
+            rightsholder => rightsholder.logoUrl,
           );
-        })
-        // .sort((eventA, eventB) => {
-        //   const startEventA = new Date(eventA.startTime).getTime()
-        //   const startEventB = new Date(eventB.startTime).getTime()
-        //   return startEventA - startEventB
-        // })
+          if (!hasLogoUrl) {
+            return false;
+          }
+        
+          return true;
+        });
+        
 
         dispatch(setSplashEventList(filteredEvents));
       }
