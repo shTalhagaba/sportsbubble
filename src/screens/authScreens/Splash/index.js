@@ -57,19 +57,16 @@ export default function Splash() {
           const currentTime = dayjs();
           return (
             eventEnd.diff(currentTime, 'minute') > 0 &&
-            eventStart.diff(currentTime, 'hour') <= 2 &&
-            // event.line1 &&
-            // event.line2 &&
-            // event.startTime &&
-            // event.endTime &&
-            // event.logo1 &&
-            event.rightsHolders.some(rightsholder => rightsholder.logoUrl)
+            eventStart.diff(currentTime, 'hour') <= 4 &&
+            event?.id !== '9f25117c-78ed-4af1-a2fb-ed5cef8ed414' && 
+            event?.rightsHoldersConnection?.edges?.length >= 1
           );
-        }).sort((eventA, eventB) => {
-          const startEventA = new Date(eventA.startTime).getTime()
-          const startEventB = new Date(eventB.startTime).getTime()
-          return startEventA - startEventB
         })
+        // .sort((eventA, eventB) => {
+        //   const startEventA = new Date(eventA.startTime).getTime()
+        //   const startEventB = new Date(eventB.startTime).getTime()
+        //   return startEventA - startEventB
+        // })
 
         dispatch(setSplashEventList(filteredEvents));
       }

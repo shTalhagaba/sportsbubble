@@ -127,35 +127,15 @@ export default function Guide(props) {
           return (
             eventEnd.diff(currentTime, 'minute') > 0 &&
             eventStart.diff(currentTime, 'hour') <= 4 &&
-            // event.line1 &&
-            // event.line2 &&
-            // event.startTime &&
-            // event.endTime &&
-            // event.logo1 &&
-            event.rightsHolders.some(rightsholder => rightsholder.logoUrl)
+            event?.id !== '9f25117c-78ed-4af1-a2fb-ed5cef8ed414' && 
+            event?.rightsHoldersConnection?.edges?.length >= 1
           );
-        }).sort((eventA, eventB) => {
-          const startEventA = new Date(eventA.startTime).getTime()
-          const startEventB = new Date(eventB.startTime).getTime()
-          return startEventA - startEventB
         })
-
-        // filteredEvents.sort((eventA, eventB) => {
-        //   const startTimeA = dayjs(eventA.startTime);
-        //   const startTimeB = dayjs(eventB.startTime);
-
-        //   if (startTimeA.isBefore(startTimeB)) {
-        //     return -1;
-        //   } else if (startTimeA.isAfter(startTimeB)) {
-        //     return 1;
-        //   } else {
-        //     const endTimeA = dayjs(eventA.endTime);
-        //     const endTimeB = dayjs(eventB.endTime);
-
-        //     return endTimeA - endTimeB;
-        //   }
-        // });
-
+        // .sort((eventA, eventB) => {
+        //   const startEventA = new Date(eventA.startTime).getTime()
+        //   const startEventB = new Date(eventB.startTime).getTime()
+        //   return startEventA - startEventB
+        // })
         setEventList(filteredEvents);
       }
       setIsRefreshing(false);
@@ -182,13 +162,7 @@ export default function Guide(props) {
       },
     },
     onCompleted: data => {
-      // const currentTime = Date.now();
       if (
-        // (
-        // (reduxData && reduxData?.expire === currentTime) ||
-        // (reduxData &&
-        //   reduxData?.eventList &&
-        //   reduxData?.eventList.length <= 0)) &&
         data &&
         data?.sortedEvents.length > 0
       ) {
@@ -225,46 +199,34 @@ export default function Guide(props) {
     },
   });
 
+  const formatTime = (time) => {
+    const hours = time.getHours()
+    const period = hours >= 12 ? 'PM' : 'AM'
+    const formattedHours = hours % 12 === 0 ? 12 : hours % 12
+    return `${formattedHours} ${period}`
+  }
+
   const getTimeList = () => {
-    const daysList = [];
-
-    const currentHour = currentDate.hour(); // Get the current hour
-    const currentDay = currentDate.startOf('day'); // Start from the beginning of the current day
     const hoursList = [];
-
-    for (let i = 0; i < 7; i++) {
-      const day = currentDay.add(i, 'day');
-
-      if (i === 0) {
-        for (let j = currentHour + 1; j < 24; j++) {
-          const hour = day.hour(j);
-          const hourDatetime = hour.toISOString();
-          const hourObject = {
-            id: i * 24 + j + 1,
-            title: hour.format('h a'),
-            selected: false,
-            datetime: hourDatetime,
-          };
-          hoursList.push(hourObject);
-        }
-      } else {
-        for (let j = 0; j < 24; j++) {
-          const hour = day.hour(j);
-          const hourDatetime = hour.toISOString();
-          const hourObject = {
-            id: i * 24 + j + 1,
-            title: hour.format('h a'),
-            selected: false,
-            datetime: hourDatetime,
-          };
-          hoursList.push(hourObject);
-        }
+    for (let i = 1; i < 168; i++) {
+      const nextHour = new Date(new Date().getTime() + i * 60 * 60 * 1000)
+      const roundedHour = new Date(
+        nextHour.getFullYear(),
+        nextHour.getMonth(),
+        nextHour.getDate(),
+        nextHour.getHours(),
+        0,
+        0
+      )
+      const timeObject = {
+        id: i,
+        title: formatTime(roundedHour),
+        selected: false,
+        datetime: roundedHour.toISOString(),
       }
-
-      daysList.push(hoursList);
+      hoursList.push(timeObject)
     }
-
-    const timeData = daysList.flat();
+    const timeData = hoursList.flat();
     setTimeData(timeData);
 
     return timeData;
@@ -406,7 +368,7 @@ export default function Guide(props) {
     }
   };
 
-  const startTimeWidth = start => {
+  const startTimeWidth = (start,label) => {
     const matchTime = dayjs(timeData[currentIndex]?.datetime);
     const startTime = dayjs(start);
     const timeDifference = startTime.diff(matchTime); // Calculate the total time difference in milliseconds
@@ -416,12 +378,12 @@ export default function Guide(props) {
       if (w === 0) {
         return `26%`;
       } else if (w < 60) {
-        return `${w / 2}%`;
+        return `${((60 - w))}%`;
       } else {
         return 0; // Return 0 for the live match time
       }
     } else if (minutesDifference > 0) {
-      let wid = minutesDifference / 2 + 22;
+      let wid = minutesDifference / 2 + 26;
       return `${wid}%`;
     } else {
       return 0; // Return 0 for any other cases
@@ -451,82 +413,82 @@ export default function Guide(props) {
   const ItemComponent = React.memo(({ item }) => {
     return (
       // Render your item component here
-      // dayjs(item?.endTime).isAfter(currentDate) ? (
-      <TouchableOpacity
-        style={styles.listContainer}
-        onPress={() => {
-          if (
-            item &&
-            item?.rightsHoldersConnection &&
-            item?.rightsHoldersConnection?.totalCount === 1 &&
-            dayjs(currentDate).isAfter(item?.startTime) &&
-            dayjs(currentDate).isBefore(item?.endTime)
-          ) {
-            navigation.navigate('withoutBottomtab', {
-              screen: 'Connect',
-              params: {
-                item: item,
-                holderItem: item?.rightsHoldersConnection,
-                eventFlag: true,
-              },
-            });
-          } else {
-            navigation.navigate('Watch', { item: item });
-          }
-        }}>
-        <View style={styles.innerContainer}>
-          <View style={styles.imageContainer}>
-            <ImageWithPlaceHolder
-              source={item?.logo1}
-              placeholderSource={Constants.placeholder_trophy_icon}
-              style={styles.imageIcon}
-              resizeMode="contain"
-            />
-          </View>
-          <View
-            style={{
-              width: item?.startTime ? startTimeWidth(item?.startTime) : 0,
-              backgroundColor: Colors.darkBlue,
-            }}></View>
-          <View
-            style={{
-              width: endTimeWidth(item?.endTime),
-              backgroundColor: dayjs(item?.startTime).isAfter(currentDate)
-                ? Colors.greyBackground
-                : Colors.mediumGreen,
-            }}></View>
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: Colors.darkBlue,
-            }}></View>
-          <View style={styles.userNameContainer}>
-            <Text style={[styles.eventTxt]} numberOfLines={1}>
-              {item?.line1 ? item?.line1 : item?.companyName}
-            </Text>
-            <Text style={styles.titleTxt} numberOfLines={1}>
-              {item?.line2 ? item?.line2 : item?.title}
-            </Text>
-            <View style={{ flexDirection: 'row' }}>
-              <Text style={[styles.eventDateTxt]}>
-                {item?.startTime
-                  ? dayjs(item?.startTime).format('ddd. MM/D')
-                  : item?.day}
-                {'  l '}
+      dayjs(item?.endTime).isAfter(currentDate) ? (
+        <TouchableOpacity
+          style={styles.listContainer}
+          onPress={() => {
+            if (
+              item &&
+              item?.rightsHoldersConnection &&
+              item?.rightsHoldersConnection?.totalCount === 1 &&
+              dayjs(currentDate).isAfter(item?.startTime) &&
+              dayjs(currentDate).isBefore(item?.endTime)
+            ) {
+              navigation.navigate('withoutBottomtab', {
+                screen: 'Connect',
+                params: {
+                  item: item,
+                  holderItem: item?.rightsHoldersConnection,
+                  eventFlag: true,
+                },
+              });
+            } else {
+              navigation.navigate('Watch', { item: item });
+            }
+          }}>
+          <View style={styles.innerContainer}>
+            <View style={styles.imageContainer}>
+              <ImageWithPlaceHolder
+                source={item?.logo1}
+                placeholderSource={Constants.placeholder_trophy_icon}
+                style={styles.imageIcon}
+                resizeMode="contain"
+              />
+            </View>
+            <View
+              style={{
+                width: item?.startTime ? startTimeWidth(item?.startTime,item?.line1) : 0,
+                backgroundColor: Colors.darkBlue,
+              }}></View>
+            <View
+              style={{
+                width: endTimeWidth(item?.endTime),
+                backgroundColor: dayjs(item?.startTime).isAfter(currentDate)
+                  ? Colors.greyBackground
+                  : Colors.mediumGreen,
+              }}></View>
+            <View
+              style={{
+                flex: 1,
+                backgroundColor: Colors.darkBlue,
+              }}></View>
+            <View style={styles.userNameContainer}>
+              <Text style={[styles.eventTxt]} numberOfLines={1}>
+                {item?.line1 ? item?.line1 : item?.companyName}
               </Text>
-              <Text style={[styles.eventDateTxt]}>
-                {' '}
-                {item?.startTime
-                  ? `${dayjs(item?.startTime).format('h:mma')} - ${dayjs(
-                    item?.endTime,
-                  ).format('h:mma')}`
-                  : item?.time}
+              <Text style={styles.titleTxt} numberOfLines={1}>
+                {item?.line2 ? item?.line2 : item?.title}
               </Text>
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={[styles.eventDateTxt]}>
+                  {item?.startTime
+                    ? dayjs(item?.startTime).format('ddd. MM/D')
+                    : item?.day}
+                  {'  l '}
+                </Text>
+                <Text style={[styles.eventDateTxt]}>
+                  {' '}
+                  {item?.startTime
+                    ? `${dayjs(item?.startTime).format('h:mma')} - ${dayjs(
+                      item?.endTime,
+                    ).format('h:mma')}`
+                    : item?.time}
+                </Text>
+              </View>
             </View>
           </View>
-        </View>
-      </TouchableOpacity>
-      // ) : null
+        </TouchableOpacity>
+      ) : null
     );
   });
 
@@ -607,91 +569,91 @@ export default function Guide(props) {
         />
       </View>
       {/* time slider */}
-      <GestureRecognizer
-        style={{ flex: 1 }}
-        onSwipeRight={state => {
-          handlePrevious();
-        }}
-        onSwipeLeft={state => {
-          handleNext();
-        }}
-        config={{
-          velocityThreshold: 0.3,
-          directionalOffsetThreshold: 100,
-          gestureIsClickThreshold: 20,
-        }}>
-        <View style={styles.timeSliderContainer}>
-          <View style={styles.liveMainContainer}>
-            <TouchableOpacity
-              onPress={() => handleLive()}
-              style={[
-                styles.liveTimeContainer,
-                {
-                  backgroundColor: isLive
-                    ? Colors?.mediumGreen
-                    : Colors.mediumBlue,
-                },
-              ]}>
-              <Text
-                style={
-                  isLive
-                    ? styles.sliderActiveTimeTxt
-                    : styles.sliderInactiveTimeTxt
-                }>
-                {'Live'}
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <View
-            style={[styles.timeSliderInnerContainer, { width: screenWidth / 3 }]}>
-            <FlatList
-              horizontal
-              data={timeData.slice(0, 2)}
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{ flex: 1, justifyContent: 'space-around' }}
-              scrollEnabled={fontScale > 1.2 ? true : false}
-              renderItem={({ item, index }) => {
-                const adjustedIndex = index + currentIndex; // Calculate the adjusted index based on the current index
-                return (
-                  <View
-                    style={[
-                      styles.timeContainer,
-                      {
-                        backgroundColor: Colors.mediumBlue,
-                      },
-                    ]}>
-                    <Text style={styles.sliderInactiveTimeTxt}>
-                      {timeData[adjustedIndex]?.title}
-                    </Text>
-                  </View>
-                );
-              }}
-            />
-          </View>
-          <View style={styles.rightIconStyle}>
-            <TouchableOpacity
-              onPress={() => handleNext()}
-              style={[
-                styles.liveTimeContainer,
-                {
-                  backgroundColor: Colors.brandBlue,
-                },
-              ]}>
-              <Image
-                source={Images.Arrow}
-                style={styles.rightIcon}
-                resizeMode={'contain'}
+        <GestureRecognizer
+          style={{ flex: 1 }}
+          onSwipeRight={state => {
+            handlePrevious();
+          }}
+          onSwipeLeft={state => {
+            handleNext();
+          }}
+          config={{
+            velocityThreshold: 0.3,
+            directionalOffsetThreshold: 100,
+            gestureIsClickThreshold: 20,
+          }}>
+          <View style={styles.timeSliderContainer}>
+            <View style={styles.liveMainContainer}>
+              <TouchableOpacity
+                onPress={() => handleLive()}
+                style={[
+                  styles.liveTimeContainer,
+                  {
+                    backgroundColor: isLive
+                      ? Colors?.mediumGreen
+                      : Colors.mediumBlue,
+                  },
+                ]}>
+                <Text
+                  style={
+                    isLive
+                      ? styles.sliderActiveTimeTxt
+                      : styles.sliderInactiveTimeTxt
+                  }>
+                  {'Live'}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View
+              style={[styles.timeSliderInnerContainer, { width: screenWidth / 3 }]}>
+              <FlatList
+                horizontal
+                data={timeData.slice(0, 2)}
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{ flex: 1, justifyContent: 'space-around' }}
+                scrollEnabled={fontScale > 1.2 ? true : false}
+                renderItem={({ item, index }) => {
+                  const adjustedIndex = index + currentIndex; // Calculate the adjusted index based on the current index
+                  return (
+                    <View
+                      style={[
+                        styles.timeContainer,
+                        {
+                          backgroundColor: Colors.mediumBlue,
+                        },
+                      ]}>
+                      <Text style={styles.sliderInactiveTimeTxt}>
+                        {timeData[adjustedIndex]?.title}
+                      </Text>
+                    </View>
+                  );
+                }}
               />
-            </TouchableOpacity>
+            </View>
+            <View style={styles.rightIconStyle}>
+              <TouchableOpacity
+                onPress={() => handleNext()}
+                style={[
+                  styles.liveTimeContainer,
+                  {
+                    backgroundColor: Colors.brandBlue,
+                  },
+                ]}>
+                <Image
+                  source={Images.Arrow}
+                  style={styles.rightIcon}
+                  resizeMode={'contain'}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-        {/* main list  */}
-        {loading && currentIndex ? (
-          <View style={{ flex: 1, justifyContent: 'center' }}>
-            <ActivityIndicator color={'#fff'} size={'large'} />
-          </View>
-        ) : (
-          <ScrollView indicatorStyle={'white'}>
+          {/* main list  */}
+          {loading && currentIndex ? (
+            <View style={{ flex: 1, justifyContent: 'center' }}>
+              <ActivityIndicator color={'#fff'} size={'large'} />
+            </View>
+          ) : (
+            // <ScrollView indicatorStyle={'white'}>
             <FlatList
               data={
                 selectedCategory === 'all' && selectedTimeIndex >= 0
@@ -721,9 +683,9 @@ export default function Guide(props) {
                 </View>
               }
             />
-          </ScrollView>
-        )}
-      </GestureRecognizer>
+            // </ScrollView>
+          )}
+        </GestureRecognizer>
       <LiveMatchView
         setLiveMatchModal={setLiveMatchModal}
         liveMatchModal={liveMatchModal}
