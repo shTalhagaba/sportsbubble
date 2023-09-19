@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ImageBackground,
   StatusBar,
@@ -15,7 +15,7 @@ import DeviceInfo from 'react-native-device-info';
 import { useQuery } from '@apollo/client';
 import { GET_SORTED_EVENTS } from 'src/screens/appScreens/Guide/queries';
 import dayjs from 'dayjs';
-import { setSplashEventList } from 'src/store/types';
+import { setSplashEventList, setStoreEventList } from 'src/store/types';
 import { useDispatch, useSelector } from 'react-redux';
 import Config from 'react-native-config';
 
@@ -31,10 +31,12 @@ export default function Splash() {
 
   const { loading, refetch, error } = useQuery(GET_SORTED_EVENTS, {
     variables: {
-      startTime: startTime,
+      startTime: dayjs(startTime).set('minutes', 0)
+        .set('second', 0)
+        .toISOString(),
       endTime: dayjs(startTime)
-        .add(2, 'hours')
-        .set('minutes', 59)
+        .add(24, 'hours')
+        .set('minutes', 0)
         .set('second', 0)
         .toISOString(),
     },
@@ -52,7 +54,7 @@ export default function Splash() {
     onCompleted: data => {
       if (data && data?.sortedEvents) {
         const filteredEvents = (data?.sortedEvents || []).filter(event => {
-          const { line1, line2, startTime, endTime, rightsHolders, id, rightsHoldersConnection } = event;
+          const { line1, line2, startTime, endTime, logo1, rightsHolders, id, rightsHoldersConnection } = event;
           // Check if the event should be excluded based on id and rightsHoldersConnection
           if (
             id === '9f25117c-78ed-4af1-a2fb-ed5cef8ed414' ||
@@ -66,6 +68,7 @@ export default function Splash() {
             !line1 ||
             !line2 ||
             !startTime ||
+            !logo1 ||
             !endTime ||
             !rightsHolders
           ) {
@@ -78,12 +81,10 @@ export default function Splash() {
           if (!hasLogoUrl) {
             return false;
           }
-        
+
           return true;
         });
-        
-
-        dispatch(setSplashEventList(filteredEvents));
+        dispatch(setStoreEventList(filteredEvents));
       }
     },
     onError: error => {
@@ -94,8 +95,8 @@ export default function Splash() {
   useEffect(() => {
     if (
       !loading &&
-      reduxData?.splashEventList &&
-      reduxData?.splashEventList.length > 0
+      reduxData?.eventList &&
+      reduxData?.eventList.length > 0
     ) {
       setTimeout(() => {
         navigation.replace('Root');
@@ -106,7 +107,7 @@ export default function Splash() {
         navigation.replace('Root');
       }, 1000);
     }
-  }, [loading, reduxData?.splashEventList]);
+  }, [loading, reduxData?.eventList]);
 
   return (
     <View style={styles.container}>
@@ -125,17 +126,10 @@ export default function Splash() {
           />
         </ImageBackground>
         <View
-          style={{
-            flex: 1,
-            alignSelf: 'center',
-            position: 'absolute',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: height / 4,
-          }}>
+          style={[styles.logoStyle, { marginTop: height / 4 }]}>
           <Image
             source={Images.LogoText}
-            style={{ height: 230, width: 230, alignSelf: 'center' }}
+            style={styles.logo}
             resizeMode="contain"
           />
         </View>

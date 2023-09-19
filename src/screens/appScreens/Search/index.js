@@ -15,7 +15,7 @@ import {
 import styles from './styles';
 import { Images, Colors, Constants, Strings } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
-import { useQuery } from '@apollo/client';
+import { useLazyQuery, useQuery } from '@apollo/client';
 import { SEARCH_EVENTS_QUERY } from './queries';
 import dayjs from 'dayjs';
 import { useNavigation } from '@react-navigation/native';
@@ -30,28 +30,17 @@ export default function Search(props) {
   const navigation = useNavigation();
   const reduxData = useSelector(state => state.user);
   const [searchText, setSearchText] = useState('');
-  const [list, setList] = useState([]);
-  // const [startTime, setStartTime] = useState(dayjs(new Date()));
-  // const [endTime, setEndTime] = useState(
-  //   dayjs(new Date()).add(7, 'day'),
-  // );
   const [isFocused, setIsFocused] = useState(true);
   const [searchFlag, setSearchFlag] = useState(true);
   const stageToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJodHRwczovL2Rldi0zNTM5MjYyLm9rdGEuY29tL29hdXRoMi92MS90b2tlbiIsImlzcyI6IjBvYTlrN2RpYWRqOUxJN0tkNWQ2Iiwic3ViIjoiMG9hOWs3ZGlhZGo5TEk3S2Q1ZDYifQ.sJCxcymR_X_OtWCZxJ5_AfUbWvKkd1ML8JW-Wl91xV8uJ2paw067kEgfR7QYz6dk3-1-egBjyf1Mifm1cTN1S8JPpkd1NN1Aw6uuky3lt5jmjeHwwqL-XHzIkSjLN_t8zdO5OpDqtlbEqyNGtJFCONJ9K-hCjp7u5FWCZ1nKwIK3X1w-FVjRDLbvJrTrh8IJriqPhiWHfkGbz-jm6yStYXMw3uhcKd164RA2l8utz4jnVRn9ebcOiN_BQb3yvtqBc0CsxB6YKQmmW7Rbpg8cRU3B1zfLfMMu2QVPLYr5vDD2mhK1PwixUZ6UnYrYirXWNNTqyZquGZPQWpIlY9sIwA'
   const { startTime, endTime } = getCurrent7DaysTime()
 
-  const { loading, refetch, error, data } = useQuery(SEARCH_EVENTS_QUERY, {
-    variables: {
-      searchString: searchText,
-      startTime: startTime,
-      endTime: endTime,
-    },
+  const [executeSearchQuery, { loading, error, data }] = useLazyQuery(SEARCH_EVENTS_QUERY, {
     fetchPolicy: 'network-only',
-    notifyOnNetworkStatusChange: true,
     context: {
       headers: {
         authorization:
-          Platform.OS === "android" ? `Bearer ${stageToken}` :
+          Platform.OS === 'android' ? `Bearer ${stageToken}` :
             Config?.BEARER_TOKEN
               ? `Bearer ${Config?.BEARER_TOKEN}`
               : '',
@@ -64,84 +53,26 @@ export default function Search(props) {
 
   useEffect(() => {
     if (searchText && searchText.length > 0) {
-      refetch()
+      executeSearchQuery({
+        variables: {
+          searchString: searchText,
+          startTime: startTime,
+          endTime: endTime,
+        },
+      });
     }
-  }, [searchText])
-
+  }, [searchText]);
 
   const handleFocus = () => {
     setIsFocused(true);
   };
 
-  const handleBlur = () => {
-    setIsFocused(false);
-  };
-
   const inputRef = useRef(null);
-
-  // useEffect(() => {
-  //   const currentTime = Date.now();
-  //   if (
-  //     (reduxData && reduxData?.expire === currentTime) ||
-  //     (reduxData && reduxData?.eventList && reduxData?.eventList.length <= 0)
-  //   ) {
-  //     const { loading, refetch, error, data } = useQuery(SEARCH_EVENTS_QUERY, {
-  //       variables: {
-  //         searchString: searchText,
-  //         startTime: startTime,
-  //         endTime: endTime,
-  //       },
-  //       onCompleted: data => {
-  //         if (data && data?.sortedEvents.length > 0) {
-  //           dispatch(setStoreEventList(data?.sortedEvents));
-  //           dispatch(setExpire(expireTime));
-  //         }
-  //       },
-  //       fetchPolicy: 'network-only',
-  //       notifyOnNetworkStatusChange: true,
-  //       context: {
-  //         headers: {
-  //           authorization:
-  //             Platform.OS === "android" ? `Bearer ${stageToken}` :
-  //               Config?.BEARER_TOKEN
-  //                 ? `Bearer ${Config?.BEARER_TOKEN}`
-
-  //                 : '',
-  //         },
-  //       },
-  //       onError: error => {
-  //         console.log('error : ', error);
-  //       },
-  //     });
-  //   }
-  // }, [navigation]);
 
   const handleInputChange = text => {
     setSearchText(text);
-    // if (
-    //   text &&
-    //   text.length > 0 &&
-    //   reduxData &&
-    //   reduxData.eventList &&
-    //   reduxData.eventList.length > 0
-    // ) {
-    //   const filtered = reduxData.eventList.filter(item => {
-    //     for (const key in item) {
-    //       const value = item[key];
-    //       if (
-    //         value !== null &&
-    //         typeof value === 'string' &&
-    //         value.toLowerCase().includes(text.toLowerCase())
-    //       ) {
-    //         return true;
-    //       }
-    //     }
-    //     return false;
-    //   });
-    //   console.log('filtered: ', filtered);
-    //   setList(filtered);
-    // }
   };
+
   const handleDone = () => {
     setIsFocused(false);
   };
@@ -235,6 +166,8 @@ export default function Search(props) {
                 value={searchText}
                 onChangeText={handleInputChange}
                 onSubmitEditing={handleDone}
+                returnKeyType='search'
+                onEndEditing={() => console.log('edit')}
               />
             </View>
           </View>
@@ -248,12 +181,13 @@ export default function Search(props) {
         </TouchableOpacity>
         {/* list showing after search */}
         {searchText.length > 0 && loading ?
-          <View style={{ flex: 1, justifyContent: 'center' }}>
+          <View style={{ marginTop: 200, justifyContent: 'center' }}>
             <ActivityIndicator color={'#fff'} size={'large'} />
           </View> :
           <FlatList
             data={searchText.length > 0 ? data?.searchEvent : []}
             showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ flexGrow: 1 }}
             ListEmptyComponent={
               <View>
                 <Text style={styles.emptyTxt}>
@@ -324,7 +258,7 @@ export default function Search(props) {
                 </View>
               </TouchableOpacity>
             )}
-            keyExtractor={(item, index) => item?.id}
+            keyExtractor={(item, index) => index.toString()} // Change to a unique key if available
           />}
       </View>
     </ImageBackground>
