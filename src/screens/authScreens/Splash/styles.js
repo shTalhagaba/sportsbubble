@@ -33,4 +33,16 @@ export default ScaledSheet.create({
     resizeMode: 'cover',
     tintColor: Colors.white,
   },
+  logoStyle: {
+    flex: 1,
+    alignSelf: 'center',
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  logo: { 
+    height: "230@ms0.3", 
+    width: "230@ms0.3", 
+    alignSelf: 'center' 
+  },
 });

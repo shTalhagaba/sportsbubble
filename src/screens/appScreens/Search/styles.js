@@ -25,7 +25,7 @@ export default ScaledSheet.create({
     backgroundColor: Colors.mediumBlue,
     marginBottom: '8@ms0.3',
     alignSelf: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   searchImage: {
     height: '18@ms0.3',

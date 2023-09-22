@@ -244,7 +244,7 @@ export default ScaledSheet.create({
   },
   flatlistContainer: {
     marginTop: '10@ms0.3',
-    marginHorizontal: '15@ms0.3',
+    marginHorizontal: '10@ms0.3',
   },
   menuBtn: {
     width: '35@ms0.3',
@@ -310,8 +310,8 @@ export default ScaledSheet.create({
     backgroundColor: Colors.black15,
   },
   listInnerContainer: {
-    width: screenWidth / 4.5,
-    height: screenWidth / 4.5,
+    width: screenWidth / 4.6,
+    height: screenWidth / 4.6,
     backgroundColor: Colors.mediumBlue,
     borderWidth: '2@ms0.3',
     borderRadius: '16@ms0.3',
@@ -322,7 +322,7 @@ export default ScaledSheet.create({
   listMainContainer: {
     alignItems: 'center',
     marginTop: '12@ms0.3',
-    marginRight: '10@ms0.3',
+    marginRight: '8@ms0.3',
   },
   headerContainer: {
     height: Platform.OS === 'ios' ? '90@ms0.3' : '70@ms0.3',

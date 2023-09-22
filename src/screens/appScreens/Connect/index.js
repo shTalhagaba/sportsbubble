@@ -30,21 +30,6 @@ export default function Connect(props) {
     }
   };
 
-  const checkSvg = async (url) => {
-     await fetch(url, { method: 'HEAD' })
-      .then(response => {
-        const contentType = response.headers.get('content-type');
-        if (contentType && contentType.includes('image/svg+xml')) {
-          return true
-        } else {
-          return false
-        }
-      })
-      .catch(error => {
-        console.error('Error checking SVG:', error);
-        setIsSvg(false);
-      });
-  }
 
   return (
     <ImageBackground
@@ -114,9 +99,9 @@ export default function Connect(props) {
         </View>
         <Text numberOfLines={1} style={styles.connectingText}>{Strings.connecting}</Text>
         <View style={styles.logoImageContainer}>
-          {eventFlag && checkSvg(holderItem?.edges?.[0]?.node?.logoUrl
+          {eventFlag && (holderItem?.edges?.[0]?.node?.logoUrl
             ? holderItem?.edges?.[0]?.node?.logoUrl
-            : holderItem?.node?.logoUrl)?
+            : holderItem?.node?.logoUrl).includes('.svg')?
             <SvgWithPlaceHolder
               source={
                 eventFlag && holderItem?.edges?.[0]?.node?.logoUrl

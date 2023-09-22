@@ -10,7 +10,6 @@ import {
   FlatList,
   Dimensions,
   Platform,
-  RefreshControl,
   ScrollView
 } from 'react-native';
 import styles from './styles';
@@ -22,13 +21,15 @@ import { useQuery } from '@apollo/client';
 import dayjs from 'dayjs';
 import { GET_SORTED_EVENTS } from './queries';
 import { useDispatch, useSelector } from 'react-redux';
-import { setExpire, setStoreEventList } from 'src/store/types';
+import { setStoreEventList } from 'src/store/types';
 import { moderateScale } from 'react-native-size-matters';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 import Config from 'react-native-config';
-import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures';
+import GestureRecognizer from 'react-native-swipe-gestures';
+import { UpdateEvents } from 'src/utils/functions';
+import { useDebouncedCallback } from 'use-debounce';
 const screenWidth = Dimensions.get('window').width;
-const { width, fontScale } = Dimensions.get('window');
+const { fontScale } = Dimensions.get('window');
 
 // Sample data for the category slider
 const categoryArr = [
@@ -55,35 +56,30 @@ const categoryArr = [
   },
 ];
 
-const expireTime = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
-
 export default function Guide(props) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   let isFocused = useIsFocused()
-
-  const currentDate = dayjs(); // Get the current date and time
+  const currentDate = dayjs(new Date()).toISOString(); // Get the current date and time
   const reduxData = useSelector(state => state.user);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLive, setIsLive] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [liveMatchModal, setLiveMatchModal] = useState(false);
   const [timeData, setTimeData] = useState([]);
   const [categoryData, setCategoryData] = useState(categoryArr);
   const [selectedTimeIndex, setSelectedTimeIndex] = useState(0);
-  const [refreshing, setRefreshing] = useState(false);
   const stageToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJodHRwczovL2Rldi0zNTM5MjYyLm9rdGEuY29tL29hdXRoMi92MS90b2tlbiIsImlzcyI6IjBvYTlrN2RpYWRqOUxJN0tkNWQ2Iiwic3ViIjoiMG9hOWs3ZGlhZGo5TEk3S2Q1ZDYifQ.sJCxcymR_X_OtWCZxJ5_AfUbWvKkd1ML8JW-Wl91xV8uJ2paw067kEgfR7QYz6dk3-1-egBjyf1Mifm1cTN1S8JPpkd1NN1Aw6uuky3lt5jmjeHwwqL-XHzIkSjLN_t8zdO5OpDqtlbEqyNGtJFCONJ9K-hCjp7u5FWCZ1nKwIK3X1w-FVjRDLbvJrTrh8IJriqPhiWHfkGbz-jm6yStYXMw3uhcKd164RA2l8utz4jnVRn9ebcOiN_BQb3yvtqBc0CsxB6YKQmmW7Rbpg8cRU3B1zfLfMMu2QVPLYr5vDD2mhK1PwixUZ6UnYrYirXWNNTqyZquGZPQWpIlY9sIwA'
 
   const [eventList, setEventList] = useState(
     reduxData &&
-      reduxData?.splashEventList &&
-      reduxData?.splashEventList.length > 0
-      ? reduxData?.splashEventList
+      reduxData?.eventList &&
+      reduxData?.eventList.length > 0
+      ? reduxData?.eventList
       : [],
   );
   const [filteredEventList, setFilteredEventList] = useState([]);
-  const [startTime, setStartTime] = useState(dayjs(new Date()).toISOString());
+  const [startTime, setStartTime] = useState(new Date());
   const [startSearchTime, setStartSearchTime] = useState(
     dayjs(new Date()).toISOString(),
   );
@@ -91,15 +87,26 @@ export default function Guide(props) {
     dayjs(new Date()).add(7, 'day').toISOString(),
   );
 
-  // Fetch data from API using Apollo useQuery hook
-  const { loading, refetch, error } = useQuery(GET_SORTED_EVENTS, {
+  // Use useEffect to call fetchData every 5 minutes
+  useEffect(() => {
+    searchRefetch();
+    const interval = setInterval(searchRefetch, 300000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+
+  useEffect(() => {
+    if (reduxData?.eventList && reduxData.eventList.length > 0) {
+      setEventList(UpdateEvents(reduxData.eventList, startTime, new Date().toISOString()));
+    }
+  }, [reduxData?.eventList]);
+
+  const { loading: searchLoading, refetch: searchRefetch, error: searchError } = useQuery(GET_SORTED_EVENTS, {
     variables: {
-      startTime: startTime,
-      endTime: dayjs(startTime)
-        .add(2, 'hours')
-        .set('minutes', 59)
-        .set('second', 0)
-        .toISOString()
+      startTime: startSearchTime,
+      endTime: endSearchTime,
     },
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
@@ -113,9 +120,12 @@ export default function Guide(props) {
       },
     },
     onCompleted: data => {
-      if (data && data?.sortedEvents) {
+      if (
+        data &&
+        data?.sortedEvents.length > 0
+      ) {
         const filteredEvents = (data?.sortedEvents || []).filter(event => {
-          const { line1, line2, startTime, endTime, rightsHolders, id, rightsHoldersConnection } = event;
+          const { line1, line2, startTime, endTime, rightsHolders, logo1, id, rightsHoldersConnection } = event;
           // Check if the event should be excluded based on id and rightsHoldersConnection
           if (
             id === '9f25117c-78ed-4af1-a2fb-ed5cef8ed414' ||
@@ -129,62 +139,8 @@ export default function Guide(props) {
             !line1 ||
             !line2 ||
             !startTime ||
-            !endTime ||
-            !rightsHolders
-          ) {
-            return false;
-          }
-          // Check if at least one rightsholder has a logoUrl
-          const hasLogoUrl = rightsHolders.some(
-            rightsholder => rightsholder.logoUrl,
-          );
-          if (!hasLogoUrl) {
-            return false;
-          }
-        
-          return true;
-        });
-        
-        setEventList(filteredEvents);
-      }
-      setIsRefreshing(false);
-    },
-    onError: error => {
-      console.log('error : ', error);
-    },
-  });
-
-  useQuery(GET_SORTED_EVENTS, {
-    variables: {
-      startTime: startSearchTime,
-      endTime: endSearchTime,
-    },
-    fetchPolicy: 'network-only',
-    notifyOnNetworkStatusChange: true,
-    context: {
-      headers: {
-        authorization:
-          Platform.OS === "ios" ? `Bearer ${stageToken}` :
-            Config?.BEARER_TOKEN
-              ? `Bearer ${Config.BEARER_TOKEN}`
-              : '',
-      },
-    },
-    onCompleted: data => {
-      if (
-        data &&
-        data?.sortedEvents.length > 0
-      ) {
-        const filteredEvents = data?.sortedEvents.filter(event => {
-          const { line1, line2, startTime, endTime, logo1, rightsHolders } =
-            event;
-          // Check if all required properties exist
-          if (
-            !line1 ||
-            !line2 ||
-            !startTime ||
-            !endTime ||
             !logo1 ||
+            !endTime ||
             !rightsHolders
           ) {
             return false;
@@ -196,11 +152,10 @@ export default function Guide(props) {
           if (!hasLogoUrl) {
             return false;
           }
-
           return true;
         });
         dispatch(setStoreEventList(filteredEvents));
-        dispatch(setExpire(expireTime));
+        // setEventList(filteredEvents)
       }
     },
     onError: error => {
@@ -237,45 +192,34 @@ export default function Guide(props) {
     }
     const timeData = hoursList.flat();
     setTimeData(timeData);
-
     return timeData;
   };
-  const wait = timeout => {
-    return new Promise(resolve => setTimeout(resolve, timeout));
-  };
-  const onRefresh = useCallback(() => {
-    setRefreshing(true);
-    getTimeList();
-    wait(2000).then(() => setRefreshing(false));
-  }, []);
 
   useEffect(() => {
     getTimeList();
   }, []);
+
   useEffect(() => {
     if (isFocused) {
-      refetch()
+      handleLive()
+      searchRefetch()
       getTimeList();
     }
   }, [isFocused]);
 
   useEffect(() => {
-    if (eventList && eventList.length > 0) {
-      let filteredEvents;
-
-      if (selectedCategory.includes('all')) {
-        // If "all" category is selected, no need to filter, keep all events
-        filteredEvents = eventList;
-      } else {
-        // Filter events based on the selected categories
-        filteredEvents = eventList.filter(event =>
-          selectedCategory.includes(event.category.name.toLowerCase()),
-        );
-      }
-
-      setFilteredEventList(filteredEvents);
+    if (reduxData?.eventList && reduxData?.eventList.length > 0) {
+      const filteredEvents = UpdateEvents(reduxData.eventList, startTime, new Date().toISOString())
+      const list = filteredEvents.filter((event) => {
+        const isCategoryMatch =
+          selectedCategory.includes('all') ||
+          selectedCategory.includes(event.category.name.toLowerCase());
+        return isCategoryMatch;
+      });
+      setFilteredEventList(list);
     }
-  }, [eventList]);
+  }, [selectedCategory, startTime, reduxData?.eventList]);
+
 
   const handleSelectedCategory = (e, index) => {
     if (index === 0 && selectedCategory === 'all') {
@@ -286,10 +230,8 @@ export default function Guide(props) {
     const formattedTime = dayjs(selectedTime).format(
       'YYYY-MM-DDTHH:mm:ss.SSSZ',
     );
-
     // Toggle the selected category
     list[index].selected = !list[index].selected;
-
     if (index === 0) {
       // Deselect all other categories if 'all' category is selected
       list.forEach((element, idx) => {
@@ -346,14 +288,14 @@ export default function Guide(props) {
     setFilteredEventList(filteredEvents);
   };
 
-  const handleSelectTime = index => {
-    const selectedTime = timeData[index]?.datetime;
-    if (index === 0) {
-      setStartTime(dayjs(new Date()).toISOString());
-    } else {
-      setStartTime(selectedTime);
-    }
-
+  const handleSelectTime = (index, method) => {
+    setStartTime(index === 0 ? new Date() : method == 'add' ? dayjs(new Date(startTime))
+      .add(1, 'hours')
+      .set('minutes', 0)
+      .set('second', 0) : dayjs(new Date(startTime))
+        .subtract(1, 'hours')
+        .set('minutes', 0)
+        .set('second', 0));
     const updatedTimeData = timeData.map((element, i) => ({
       ...element,
       selected: i === index,
@@ -362,54 +304,22 @@ export default function Guide(props) {
     setSelectedTimeIndex(index);
   };
 
-  const endTimeWidth = end => {
-    const startTime = dayjs(timeData[currentIndex]?.datetime);
-    const endTime = dayjs(end);
-    const timeDifference = endTime.diff(startTime); // Calculate the total time difference in milliseconds
-    const minutesDiffference = Math.round(timeDifference / (1000 * 60));
-    if (minutesDiffference <= 0) {
-      let w =
-        minutesDiffference < 0 ? 60 + minutesDiffference : minutesDiffference;
-      return w === 0 ? '26%' : `${w / 2 - 4}%`;
-    } else {
-      let wid = minutesDiffference / 2 + 26;
-      return `${wid}%`;
-    }
-  };
-
-  const startTimeWidth = (start, label) => {
-    const matchTime = dayjs(timeData[currentIndex]?.datetime);
-    const startTime = dayjs(start);
-    const timeDifference = startTime.diff(matchTime); // Calculate the total time difference in milliseconds
-    const minutesDifference = Math.round(timeDifference / (1000 * 60));
-    if (isLive && minutesDifference <= 0) {
-      let w = minutesDifference * -1;
-      if (w === 0) {
-        return `26%`;
-      } else if (w < 60) {
-        return `${((60 - w))}%`;
-      } else {
-        return 0; // Return 0 for the live match time
-      }
-    } else if (minutesDifference > 0) {
-      let wid = minutesDifference / 2 + 26;
-      return `${wid}%`;
-    } else {
-      return 0; // Return 0 for any other cases
-    }
-  };
-
   // handle next timer to show next hour events
   const handleNext = () => {
-    handleSelectTime(currentIndex + 1);
-    setCurrentIndex(prevIndex => prevIndex + 1);
-    setIsLive(false);
+    if (currentIndex < 165) {
+      handleSelectTime(currentIndex + 1, 'add');
+      setCurrentIndex(prevIndex => prevIndex + 1);
+      setIsLive(false);
+    }
   };
+
   const handlePrevious = () => {
-    if (currentIndex > 0) {
-      handleSelectTime(currentIndex - 1);
+    if (currentIndex > 1) {
+      handleSelectTime(currentIndex - 1, 'subtract');
       setCurrentIndex(prevIndex => prevIndex - 1);
       setIsLive(false);
+    } else {
+      handleLive()
     }
   };
 
@@ -456,15 +366,21 @@ export default function Guide(props) {
           </View>
           <View
             style={{
-              width: item?.startTime ? startTimeWidth(item?.startTime, item?.line1) : 0,
+              width: `${item?.startGrad}%`,
               backgroundColor: Colors.darkBlue,
             }}></View>
           <View
             style={{
-              width: endTimeWidth(item?.endTime),
-              backgroundColor: dayjs(item?.startTime).isAfter(currentDate)
-                ? Colors.greyBackground
-                : Colors.mediumGreen,
+              // width: endTimeWidth(item?.endTime),
+              backgroundColor: item?.live
+                ? Colors.mediumGreen
+                : Colors.mediumBlue,
+              width: `${item?.endGrad + item.startGrad <= 86
+                ? item?.endGrad - item?.startGrad
+                : item?.endGrad + item?.startGrad >= 86
+                  ? 86 - item?.startGrad
+                  : item?.endGrad - item?.startGrad
+                }%`,
             }}></View>
           <View
             style={{
@@ -579,7 +495,6 @@ export default function Guide(props) {
       </View>
       {/* time slider */}
       <GestureRecognizer
-        style={{ flex: 1 }}
         onSwipeRight={state => {
           handlePrevious();
         }}
@@ -592,27 +507,44 @@ export default function Guide(props) {
           gestureIsClickThreshold: 20,
         }}>
         <View style={styles.timeSliderContainer}>
-          <View style={styles.liveMainContainer}>
-            <TouchableOpacity
-              onPress={() => handleLive()}
-              style={[
-                styles.liveTimeContainer,
-                {
-                  backgroundColor: isLive
-                    ? Colors?.mediumGreen
-                    : Colors.mediumBlue,
-                },
-              ]}>
-              <Text
-                style={
-                  isLive
-                    ? styles.sliderActiveTimeTxt
-                    : styles.sliderInactiveTimeTxt
-                }>
-                {'Live'}
-              </Text>
-            </TouchableOpacity>
-          </View>
+          {isLive ?
+            <View style={styles.liveMainContainer}>
+              <TouchableOpacity
+                onPress={() => handleLive()}
+                style={[
+                  styles.liveTimeContainer,
+                  {
+                    backgroundColor: isLive
+                      ? Colors?.mediumGreen
+                      : Colors.mediumBlue,
+                  },
+                ]}>
+                <Text
+                  style={
+                    isLive
+                      ? styles.sliderActiveTimeTxt
+                      : styles.sliderInactiveTimeTxt
+                  }>
+                  {'Live'}
+                </Text>
+              </TouchableOpacity>
+            </View> :
+            <View style={styles.liveMainContainer}>
+              <TouchableOpacity
+                onPress={() => handlePrevious()}
+                style={[
+                  styles.liveTimeContainer,
+                  {
+                    backgroundColor: Colors.brandBlue,
+                  },
+                ]}>
+                <Image
+                  source={Images.Arrow}
+                  style={[styles.rightIcon, { transform: [{ rotate: '180deg' }] }]}
+                  resizeMode={'contain'}
+                />
+              </TouchableOpacity>
+            </View>}
           <View
             style={[styles.timeSliderInnerContainer, { width: screenWidth / 3 }]}>
             <FlatList
@@ -656,29 +588,25 @@ export default function Guide(props) {
             </TouchableOpacity>
           </View>
         </View>
-        {/* main list  */}
-        {loading && currentIndex ? (
-          <View style={{ flex: 1, justifyContent: 'center' }}>
-            <ActivityIndicator color={'#fff'} size={'large'} />
-          </View>
-        ) : (
-          // <ScrollView indicatorStyle={'white'}>
+      </GestureRecognizer>
+      {/* main list  */}
+      {false ? (
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          <ActivityIndicator color={'#fff'} size={'large'} />
+        </View>
+      ) : (
+        <ScrollView indicatorStyle={'white'}>
           <FlatList
             data={
               selectedCategory === 'all' && selectedTimeIndex >= 0
-                ? eventList && eventList.length > 0
-                  ? eventList
+                ? filteredEventList && filteredEventList.length > 0
+                  ? filteredEventList
                   : selectedTimeIndex > 0
                     ? filteredEventList
                     : []
                 : filteredEventList
             }
             showsVerticalScrollIndicator={false}
-            refreshControl={
-              <RefreshControl
-                refreshing={refreshing}
-                onRefresh={onRefresh}
-              />}
             renderItem={({ item }) => <ItemComponent item={item} />}
             keyExtractor={item => item?.id}
             removeClippedSubviews={true} // Unmount components when outside of window
@@ -692,9 +620,8 @@ export default function Guide(props) {
               </View>
             }
           />
-          // </ScrollView>
-        )}
-      </GestureRecognizer>
+        </ScrollView>
+      )}
       <LiveMatchView
         setLiveMatchModal={setLiveMatchModal}
         liveMatchModal={liveMatchModal}

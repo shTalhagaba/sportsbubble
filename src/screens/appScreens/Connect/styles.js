@@ -62,7 +62,6 @@ export default ScaledSheet.create({
     color: Colors.white,
     fontFamily: Fonts.Regular,
     width: Platform.OS === 'android' ? screenWidth - 110 : screenWidth - 110,
-
   },
   eventTxt: {
     fontSize: '13@ms0.3',
