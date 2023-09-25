@@ -1,3 +1,5 @@
+import dayjs from "dayjs"
+
 export function getCurrent7DaysTime () {
     const currentDate = new Date()
   
@@ -88,13 +90,14 @@ export function getCurrent7DaysTime () {
         }
         return event
       })
+      const currentTime2 = dayjs(currentTime).minute(0)
     updatedEvents = updatedEvents?.filter((event) => {
-      const endTime = new Date(event.endTime).getTime()
-      const startTime = new Date(event.startTime).getTime()
-      const current = new Date(currentTime).getTime()
-      const twoHoursAnd29Minutes = 2 * 60 * 60 * 1000 + 29 * 60 * 1000; // 2 hours and 29 minutes in milliseconds
-      const fourHoursFromNow = current + twoHoursAnd29Minutes;
-      return endTime > current && startTime <= fourHoursFromNow
+      const eventStart = dayjs(event.startTime)
+      const eventEnd = dayjs(event.endTime)
+      return (
+        eventStart.diff(currentTime2, 'minute') <= 176 &&
+        eventEnd > currentTime2
+      )
     })
   
     return updatedEvents

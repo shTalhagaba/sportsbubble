@@ -129,7 +129,7 @@ export default function Watch(props) {
                     })
                   }}
                   style={[styles.listMainContainer, (dayjs(currentDate).isAfter(itemSelected?.startTime) &&
-                    dayjs(currentDate).isBefore(itemSelected?.endTime) ? {} : {pointerEvents: 'none' })]}>
+                    dayjs(currentDate).isBefore(itemSelected?.endTime) ? {} : { pointerEvents: 'none' })]}>
                   <View style={styles.listInnerContainer}>
                     <View style={styles.listBackground} />
                     <View style={styles.imageContainer}>

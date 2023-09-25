@@ -23,6 +23,7 @@ import strings from 'src/utils/strings';
 export default function Search(props) {
   const navigation = useNavigation();
   const reduxData = useSelector(state => state.user);
+  const currentDate = dayjs(new Date()).toISOString(); // Get the current date and time
   const [searchText, setSearchText] = useState('');
   const [list, setList] = useState([]);
   const [isFocused, setIsFocused] = useState(true);
@@ -105,7 +106,7 @@ export default function Search(props) {
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
         onPressBack={() =>
-          navigation.navigate('Guide', {
+          navigation.navigate('Search', {
             screen: 'Guide',
           })
         }
@@ -193,7 +194,9 @@ export default function Search(props) {
                 if (
                   item &&
                   item?.rightsHoldersConnection &&
-                  item?.rightsHoldersConnection?.totalCount === 1
+                  item?.rightsHoldersConnection?.totalCount === 1 &&
+                  dayjs(currentDate).isAfter(item?.startTime) &&
+                  dayjs(currentDate).isBefore(item?.endTime)
                 ) {
                   navigation.navigate('withoutBottomtab', {
                     screen: 'Connect',

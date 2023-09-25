@@ -79,6 +79,22 @@ export default ScaledSheet.create({
     shadowRadius: 3,
     shadowOpacity: 1,
   },
+  leftTimeContainer: {
+    backgroundColor: '#21365110', // Set a semi-transparent background color
+    paddingHorizontal: '16@ms0.3',
+    marginLeft: '2@ms0.3',
+    borderRadius: '20@ms0.3',
+    height: fontScale > 1 ? 24 * fontScale : '24@ms0.3',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    elevation: 3,
+    shadowColor: 'rgba(0, 0, 0, 0.15)',
+    shadowOffset: { width: 0, height: 1 },
+    shadowRadius: 3,
+    shadowOpacity: 1,
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
   timeSliderContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -96,6 +112,13 @@ export default ScaledSheet.create({
     height: fontScale > 1 ? 20 * fontScale : '38@ms0.3',
     marginTop: fontScale > 1 ? 6 * fontScale : '1@ms0.3',
   },
+  leftIconStyle: {
+    width: fontScale > 1 ? (width / 5) * fontScale : width / 4 -5,
+    justifyContent: 'center',
+    alignContent: 'center',
+    height: fontScale > 1 ? 20 * fontScale : '38@ms0.3',
+    marginTop: fontScale > 1 ? 6 * fontScale : '1@ms0.3',
+  },
   nextContainer: {
     backgroundColor: Colors.brandBlue,
     paddingHorizontal: '18@ms0.3',
@@ -107,6 +130,10 @@ export default ScaledSheet.create({
     alignSelf: 'center',
   },
   rightIcon: {
+    height: fontScale > 1 ? 10 * fontScale : '13@ms0.3',
+    width: fontScale > 1 ? 16 * fontScale : '19@ms0.3',
+  },
+  leftIcon: {
     height: fontScale > 1 ? 10 * fontScale : '13@ms0.3',
     width: fontScale > 1 ? 16 * fontScale : '19@ms0.3',
   },

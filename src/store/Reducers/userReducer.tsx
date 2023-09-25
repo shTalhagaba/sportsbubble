@@ -10,6 +10,8 @@ const initialState = {
   eventList: [],
   splashEventList: [],
   expire: '',
+  refresh: false,
+  selectedTimebar: -1,
 };
 
 const user = (state = initialState, action: any) => {
@@ -88,6 +90,30 @@ const user = (state = initialState, action: any) => {
       try {
         action.payload.user = true;
         return action.payload;
+      } catch (e) {
+        alert(e);
+        return state;
+      }
+      break;
+    // refresh data.
+    case 'REFRESH_DATA':
+      try {
+        return {
+          ...state,
+          refresh: action.payload,
+        };
+      } catch (e) {
+        alert(e);
+        return state;
+      }
+      break;
+    // refresh data.
+    case 'SELECTED_TIMEBAR':
+      try {
+        return {
+          ...state,
+          selectedTimebar: action.payload,
+        };
       } catch (e) {
         alert(e);
         return state;

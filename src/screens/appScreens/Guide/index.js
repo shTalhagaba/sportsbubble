@@ -21,13 +21,13 @@ import { useQuery } from '@apollo/client';
 import dayjs from 'dayjs';
 import { GET_SORTED_EVENTS } from './queries';
 import { useDispatch, useSelector } from 'react-redux';
-import { setStoreEventList } from 'src/store/types';
+import { refreshData, selectedTimebar, setStoreEventList } from 'src/store/types';
 import { moderateScale } from 'react-native-size-matters';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 import Config from 'react-native-config';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { UpdateEvents } from 'src/utils/functions';
-import { useDebouncedCallback } from 'use-debounce';
+
 const screenWidth = Dimensions.get('window').width;
 const { fontScale } = Dimensions.get('window');
 
@@ -201,11 +201,16 @@ export default function Guide(props) {
 
   useEffect(() => {
     if (isFocused) {
-      handleLive()
+      if (reduxData?.refresh || reduxData?.selectedTimebar === -1) {
+        handleLive()
+        dispatch(refreshData(false)); // Dispatch the action
+      } else {
+        setSelectedTimeIndex(reduxData?.selectedTimebar)
+      }
       searchRefetch()
       getTimeList();
     }
-  }, [isFocused]);
+  }, [isFocused, reduxData?.refresh]);
 
   useEffect(() => {
     if (reduxData?.eventList && reduxData?.eventList.length > 0) {
@@ -327,6 +332,7 @@ export default function Guide(props) {
     handleSelectTime(0);
     setCurrentIndex(0);
     setIsLive(true);
+    dispatch(selectedTimebar(-1))
   };
 
   const ItemComponent = React.memo(({ item }) => {
@@ -336,6 +342,7 @@ export default function Guide(props) {
       <TouchableOpacity
         style={styles.listContainer}
         onPress={() => {
+          dispatch(selectedTimebar(selectedTimeIndex))
           if (
             item &&
             item?.rightsHoldersConnection &&
@@ -529,11 +536,11 @@ export default function Guide(props) {
                 </Text>
               </TouchableOpacity>
             </View> :
-            <View style={styles.liveMainContainer}>
+            <View style={styles.leftIconStyle}>
               <TouchableOpacity
                 onPress={() => handlePrevious()}
                 style={[
-                  styles.liveTimeContainer,
+                  styles.leftTimeContainer,
                   {
                     backgroundColor: Colors.brandBlue,
                   },
@@ -577,8 +584,8 @@ export default function Guide(props) {
               style={[
                 styles.liveTimeContainer,
                 {
-                  backgroundColor: Colors.brandBlue,
-                },
+                  backgroundColor:  Colors.brandBlue,
+                }
               ]}>
               <Image
                 source={Images.Arrow}

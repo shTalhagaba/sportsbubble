@@ -39,3 +39,18 @@ export const loginData = (args: any) => {
     payload: args,
   };
 };
+
+export const refreshData = (args: any) => {
+  return {
+    type: 'REFRESH_DATA',
+    payload: args,
+  };
+};
+
+export const selectedTimebar = (args: any) => {
+  return {
+    type: 'SELECTED_TIMEBAR',
+    payload: args,
+  };
+};
+
