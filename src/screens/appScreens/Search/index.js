@@ -10,6 +10,7 @@ import {
   Keyboard,
   TextInput,
   Platform,
+  SafeAreaView,
 } from 'react-native';
 import styles from './styles';
 import { Images, Colors, Constants, Strings } from 'src/utils';
@@ -29,25 +30,43 @@ export default function Search(props) {
   const [searchText, setSearchText] = useState('');
   const [list, setList] = useState([]);
   const [isFocusedFlag, setIsFocusedFlag] = useState(false);
-  const [searchFlag, setSearchFlag] = useState(true);
-
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
   const inputRef = useRef(null);
 
   useEffect(() => {
     if (isFocused) {
-      console.log("Enterrrrr")
-      focusSearch()
+      handleFocus()
       inputRef?.current?.focus();
+      Keyboard.dismiss();
+
     }
     return () => {
       Keyboard.dismiss();
     }
   }, [isFocused]);
 
-  const focusSearch = () => {
-    setIsFocusedFlag(true)
-    inputRef?.current?.focus();
-  }
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      keyboardDidShow
+    );
+
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      keyboardDidHide
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
+  const keyboardDidShow = () => {
+    setIsKeyboardOpen(true);
+  };
+  const keyboardDidHide = () => {
+    setIsKeyboardOpen(false);
+  };
   const handleFocus = () => {
     setIsFocusedFlag(true);
   };
@@ -57,7 +76,6 @@ export default function Search(props) {
   const handleClear = () => {
     setSearchText('');
     setIsFocusedFlag(false);
-    setSearchFlag(false);
     Keyboard.dismiss();
   };
   const handleInputChange = text => {
@@ -85,6 +103,38 @@ export default function Search(props) {
       setList(filtered);
     }
   };
+  const handleEnd = () => {
+    if (isKeyboardOpen) {
+      Keyboard.dismiss()
+    } else {
+      inputRef?.current?.focus()
+    }
+  }
+  const handleDetails = (item) => {
+    if (item &&
+      item?.rightsHoldersConnection &&
+      item?.rightsHoldersConnection?.totalCount === 1 &&
+      dayjs(currentDate).isAfter(item?.startTime) &&
+      dayjs(currentDate).isBefore(item?.endTime)
+    ) {
+      Keyboard.dismiss();
+      navigation.navigate('withoutBottomtab', {
+        screen: 'Connect',
+        params: {
+          item: item,
+          holderItem: item?.rightsHoldersConnection,
+          eventFlag: true,
+        },
+      });
+    } else {
+      Keyboard.dismiss();
+      navigation.navigate('Watch', {
+        item: item,
+        searchFlag: true,
+      });
+    }
+  }
+
   return (
     <ImageBackground
       source={Images.Background2}
@@ -106,10 +156,10 @@ export default function Search(props) {
         }
         SimpleView
       />
-      <View style={styles.mainContainer}>
+      <SafeAreaView style={styles.mainContainer}>
         {/* Search text box */}
         <TouchableOpacity
-          onPress={() => focusSearch()}
+          onPress={() => handleFocus()}
           style={[
             styles.searchContainer,
             isFocusedFlag ? styles.focus : styles.blur,
@@ -156,7 +206,7 @@ export default function Search(props) {
                 onChangeText={handleInputChange}
                 onSubmitEditing={handleDone}
                 returnKeyType='search'
-                onEndEditing={() => isFocusedFlag && inputRef?.current?.focus()}
+                onEndEditing={() => handleEnd()}
               />
             </View>
           </View>
@@ -169,12 +219,12 @@ export default function Search(props) {
             />
           </TouchableOpacity>
         </TouchableOpacity>
-
         {/* list showing after search */}
         <FlatList
           data={searchText.length > 0 ? list : []}
           showsVerticalScrollIndicator={false}
-          onScrollBeginDrag={() => Keyboard.dismiss()}
+          keyboardShouldPersistTaps={'handled'}
+          // onScrollBeginDrag={() => Keyboard.dismiss()}
           ListEmptyComponent={
             <View>
               <Text style={styles.emptyTxt}>
@@ -187,29 +237,7 @@ export default function Search(props) {
           renderItem={({ item }) => (
             <TouchableOpacity
               style={styles.listContainer}
-              onPress={() => {
-                if (
-                  item &&
-                  item?.rightsHoldersConnection &&
-                  item?.rightsHoldersConnection?.totalCount === 1 &&
-                  dayjs(currentDate).isAfter(item?.startTime) &&
-                  dayjs(currentDate).isBefore(item?.endTime)
-                ) {
-                  navigation.navigate('withoutBottomtab', {
-                    screen: 'Connect',
-                    params: {
-                      item: item,
-                      holderItem: item?.rightsHoldersConnection,
-                      eventFlag: true,
-                    },
-                  });
-                } else {
-                  navigation.navigate('Watch', {
-                    item: item,
-                    searchFlag: true,
-                  });
-                }
-              }}>
+              onPress={() => handleDetails(item)}>
               <View style={styles.innerContainer}>
                 <View style={styles.imageContainer}>
                   <ImageWithPlaceHolder
@@ -246,9 +274,10 @@ export default function Search(props) {
               </View>
             </TouchableOpacity>
           )}
+
           keyExtractor={(item, index) => index.toString()} // Change to a unique key if available
         />
-      </View>
+      </SafeAreaView>
     </ImageBackground>
   );
 }
