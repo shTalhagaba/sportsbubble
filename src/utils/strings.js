@@ -6,7 +6,7 @@ export default {
   esports: 'ESPORTS',
   watchOptions: 'Watch Options',
   connectToWatch: 'Connect to Watch on These Apps or Services',
-  connectToWatchFuture:'This Event Begins Streaming on',
+  connectToWatchFuture: 'This Event Begins Streaming on',
   connectToWatchEmpty: 'There are no direct connections available for this event.',
   otherWays: 'Other ways to watch...',
   settings: 'Settings',

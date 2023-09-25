@@ -2,7 +2,7 @@ import { Colors, Fonts } from 'src/utils';
 import { ScaledSheet } from "react-native-size-matters";
 import { Dimensions } from 'react-native';
 
-const {fontScale} = Dimensions.get('window');
+const { fontScale } = Dimensions.get('window');
 
 export default ScaledSheet.create({
   container: {
@@ -43,8 +43,8 @@ export default ScaledSheet.create({
   crossImage: {
     height: '12@ms0.3',
     width: '12@ms0.3',
-    marginHorizontal: '10@ms0.3',
     tintColor: Colors.white,
+
   },
   inputField: {
     letterSpacing: 0.75,

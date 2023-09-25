@@ -15,26 +15,51 @@ import styles from './styles';
 import { Images, Colors, Constants, Strings } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
 import dayjs from 'dayjs';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 import strings from 'src/utils/strings';
 
 export default function Search(props) {
   const navigation = useNavigation();
+  let isFocused = useIsFocused()
+
   const reduxData = useSelector(state => state.user);
   const currentDate = dayjs(new Date()).toISOString(); // Get the current date and time
   const [searchText, setSearchText] = useState('');
   const [list, setList] = useState([]);
-  const [isFocused, setIsFocused] = useState(true);
+  const [isFocusedFlag, setIsFocusedFlag] = useState(false);
   const [searchFlag, setSearchFlag] = useState(true);
-
-  const handleFocus = () => {
-    setIsFocused(true);
-  };
 
   const inputRef = useRef(null);
 
+  useEffect(() => {
+    if (isFocused) {
+      console.log("Enterrrrr")
+      focusSearch()
+      inputRef?.current?.focus();
+    }
+    return () => {
+      Keyboard.dismiss();
+    }
+  }, [isFocused]);
+
+  const focusSearch = () => {
+    setIsFocusedFlag(true)
+    inputRef?.current?.focus();
+  }
+  const handleFocus = () => {
+    setIsFocusedFlag(true);
+  };
+  const handleDone = () => {
+    setIsFocusedFlag(false);
+  };
+  const handleClear = () => {
+    setSearchText('');
+    setIsFocusedFlag(false);
+    setSearchFlag(false);
+    Keyboard.dismiss();
+  };
   const handleInputChange = text => {
     setSearchText(text);
     if (
@@ -60,37 +85,6 @@ export default function Search(props) {
       setList(filtered);
     }
   };
-
-  const handleDone = () => {
-    setIsFocused(false);
-  };
-
-  useEffect(() => {
-    onPressTouch();
-  }, [isFocused]);
-
-  const focusSearch = async () => {
-    await setIsFocused(true)
-    await onPressTouch();
-  }
-
-  const onPressTouch = () => {
-    if (!isFocused) {
-      setTimeout(() => {
-        inputRef?.current?.focus();
-        // setIsFocused(false)
-
-        Keyboard.dismiss();
-      }, 100); // Delay the focus call to ensure proper rendering
-    }
-  };
-
-  const handleClear = () => {
-    setSearchText('');
-    setIsFocused(false);
-    setSearchFlag(false);
-  };
-
   return (
     <ImageBackground
       source={Images.Background2}
@@ -118,10 +112,10 @@ export default function Search(props) {
           onPress={() => focusSearch()}
           style={[
             styles.searchContainer,
-            isFocused ? styles.focus : styles.blur,
+            isFocusedFlag ? styles.focus : styles.blur,
           ]}>
           <View style={{ flex: 1 }}>
-            {isFocused && (
+            {isFocusedFlag && (
               <View
                 style={{
                   flexDirection: 'row',
@@ -144,7 +138,7 @@ export default function Search(props) {
                 alignItems: 'center',
                 marginLeft: 12,
               }}>
-              {!isFocused && (
+              {!isFocusedFlag && (
                 <Image
                   source={Images.Search}
                   style={styles.searchImage}
@@ -152,20 +146,22 @@ export default function Search(props) {
                 />
               )}
               <TextInput
+                ref={inputRef}
                 style={styles.inputField}
                 onFocus={handleFocus}
                 autoFocus={true}
-                placeholder={!isFocused ? 'Search' : ''}
+                placeholder={!isFocusedFlag ? 'Search' : ''}
                 placeholderTextColor={Colors.white}
                 value={searchText}
                 onChangeText={handleInputChange}
                 onSubmitEditing={handleDone}
                 returnKeyType='search'
-                onEndEditing={() => console.log('edit')}
+                onEndEditing={() => isFocusedFlag && inputRef?.current?.focus()}
               />
             </View>
           </View>
-          <TouchableOpacity onPress={handleClear}>
+          <TouchableOpacity onPress={handleClear}
+            style={{ padding: 10, }}>
             <Image
               source={Images.Cross}
               style={styles.crossImage}
@@ -173,6 +169,7 @@ export default function Search(props) {
             />
           </TouchableOpacity>
         </TouchableOpacity>
+
         {/* list showing after search */}
         <FlatList
           data={searchText.length > 0 ? list : []}
@@ -250,7 +247,7 @@ export default function Search(props) {
             </TouchableOpacity>
           )}
           keyExtractor={(item, index) => index.toString()} // Change to a unique key if available
-          />
+        />
       </View>
     </ImageBackground>
   );
