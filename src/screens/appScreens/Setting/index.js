@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   ImageBackground,
@@ -9,10 +9,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import styles from './styles';
-import { Images, Colors } from 'src/utils';
-import { useNavigation } from '@react-navigation/native';
+import {Images, Colors} from 'src/utils';
+import {useNavigation} from '@react-navigation/native';
 import AppHeader from 'src/components/AppHeader';
 import ButtonWithIcon from 'src/components/ButtonWithIcon';
+import DeviceInfo from 'react-native-device-info';
 import Strings from 'src/utils/strings';
 import CustomModalView from 'src/components/Modal/CustomModal';
 import Instabug, { InvocationEvent } from 'instabug-reactnative';
@@ -23,13 +24,13 @@ import ShowMessage from 'src/components/ShowMessage';
 
 export default function Setting() {
   const navigation = useNavigation();
+  const version = DeviceInfo.getVersion();
   const dispatch = useDispatch();
   const [logoutModal, setLogoutModal] = useState(false);
   const data = useSelector(state => state.user);
 
   useEffect(() => {
     Instabug.init({
-      // token: '02e02ab36f08bb8372ad6966cd83bf8a',  // own instabug
       token: 'fa2bfcf8ea1c455d74b12f36846eb929', // stage
       invocationEvents: [InvocationEvent.shake],
     });
@@ -37,7 +38,7 @@ export default function Setting() {
 
   return (
     <ImageBackground
-      source={Images.Background}
+      source={Images.Background2}
       resizeMode="cover"
       style={styles.container}>
       <StatusBar
@@ -89,7 +90,6 @@ export default function Setting() {
             title={Strings.aboutWatchSports}
             onpress={() => navigation.navigate('About')}
           />
-
           <ButtonWithIcon
             title={Strings.legal}
             onpress={() => navigation.navigate('Legal')}
@@ -150,7 +150,20 @@ export default function Setting() {
         }}
         Container={{ backgroundColor: Colors.backBlack }}
       />
-
+      {/* Powered by sports bubble */}
+      <View style={styles.sbContainer}>
+        <Image
+          source={Images.Sports}
+          style={styles.leftArrowIcon}
+          resizeMode={'contain'}
+        />
+        <Image
+          source={Images.PoweredSB}
+          style={styles.powerImage}
+          resizeMode={'contain'}
+        />
+        <Text style={styles.versionTxt}>v {version}</Text>
+      </View>
     </ImageBackground>
   );
 }

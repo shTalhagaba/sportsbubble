@@ -1,8 +1,8 @@
-import {Colors, Fonts} from 'src/utils';
-import {ScaledSheet} from 'react-native-size-matters';
-import {Dimensions} from 'react-native';
-const {fontScale} = Dimensions.get('window');
+import { Colors, Fonts } from 'src/utils';
+import { ScaledSheet } from 'react-native-size-matters';
+import { Dimensions } from 'react-native';
 const screenWidth = Dimensions.get('window').width;
+const { fontScale } = Dimensions.get('window');
 
 export default ScaledSheet.create({
   container: {
@@ -61,7 +61,7 @@ export default ScaledSheet.create({
     lineHeight: '23@ms0.3',
     color: Colors.white,
     fontFamily: Fonts.Regular,
-    maxWidth: Platform.OS === 'android' ? screenWidth - 110 : screenWidth - 110,
+    width: Platform.OS === 'android' ? screenWidth - 110 : screenWidth - 110,
   },
   eventTxt: {
     fontSize: '13@ms0.3',
@@ -113,7 +113,7 @@ export default ScaledSheet.create({
   sliderContainer: {
     flexDirection: 'row',
     backgroundColor: Colors.greyBackground,
-    height: fontScale > 1 ? (screenWidth / 4.4) * fontScale : (screenWidth / 3.6),
+    height: fontScale > 1 ? 90 * fontScale : '90@ms0.3',
     alignItems: 'center',
     paddingHorizontal: '13@ms0.3',
   },

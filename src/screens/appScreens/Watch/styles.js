@@ -1,8 +1,8 @@
-import {Colors, Fonts} from 'src/utils';
-import {ScaledSheet} from 'react-native-size-matters';
-import {Dimensions, Platform} from 'react-native';
+import { Colors, Fonts } from 'src/utils';
+import { ScaledSheet } from 'react-native-size-matters';
+import { Dimensions, Platform } from 'react-native';
 const screenWidth = Dimensions.get('window').width;
-const {fontScale} = Dimensions.get('window');
+const { fontScale } = Dimensions.get('window');
 
 export default ScaledSheet.create({
   container: {
@@ -12,7 +12,7 @@ export default ScaledSheet.create({
   itemListContainer: {
     paddingRight: '0@ms0.3',
     marginVertical: '1@ms0.3',
-    paddingVertical: '5@ms0.3'
+    paddingVertical: '5@ms0.3',
   },
   itemInnerContainer: {
     flexDirection: 'row',
@@ -47,7 +47,7 @@ export default ScaledSheet.create({
     width: '16@ms0.3',
   },
   itemContainer: {
-    height: fontScale > 1 ? 74 * fontScale : '78@ms0.3',
+    height: fontScale > 1 ? 78 * fontScale : '78@ms0.3',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -70,6 +70,15 @@ export default ScaledSheet.create({
     marginRight: 16,
     borderRadius: 16,
   },
+  image2Container: {
+    backgroundColor: Colors.mediumBlue,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: '2@ms0.3',
+    borderRadius: 16,
+    paddingVertical: 18,
+    paddingHorizontal: Platform.OS === 'android' ? 15 : 18,
+  },
   imageIcon: {
     height: '65@ms0.3',
     width: '64@ms0.3',
@@ -88,6 +97,14 @@ export default ScaledSheet.create({
     justifyContent: 'center',
     position: 'absolute',
     left: '65@ms0.3',
+  },
+  leftContainer: {
+    flex: 1,
+    backgroundColor: Colors.darkGrey,
+  },
+  rightContainer: {
+    flex: 1,
+    backgroundColor: Colors.blueGrey,
   },
   listTitleTxt: {
     fontSize: '13@ms0.3',
@@ -197,7 +214,7 @@ export default ScaledSheet.create({
   sliderContainer: {
     flexDirection: 'row',
     backgroundColor: Colors.greyBackground,
-    height: fontScale > 1 ? (screenWidth / 4.4) * fontScale : (screenWidth / 3.6),
+    height: fontScale > 1 ? (screenWidth / 4.4) * fontScale : '90@ms0.3',
     alignItems: 'center',
     paddingHorizontal: '15@ms0.3',
     marginTop: '10@ms0.3',
@@ -227,17 +244,17 @@ export default ScaledSheet.create({
   },
   flatlistContainer: {
     marginTop: '10@ms0.3',
-    marginHorizontal: '15@ms0.3',
+    marginHorizontal: '10@ms0.3',
   },
   menuBtn: {
-    width: '32@ms0.3',
-    height: '12@ms0.3',
+    width: '35@ms0.3',
+    height: '13@ms0.3',
     marginTop: '20@ms0.3',
     marginRight: '10@ms0.3',
   },
   menuBtn2: {
-    width: '32@ms0.3',
-    height: '12@ms0.3',
+    width: '35@ms0.3',
+    height: '13@ms0.3',
     marginRight: '10@ms0.3',
   },
   largeMenuImage: {
@@ -246,14 +263,12 @@ export default ScaledSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     paddingTop: '20@ms0.3',
-    // backgroundColor: 'transparent',
   },
   smallMenuImage: {
     width: '100%',
     height: fontScale > 1 ? 76 * fontScale : '80@ms0.3',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'transparent',
   },
   flexOnly: {
     flex: 1,
@@ -266,11 +281,11 @@ export default ScaledSheet.create({
   bottomInnerContainer: {
     width: screenWidth / 4.5,
     height: screenWidth / 4.5,
-    backgroundColor: Colors.greyBackground,
+    backgroundColor: Colors.mediumBlue,
     borderWidth: '2@ms0.3',
     borderRadius: '16@ms0.3',
     overflow: 'hidden',
-    borderColor: Colors.greyBackground,
+    borderColor: Colors.mediumBlue,
     justifyContent: 'center',
   },
   bottomListBackground: {
@@ -295,19 +310,19 @@ export default ScaledSheet.create({
     backgroundColor: Colors.black15,
   },
   listInnerContainer: {
-    width: screenWidth / 4.5,
-    height: screenWidth / 4.5,
-    backgroundColor: Colors.greyBackground,
+    width: screenWidth / 4.6,
+    height: screenWidth / 4.6,
+    backgroundColor: Colors.mediumBlue,
     borderWidth: '2@ms0.3',
     borderRadius: '16@ms0.3',
     overflow: 'hidden',
-    borderColor: Colors.greyBackground,
+    borderColor: Colors.mediumBlue,
     justifyContent: 'center',
   },
   listMainContainer: {
     alignItems: 'center',
     marginTop: '12@ms0.3',
-    marginRight: '10@ms0.3',
+    marginRight: '8@ms0.3',
   },
   headerContainer: {
     height: Platform.OS === 'ios' ? '90@ms0.3' : '70@ms0.3',

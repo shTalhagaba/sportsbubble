@@ -1,8 +1,16 @@
 import {gql} from 'graphql-tag';
 
 export const SEARCH_EVENTS_QUERY = gql`
-  query SearchEvents($searchString: String!, $startTime: DateTime!, $endTime: DateTime!) {
-    searchEvent(searchString: $searchString, startTime: $startTime, endTime: $endTime) {
+  query SearchEvents(
+    $searchString: String!
+    $startTime: DateTime!
+    $endTime: DateTime!
+  ) {
+    searchEvent(
+      searchString: $searchString
+      startTime: $startTime
+      endTime: $endTime
+    ) {
       line1
       line2
       id
@@ -24,6 +32,17 @@ export const SEARCH_EVENTS_QUERY = gql`
       sport {
         name
       }
+      rightsHoldersConnection {
+        edges {
+          node {
+            logoUrl
+            name
+            id
+            weight
+          }
+          rhVideoUrl
+        }
+      }
     }
   }
-`;
+`

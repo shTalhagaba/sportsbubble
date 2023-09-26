@@ -33,12 +33,11 @@ export default ScaledSheet.create({
     fontStyle: 'italic',
   },
   logoutTxt: {
-    fontSize: '17@ms0.3',
-    fontWeight: '400',
+    fontSize: '18@ms0.3',
+    fontWeight: '500',
     color: Colors.darkOrange,
     fontFamily: Fonts.Regular,
     marginStart: '16@ms0.3',
-    lineHeight: '22@ms0.3',
   },
   sbContainer: {
     height: '21%',

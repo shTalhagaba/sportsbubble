@@ -1,22 +1,24 @@
 import React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Images, Colors} from 'src/utils';
-import {Image, Platform, View} from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Images, Colors } from 'src/utils';
+import { Image, Platform, View } from 'react-native';
 
 import Guide from 'src/screens/appScreens/Guide';
 import Watch from 'src/screens/appScreens/Watch';
 import Search from 'src/screens/appScreens/Search';
 import Setting from 'src/screens/appScreens/Setting';
 import Legal from 'src/screens/appScreens/Legal';
-import About from 'src/screens/appScreens/About';
 import MySports from 'src/screens/appScreens/MySports';
-import {moderateScale, ScaledSheet} from 'react-native-size-matters';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { moderateScale, ScaledSheet } from 'react-native-size-matters';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useDispatch, useSelector } from 'react-redux';
+import { refreshData } from 'src/store/types';
 
 const Tab = createBottomTabNavigator();
 
 const SettingNavigator = createNativeStackNavigator();
 const GuideNavigator = createNativeStackNavigator();
+const SearchNavigator = createNativeStackNavigator();
 
 const GuideNavigation = () => {
   return (
@@ -37,18 +39,36 @@ const SettingNavigation = () => {
         headerShown: false,
       }}>
       <SettingNavigator.Screen name="Setting" component={Setting} />
-      <SettingNavigator.Screen name="About" component={About} />
       <SettingNavigator.Screen name="Legal" component={Legal} />
     </SettingNavigator.Navigator>
   );
 };
 
-//listener addeed for Dashboard
-const tabBarGuideListeners = ({navigation, route}) => ({
-  tabPress: () => navigation.navigate('Guide'),
-});
+const SearchNavigation = () => {
+  return (
+    <SearchNavigator.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <SearchNavigator.Screen name="Search" component={Search} />
+      <SearchNavigator.Screen name="WatchSearch" component={Watch} />
+    </SearchNavigator.Navigator>
+  );
+};
+
+
 
 const BottomTab = () => {
+  const dispatch = useDispatch();
+  const reduxData = useSelector(state => state.user);
+
+  const tabBarGuideListeners = ({ navigation, route }) => ({
+    tabPress: () => {
+      navigation.navigate('Guide'),
+        dispatch(refreshData(!reduxData?.refresh)); // Dispatch the action
+    }
+  });
+
   return (
     <Tab.Navigator
       initialRouteName={'Guide'}
@@ -60,15 +80,18 @@ const BottomTab = () => {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: Colors.appColorBackground90,
+          backgroundColor:
+            Platform.OS === 'ios'
+              ? Colors.appColorBackground90
+              : Colors.backBlack,
           height:
             Platform.OS === 'android'
               ? moderateScale(72, 0.3)
-              : moderateScale(81, 0.3),
+              : moderateScale(80, 0.3),
           paddingTop:
             Platform.OS === 'android'
               ? moderateScale(2, 0.3)
-              : moderateScale(16, 0.3),
+              : moderateScale(15, 0.3),
           borderTopWidth: 2,
           borderTopColor: '#3E4349',
         },
@@ -78,7 +101,7 @@ const BottomTab = () => {
         component={GuideNavigation}
         listeners={tabBarGuideListeners}
         options={{
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <View style={styles.bottomContainer}>
               <Image
                 source={focused ? Images.GuideGreen : Images.Guide}
@@ -98,7 +121,7 @@ const BottomTab = () => {
         name="MySports"
         component={MySports}
         options={{
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <View style={styles.bottomContainer}>
               <Image
                 source={focused ? Images.MySportsFiiled : Images.MySports}
@@ -116,10 +139,10 @@ const BottomTab = () => {
       />
       <Tab.Screen
         name="Search"
-        component={Search}
+        component={SearchNavigation}
         // listeners={handleSearchStack}
         options={{
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <View style={styles.bottomContainer}>
               <Image
                 source={
@@ -142,7 +165,7 @@ const BottomTab = () => {
         name="Setting"
         component={SettingNavigation}
         options={{
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <View style={styles.bottomContainer}>
               <Image
                 source={

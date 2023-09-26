@@ -7,8 +7,8 @@ import {
   FlatList,
   TouchableOpacity,
   StatusBar,
-  ScrollView,
   Dimensions,
+  ScrollView,
 } from 'react-native';
 import styles from './styles';
 import { Images, Colors, Strings, Constants } from 'src/utils';
@@ -17,14 +17,8 @@ import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 import GestureRecognizer from 'react-native-swipe-gestures';
+import SvgWithPlaceHolder from '../../../components/SvgWithPlaceHolder';
 const screeHeight = Dimensions.get('window').height;
-
-const data = [
-  { id: 1, img: Images.NBALogo, title: 'Fubo' },
-  { id: 2, img: Images.NBALogo, title: 'ESPN' },
-  { id: 3, img: Images.NBALogo, title: 'Sling' },
-  { id: 4, img: Images.NBALogo, title: 'DAZN' },
-];
 
 export default function Watch(props) {
   const navigation = useNavigation();
@@ -33,21 +27,32 @@ export default function Watch(props) {
   const [bottomMenu, setBottomMenu] = useState(false);
   const [bottomShow, setBottomShow] = useState(false);
   const { searchFlag } = props?.route?.params;
-
+  const [mainlist, setMainList] = useState([]);
+  const [bottomList, setBottomList] = useState([]);
 
   useEffect(() => {
     setItemSelected(props?.route?.params?.item);
     if (
-      props?.route?.params?.item &&
-      props?.route?.params?.item?.rightsHoldersConnection?.totalCount > 1
+      (props?.route?.params?.item &&
+        props?.route?.params?.item?.rightsHoldersConnection?.edges.length > 0) ||
+      props?.route?.params?.item?.rightsHoldersConnection?.totalCount > 0
     ) {
       let list =
         props?.route?.params?.item?.rightsHoldersConnection?.edges.filter(
           item => {
             const rightsHolder = item?.node;
-            return rightsHolder && rightsHolder.weight < 1000;
+            return rightsHolder && rightsHolder.weight < 1000 || rightsHolder.weight === null;
           },
         );
+      let main =
+        props?.route?.params?.item?.rightsHoldersConnection?.edges.filter(
+          item => {
+            const rightsHolder = item?.node;
+            return rightsHolder && rightsHolder.weight > 1000;
+          },
+        );
+      setBottomList(list)
+      setMainList(main)
       if (list && list.length > 0) {
         setBottomShow(true);
       }
@@ -70,7 +75,7 @@ export default function Watch(props) {
                 />
               </View>
               <View style={[styles.userNameContainer]}>
-                <Text style={styles.eventTxt}>
+                <Text style={styles.eventTxt} numberOfLines={1}>
                   {itemSelected?.line1
                     ? itemSelected?.line1
                     : itemSelected?.companyName}
@@ -102,61 +107,101 @@ export default function Watch(props) {
         {/* Watch option text */}
         <Text style={styles.watchOptions}>{Strings.watchOptions}</Text>
         {/* right holder connection list */}
-        {itemSelected &&
-          itemSelected?.rightsHoldersConnection?.edges &&
-          itemSelected?.rightsHoldersConnection?.totalCount > 0 ? (
-          <View style={styles.flatlistContainer}>
-            {dayjs(itemSelected?.startTime).isAfter(currentDate) ? null : (
-              <Text style={styles.conectTxt}>{Strings.connectToWatch}</Text>
-            )}
-            <FlatList
-              data={itemSelected?.rightsHoldersConnection?.edges || data}
-              showsVerticalScrollIndicator={false}
-              horizontal
-              contentContainerStyle={{ flex: 1, justifyContent: 'center' }}
-              renderItem={({ item, index }) => {
-                return item?.node?.weight > 1000 ? (
-                  <TouchableOpacity
-                    onPress={() => {
-                      dayjs(currentDate).isAfter(itemSelected?.startTime) &&
-                        dayjs(currentDate).isBefore(itemSelected?.endTime) ? (
-                        navigation.navigate('withoutBottomtab', {
-                          screen: 'Connect',
-                          params: { item: itemSelected, holderItem: item },
-                        })) : {}
-                    }}
-                    style={styles.listMainContainer}>
-                    <View style={styles.listInnerContainer}>
-                      <View style={styles.listBackground} />
-                      <View style={styles.imageContainer}>
+        <View style={styles.flatlistContainer}>
+          <Text style={styles.conectTxt}>
+            {dayjs(itemSelected?.startTime).isAfter(currentDate)
+              ? ' '
+              : Strings.connectToWatch}
+          </Text>
+          <FlatList
+            data={mainlist}
+            showsHorizontalScrollIndicator={false}
+            horizontal
+            contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignSelf: 'center', }}
+            renderItem={({ item, index }) => {
+              return (
+                <TouchableOpacity
+                  pointer
+                  onPress={() => {
+                    navigation.navigate('withoutBottomtab', {
+                      screen: 'Connect',
+                      params: { item: itemSelected, holderItem: item },
+                    })
+                  }}
+                  style={[styles.listMainContainer, (dayjs(currentDate).isAfter(itemSelected?.startTime) &&
+                    dayjs(currentDate).isBefore(itemSelected?.endTime) ? {} : { pointerEvents: 'none' })]}>
+                  <View style={styles.listInnerContainer}>
+                    <View style={styles.listBackground} />
+                    <View style={styles.imageContainer}>
+                      {item?.node && item?.node?.logoUrl && (item?.node?.logoUrl.includes('.svg')) ?
+                        <SvgWithPlaceHolder
+                          source={item?.node?.logoUrl}
+                          placeholderSource={Constants.placeholder_trophy_icon}
+                          style={styles.imageRightsIcon}
+                          logoUrl={true}
+                          widthLogo={46}
+                          heightLogo={46}
+                          resizeMode="contain"
+                        /> :
                         <ImageWithPlaceHolder
                           source={item?.node?.logoUrl}
                           placeholderSource={Constants.placeholder_trophy_icon}
                           style={styles.imageRightsIcon}
                           logoUrl={true}
-                          widthLogo={50}
-                          heightLogo={50}
+                          widthLogo={48}
+                          heightLogo={48}
                           resizeMode="contain"
-                        />
-                      </View>
+                        />}
                     </View>
-                    {/* <Text style={styles.listTitleTxt} numberOfLines={1}>
-                      {item?.node?.name || item?.title}
-                    </Text> */}
-                  </TouchableOpacity>
-                ) : null;
-              }}
-            />
-          </View>
-        ) : (
-          <Text style={styles.orangeTxt}>{Strings.connectToWatchEmpty}</Text>
-        )}
+                  </View>
+                </TouchableOpacity>
+              )
+            }}
+            ListEmptyComponent={
+              <Text style={styles.orangeTxt}>{Strings.connectToWatchEmpty}</Text>
+            }
+          />
+        </View>
       </>)
+  }
+
+  const ItemComponent = ({ item }) => {
+    return (
+      <View style={styles.bottomListContainer}>
+        <View style={styles.bottomInnerContainer}>
+          <View style={styles.bottomListBackground} />
+          <View style={styles.imageContainer}>
+            {item?.node && item?.node?.logoUrl && (item?.node?.logoUrl.includes('.svg')) ?
+              <SvgWithPlaceHolder
+                source={item?.node?.logoUrl
+                }
+                placeholderSource={Constants.placeholder_trophy_icon}
+                style={styles.imageRightsIcon}
+                logoUrl={true}
+                widthLogo={47}
+                heightLogo={47}
+                resizeMode="contain"
+              /> :
+              <ImageWithPlaceHolder
+                source={item?.node?.logoUrl}
+                placeholderSource={
+                  Constants.placeholder_trophy_icon
+                }
+                style={styles.imageRightsIcon}
+                logoUrl={true}
+                widthLogo={50}
+                heightLogo={50}
+                resizeMode="contain"
+              />}
+          </View>
+        </View>
+      </View>
+    )
   }
 
   return (
     <ImageBackground
-      source={Images.Background}
+      source={Images.Background2}
       resizeMode="cover"
       style={styles.container}>
       <StatusBar
@@ -172,95 +217,69 @@ export default function Watch(props) {
         SimpleView
       // headerContainer={styles.headerContainer}
       />
+      {/* Main View */}
+      {screeHeight < 600 ?
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 20 }}
+          scrolc
+          style={styles.flexOnly}>
+          {mainView()}
+        </ScrollView>
+        :
+        <View
+          style={styles.flexOnly}>
+          {mainView()}
+        </View>
+      }
       <GestureRecognizer
         style={{
-          flex: 1
+          // flex: 1,
         }}
         onSwipeDown={state => {
-          setBottomMenu(false)
+          setBottomMenu(false);
         }}
         onSwipeUp={state => {
-
-          setBottomMenu(true)
+          setBottomMenu(true);
         }}
         config={{
           velocityThreshold: 0.1,
-          directionalOffsetThreshold: 18,
-          gestureIsClickThreshold: 20
+          directionalOffsetThreshold: 100,
+          gestureIsClickThreshold: 20,
         }}>
-        {/* Main View */}
-        {screeHeight < 600 ?
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingBottom: 20 }}
-            style={styles.flexOnly}>
-            {mainView()}
-          </ScrollView>
-          :
-          <View
-            style={styles.flexOnly}>
-            {mainView()}
-          </View>}
-
-        <View>
-          {bottomShow &&
-            (bottomMenu ? (
-              <ImageBackground
-                source={Images.CircleBGLarge}
-                resizeMode={'stretch'}
-                style={styles.largeMenuImage}>
-                <TouchableOpacity onPress={() => setBottomMenu(false)}>
-                  <Image source={Images.Menu} style={styles.menuBtn2} />
-                </TouchableOpacity>
-                <Text style={styles.wayToWatch}>{Strings.otherWays}</Text>
-                <View style={styles.bottomFlatlist}>
-                  <FlatList
-                    data={itemSelected?.rightsHoldersConnection?.edges || data}
-                    showsVerticalScrollIndicator={false}
-                    contentContainerStyle={{ justifyContent: 'center' }}
-                    horizontal
-                    renderItem={({ item, index }) => {
-                      return item?.node?.weight === null ||
-                        item?.node?.weight < 1000 ? (
-                        <View style={styles.bottomListContainer}>
-                          <View style={styles.bottomInnerContainer}>
-                            <View style={styles.bottomListBackground} />
-                            <View style={styles.imageContainer}>
-                              <ImageWithPlaceHolder
-                                source={item?.node?.logoUrl}
-                                placeholderSource={
-                                  Constants.placeholder_trophy_icon
-                                }
-                                style={styles.imageRightsIcon}
-                                logoUrl={true}
-                                widthLogo={50}
-                                heightLogo={50}
-                                resizeMode="contain"
-                              />
-                            </View>
-                          </View>
-                          {/* <Text style={styles.listTitleTxt2} numberOfLines={1}>
-                        {item?.node?.name || item?.title}
-                      </Text> */}
-                        </View>
-                      ) : null;
-                    }}
-                  />
-                </View>
-              </ImageBackground>
-            ) : (
-              <ImageBackground
-                source={Images.CircleBG}
-                resizeMode={'stretch'}
-                style={styles.smallMenuImage}>
-                <TouchableOpacity onPress={() => setBottomMenu(true)}>
-                  <Image source={Images.Menu} style={styles.menuBtn} />
-                </TouchableOpacity>
-                <Text style={styles.wayToWatch}>{Strings.otherWays}</Text>
-              </ImageBackground>
-            ))}
-        </View>
+        {bottomShow && bottomList.length > 0 &&
+          (bottomMenu ? (
+            <ImageBackground
+              source={Images.CircleBGLarge}
+              resizeMode={'stretch'}
+              style={styles.largeMenuImage}>
+              <TouchableOpacity onPress={() => setBottomMenu(false)}>
+                <Image source={Images.Menu} style={styles.menuBtn2} />
+              </TouchableOpacity>
+              <Text style={styles.wayToWatch}>{Strings.otherWays}</Text>
+              <View style={styles.bottomFlatlist}>
+                <FlatList
+                  data={bottomList}
+                  showsVerticalScrollIndicator={false}
+                  contentContainerStyle={{ justifyContent: 'center' }}
+                  horizontal
+                  renderItem={({ item }) => <ItemComponent item={item} />}
+                />
+              </View>
+            </ImageBackground>
+          ) : (
+            <ImageBackground
+              source={Images.CircleBG}
+              resizeMode={'stretch'}
+              style={styles.smallMenuImage}>
+              <TouchableOpacity onPress={() => setBottomMenu(true)}>
+                <Image source={Images.Menu} style={styles.menuBtn} />
+              </TouchableOpacity>
+              <Text style={styles.wayToWatch}>{Strings.otherWays}</Text>
+            </ImageBackground>
+          ))}
       </GestureRecognizer>
+
     </ImageBackground>
   );
 }

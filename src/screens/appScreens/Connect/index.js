@@ -13,6 +13,7 @@ import AppHeader from 'src/components/AppHeader';
 import GreenButton from 'src/components/GreenButton';
 import dayjs from 'dayjs';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
+import SvgWithPlaceHolder from '../../../components/SvgWithPlaceHolder';
 
 export default function Connect(props) {
   const [item, setItem] = useState(props?.route?.params?.item);
@@ -20,7 +21,7 @@ export default function Connect(props) {
   const currentDate = dayjs(new Date()).toISOString(); // Get the current date and time
 
   useEffect(() => {
-    setItem(props?.route?.params?.item);
+    setItem(props?.route?.params?.item)
   }, [props?.route?.params?.item]);
 
   const handleClick = url => {
@@ -31,7 +32,7 @@ export default function Connect(props) {
 
   return (
     <ImageBackground
-      source={Images.Background}
+      source={Images.Background2}
       resizeMode="cover"
       style={styles.container}>
       <StatusBar
@@ -95,19 +96,33 @@ export default function Connect(props) {
             style={styles.imageStyle}
           />
         </View>
-          <Text style={styles.connectingText}>{Strings.connecting}</Text>
+        <Text numberOfLines={1} style={styles.connectingText}>{Strings.connecting}</Text>
         <View style={styles.logoImageContainer}>
-          <ImageWithPlaceHolder
-            source={
-              eventFlag && holderItem?.edges?.[0]?.node?.logoUrl
-                ? holderItem?.edges?.[0]?.node?.logoUrl
-                : holderItem?.node?.logoUrl
-            }
-            placeholderSource={Constants.placeholder_trophy_icon}
-            style={styles.logoImageStyle}
-            logoUrl={true}
-            resizeMode="contain"
-          />
+          {eventFlag && (holderItem?.edges?.[0]?.node?.logoUrl
+            ? holderItem?.edges?.[0]?.node?.logoUrl
+            : holderItem?.node?.logoUrl).includes('.svg')?
+            <SvgWithPlaceHolder
+              source={
+                eventFlag && holderItem?.edges?.[0]?.node?.logoUrl
+                  ? holderItem?.edges?.[0]?.node?.logoUrl
+                  : holderItem?.node?.logoUrl
+              }
+              placeholderSource={Constants.placeholder_trophy_icon}
+              style={styles.logoImageStyle}
+              logoUrl={true}
+              resizeMode="contain"
+            /> :
+            <ImageWithPlaceHolder
+              source={
+                eventFlag && holderItem?.edges?.[0]?.node?.logoUrl
+                  ? holderItem?.edges?.[0]?.node?.logoUrl
+                  : holderItem?.node?.logoUrl
+              }
+              placeholderSource={Constants.placeholder_trophy_icon}
+              style={styles.logoImageStyle}
+              logoUrl={true}
+              resizeMode="contain"
+            />}
         </View>
         <View style={styles.buttonContainer}>
           {dayjs(currentDate).isAfter(item?.startTime) &&

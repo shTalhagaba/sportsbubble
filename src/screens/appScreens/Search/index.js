@@ -10,70 +10,74 @@ import {
   Keyboard,
   TextInput,
   Platform,
+  SafeAreaView,
 } from 'react-native';
 import styles from './styles';
 import { Images, Colors, Constants, Strings } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
-import { useQuery } from '@apollo/client';
-import { SEARCH_EVENTS_QUERY } from './queries';
 import dayjs from 'dayjs';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 import strings from 'src/utils/strings';
-const expireTime = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
 export default function Search(props) {
   const navigation = useNavigation();
+  let isFocused = useIsFocused()
+
   const reduxData = useSelector(state => state.user);
+  const currentDate = dayjs(new Date()).toISOString(); // Get the current date and time
   const [searchText, setSearchText] = useState('');
   const [list, setList] = useState([]);
-  const [startTime, setStartTime] = useState(dayjs(new Date()).toISOString());
-  const [endTime, setEndTime] = useState(
-    dayjs(new Date()).add(7, 'day').toISOString(),
-  );
-  const expireTime = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
-  const [isFocused, setIsFocused] = useState(true);
-  const [searchFlag, setSearchFlag] = useState(true);
-
-  const handleFocus = () => {
-    setIsFocused(true);
-  };
-
-  const handleBlur = () => {
-    setIsFocused(false);
-  };
-
+  const [isFocusedFlag, setIsFocusedFlag] = useState(false);
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
   const inputRef = useRef(null);
 
   useEffect(() => {
-    // const currentTime = Date.now();
-    // if (
-    //   (reduxData && reduxData?.expire && reduxData?.expire === currentTime) ||
-    //   (reduxData && reduxData?.eventList && reduxData?.eventList.length <= 0)
-    // ) {
-    //   const {loading, refetch, error, data} = useQuery(SEARCH_EVENTS_QUERY, {
-    //     variables: {
-    //       searchString: searchText,
-    //       startTime: startTime,
-    //       endTime: endTime,
-    //     },
-    //     onCompleted: data => {
-    //       if (data && data?.sortedEvents && data?.sortedEvents.length > 0) {
-    //         dispatch(setStoreEventList(data?.sortedEvents));
-    //         dispatch(setExpire(expireTime));
-    //       }
-    //     },
-    //     fetchPolicy: 'network-only',
-    //     notifyOnNetworkStatusChange: true,
-    //     onError: error => {
-    //       console.log('error : ', error);
-    //       // ShowMessage(error);
-    //     },
-    //   });
-    // }
-  }, [navigation]);
+    if (isFocused) {
+      handleFocus()
+      inputRef?.current?.focus();
+      Keyboard.dismiss();
 
+    }
+    return () => {
+      Keyboard.dismiss();
+    }
+  }, [isFocused]);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      keyboardDidShow
+    );
+
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      keyboardDidHide
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
+  const keyboardDidShow = () => {
+    setIsKeyboardOpen(true);
+  };
+  const keyboardDidHide = () => {
+    setIsKeyboardOpen(false);
+  };
+  const handleFocus = () => {
+    setIsFocusedFlag(true);
+  };
+  const handleDone = () => {
+    setIsFocusedFlag(false);
+  };
+  const handleClear = () => {
+    setSearchText('');
+    setIsFocusedFlag(false);
+    Keyboard.dismiss();
+  };
   const handleInputChange = text => {
     setSearchText(text);
     if (
@@ -96,38 +100,44 @@ export default function Search(props) {
         }
         return false;
       });
-      console.log('filtered: ', filtered);
       setList(filtered);
     }
   };
-  const handleDone = () => {
-    setIsFocused(false);
-  };
-
-  // useEffect(() => {
-  //   onPressTouch();
-  // }, [isFocused]);
-
-  const onPressTouch = () => {
-    if (!isFocused) {
-      setTimeout(() => {
-        inputRef?.current?.focus();
-        // setIsFocused(false)
-
-        Keyboard.dismiss();
-      }, 100); // Delay the focus call to ensure proper rendering
+  const handleEnd = () => {
+    if (isKeyboardOpen) {
+      Keyboard.dismiss()
+    } else {
+      inputRef?.current?.focus()
     }
-  };
-
-  const handleClear = () => {
-    setSearchText('');
-    setIsFocused(false);
-    setSearchFlag(false);
-  };
+  }
+  const handleDetails = (item) => {
+    if (item &&
+      item?.rightsHoldersConnection &&
+      item?.rightsHoldersConnection?.totalCount === 1 &&
+      dayjs(currentDate).isAfter(item?.startTime) &&
+      dayjs(currentDate).isBefore(item?.endTime)
+    ) {
+      Keyboard.dismiss();
+      navigation.navigate('withoutBottomtab', {
+        screen: 'Connect',
+        params: {
+          item: item,
+          holderItem: item?.rightsHoldersConnection,
+          eventFlag: true,
+        },
+      });
+    } else {
+      Keyboard.dismiss();
+      navigation.navigate('Watch', {
+        item: item,
+        searchFlag: true,
+      });
+    }
+  }
 
   return (
     <ImageBackground
-      source={Images.Background}
+      source={Images.Background2}
       resizeMode="cover"
       style={styles.container}>
       <StatusBar
@@ -140,22 +150,22 @@ export default function Search(props) {
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
         onPressBack={() =>
-          navigation.navigate('Guide', {
+          navigation.navigate('Search', {
             screen: 'Guide',
           })
         }
         SimpleView
       />
-      <View style={styles.mainContainer}>
+      <SafeAreaView style={styles.mainContainer}>
         {/* Search text box */}
         <TouchableOpacity
-          onPress={() => setIsFocused(true)}
+          onPress={() => handleFocus()}
           style={[
             styles.searchContainer,
-            isFocused ? styles.focus : styles.blur,
+            isFocusedFlag ? styles.focus : styles.blur,
           ]}>
           <View style={{ flex: 1 }}>
-            {isFocused && (
+            {isFocusedFlag && (
               <View
                 style={{
                   flexDirection: 'row',
@@ -177,9 +187,8 @@ export default function Search(props) {
                 alignSelf: 'center',
                 alignItems: 'center',
                 marginLeft: 12,
-                marginTop: 3,
               }}>
-              {!isFocused && (
+              {!isFocusedFlag && (
                 <Image
                   source={Images.Search}
                   style={styles.searchImage}
@@ -187,18 +196,22 @@ export default function Search(props) {
                 />
               )}
               <TextInput
+                ref={inputRef}
                 style={styles.inputField}
                 onFocus={handleFocus}
                 autoFocus={true}
-                placeholder={!isFocused ? 'Search' : ''}
+                placeholder={!isFocusedFlag ? 'Search' : ''}
                 placeholderTextColor={Colors.white}
                 value={searchText}
                 onChangeText={handleInputChange}
                 onSubmitEditing={handleDone}
+                returnKeyType='search'
+                onEndEditing={() => handleEnd()}
               />
             </View>
           </View>
-          <TouchableOpacity onPress={handleClear}>
+          <TouchableOpacity onPress={handleClear}
+            style={{ padding: 10, }}>
             <Image
               source={Images.Cross}
               style={styles.crossImage}
@@ -206,42 +219,25 @@ export default function Search(props) {
             />
           </TouchableOpacity>
         </TouchableOpacity>
-
         {/* list showing after search */}
         <FlatList
           data={searchText.length > 0 ? list : []}
           showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps={'handled'}
+          // onScrollBeginDrag={() => Keyboard.dismiss()}
           ListEmptyComponent={
             <View>
-              <Text style={styles.emptyTxt}>{Strings.emptySearchList}</Text>
+              <Text style={styles.emptyTxt}>
+                {searchText.length > 0 && list && list.length <= 0
+                  ? Strings.emptyEventsSearchList
+                  : Strings.emptySearchList}
+              </Text>
             </View>
           }
           renderItem={({ item }) => (
             <TouchableOpacity
               style={styles.listContainer}
-              onPress={() => {
-                if (
-                  item &&
-                  item?.rightsHoldersConnection &&
-                  item?.rightsHoldersConnection?.totalCount === 1 &&
-                  dayjs(currentDate).isAfter(item?.startTime) &&
-                  dayjs(currentDate).isBefore(item?.endTime)
-                ) {
-                  navigation.navigate('withoutBottomtab', {
-                    screen: 'Connect',
-                    params: {
-                      item: item,
-                      holderItem: item?.rightsHoldersConnection,
-                      eventFlag: true,
-                    },
-                  });
-                } else {
-                  navigation.navigate('Watch', {
-                    item: item,
-                    searchFlag: true,
-                  });
-                }
-              }}>
+              onPress={() => handleDetails(item)}>
               <View style={styles.innerContainer}>
                 <View style={styles.imageContainer}>
                   <ImageWithPlaceHolder
@@ -278,9 +274,10 @@ export default function Search(props) {
               </View>
             </TouchableOpacity>
           )}
-          keyExtractor={(item, index) => item?.id}
+
+          keyExtractor={(item, index) => index.toString()} // Change to a unique key if available
         />
-      </View>
+      </SafeAreaView>
     </ImageBackground>
   );
 }

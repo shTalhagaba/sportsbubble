@@ -6,6 +6,7 @@ import {
   View,
   Image,
   Text,
+  Platform,
 } from 'react-native';
 import styles from './styles';
 import { Images, Colors } from 'src/utils';
@@ -14,8 +15,9 @@ import DeviceInfo from 'react-native-device-info';
 import { useQuery } from '@apollo/client';
 import { GET_SORTED_EVENTS } from 'src/screens/appScreens/Guide/queries';
 import dayjs from 'dayjs';
-import { setSplashEventList } from 'src/store/types';
+import { setStoreEventList } from 'src/store/types';
 import { useDispatch, useSelector } from 'react-redux';
+import Config from 'react-native-config';
 
 export default function Splash() {
   const navigation = useNavigation();
@@ -24,31 +26,50 @@ export default function Splash() {
   const [startTime, setStartTime] = useState(dayjs(new Date()).toISOString());
   const height = Dimensions.get('window').height;
   const version = DeviceInfo.getVersion();
+  const stageToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJodHRwczovL2Rldi0zNTM5MjYyLm9rdGEuY29tL29hdXRoMi92MS90b2tlbiIsImlzcyI6IjBvYTlrN2RpYWRqOUxJN0tkNWQ2Iiwic3ViIjoiMG9hOWs3ZGlhZGo5TEk3S2Q1ZDYifQ.sJCxcymR_X_OtWCZxJ5_AfUbWvKkd1ML8JW-Wl91xV8uJ2paw067kEgfR7QYz6dk3-1-egBjyf1Mifm1cTN1S8JPpkd1NN1Aw6uuky3lt5jmjeHwwqL-XHzIkSjLN_t8zdO5OpDqtlbEqyNGtJFCONJ9K-hCjp7u5FWCZ1nKwIK3X1w-FVjRDLbvJrTrh8IJriqPhiWHfkGbz-jm6yStYXMw3uhcKd164RA2l8utz4jnVRn9ebcOiN_BQb3yvtqBc0CsxB6YKQmmW7Rbpg8cRU3B1zfLfMMu2QVPLYr5vDD2mhK1PwixUZ6UnYrYirXWNNTqyZquGZPQWpIlY9sIwA'
 
-  // Apollo Client query for fetching sorted events
+
   const { loading, refetch, error } = useQuery(GET_SORTED_EVENTS, {
     variables: {
-      startTime: startTime,
+      startTime: dayjs(startTime).set('minutes', 0)
+        .set('second', 0)
+        .toISOString(),
       endTime: dayjs(startTime)
-        .add(2, 'hours')
+        .add(24, 'hours')
         .set('minutes', 0)
         .set('second', 0)
         .toISOString(),
     },
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
+    context: {
+      headers: {
+        authorization:
+          Platform.OS === "android" ? stageToken :
+            Config?.BEARER_TOKEN
+              ? `Bearer ${Config.BEARER_TOKEN}`
+              : '',
+      },
+    },
     onCompleted: data => {
       if (data && data?.sortedEvents) {
-        const filteredEvents = data?.sortedEvents.filter(event => {
+        const filteredEvents = (data?.sortedEvents || []).filter(event => {
+          const { line1, line2, startTime, endTime, logo1, rightsHolders, id, rightsHoldersConnection } = event;
+          // Check if the event should be excluded based on id and rightsHoldersConnection
+          if (
+            id === '9f25117c-78ed-4af1-a2fb-ed5cef8ed414' ||
+            !rightsHoldersConnection ||
+            rightsHoldersConnection.edges.length < 1
+          ) {
+            return false;
+          }
           // Check if all required properties exist
-          const { line1, line2, startTime, endTime, logo1, rightsHolders } =
-            event;
           if (
             !line1 ||
             !line2 ||
             !startTime ||
-            !endTime ||
             !logo1 ||
+            !endTime ||
             !rightsHolders
           ) {
             return false;
@@ -60,13 +81,14 @@ export default function Splash() {
           if (!hasLogoUrl) {
             return false;
           }
+
           return true;
         });
-        dispatch(setSplashEventList(filteredEvents));
+        dispatch(setStoreEventList(filteredEvents));
       }
     },
     onError: error => {
-      console.log('error : ', error);
+      console.log('error splash : ', error);
     },
   });
 
@@ -74,8 +96,8 @@ export default function Splash() {
     // Check user status and navigate accordingly
     if (!loading) {
       if ((reduxData?.user || reduxData?.guest) &&
-        reduxData?.splashEventList &&
-        reduxData?.splashEventList.length > 0
+        reduxData?.eventList &&
+        reduxData?.eventList.length > 0
       ) {
         setTimeout(() => {
           navigation.replace('Root');
@@ -86,12 +108,12 @@ export default function Splash() {
         }, 1000);
       }
     }
-  }, [loading, reduxData?.splashEventList]);
+  }, [loading, reduxData?.eventList]);
 
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={Images.Background}
+        source={Images.Background2}
         style={{ height: '100%', width: '100%' }}
         resizeMode="cover">
         <ImageBackground
@@ -104,10 +126,10 @@ export default function Splash() {
             barStyle="light-content"
           />
         </ImageBackground>
-        <View style={styles.imageStyle}>
+        <View style={[styles.logoStyle, { marginTop: height / 4 }]}>
           <Image
             source={Images.LogoText}
-            style={styles.image}
+            style={styles.logo}
             resizeMode="contain"
           />
         </View>
