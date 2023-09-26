@@ -224,7 +224,7 @@ export default function Search(props) {
           data={searchText.length > 0 ? list : []}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps={'handled'}
-          // onScrollBeginDrag={() => Keyboard.dismiss()}
+          onScrollBeginDrag={() => Keyboard.dismiss()}
           ListEmptyComponent={
             <View>
               <Text style={styles.emptyTxt}>
