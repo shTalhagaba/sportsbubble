@@ -52,7 +52,7 @@ const SearchNavigation = () => {
         headerShown: false,
       }}>
       <SearchNavigator.Screen name="Search" component={Search} />
-      <SearchNavigator.Screen name="Watch" component={Watch} />
+      <SearchNavigator.Screen name="WatchSearch" component={Watch} />
     </SearchNavigator.Navigator>
   );
 };

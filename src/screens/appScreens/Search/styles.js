@@ -1,8 +1,5 @@
 import { Colors, Fonts } from 'src/utils';
 import { ScaledSheet } from "react-native-size-matters";
-import { Dimensions } from 'react-native';
-
-const { fontScale } = Dimensions.get('window');
 
 export default ScaledSheet.create({
   container: {
