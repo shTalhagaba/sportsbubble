@@ -136,148 +136,148 @@ export default function Search(props) {
 
   return (
     <View style={styles.container}>
-    <ImageBackground
-      source={Images.Background2}
-      resizeMode="cover"
-      style={styles.container}>
-      <StatusBar
-        backgroundColor={Colors.transparent}
-        translucent
-        barStyle="light-content"
-      />
-      {/* Header with Logo and back icon  */}
-      <AppHeader
-        centerImage={Images.Logo}
-        LeftImage={Images.LeftIcon}
-        onPressBack={() =>
-          navigation.navigate('Guide', {
-            screen: 'GuideMain',
-          })
-        }
-        SimpleView
-      />
-      <SafeAreaView style={styles.mainContainer}>
-        {/* Search text box */}
-        <TouchableOpacity
-          onPress={() => inputRef.current?.focus()} // Focus the input when the TouchableOpacity is pressed
-          style={[
-            styles.searchContainer,
-            isFocusedFlag ? styles.focus : styles.blur,
-          ]}>
-          <View style={{ flex: 1 }}>
-            {isFocusedFlag && (
+      <ImageBackground
+        source={Images.Background2}
+        resizeMode="cover"
+        style={styles.container}>
+        <StatusBar
+          backgroundColor={Colors.transparent}
+          translucent
+          barStyle="light-content"
+        />
+        {/* Header with Logo and back icon  */}
+        <AppHeader
+          centerImage={Images.Logo}
+          LeftImage={Images.LeftIcon}
+          onPressBack={() =>
+            navigation.navigate('Guide', {
+              screen: 'GuideMain',
+            })
+          }
+          SimpleView
+        />
+        <SafeAreaView style={styles.mainContainer}>
+          {/* Search text box */}
+          <TouchableOpacity
+            onPress={() => inputRef.current?.focus()} // Focus the input when the TouchableOpacity is pressed
+            style={[
+              styles.searchContainer,
+              isFocusedFlag ? styles.focus : styles.blur,
+            ]}>
+            <View style={{ flex: 1 }}>
+              {isFocusedFlag && (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginTop: Platform.OS === 'ios' ? -5 : 5,
+                    marginLeft: 15,
+                    alignItems: 'center',
+                  }}>
+                  <Image
+                    source={Images.Search}
+                    style={styles.searchImageTwo}
+                    resizeMode={'contain'}
+                  />
+                  <Text style={styles.searchTxt}>{strings.search}</Text>
+                </View>
+              )}
               <View
                 style={{
                   flexDirection: 'row',
-                  marginTop: Platform.OS === 'ios' ? -5 : 5,
-                  marginLeft: 15,
+                  alignSelf: 'center',
                   alignItems: 'center',
+                  marginLeft: 12,
                 }}>
-                <Image
-                  source={Images.Search}
-                  style={styles.searchImageTwo}
-                  resizeMode={'contain'}
-                />
-                <Text style={styles.searchTxt}>{strings.search}</Text>
-              </View>
-            )}
-            <View
-              style={{
-                flexDirection: 'row',
-                alignSelf: 'center',
-                alignItems: 'center',
-                marginLeft: 12,
-              }}>
-              {!isFocusedFlag && (
-                <Image
-                  source={Images.Search}
-                  style={styles.searchImage}
-                  resizeMode={'contain'}
-                />
-              )}
-              <TextInput
-                ref={inputRef}
-                style={styles.inputField}
-                onFocus={handleFocus}
-                autoFocus={true}
-                placeholder={!isFocusedFlag ? 'Search' : ''}
-                placeholderTextColor={Colors.white}
-                value={searchText}
-                onChangeText={handleInputChange}
-                onSubmitEditing={handleDone}
-                returnKeyType='search'
-                onEndEditing={() => handleEnd()}
-              />
-            </View>
-          </View>
-          <TouchableOpacity onPress={handleClear} style={{ padding: 10 }}>
-            <Image
-              source={Images.Cross}
-              style={styles.crossImage}
-              resizeMode={'contain'}
-            />
-          </TouchableOpacity>
-        </TouchableOpacity>
-
-        {/* list showing after search */}
-        <FlatList
-          data={searchText.length > 0 ? list : []}
-          showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps={'handled'}
-          // onScrollBeginDrag={() => Keyboard.dismiss()}
-          ListEmptyComponent={
-            <View>
-              <Text style={styles.emptyTxt}>
-                {searchText.length > 0 && list && list.length <= 0
-                  ? Strings.emptyEventsSearchList
-                  : Strings.emptySearchList}
-              </Text>
-            </View>
-          }
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={styles.listContainer}
-              onPress={() => handleDetails(item)}>
-              <View style={styles.innerContainer}>
-                <View style={styles.imageContainer}>
-                  <ImageWithPlaceHolder
-                    source={item?.logo1}
-                    placeholderSource={Constants.placeholder_trophy_icon}
-                    style={styles.imageIcon}
-                    resizeMode="contain"
+                {!isFocusedFlag && (
+                  <Image
+                    source={Images.Search}
+                    style={styles.searchImage}
+                    resizeMode={'contain'}
                   />
-                </View>
-                <View style={styles.userNameContainer}>
-                  <Text style={styles.eventTxt}>
-                    {item?.line1 ? item?.line1 : item?.companyName}
-                  </Text>
-                  <Text style={styles.titleTxt} numberOfLines={1}>
-                    {item?.line2 ? item?.line2 : item?.title}
-                  </Text>
-                  <View style={styles.innerContainer}>
+                )}
+                <TextInput
+                  ref={inputRef}
+                  style={styles.inputField}
+                  onFocus={handleFocus}
+                  autoFocus={true}
+                  placeholder={!isFocusedFlag ? 'Search' : ''}
+                  placeholderTextColor={Colors.white}
+                  value={searchText}
+                  onChangeText={handleInputChange}
+                  onSubmitEditing={handleDone}
+                  returnKeyType='search'
+                  onEndEditing={() => handleEnd()}
+                />
+              </View>
+            </View>
+            <TouchableOpacity onPress={handleClear} style={{ padding: 10 }}>
+              <Image
+                source={Images.Cross}
+                style={styles.crossImage}
+                resizeMode={'contain'}
+              />
+            </TouchableOpacity>
+          </TouchableOpacity>
+
+          {/* list showing after search */}
+          <FlatList
+            data={searchText.length > 0 ? list : []}
+            showsVerticalScrollIndicator={false}
+            keyboardShouldPersistTaps={'handled'}
+            onScrollBeginDrag={() => Keyboard.dismiss()}
+            ListEmptyComponent={
+              <View>
+                <Text style={styles.emptyTxt}>
+                  {searchText.length > 0 && list && list.length <= 0
+                    ? Strings.emptyEventsSearchList
+                    : Strings.emptySearchList}
+                </Text>
+              </View>
+            }
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                style={styles.listContainer}
+                onPress={() => handleDetails(item)}>
+                <View style={styles.innerContainer}>
+                  <View style={styles.imageContainer}>
+                    <ImageWithPlaceHolder
+                      source={item?.logo1}
+                      placeholderSource={Constants.placeholder_trophy_icon}
+                      style={styles.imageIcon}
+                      resizeMode="contain"
+                    />
+                  </View>
+                  <View style={styles.userNameContainer}>
                     <Text style={styles.eventTxt}>
-                      {' ' + item?.startTime
-                        ? dayjs(item?.startTime).format('ddd. MM/D')
-                        : item?.day}
-                      {'  l '}
+                      {item?.line1 ? item?.line1 : item?.companyName}
                     </Text>
-                    <Text style={styles.eventTxt}>
-                      {' '}
-                      {' ' + item?.startTime
-                        ? dayjs(item?.startTime).format('h:mma') +
-                        ' - ' +
-                        dayjs(item?.endTime).format('h:mma')
-                        : item?.time}
+                    <Text style={styles.titleTxt} numberOfLines={1}>
+                      {item?.line2 ? item?.line2 : item?.title}
                     </Text>
+                    <View style={styles.innerContainer}>
+                      <Text style={styles.eventTxt}>
+                        {' ' + item?.startTime
+                          ? dayjs(item?.startTime).format('ddd. MM/D')
+                          : item?.day}
+                        {'  l '}
+                      </Text>
+                      <Text style={styles.eventTxt}>
+                        {' '}
+                        {' ' + item?.startTime
+                          ? dayjs(item?.startTime).format('h:mma') +
+                          ' - ' +
+                          dayjs(item?.endTime).format('h:mma')
+                          : item?.time}
+                      </Text>
+                    </View>
                   </View>
                 </View>
-              </View>
-            </TouchableOpacity>
-          )}
-          keyExtractor={(item, index) => index.toString()} // Change to a unique key if available
-        />
-      </SafeAreaView>
-    </ImageBackground>
+              </TouchableOpacity>
+            )}
+            keyExtractor={(item, index) => index.toString()} // Change to a unique key if available
+          />
+        </SafeAreaView>
+      </ImageBackground>
     </View>
   );
 }
