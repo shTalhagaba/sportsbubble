@@ -38,7 +38,6 @@ export default function Search(props) {
       handleFocus()
       inputRef?.current?.focus();
       Keyboard.dismiss();
-
     }
     return () => {
       Keyboard.dismiss();
@@ -128,7 +127,7 @@ export default function Search(props) {
       });
     } else {
       Keyboard.dismiss();
-      navigation.navigate('Watch', {
+      navigation.navigate('SearchWatch', {
         item: item,
         searchFlag: true,
       });
@@ -136,6 +135,7 @@ export default function Search(props) {
   }
 
   return (
+    <View style={styles.container}>
     <ImageBackground
       source={Images.Background2}
       resizeMode="cover"
@@ -150,8 +150,8 @@ export default function Search(props) {
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
         onPressBack={() =>
-          navigation.navigate('Search', {
-            screen: 'Guide',
+          navigation.navigate('Guide', {
+            screen: 'GuideMain',
           })
         }
         SimpleView
@@ -159,7 +159,7 @@ export default function Search(props) {
       <SafeAreaView style={styles.mainContainer}>
         {/* Search text box */}
         <TouchableOpacity
-          onPress={() => handleFocus()}
+          onPress={() => inputRef.current?.focus()} // Focus the input when the TouchableOpacity is pressed
           style={[
             styles.searchContainer,
             isFocusedFlag ? styles.focus : styles.blur,
@@ -210,8 +210,7 @@ export default function Search(props) {
               />
             </View>
           </View>
-          <TouchableOpacity onPress={handleClear}
-            style={{ padding: 10, }}>
+          <TouchableOpacity onPress={handleClear} style={{ padding: 10 }}>
             <Image
               source={Images.Cross}
               style={styles.crossImage}
@@ -219,12 +218,13 @@ export default function Search(props) {
             />
           </TouchableOpacity>
         </TouchableOpacity>
+
         {/* list showing after search */}
         <FlatList
           data={searchText.length > 0 ? list : []}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps={'handled'}
-          onScrollBeginDrag={() => Keyboard.dismiss()}
+          // onScrollBeginDrag={() => Keyboard.dismiss()}
           ListEmptyComponent={
             <View>
               <Text style={styles.emptyTxt}>
@@ -274,10 +274,10 @@ export default function Search(props) {
               </View>
             </TouchableOpacity>
           )}
-
           keyExtractor={(item, index) => index.toString()} // Change to a unique key if available
         />
       </SafeAreaView>
     </ImageBackground>
+    </View>
   );
 }

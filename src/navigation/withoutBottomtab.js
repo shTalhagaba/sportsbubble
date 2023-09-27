@@ -14,7 +14,6 @@ const AppNavigator = createNativeStackNavigator()
 
 const WithoutBottomnavigation = () => {
     return (
-
         <AppNavigator.Navigator
             screenOptions={{
                 headerShown: false
@@ -26,7 +25,6 @@ const WithoutBottomnavigation = () => {
             <AppNavigator.Screen name="Payment" component={Payment} />
             <AppNavigator.Screen name="Connect" component={Connect} />
             <AppNavigator.Screen name="Term" component={Term} />
-
         </AppNavigator.Navigator>
     )
 }

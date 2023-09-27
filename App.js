@@ -1,11 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Navigation from 'src/navigation';
-import { NavigationContainer } from '@react-navigation/native';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ApolloClient, InMemoryCache, createHttpLink, ApolloProvider } from '@apollo/client';
-import { persistCache } from 'apollo3-cache-persist';
-import Config from 'react-native-config';
-import { persistStore, persistReducer, createTransform } from 'redux-persist';
+import { persistStore, persistReducer } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import { createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
@@ -40,6 +38,16 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
   defaultOptions: { watchQuery: { fetchPolicy: 'cache-and-network' } },
 });
+const
+  theme = {
+    ...DefaultTheme,
+    colors
+      : {
+      ...DefaultTheme.colors,
+      background:'black'
+      ,
+    },
+  }
 
 const App = () => {
   LogBox.ignoreLogs(['Warning: ...']);
@@ -47,7 +55,7 @@ const App = () => {
 
   return (
     <ApolloProvider client={client}>
-      <NavigationContainer>
+      <NavigationContainer theme={theme}>
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
             <Navigation />

@@ -172,7 +172,7 @@ export default function Guide(props) {
 
   const getTimeList = () => {
     const hoursList = [];
-    for (let i = 1; i < 168; i++) {
+    for (let i = 1; i < 169; i++) {
       const nextHour = new Date(new Date().getTime() + i * 60 * 60 * 1000)
       const roundedHour = new Date(
         nextHour.getFullYear(),
@@ -311,7 +311,7 @@ export default function Guide(props) {
 
   // handle next timer to show next hour events
   const handleNext = () => {
-    if (currentIndex < 165) {
+    if (currentIndex < 166) {
       handleSelectTime(currentIndex + 1, 'add');
       setCurrentIndex(prevIndex => prevIndex + 1);
       setIsLive(false);
@@ -425,6 +425,7 @@ export default function Guide(props) {
   });
 
   return (
+    <View style={styles.container}>
     <ImageBackground
       source={Images.Background}
       resizeMode="cover"
@@ -584,7 +585,7 @@ export default function Guide(props) {
               style={[
                 styles.liveTimeContainer,
                 {
-                  backgroundColor: Colors.brandBlue,
+                  backgroundColor:  Colors.brandBlue,
                 }
               ]}>
               <Image
@@ -634,5 +635,6 @@ export default function Guide(props) {
         liveMatchModal={liveMatchModal}
       />
     </ImageBackground>
+    </View>
   );
 }

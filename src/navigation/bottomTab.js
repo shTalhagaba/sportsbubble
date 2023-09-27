@@ -27,7 +27,7 @@ const GuideNavigation = () => {
       screenOptions={{
         headerShown: false,
       }}>
-      <GuideNavigator.Screen name="Guide" component={Guide} />
+      <GuideNavigator.Screen name="GuideMain" component={Guide} />
       <GuideNavigator.Screen name="Watch" component={Watch} />
     </GuideNavigator.Navigator>
   );
@@ -39,7 +39,7 @@ const SettingNavigation = () => {
       screenOptions={{
         headerShown: false,
       }}>
-      <SettingNavigator.Screen name="Setting" component={Setting} />
+      <SettingNavigator.Screen name="SettingMain" component={Setting} />
       <SettingNavigator.Screen name="Legal" component={Legal} />
     </SettingNavigator.Navigator>
   );
@@ -51,8 +51,8 @@ const SearchNavigation = () => {
       screenOptions={{
         headerShown: false,
       }}>
-      <SearchNavigator.Screen name="Search" component={Search} />
-      <SearchNavigator.Screen name="WatchSearch" component={Watch} />
+      <SearchNavigator.Screen name="SearchMain" component={Search} />
+      <SearchNavigator.Screen name="SearchWatch" component={Watch} />
     </SearchNavigator.Navigator>
   );
 };
@@ -65,7 +65,7 @@ const BottomTab = () => {
 
   const tabBarGuideListeners = ({ navigation, route }) => ({
     tabPress: () => {
-      navigation.navigate('Guide'),
+      navigation.navigate('GuideMain'),
         dispatch(refreshData(!reduxData?.refresh)); // Dispatch the action
     }
   });
@@ -142,7 +142,7 @@ const BottomTab = () => {
         name="Search"
         component={SearchNavigation}
         // listeners={handleSearchStack}
-        options={{
+        options={{ 
           tabBarIcon: ({ focused }) => (
             <View style={styles.bottomContainer}>
               <Image
