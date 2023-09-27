@@ -74,8 +74,8 @@ export default function Search(props) {
   };
   const handleClear = () => {
     setSearchText('');
-    setIsFocusedFlag(false);
-    Keyboard.dismiss();
+    // setIsFocusedFlag(false);
+    // Keyboard.dismiss();
   };
   const handleInputChange = text => {
     setSearchText(text);
