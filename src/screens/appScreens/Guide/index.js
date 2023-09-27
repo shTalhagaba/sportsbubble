@@ -584,7 +584,7 @@ export default function Guide(props) {
               style={[
                 styles.liveTimeContainer,
                 {
-                  backgroundColor:  Colors.brandBlue,
+                  backgroundColor: Colors.brandBlue,
                 }
               ]}>
               <Image

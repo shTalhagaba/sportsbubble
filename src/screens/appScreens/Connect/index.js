@@ -60,8 +60,8 @@ export default function Connect(props) {
                   source={item?.logo1}
                   placeholderSource={Constants.placeholder_trophy_icon}
                   style={styles.imageIcon}
-                  resizeMode="contain"
                 />
+                  resizeMode="contain"
               </View>
               <View style={styles.userNameContainer}>
                 <Text style={styles.eventTxt} numberOfLines={2}>
@@ -101,7 +101,7 @@ export default function Connect(props) {
         <View style={styles.logoImageContainer}>
           {eventFlag && (holderItem?.edges?.[0]?.node?.logoUrl
             ? holderItem?.edges?.[0]?.node?.logoUrl
-            : holderItem?.node?.logoUrl).includes('.svg')?
+            : holderItem?.node?.logoUrl).includes('.svg') ?
             <SvgWithPlaceHolder
               source={
                 eventFlag && holderItem?.edges?.[0]?.node?.logoUrl
