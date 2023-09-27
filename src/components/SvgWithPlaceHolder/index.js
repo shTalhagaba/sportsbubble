@@ -41,6 +41,7 @@ const SvgWithPlaceHolder = ({
   const handleImageError = () => {
     setImageError(true);
   };
+  console.log('dimensions : ', dimensions)
 
   return (
     <>
@@ -52,14 +53,14 @@ const SvgWithPlaceHolder = ({
       ) : (
         <>
           {!imageError && source && source != 'null' ?
-            dimensions && dimensions?.width > 500 ?
+            dimensions && dimensions?.width > 200 ?
               <SvgCssUri
                 width={dimensions && dimensions?.width ? dimensions?.width : widthLogo ? widthLogo : 100}
                 height={dimensions && dimensions?.height ? dimensions?.height : heightLogo ? heightLogo : 120}
                 uri={source}
-                style={{ aspectRatio: 0.1, width: '100%', height: '100%', }}
+                style={{ aspectRatio: dimensions?.height < 500 && dimensions?.height < dimensions?.width ? 0.5 : 0.1, width: '100%', height: '100%', }}
                 viewBox={`0 0 ${dimensions && dimensions?.width > 0 ? dimensions?.width : widthLogo ? widthLogo : 100} ${dimensions && dimensions?.height > 0 ? dimensions?.height : heightLogo ? heightLogo : 120}`} // Specify the viewBox dimensions (min-x, min-y, width, height)
-                preserveAspectRatio="xMaxYMax meet" // Preserve aspect ratio
+              // preserveAspectRatio="xMaxYMax meet" // Preserve aspect ratio
               /> :
               <SvgCssUri
                 width={widthLogo ? widthLogo : 100}

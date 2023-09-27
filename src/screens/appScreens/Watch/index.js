@@ -213,7 +213,7 @@ export default function Watch(props) {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        onPressBack={searchFlag ? () => navigation.navigate('SearchWatch') : null}
+        // onPressBack={searchFlag ? () => navigation.navigate('SearchWatch') : null}
         SimpleView
       // headerContainer={styles.headerContainer}
       />

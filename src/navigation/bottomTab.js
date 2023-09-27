@@ -70,6 +70,12 @@ const BottomTab = () => {
     }
   });
 
+  const tabBarSearchListeners = ({ navigation, route }) => ({
+    tabPress: () => {
+      navigation.navigate('SearchMain')
+    }
+  });
+
   return (
     <Tab.Navigator
       initialRouteName={'Guide'}
@@ -141,7 +147,7 @@ const BottomTab = () => {
       <Tab.Screen
         name="Search"
         component={SearchNavigation}
-        // listeners={handleSearchStack}
+        listeners={tabBarSearchListeners}
         options={{ 
           tabBarIcon: ({ focused }) => (
             <View style={styles.bottomContainer}>
