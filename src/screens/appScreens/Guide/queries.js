@@ -16,6 +16,12 @@ export const GET_SORTED_EVENTS = gql`
         name
         logoUrl
       }
+      league {
+        name
+      }
+      sport {
+        name
+      }
       rightsHoldersConnection {
         totalCount
         edges {
