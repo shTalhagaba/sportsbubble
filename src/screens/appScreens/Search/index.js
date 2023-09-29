@@ -42,6 +42,8 @@ export default function Search(props) {
     }
     return () => {
       Keyboard.dismiss();
+      setIsFocusedFlag(false)
+      setSearchText('')
     }
   }, [isFocused]);
 
