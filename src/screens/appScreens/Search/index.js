@@ -41,6 +41,8 @@ export default function Search(props) {
     }
     return () => {
       Keyboard.dismiss();
+      setIsFocusedFlag(false)
+      setSearchText('')
     }
   }, [isFocused]);
 
@@ -93,7 +95,7 @@ export default function Search(props) {
         const searchString = text.split(" ").filter(a => a !== '');
         // Creating an iterable to verify that all words are matched
         let matchedStrings = 0;
-        
+
         for (const text of searchString) {
           for (const key of searchableFields) {
             const value = key.split('.').reduce((obj, prop) => obj && obj[prop], item);
@@ -111,7 +113,7 @@ export default function Search(props) {
       setList(filtered);
     }
   };
-  
+
   const handleEnd = () => {
     if (isKeyboardOpen) {
       Keyboard.dismiss()
