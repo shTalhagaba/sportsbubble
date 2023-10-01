@@ -1,19 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import {
-  ImageBackground,
-  Text,
-  View,
-  Image,
-  StatusBar,
-  Linking,
-} from 'react-native';
+import { ImageBackground, Text, View, Image, StatusBar, Linking } from 'react-native';
 import styles from './styles';
 import { Images, Colors, Strings, Constants } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
 import GreenButton from 'src/components/GreenButton';
 import dayjs from 'dayjs';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
-import SvgWithPlaceHolder from '../../../components/SvgWithPlaceHolder';
+import SvgWithPlaceHolder from 'src/components/SvgWithPlaceHolder';
 
 export default function Connect(props) {
   const [item, setItem] = useState(props?.route?.params?.item);
@@ -100,7 +93,7 @@ export default function Connect(props) {
         <View style={styles.logoImageContainer}>
           {eventFlag && (holderItem?.edges?.[0]?.node?.logoUrl
             ? holderItem?.edges?.[0]?.node?.logoUrl
-            : holderItem?.node?.logoUrl).includes('.svg')?
+            : holderItem?.node?.logoUrl).includes('.svg') ?
             <SvgWithPlaceHolder
               source={
                 eventFlag && holderItem?.edges?.[0]?.node?.logoUrl

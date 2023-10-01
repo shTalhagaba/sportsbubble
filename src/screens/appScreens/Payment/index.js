@@ -92,7 +92,7 @@ export default function Payment() {
                     }}
 
                 />
-                <View style={{ flexDirection: "row" }}>
+                <View style={styles.direction}>
                     <View style={styles.expiryContainer}>
                         <ContactTextInput
                             leftImage={Images.Card}

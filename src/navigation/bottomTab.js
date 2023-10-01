@@ -5,11 +5,9 @@ import { Image, Platform, View } from 'react-native';
 
 import Guide from 'src/screens/appScreens/Guide';
 import Watch from 'src/screens/appScreens/Watch';
-import Connect from 'src/screens/appScreens/Connect';
 import Search from 'src/screens/appScreens/Search';
 import Setting from 'src/screens/appScreens/Setting';
 import Legal from 'src/screens/appScreens/Legal';
-import MySports from 'src/screens/appScreens/MySports';
 import { moderateScale, ScaledSheet } from 'react-native-size-matters';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useDispatch, useSelector } from 'react-redux';
@@ -124,31 +122,11 @@ const BottomTab = () => {
           ),
         }}
       />
-      {/* <Tab.Screen
-        name="MySports"
-        component={MySports}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <View style={styles.bottomContainer}>
-              <Image
-                source={Images.MySports}
-                style={[
-                  styles.iconImage,
-                  {
-                    tintColor: focused ? Colors.lightGreen : Colors.greyText,
-                  },
-                ]}
-                resizeMode={'contain'}
-              />
-            </View>
-          ),
-        }}
-      /> */}
       <Tab.Screen
         name="Search"
         component={SearchNavigation}
         listeners={tabBarSearchListeners}
-        options={{ 
+        options={{
           tabBarIcon: ({ focused }) => (
             <View style={styles.bottomContainer}>
               <Image

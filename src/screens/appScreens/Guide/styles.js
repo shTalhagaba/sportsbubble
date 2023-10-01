@@ -25,6 +25,17 @@ export default ScaledSheet.create({
     alignSelf: 'center',
     marginTop: '40@ms0.3',
   },
+  indicatorContainer: {
+    flex: 1,
+    justifyContent: 'center'
+  },
+  direction: {
+    flexDirection: 'row'
+  },
+  userNameMainContainer: {
+    flex: 1,
+    backgroundColor: Colors.darkBlue,
+  },
   listContainer: {
     paddingRight: '0@ms0.3',
     marginVertical: '0@ms0.3',

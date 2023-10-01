@@ -1,29 +1,22 @@
 import React from 'react';
-import {
-  ImageBackground,
-  ScrollView,
-  StatusBar,
-  Text,
-  View,
-  useWindowDimensions,
-} from 'react-native';
+import { ImageBackground, ScrollView, StatusBar, Text, View, useWindowDimensions } from 'react-native';
 import styles from './styles';
-import {Images, Colors, Strings} from 'src/utils';
+import { Images, Colors, Strings } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
-import {privacyPolicy, privacyPolicyCA, termsOfUse} from 'src/utils/term';
+import { privacyPolicy, privacyPolicyCA, termsOfUse } from 'src/utils/term';
 import RenderHTML from 'react-native-render-html';
 
 export default function Term(props) {
-  const {width} = useWindowDimensions();
+  const { width } = useWindowDimensions();
   let source = {
     html:
       props?.route?.params?.selected === Strings.termUse
         ? termsOfUse
         : props?.route?.params?.selected === Strings.privacyPolicy
-        ? privacyPolicy
-        : props?.route?.params?.selected === Strings.californiaPolicy
-        ? privacyPolicyCA
-        : termsOfUse,
+          ? privacyPolicy
+          : props?.route?.params?.selected === Strings.californiaPolicy
+            ? privacyPolicyCA
+            : termsOfUse,
   };
   return (
     <ImageBackground
@@ -39,7 +32,7 @@ export default function Term(props) {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        customLeftImage={{tintColor: Colors.orange}}
+        customLeftImage={{ tintColor: Colors.orange }}
         SimpleView
       />
       {/* Main tabs  */}
@@ -50,7 +43,7 @@ export default function Term(props) {
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           indicatorStyle={'white'}
-          style={{flex: 1, marginVertical: 25}}>
+          style={styles.scrollContainer}>
           <View>
             <RenderHTML source={source} contentWidth={width} />
           </View>

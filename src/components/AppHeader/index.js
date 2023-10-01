@@ -5,7 +5,6 @@ import styles from './styles';
 
 const AppHeader = props => {
   const navigation = useNavigation();
-
   return (
     <View style={[styles.headerContainer, props.headerContainer, props?.connect ? styles.headerContainer2 : {}]}>
       {props.LeftImage ? (

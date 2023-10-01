@@ -31,7 +31,7 @@ export default function UpdatePassword() {
                 customLeftImage={{ tintColor: Colors.darkOrange }}
                 SimpleView />
             <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={{ marginHorizontal: 20 }}>
+                <View style={styles.innerContainer}>
                     <Text style={styles.loginTxt}>{Strings.updatePassword}</Text>
                     <ContactTextInput
                         leftImage={Images.LockIcon}

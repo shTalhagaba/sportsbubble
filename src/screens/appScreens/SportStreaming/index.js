@@ -1,17 +1,8 @@
-import React, {useRef, useState} from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  ImageBackground,
-  StatusBar,
-  FlatList,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, ScrollView, ImageBackground, StatusBar, FlatList, Image, TouchableOpacity } from 'react-native';
 import styles from './styles';
 import AppHeader from 'src/components/AppHeader';
-import {Images, Colors} from 'src/utils';
+import { Images, Colors } from 'src/utils';
 import Strings from 'src/utils/strings';
 import AppSearch from 'src/components/AppSearch';
 import { sportStreamingList } from 'src/utils/list';
@@ -19,6 +10,7 @@ import { sportStreamingList } from 'src/utils/list';
 
 export default function SportStreaming() {
   const [mySportData, setSportData] = useState(sportStreamingList);
+
   const handleSelectSports = (item, index) => {
     let list = [...mySportData];
     list[index].selected = !list[index].selected;
@@ -34,7 +26,7 @@ export default function SportStreaming() {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        customLeftImage={{tintColor: Colors.darkOrange}}
+        customLeftImage={{ tintColor: Colors.darkOrange }}
         SimpleView
       />
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -52,7 +44,7 @@ export default function SportStreaming() {
           <FlatList
             data={mySportData}
             showsVerticalScrollIndicator={false}
-            renderItem={({item, index}) => (
+            renderItem={({ item, index }) => (
               <View style={styles.listContainer}>
                 <View style={styles.innerListContainer}>
                   <Image

@@ -6,6 +6,9 @@ export default ScaledSheet.create({
         flex: 1,
         backgroundColor: Colors.appColorBackground
     },
+    innerContainer: {
+        marginHorizontal: 20
+    },
     loginTxt: {
         fontSize: "20@ms0.3",
         fontWeight: "bold",

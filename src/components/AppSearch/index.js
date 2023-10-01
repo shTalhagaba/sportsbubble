@@ -42,7 +42,6 @@ const AppSearch = props => {
         returnKeyType={props.returnKeyType}
         onSubmitEditing={props.onSubmitEditing}
         blurOnSubmit={props.blurOnSubmit}
-        // ref={props.ref}
         ref={props.refInner}
         onFocus={handleFocus}
         onBlur={handleBlur}

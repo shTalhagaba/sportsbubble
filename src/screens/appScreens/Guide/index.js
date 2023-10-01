@@ -1,17 +1,5 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import {
-  ImageBackground,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  StatusBar,
-  ActivityIndicator,
-  FlatList,
-  Dimensions,
-  Platform,
-  ScrollView
-} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { ImageBackground, Text, View, Image, TouchableOpacity, StatusBar, ActivityIndicator, FlatList, Dimensions, Platform, ScrollView } from 'react-native';
 import styles from './styles';
 import { Images, Colors, Strings, Constants } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
@@ -32,7 +20,7 @@ import { categoryArr, stageToken, wrongEventId } from 'src/utils/list';
 const screenWidth = Dimensions.get('window').width;
 const { fontScale } = Dimensions.get('window');
 
-export default function Guide(props) {
+export default function Guide() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   let isFocused = useIsFocused()
@@ -364,11 +352,7 @@ export default function Guide(props) {
                   : item?.endGrad - item?.startGrad
                 }%`,
             }}></View>
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: Colors.darkBlue,
-            }}></View>
+          <View style={styles.userNameMainContianer}></View>
           <View style={styles.userNameContainer}>
             <Text style={[styles.eventTxt]} numberOfLines={1}>
               {item?.line1 ? item?.line1 : item?.companyName}
@@ -376,7 +360,7 @@ export default function Guide(props) {
             <Text style={styles.titleTxt} numberOfLines={1}>
               {item?.line2 ? item?.line2 : item?.title}
             </Text>
-            <View style={{ flexDirection: 'row' }}>
+            <View style={styles.direction}>
               <Text style={[styles.eventDateTxt]}>
                 {item?.startTime
                   ? dayjs(item?.startTime).format('ddd. MM/D')
@@ -574,7 +558,7 @@ export default function Guide(props) {
         </GestureRecognizer>
         {/* main list  */}
         {false ? (
-          <View style={{ flex: 1, justifyContent: 'center' }}>
+          <View style={styles.indicatorContainer}>
             <ActivityIndicator color={'#fff'} size={'large'} />
           </View>
         ) : (

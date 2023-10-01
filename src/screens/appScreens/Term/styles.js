@@ -1,10 +1,14 @@
-import {Colors, Fonts} from 'src/utils';
-import {ScaledSheet} from 'react-native-size-matters';
+import { Colors, Fonts } from 'src/utils';
+import { ScaledSheet } from 'react-native-size-matters';
 
 export default ScaledSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.appColorBackground,
+  },
+  scrollContainer: {
+    flex: 1,
+    marginVertical: '25@ms0.3',
   },
   loginTxt: {
     fontSize: '20@ms0.3',

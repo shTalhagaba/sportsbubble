@@ -5,5 +5,6 @@ import Strings from './strings'
 import Constants from './constants'
 import Functions from './functions'
 import List from './list'
+import Devices from './devices'
 
-export { Colors, Images, Fonts, Strings, Constants, Functions, List }
+export { Colors, Images, Fonts, Strings, Constants, Functions, List, Devices }

@@ -14,6 +14,24 @@ export default ScaledSheet.create({
   innerContainer: {
     flexDirection: "row"
   },
+  searchMainContainer: {
+    flex: 1
+  },
+  searchInnerContainer: {
+    flexDirection: 'row',
+    marginTop: Platform.OS === 'ios' ? -5 : 5,
+    marginLeft: 15,
+    alignItems: 'center',
+  },
+  searchFocusContainer: {
+    flexDirection: 'row',
+    alignSelf: 'center',
+    alignItems: 'center',
+    marginLeft: 12,
+  },
+  clearContainer: {
+    padding: 10
+  },
   searchContainer: {
     flexDirection: 'row',
     height: '53@ms0.3',

@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { View, Text, ScrollView, ImageBackground, StatusBar, FlatList, Image, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, ScrollView, ImageBackground, StatusBar, Image, TouchableOpacity } from 'react-native';
 import styles from './styles';
 import AppHeader from 'src/components/AppHeader'
 import { Images, Colors, Strings } from 'src/utils';

@@ -1,15 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  ImageBackground,
-  Text,
-  View,
-  Image,
-  FlatList,
-  TouchableOpacity,
-  StatusBar,
-  Dimensions,
-  ScrollView,
-} from 'react-native';
+import { ImageBackground, Text, View, Image, FlatList, TouchableOpacity, StatusBar, Dimensions, ScrollView } from 'react-native';
 import styles from './styles';
 import { Images, Colors, Strings, Constants } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
@@ -116,7 +106,7 @@ export default function Watch(props) {
             data={mainlist}
             showsHorizontalScrollIndicator={false}
             horizontal
-            contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignSelf: 'center', }}
+            contentContainerStyle={styles.flatContainer}
             renderItem={({ item, index }) => {
               return (
                 <TouchableOpacity

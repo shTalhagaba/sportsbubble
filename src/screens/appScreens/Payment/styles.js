@@ -10,6 +10,9 @@ export default ScaledSheet.create({
         marginTop: "10@ms0.3",
         marginHorizontal: "20@ms0.3"
     },
+    direction: {
+        flexDirection: "row"
+    },
     checkoutTxt: {
         fontSize: "24@ms0.3",
         fontWeight: "800",

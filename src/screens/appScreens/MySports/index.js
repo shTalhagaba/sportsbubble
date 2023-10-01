@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
-import {
-  ImageBackground,
-  Text,
-  View,
-  Image,
-  FlatList,
-  TouchableOpacity,
-  StatusBar,
-} from 'react-native';
+import { ImageBackground, Text, View, Image, FlatList, TouchableOpacity, StatusBar } from 'react-native';
 import styles from './styles';
 import { Images, Colors, Strings } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
