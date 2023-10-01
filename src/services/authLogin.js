@@ -11,7 +11,6 @@ const userLogin = async (email, password) => {
       Username: email,
       Password: password
     })
-
     user.authenticateUser(details, {
       onSuccess: (data) => {
         resolve(data)

@@ -7,14 +7,12 @@ const changePassword = (email, oldPassword, newPassword) => {
       UserPoolId: 'us-west-2_nTZIRvqNk',
       ClientId: '2c4r8a30g1h8vu08kvad3mm7ov',
     };
-
     const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
     const userData = {
       Username: email,
       Pool: userPool,
     };
     const cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
-
     cognitoUser.authenticateUser(
       new AmazonCognitoIdentity.AuthenticationDetails({
         Username: email,

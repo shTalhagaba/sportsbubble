@@ -17,7 +17,7 @@ import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 import GestureRecognizer from 'react-native-swipe-gestures';
-import SvgWithPlaceHolder from '../../../components/SvgWithPlaceHolder';
+import SvgRenderer from 'src/components/SvgRenderer';
 const screeHeight = Dimensions.get('window').height;
 
 export default function Watch(props) {
@@ -26,7 +26,6 @@ export default function Watch(props) {
   const [itemSelected, setItemSelected] = useState(props?.route?.params?.item);
   const [bottomMenu, setBottomMenu] = useState(false);
   const [bottomShow, setBottomShow] = useState(false);
-  const { searchFlag } = props?.route?.params;
   const [mainlist, setMainList] = useState([]);
   const [bottomList, setBottomList] = useState([]);
 
@@ -130,19 +129,12 @@ export default function Watch(props) {
                   }}
                   style={[styles.listMainContainer, (dayjs(currentDate).isAfter(itemSelected?.startTime) &&
                     dayjs(currentDate).isBefore(itemSelected?.endTime) ? {} : { pointerEvents: 'none' })]}>
-                  <View style={styles.listInnerContainer}>
-                    <View style={styles.listBackground} />
-                    <View style={styles.imageContainer}>
-                      {item?.node && item?.node?.logoUrl && (item?.node?.logoUrl.includes('.svg')) ?
-                        <SvgWithPlaceHolder
-                          source={item?.node?.logoUrl}
-                          placeholderSource={Constants.placeholder_trophy_icon}
-                          style={styles.imageRightsIcon}
-                          logoUrl={true}
-                          widthLogo={46}
-                          heightLogo={46}
-                          resizeMode="contain"
-                        /> :
+                  {item?.node && item?.node?.logoUrl && (item?.node?.logoUrl.includes('.svg')) ?
+                    <SvgRenderer url={item?.node?.logoUrl} />
+                    :
+                    <View style={styles.listInnerContainer}>
+                      <View style={styles.listBackground} />
+                      <View style={styles.imageContainer}>
                         <ImageWithPlaceHolder
                           source={item?.node?.logoUrl}
                           placeholderSource={Constants.placeholder_trophy_icon}
@@ -151,9 +143,9 @@ export default function Watch(props) {
                           widthLogo={48}
                           heightLogo={48}
                           resizeMode="contain"
-                        />}
-                    </View>
-                  </View>
+                        />
+                      </View>
+                    </View>}
                 </TouchableOpacity>
               )
             }}
@@ -172,16 +164,8 @@ export default function Watch(props) {
           <View style={styles.bottomListBackground} />
           <View style={styles.imageContainer}>
             {item?.node && item?.node?.logoUrl && (item?.node?.logoUrl.includes('.svg')) ?
-              <SvgWithPlaceHolder
-                source={item?.node?.logoUrl
-                }
-                placeholderSource={Constants.placeholder_trophy_icon}
-                style={styles.imageRightsIcon}
-                logoUrl={true}
-                widthLogo={47}
-                heightLogo={47}
-                resizeMode="contain"
-              /> :
+              <SvgRenderer url={item?.node?.logoUrl} />
+              :
               <ImageWithPlaceHolder
                 source={item?.node?.logoUrl}
                 placeholderSource={
@@ -213,7 +197,7 @@ export default function Watch(props) {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        onPressBack={searchFlag ? () => navigation.navigate('Search') : null}
+        // onPressBack={searchFlag ? () => navigation.navigate('SearchWatch') : null}
         SimpleView
       // headerContainer={styles.headerContainer}
       />
@@ -279,7 +263,6 @@ export default function Watch(props) {
             </ImageBackground>
           ))}
       </GestureRecognizer>
-
     </ImageBackground>
   );
 }

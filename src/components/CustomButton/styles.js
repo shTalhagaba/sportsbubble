@@ -1,5 +1,5 @@
-import {Colors} from 'src/utils';
-import {ScaledSheet} from 'react-native-size-matters';
+import { Colors } from 'src/utils';
+import { ScaledSheet } from 'react-native-size-matters';
 
 const styles = ScaledSheet.create({
   container: {

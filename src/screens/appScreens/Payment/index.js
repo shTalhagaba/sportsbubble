@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { View, Text, ScrollView, ImageBackground, StatusBar, FlatList, Image, TouchableOpacity } from 'react-native';
+import { View, Text, ImageBackground, StatusBar, FlatList, Image, TouchableOpacity } from 'react-native';
 import styles from './styles';
 import AppHeader from 'src/components/AppHeader'
 import { Images, Colors, Strings } from 'src/utils';
@@ -7,24 +7,17 @@ import { useNavigation } from '@react-navigation/native';
 import CustomButton from 'src/components/CustomButton';
 import ContactTextInput from 'src/components/ContactTextInput'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-
-const data = [
-    { id: 1, name: "Credit", selected: false },
-    { id: 2, name: "Debit", selected: false },
-    { id: 3, name: "Other Option", selected: false },
-]
+import { paymentList } from 'src/utils/list';
 
 export default function Payment() {
     const navigation = useNavigation()
-
-    const [paymentData, setPaymentData] = useState(data)
+    const [paymentData, setPaymentData] = useState(paymentList)
     const [cardNumber, setCardNumber] = useState('')
     const [expiryDate, setExpiryDate] = useState('')
     const [cvv, setCvv] = useState('')
     const [country, setCountry] = useState('')
     const [zip, setZip] = useState('')
     const [saveCardFlag, setSaveCardFlag] = useState(false)
-
     const cardNumberRef = useRef()
     const expiryDateRef = useRef()
     const cvvRef = useRef()
@@ -53,7 +46,6 @@ export default function Payment() {
             <KeyboardAwareScrollView
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ flexGrow: 1, paddingBottom: 30 }}>
-
                 <View style={styles.innerContainer}>
                     <Text style={styles.checkoutTxt}>{Strings.checkout}</Text>
                     <View style={styles.payContainer}>
@@ -164,7 +156,6 @@ export default function Payment() {
                         <Text style={styles.saveCardTxt}>{Strings.saveThisCard}</Text>
                     </TouchableOpacity>
                     <Text style={[styles.cardInformationTxt, { marginTop: 0 }]}>{Strings.countryRegion}</Text>
-
                     <ContactTextInput
                         leftImage={Images.Country}
                         placeholderTextColor={Colors.white}
@@ -193,17 +184,13 @@ export default function Payment() {
                         autoCapitalize="none"
                         returnKeyType={"next"}
                     />
-
                     <View style={styles.btnContainer}>
                         <CustomButton
                             title={Strings.upgrade}
                             onpress={() => navigation.navigate("withoutBottomtab", { screen: "Payment" })} />
-
                     </View>
                 </View>
-
             </KeyboardAwareScrollView>
-
         </ImageBackground>
     );
 }

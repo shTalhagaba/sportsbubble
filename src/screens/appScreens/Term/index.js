@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import styles from './styles';
-import {Images, Colors, Strings} from 'src/utils';
+import { Images, Colors, Strings } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
 import { fetchContentFulContent } from 'src/utils/contentful';
 
@@ -19,30 +19,28 @@ export default function Term(props) {
   });
 
   useEffect(() => {
-    async function fetchPromotionContent () {
+    async function fetchPromotionContent() {
       const termUse = await fetchContentFulContent('XuhxvmlTfU1MCjuELLHvY');
       const privacyPolicy = await fetchContentFulContent('52UJuQgc1nZAm8kLrkAlke');
       const californiaPolicy = await fetchContentFulContent('4QghRl8LFoRAvWRNyTDeX4');
-      
-      setContent({ 
+      setContent({
         termUse: termUse.fields.description.content[0].content[0].value,
         privacyPolicy: privacyPolicy.fields.description.content[0].content[0].value,
         californiaPolicy: californiaPolicy.fields.description.content[0].content[0].value
       });
     }
-
     fetchPromotionContent()
   }, [])
 
-  let source = 
-      props?.route?.params?.selected === Strings.termUse
-        ? content.termUse
-        : props?.route?.params?.selected === Strings.privacyPolicy
+  let source =
+    props?.route?.params?.selected === Strings.termUse
+      ? content.termUse
+      : props?.route?.params?.selected === Strings.privacyPolicy
         ? content.privacyPolicy
         : props?.route?.params?.selected === Strings.californiaPolicy
-        ? content.californiaPolicy
-        : content.termUse
-  ;
+          ? content.californiaPolicy
+          : content.termUse
+    ;
   return (
     <ImageBackground
       source={Images.Background}
@@ -57,10 +55,9 @@ export default function Term(props) {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        customLeftImage={{tintColor: Colors.orange}}
+        customLeftImage={{ tintColor: Colors.orange }}
         SimpleView
       />
-
       {/* Main tabs  */}
       <View style={styles.mainTabContainer}>
         <Text style={styles.loginTxt}>
@@ -69,7 +66,7 @@ export default function Term(props) {
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           indicatorStyle={'white'}
-          style={{flex: 1, marginVertical: 25}}>
+          style={{ flex: 1, marginVertical: 25 }}>
           <View>
             {
               content.termUse && (

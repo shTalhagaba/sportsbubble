@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { View, Text, ScrollView, ImageBackground, StatusBar } from 'react-native';
+import { View, Text, ImageBackground, StatusBar } from 'react-native';
 import styles from './styles';
 import ContactTextInput from 'src/components/ContactTextInput';
 import AppHeader from 'src/components/AppHeader';
@@ -14,12 +14,10 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 export default function ResetPassword(props) {
   const navigation = useNavigation();
-  // State variables for OTP and password
   const [otp, setOtp] = useState('');
   const [password, setPassword] = useState('');
   const [displayPassword, setDisplayPassword] = useState(true);
   const [loadingLocal, setLoadingLocal] = useState(false);
-  // Refs for input fields
   const emailRef = useRef();
   const passwordRef = useRef();
 
@@ -114,7 +112,6 @@ export default function ResetPassword(props) {
           />
         </View>
       </KeyboardAwareScrollView>
-
       {/* Loading modal */}
       <LoaderModal visible={loadingLocal} loadingText={''} />
     </ImageBackground>

@@ -23,7 +23,6 @@ const LiveMatch = ({ setLiveMatchModal, liveMatchModal }) => {
       const promotions = await fetchContentFulContent('67NvszQuZ1oltZJb9tNgOw');
       setContent(promotions);
     }
-
     fetchPromotionContent()
   }, [])
 
@@ -58,7 +57,6 @@ const LiveMatch = ({ setLiveMatchModal, liveMatchModal }) => {
                       <Image
                         source={channel?.node?.logoUrl != null ? { uri: channel?.node?.logoUrl } : Images.Twitch_logo_2019}
                         style={styles.logoImage}
-                      // key={index}
                       /> : null
                   )
                 )}

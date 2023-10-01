@@ -1,4 +1,4 @@
-import { gql } from 'graphql-tag';
+import {gql} from 'graphql-tag';
 
 export const GET_SORTED_EVENTS = gql`
   query SortedEvents($endTime: DateTime!, $startTime: DateTime!) {
@@ -21,6 +21,12 @@ export const GET_SORTED_EVENTS = gql`
       rightsHolders {
         name
         logoUrl
+      }
+      league {
+        name
+      }
+      sport {
+        name
       }
       rightsHoldersConnection {
         totalCount

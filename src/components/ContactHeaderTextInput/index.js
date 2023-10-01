@@ -1,7 +1,7 @@
 import React from 'react';
-import {View, TextInput, Image, TouchableOpacity, Text} from 'react-native';
+import { View, TextInput, Image, TouchableOpacity, Text } from 'react-native';
 import styles from './styles';
-import {Images} from 'src/utils';
+import { Images } from 'src/utils';
 
 const ContactHeaderTextInput = props => {
   return (

@@ -8,7 +8,6 @@ const userOTP = (email, otp, mfaSession) => {
       Pool: CognitoPool,
     };
     const cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
-
     cognitoUser.confirmRegistration(otp, true, function (err, result) {
       if (err) {
         alert(err.message || JSON.stringify(err));
@@ -21,6 +20,7 @@ const userOTP = (email, otp, mfaSession) => {
     });
   });
 };
+
 const resendCode = email => {
   return new Promise((resolve, reject) => {
     const userData = {
@@ -28,7 +28,6 @@ const resendCode = email => {
       Pool: CognitoPool,
     };
     const cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
-
     cognitoUser.resendConfirmationCode(function (err, result) {
       if (err) {
         alert(err.message || JSON.stringify(err));
@@ -71,4 +70,4 @@ const signOut = () => {
   });
 };
 
-export {userOTP, resendCode, signOut};
+export { userOTP, resendCode, signOut };

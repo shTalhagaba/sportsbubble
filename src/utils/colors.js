@@ -40,4 +40,5 @@ export default {
     lightBlue: "#6489B7",
     backBlack: "#0D131A",
     black15: "rgba(0, 0, 0, 0.15)",
+    loadingColor: "#1A0167",
 }

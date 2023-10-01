@@ -7,8 +7,7 @@ import {
   StatusBar,
 } from 'react-native';
 import styles from './styles';
-import {Colors} from 'src/utils';
-
+import { Colors } from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
 
 const CustomModal = props => {
@@ -57,7 +56,7 @@ const CustomModal = props => {
                 ) : (
                   <CustomButton
                     blue={props.blue}
-                    Container={props.rowStyle ? {flex: 1} : null}
+                    Container={props.rowStyle ? { flex: 1 } : null}
                     title={props.otherBtnTxt}
                     onpress={props.otherBtnPress}
                   />

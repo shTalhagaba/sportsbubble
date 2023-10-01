@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import {
   FlatList,
   ImageBackground,
-  ScrollView,
   StatusBar,
   Text,
   TouchableOpacity,
@@ -14,7 +13,6 @@ import { useNavigation } from '@react-navigation/native';
 import AppHeader from 'src/components/AppHeader';
 import Strings from 'src/utils/strings';
 import ContactHeaderTextInput from 'src/components/ContactHeaderTextInput';
-import ContactTextInput from 'src/components/ContactTextInput';
 import CustomButton from 'src/components/CustomButton';
 import CustomModalView from 'src/components/Modal/CustomModal';
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,6 +22,7 @@ import { ShowMessage } from 'src/components/ShowMessage';
 import { updateProfileValidation } from 'src/common/authValidation';
 import { setToken, setUser, setUserData } from 'src/store/types';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { optionsList } from 'src/utils/list';
 
 export default function PersonalInfo() {
   const navigation = useNavigation();
@@ -39,12 +38,6 @@ export default function PersonalInfo() {
   const [email, setEmail] = useState('example@sportsbubble.io');
   const [loadingLocal, setLoadingLocal] = useState(false);
   const [cancelAccountModal, setCancelAccountModal] = useState(false);
-  const options = [
-    { id: 1, label: 'he/him', value: 'he/him' },
-    { id: 2, label: 'she/her', value: 'she/her' },
-    { id: 3, label: 'they/them', value: 'they/them' },
-    { id: 4, label: 'other', value: 'other' },
-  ];
   const firstNameRef = useRef();
   const lastNameRef = useRef();
   const zipCodeRef = useRef();
@@ -130,7 +123,6 @@ export default function PersonalInfo() {
     try {
       setLoadingLocal(true);
       const user = await deleteUser();
-      console.log('delete user => ', user);
       if (user === 'SUCCESS') {
         dispatch(setUser(false));
         dispatch(setUserData({}));
@@ -186,7 +178,6 @@ export default function PersonalInfo() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ flexGrow: 1, paddingBottom: 30 }}>
         <View style={styles.innerContainer}>
-
           <Text style={styles.headerTxt}>{Strings.personalInfo}</Text>
           <ContactHeaderTextInput
             leftImage={Images.UserIcon}
@@ -194,8 +185,6 @@ export default function PersonalInfo() {
             Container={{ marginTop: 24 }}
             customInputStyle={{ marginBottom: 5 }}
             refInner={firstNameRef}
-            // placeholderTextColor={Colors.white}
-            // placeholder={Strings.firstName}
             headerTxtStyle={styles.headerTxtStyle}
             multiline={false}
             value={firstName}
@@ -213,8 +202,6 @@ export default function PersonalInfo() {
             leftImage={Images.UserIcon}
             headerName={Strings.lastName}
             refInner={lastNameRef}
-            // placeholder={Strings.lastName}
-            // placeholderTextColor={Colors.white}
             customInputStyle={{ marginBottom: 5 }}
             multiline={false}
             headerTxtStyle={styles.headerTxtStyle}
@@ -233,8 +220,6 @@ export default function PersonalInfo() {
             leftImage={Images.Location}
             headerName={Strings.zipCode}
             refInner={zipCodeRef}
-            // placeholderTextColor={Colors.white}
-            // placeholder={Strings.zipCode}
             headerTxtStyle={styles.headerTxtStyle}
             customInputStyle={{ marginBottom: 5 }}
             multiline={false}
@@ -253,8 +238,6 @@ export default function PersonalInfo() {
             leftImage={Images.Birthday}
             headerName={Strings.birthdate}
             refInner={dobRef}
-            // placeholderTextColor={Colors.white}
-            // placeholder={Strings.birthdate}
             headerTxtStyle={styles.headerTxtStyle}
             customInputStyle={{ marginBottom: 5, opacity: 0.7 }}
             multiline={false}
@@ -294,7 +277,7 @@ export default function PersonalInfo() {
             {isOpen && (
               <View style={styles.openStyle}>
                 <FlatList
-                  data={options}
+                  data={optionsList}
                   keyExtractor={item => item.id.toString()}
                   renderItem={({ item }) => (
                     <TouchableOpacity
@@ -311,8 +294,6 @@ export default function PersonalInfo() {
             leftImage={Images.EmailIcon}
             headerName={Strings.email}
             refInner={emailRef}
-            // placeholderTextColor={Colors.white}
-            // placeholder={Strings.email}
             headerTxtStyle={styles.headerTxtStyle}
             multiline={false}
             value={email}
@@ -332,13 +313,11 @@ export default function PersonalInfo() {
             disabled={buttonDisable}
             blue={true}
           />
-
           <TouchableOpacity
             onPress={() => setCancelAccountModal(!cancelAccountModal)}>
             <Text style={styles.cancelAccountTxt}>{Strings.cancelAccount}</Text>
           </TouchableOpacity>
         </View>
-
       </KeyboardAwareScrollView>
       <CustomModalView
         visible={cancelAccountModal}

@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import styles from './styles';
 import {Colors, Images} from 'src/utils';
-
 import CustomButton from 'src/components/CustomButton';
 
 const CustomMySportsModalView = props => {

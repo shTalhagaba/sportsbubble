@@ -1,7 +1,6 @@
 import { Colors, Fonts } from 'src/utils';
 import { ScaledSheet } from "react-native-size-matters";
 
-
 export default ScaledSheet.create({
     container: {
         flex: 1,
@@ -23,10 +22,6 @@ export default ScaledSheet.create({
         lineHeight: "25@ms0.3",
         textAlign: "center"
     },
-    // searchContainer: {
-    //     height: "56@ms0.3",
-    //     paddingRight: "15@ms0.3",
-    // },
     innerContainer: {
         marginHorizontal: "15@ms0.3",
         marginTop: "5@ms0.3"
@@ -78,7 +73,6 @@ export default ScaledSheet.create({
         bottom: "40@ms0.3",
         marginHorizontal: "20@ms0.3",
     },
-
     searchContainer: {
         flexDirection: 'row',
         height: '53@ms0.3',

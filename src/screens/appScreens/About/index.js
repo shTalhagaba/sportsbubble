@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from 'react';
-import {ImageBackground, ScrollView, StatusBar, Text, View} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { ImageBackground, ScrollView, StatusBar, Text, View } from 'react-native';
 import styles from './styles';
-import {Images, Colors, Strings} from 'src/utils';
+import { Images, Colors, Strings } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
-import {fetchContentFulContent} from 'src/utils/contentful';
+import { fetchContentFulContent } from 'src/utils/contentful';
 
 export default function About(props) {
   const [content, setContent] = useState(null);
@@ -30,17 +30,16 @@ export default function About(props) {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        customLeftImage={{tintColor: Colors.orange}}
+        customLeftImage={{ tintColor: Colors.orange }}
         SimpleView
       />
-
       {/* Main tabs  */}
       <View style={styles.mainTabContainer}>
         <Text style={styles.loginTxt}>{Strings.aboutWatchSports}</Text>
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           indicatorStyle={'white'}
-          style={{flex: 1, marginVertical: 25}}>
+          style={{ flex: 1, marginVertical: 25 }}>
           <View>
             {content && <Text style={styles.contentTxt}>{content}</Text>}
           </View>

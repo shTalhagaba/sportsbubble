@@ -1,4 +1,3 @@
-
 const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
 
 const adminDeleteUser = (adminCredentials, usernameToDelete) => {
@@ -7,20 +6,16 @@ const adminDeleteUser = (adminCredentials, usernameToDelete) => {
       UserPoolId: 'us-west-2_nTZIRvqNk',
       ClientId: '2c4r8a30g1h8vu08kvad3mm7ov',
     };
-
     const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
-
     const adminAuthenticationDetails =
       new AmazonCognitoIdentity.AuthenticationDetails({
         Username: adminCredentials.username,
         Password: adminCredentials.password,
       });
-
     const adminCognitoUser = new AmazonCognitoIdentity.CognitoUser({
       Username: adminCredentials.username,
       Pool: userPool,
     });
-
     adminCognitoUser.authenticateUser(adminAuthenticationDetails, {
       onSuccess: session => {
         // The admin is now authenticated, proceed to delete the user.
@@ -28,9 +23,7 @@ const adminDeleteUser = (adminCredentials, usernameToDelete) => {
           Username: usernameToDelete,
           Pool: userPool,
         };
-
         const cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
-
         cognitoUser.deleteUser((err, result) => {
           if (err) {
             console.error('Error deleting user: ', err);
@@ -49,4 +42,4 @@ const adminDeleteUser = (adminCredentials, usernameToDelete) => {
   });
 };
 
-module.exports = {adminDeleteUser};
+module.exports = { adminDeleteUser };

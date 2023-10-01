@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {View, Text, ScrollView, ImageBackground, StatusBar} from 'react-native';
+import {View, Text, ImageBackground, StatusBar} from 'react-native';
 import styles from './styles';
 import ContactTextInput from 'src/components/ContactTextInput';
 import AppHeader from 'src/components/AppHeader';
@@ -24,11 +24,9 @@ export default function UpdatePassword() {
   const newPasswordRef = useRef();
   const newConfirmPasswordRef = useRef();
   const [loadingLocal, setLoadingLocal] = useState(false);
-
   const [displayCurrentPassword, setDisplayCurrentPassword] = useState(true);
   const [displayNewPassword, setDisplayNewPassword] = useState(true);
-  const [displayNewConfirmPassword, setDisplayNewConfirmPassword] =
-    useState(true);
+  const [displayNewConfirmPassword, setDisplayNewConfirmPassword] = useState(true);
 
   const updatePassword = async () => {
     if (
@@ -41,7 +39,6 @@ export default function UpdatePassword() {
           currentPassword,
           newPassword,
         );
-
         if (user === 'SUCCESS') {
           ShowMessage('Password changed successfully.')
           navigation.goBack(null);
@@ -75,7 +72,6 @@ export default function UpdatePassword() {
         translucent
         barStyle="light-content"
       />
-
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}

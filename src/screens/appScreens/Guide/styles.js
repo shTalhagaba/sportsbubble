@@ -59,9 +59,6 @@ export default ScaledSheet.create({
     shadowRadius: 3,
     shadowOpacity: 1,
     marginTop: '0@ms0.3',
-    // marginLeft: fontScale > 1.3 ? 12 * fontScale :
-    //   fontScale > 1 ? 20 * fontScale :
-    //     Platform.OS === 'android' ? '25@ms0.3' : '28@ms0.3',
   },
   liveMainContainer: {
     width: fontScale > 1 ? (width / 5) * fontScale : width / 4,
@@ -118,7 +115,7 @@ export default ScaledSheet.create({
     marginTop: fontScale > 1 ? 6 * fontScale : '1@ms0.3',
   },
   leftIconStyle: {
-    width: fontScale > 1 ? (width / 5) * fontScale : width / 4 -5,
+    width: fontScale > 1 ? (width / 5) * fontScale : width / 4 - 5,
     justifyContent: 'center',
     alignContent: 'center',
     height: fontScale > 1 ? 20 * fontScale : '38@ms0.3',
@@ -262,9 +259,7 @@ export default ScaledSheet.create({
     position: 'absolute',
     left: Platform.OS === 'android' ? -5 : -5,
     top: -4.5,
-    // height: '94@ms0.3',
     height: fontScale > 1 ? (width / 4.9) * fontScale : width / 4.7 - 1,
-    // width: width / 4.3,
     width: fontScale > 1 ? (width / 4.9) * fontScale : width / 4.71,
     borderRadius: fontScale > 1 ? 19 * fontScale : '20@ms0.3',
     borderWidth: '3@ms0.3',

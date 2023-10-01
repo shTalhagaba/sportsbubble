@@ -8,7 +8,6 @@ const styles = ScaledSheet.create({
     marginTop: '16@ms0.3',
     borderRadius: '15@ms0.3',
     height: '60@ms0.3',
-    // marginStart: '15@ms0.3',
     paddingVertical: '5@ms0.3',
     flexDirection: 'row',
   },

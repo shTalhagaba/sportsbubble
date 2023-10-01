@@ -34,8 +34,6 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [displayPassword, setDisplayPassword] = useState(true);
   const [loadingLocal, setLoadingLocal] = useState(false);
-
-  // Refs for input fields
   const emailRef = useRef();
   const passwordRef = useRef();
 
@@ -148,7 +146,6 @@ export default function Login() {
             onPress={() => navigation.navigate('ForgotPassword')}>
             <Text style={styles.forgotTxt}>{Strings.forgotPassword}</Text>
           </TouchableOpacity>
-
           <Text style={styles.accountTxt}>{Strings.dontAccount}</Text>
           {/* Sign-up link */}
           <TouchableOpacity onPress={() => navigation.navigate('Signup')}>

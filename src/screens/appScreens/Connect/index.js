@@ -100,7 +100,7 @@ export default function Connect(props) {
         <View style={styles.logoImageContainer}>
           {eventFlag && (holderItem?.edges?.[0]?.node?.logoUrl
             ? holderItem?.edges?.[0]?.node?.logoUrl
-            : holderItem?.node?.logoUrl).includes('.svg')?
+            : holderItem?.node?.logoUrl).includes('.svg') ?
             <SvgWithPlaceHolder
               source={
                 eventFlag && holderItem?.edges?.[0]?.node?.logoUrl

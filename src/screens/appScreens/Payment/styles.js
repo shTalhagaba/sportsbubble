@@ -1,7 +1,6 @@
 import { Colors, Fonts } from 'src/utils';
 import { ScaledSheet } from "react-native-size-matters";
 
-
 export default ScaledSheet.create({
     container: {
         flex: 1,
@@ -122,8 +121,6 @@ export default ScaledSheet.create({
         paddingVertical: "14@ms0.3",
         flexDirection: "row",
         marginLeft: "1@ms0.3",
-        // borderRadius: "16@ms0.3",
-        // borderWidth: "2@ms0.3",
     },
     saveCardTxt: {
         fontSize: "16@ms0.3",
@@ -134,7 +131,6 @@ export default ScaledSheet.create({
         lineHeight: "21@ms0.3",
     },
     btnContainer: {
-        // marginTop: "40@ms0.3"
         marginBottom: "40@ms0.3"
     },
     customInputStyle: {

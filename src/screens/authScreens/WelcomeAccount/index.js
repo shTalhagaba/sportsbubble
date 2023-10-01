@@ -13,7 +13,6 @@ import AppHeader from 'src/components/AppHeader';
 import { Images, Colors, Strings } from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import { signupComplete } from 'src/services/authSignup';
 import ShowMessage from 'src/components/ShowMessage';
 import LoaderModal from 'src/components/LoaderModal';
@@ -21,8 +20,9 @@ import { completeProfileValidation } from 'src/common/authValidation';
 import dayjs from 'dayjs';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DateTimePickerModal from "react-native-modal-datetime-picker"
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { CREATE_CONSUMER } from 'src/graphQL';
+import { optionsList } from 'src/utils/list';
 
 export default function WelcomeAccount(props) {
   const [createConsumerMutation, { loading, error }] = useMutation(CREATE_CONSUMER);
@@ -31,11 +31,9 @@ export default function WelcomeAccount(props) {
   const [birthday, setBirthday] = useState('');
   const [pronouns, setPronouns] = useState('');
   const [date, setDate] = useState('')
-
   const [isOpen, setIsOpen] = useState(false);
   const [loadingLocal, setLoadingLocal] = useState(false);
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
-
   const [firstName, setFirstName] = useState(
     props?.route?.params?.fullName
       ? props?.route?.params?.fullName
@@ -47,12 +45,6 @@ export default function WelcomeAccount(props) {
   const [dob, setDOB] = useState('');
   const [showDatePicker, setShowDatePicker] = useState(false);
 
-  const options = [
-    { id: 1, label: 'he/him', value: 'he/him' },
-    { id: 2, label: 'she/her', value: 'she/her' },
-    { id: 3, label: 'they/them', value: 'they/them' },
-    { id: 4, label: 'other', value: 'other' },
-  ];
   // Toggle the dropdown menu
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -62,13 +54,6 @@ export default function WelcomeAccount(props) {
     setPronouns(item?.label);
     toggleDropdown();
   };
-  // Handle the change in the selected date in the date picker
-  const handleDOBChange = (event, selectedDate) => {
-    const currentDate = selectedDate || dob;
-    setShowDatePicker(Platform.OS === 'ios');
-    setShowDatePicker(false);
-    setDOB(currentDate);
-  };
   // Handle the submission of the complete profile form
   const submitButton = async () => {
     if (completeProfileValidation(zipCode, dob, pronouns)) {
@@ -77,9 +62,7 @@ export default function WelcomeAccount(props) {
         cognitoId: props?.route?.params?.client,
         cognitoZip: zipCode,
       };
-      console.log('inputData : ',inputData)
       await handleFormSubmit(inputData)
-      // Define your input data structure
       const user = await signupComplete(
         props?.route?.params?.email,
         props?.route?.params?.password,
@@ -99,27 +82,24 @@ export default function WelcomeAccount(props) {
       setLoadingLocal(false);
     }
   };
-    // Define the function to handle the form submission
-    const handleFormSubmit = async (inputData) => {
-      try {
-        const { data } = await createConsumerMutation({
-          variables: { input: inputData },
-        });
-        // Handle the response data as needed
-        console.log('Consumer created:', data);
-      } catch (err) {
-        console.error('Error creating consumer:', err);
-      }
-    };
+  // Define the function to handle the form submission
+  const handleFormSubmit = async (inputData) => {
+    try {
+      const { data } = await createConsumerMutation({
+        variables: { input: inputData },
+      });
+      console.log('Consumer created:', data);
+    } catch (err) {
+      console.error('Error creating consumer:', err);
+    }
+  };
   const handleShowDatePicker = () => {
     setDatePickerVisible(true);
   };
-
   const hideDatePicker = () => {
     setDatePickerVisible(false);
   };
   const handleConfirm = (date) => {
-    console.log("Date ", date)
     // const selectedDate = moment(date).format('DD MMMM YYYY');
     setDate(date)
     setDOB(date.toDateString())
@@ -192,12 +172,10 @@ export default function WelcomeAccount(props) {
               blurOnSubmit={false}
               rightImage={Images.Calendar}
               pressRightImage={() => handleShowDatePicker()}
-              // pressRightImage={() => setShowDatePicker(!showDatePicker)}
               onSubmitEditing={() => {
                 pronounsRef.current.focus();
               }}
             />
-
             <Text style={styles.sideTxt}>{Strings.youMustBe}</Text>
             {/* Pronouns Input */}
             <ContactTextInput
@@ -226,7 +204,7 @@ export default function WelcomeAccount(props) {
                   width: '98%',
                 }}>
                 <FlatList
-                  data={options}
+                  data={optionsList}
                   keyExtractor={item => item.id.toString()}
                   renderItem={({ item }) => (
                     <TouchableOpacity
@@ -256,8 +234,6 @@ export default function WelcomeAccount(props) {
           onConfirm={handleConfirm}
           onCancel={hideDatePicker}
           maximumDate={minimumDOB}
-        // maximumDate={new Date()}
-        // minimumDOB={minimumDOB}
         />
       </ImageBackground>
     </View>

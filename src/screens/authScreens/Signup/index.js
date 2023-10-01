@@ -24,7 +24,6 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 export default function Signup() {
   const navigation = useNavigation();
-  // State variables for user input and UI state
   const [fullName, setFullName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -38,7 +37,6 @@ export default function Signup() {
   const [displayPassword, setDisplayPassword] = useState(true);
   const [displayConfirmPassword, setDisplayConfirmPassword] = useState(true);
   const [client, setClient] = useState('');
-
   // Refs for input fields
   const fullNameRef = useRef();
   const lastNameRef = useRef();
@@ -187,7 +185,6 @@ export default function Signup() {
               emailRef.current.focus();
             }}
           />
-
           {/* Input field for email */}
           <ContactTextInput
             leftImage={Images.EmailIcon}
@@ -282,7 +279,6 @@ export default function Signup() {
                 />
               )}
             </TouchableOpacity>
-
             <View style={styles.termConditionContainer}>
               <Text style={styles.termsCondition}>
                 {Strings.haveRead}

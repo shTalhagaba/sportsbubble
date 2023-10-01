@@ -1,5 +1,5 @@
-import {Colors, Fonts} from 'src/utils';
-import {ScaledSheet} from 'react-native-size-matters';
+import { Colors, Fonts } from 'src/utils';
+import { ScaledSheet } from 'react-native-size-matters';
 
 const styles = ScaledSheet.create({
   mainView: {
@@ -15,7 +15,7 @@ const styles = ScaledSheet.create({
     borderRadius: 16,
     elevation: 5,
     shadowColor: Colors.black50,
-    shadowOffset: {width: 0, height: 6},
+    shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 1,
     shadowRadius: 8,
     marginBottom: 6, // Adjust this value as needed

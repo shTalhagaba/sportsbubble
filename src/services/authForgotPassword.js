@@ -6,9 +6,7 @@ const initiateForgotPassword = async username => {
     Username: username,
     Pool: CognitoPool,
   };
-
   const cognitoUser = new CognitoUser(userData);
-
   try {
     await new Promise((resolve, reject) => {
       cognitoUser.forgotPassword({
@@ -31,14 +29,11 @@ const confirmPasswordReset = async (
   newPassword,
   verificationCode,
 ) => {
-
   const userData = {
     Username: username,
     Pool: CognitoPool,
   };
-
   const cognitoUser = new CognitoUser(userData);
-
   try {
     await new Promise((resolve, reject) => {
       cognitoUser.confirmPassword(verificationCode, newPassword, {

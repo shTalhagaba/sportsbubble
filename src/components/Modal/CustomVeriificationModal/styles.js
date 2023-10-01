@@ -1,5 +1,5 @@
-import {Colors, Fonts} from 'src/utils';
-import {ScaledSheet} from 'react-native-size-matters';
+import { Colors, Fonts } from 'src/utils';
+import { ScaledSheet } from 'react-native-size-matters';
 
 const styles = ScaledSheet.create({
   mainView: {
@@ -81,10 +81,10 @@ const styles = ScaledSheet.create({
     borderWidth: "2@ms0.3",
     borderColor: Colors.white,
     height: "53@ms0.3",
-},
-buttonStyle: {
+  },
+  buttonStyle: {
     height: "53@ms0.3",
-},
+  },
 });
 
 export default styles;

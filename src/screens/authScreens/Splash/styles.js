@@ -40,9 +40,9 @@ export default ScaledSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  logo: { 
-    height: "230@ms0.3", 
-    width: "230@ms0.3", 
-    alignSelf: 'center' 
+  logo: {
+    height: "230@ms0.3",
+    width: "230@ms0.3",
+    alignSelf: 'center'
   },
 });

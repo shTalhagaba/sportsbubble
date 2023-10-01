@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import Navigation from 'src/navigation';
-import { NavigationContainer } from '@react-navigation/native';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ApolloClient, InMemoryCache, createHttpLink, ApolloProvider } from '@apollo/client';
 import { persistCache } from 'apollo3-cache-persist';
 import Config from 'react-native-config';
-import { persistStore, persistReducer, createTransform } from 'redux-persist';
+import { persistStore, persistReducer } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import { createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
@@ -30,10 +30,10 @@ sagaMiddleware.run(mySaga);
 const persistor = persistStore(store);
 
 const httpLink = createHttpLink({
-  // uri: 'https://9oa4ll4zp8.execute-api.us-west-2.amazonaws.com/stage/graphql',
+  // uri: 'https://9oa4ll4zp8.execute-api.us-west-2.amazonaws.com/stage/graphql',  // sb3 staging
   // uri: 'https://cpbubzqq92.execute-api.us-west-2.amazonaws.com/dev/graphql', // same web link
-  // uri: 'https://6953ptqg3b.execute-api.us-west-2.amazonaws.com/dev/graphql',
-  uri: 'https://09a84a77s4.execute-api.us-west-2.amazonaws.com/dev/graphql', // new 
+  // uri: 'https://6953ptqg3b.execute-api.us-west-2.amazonaws.com/dev/graphql', // sb2 watch sport dev
+  uri: 'https://09a84a77s4.execute-api.us-west-2.amazonaws.com/dev/graphql', // sb5 dev passport 
   // uri: Config.BASE_URL
 });
 
@@ -42,6 +42,16 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
   defaultOptions: { watchQuery: { fetchPolicy: 'cache-and-network' } },
 });
+const
+  theme = {
+    ...DefaultTheme,
+    colors
+      : {
+      ...DefaultTheme.colors,
+      background:'black'
+      ,
+    },
+  }
 
 const App = () => {
   LogBox.ignoreLogs(['Warning: ...']);
@@ -49,7 +59,7 @@ const App = () => {
 
   return (
     <ApolloProvider client={client}>
-      <NavigationContainer>
+      <NavigationContainer theme={theme}>
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
             <Navigation />

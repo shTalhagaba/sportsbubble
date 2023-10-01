@@ -22,58 +22,10 @@ import { useMutation, useQuery } from '@apollo/client';
 import { DELETE_CONSUMERS, GET_MY_SPORT, GET_MY_SPORT_LIST, UPDATE_CONSUMERS, UPDATE_NOTIFICATION_CONSUMERS } from 'src/graphQL';
 import LoaderModal from 'src/components/LoaderModal';
 import { setSportsList, setUser } from 'src/store/types';
+import { categoryArr, sportDummyList } from 'src/utils/list';
 const { fontScale } = Dimensions.get('window');
 
-const data = [
-  {
-    id: 1,
-    img: Images.BaseBall,
-    name: 'Baseball',
-    notifcationFlag: false,
-    fvrtFlag: false,
-  },
-  {
-    id: 2,
-    img: Images.BasketBall,
-    name: 'Basketball',
-    notifcationFlag: false,
-    fvrtFlag: false,
-  },
-  {
-    id: 3,
-    img: Images.BaseBall,
-    name: 'Boxing',
-    notifcationFlag: false,
-    fvrtFlag: false,
-  },
-];
-
-// Sample data for the category slider
-const categoryArr = [
-  {
-    id: 1,
-    title: 'all',
-    value: 'all',
-    selected: true,
-  },
-  {
-    id: 2,
-    title: 'pro',
-    value: 'pro',
-  },
-  {
-    id: 3,
-    title: 'college',
-    value: 'college',
-  },
-  {
-    id: 4,
-    title: 'esports',
-    value: 'e-sports',
-  },
-];
-
-export default function Guide() {
+export default function MySports() {
   const navigation = useNavigation();
   const reduxData = useSelector(state => state.user);
   const isFocused = useIsFocused();
@@ -81,7 +33,7 @@ export default function Guide() {
   const [categoryData, setCategoryData] = useState(categoryArr);
   const [reminderModal, setReminderModal] = useState(false);
   const [fvrtModal, setFvrtModal] = useState(reduxData?.guest === true ? true : false);
-  const [mySportData, setSportData] = useState(data);
+  const [mySportData, setSportData] = useState(sportDummyList);
   const [currentIndex, setCurrentIndex] = useState();
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [filteredEventList, setFilteredEventList] = useState([]);
@@ -138,7 +90,6 @@ export default function Guide() {
             dispatch(setSportsList(data?.updateConsumers?.consumers?.[0]?.favoriteSports));
           }
         }
-        // Handle the response data as needed
         console.log('Updated consumer:', data?.updateConsumers?.consumers);
       } catch (err) {
         console.error('Error updating consumer:', err);
@@ -147,8 +98,6 @@ export default function Guide() {
       ShowMessage('Invalid data')
     }
   };
-
-
   // Define a function to execute the mutation
   const deleteConsumers = async (id) => {
     if (id) {
@@ -176,8 +125,6 @@ export default function Guide() {
           ShowMessage('Remove from Favorites successfully!')
           refetch()
         }
-        // Handle the response data as needed
-        console.log('Remove consumer:', data?.updateConsumers?.consumers?.[0]?.favoriteSports);
       } catch (err) {
         console.error('Error updating consumer:', err);
       }
@@ -185,7 +132,6 @@ export default function Guide() {
       ShowMessage('Invalid data')
     }
   };
-
   // Define a function to execute the mutation
   const updateNotificationConsumers = async (id, flag) => {
     if (id) {
@@ -218,8 +164,6 @@ export default function Guide() {
           ShowMessage(flag ? 'Notification is inActive.' : 'Notification is Active')
           refetch()
         }
-        // Handle the response data as needed
-        console.log('Remove consumer:', data?.updateConsumers?.consumers?.[0]?.favoriteSports);
       } catch (err) {
         console.error('Error updating consumer:', err);
       }
@@ -296,14 +240,11 @@ export default function Guide() {
 
   useEffect(() => {
     let list = [...categoryData];
-    // Filter events based on selected categories
     const selectedCategories = list.filter(category => category.selected);
     const selectedCategoryValues = selectedCategories.map(
       category => category.value
     );
-
     let filteredEvents = [];
-
     if (selectedCategories.length === 1 && selectedCategoryValues[0] === 'all') {
       setSelectedCategory('all');
       filteredEvents = mySportData; // Use all data when 'all' category is selected
@@ -311,18 +252,15 @@ export default function Guide() {
       filteredEvents = mySportData.filter(item => {
         // Extract the names from item.categories
         const categoryNames = item?.categories.map(category => category.name);
-        // Check if at least one of the selected categories matches any category name in the item
         return selectedCategoryValues.some(selectedCategory =>
           categoryNames.includes(selectedCategory)
         );
       });
-
     }
     setFilteredEventList(filteredEvents);
   }, [mySportData])
 
   const handleReminder = (item, index, selectedItem) => {
-    console.log('item?.categories?.[0] : ', item?.categories?.[0], selectedItem)
     if (!selectedItem || !selectedItem?.[0]?.notifications) {
       updateConsumers(item?.categories?.[0], item, flag, selectedItem?.[0]?.notifications)
     }
@@ -330,8 +268,7 @@ export default function Guide() {
     setReminderModal(!reminderModal);
   };
 
-  const handleFvrt = (item,selectedItem) => {
-    console.log('handleFvrt item : ', selectedItem)
+  const handleFvrt = (item, selectedItem) => {
     if (reduxData?.user) {
       setCurrentIndex(selectedItem?.[0]);
       if (selectedItem && selectedItem.length > 0) {
@@ -355,21 +292,15 @@ export default function Guide() {
     if (index === 0 && selectedCategory === 'all') {
       return;
     }
-
     let list = [...categoryData];
-
-    // Toggle the selected category
     list[index].selected = !list[index].selected;
-
     if (index === 0) {
-      // Deselect all other categories if 'all' category is selected
       list.forEach((element, idx) => {
         if (idx !== 0) {
           element.selected = false;
         }
       });
     } else {
-      // Check if all other categories are deselected
       const otherSelected = list.slice(1).some(element => element.selected);
       if (!otherSelected) {
         list[0].selected = true;
@@ -377,15 +308,12 @@ export default function Guide() {
         list[0].selected = false;
       }
     }
-
     // Filter events based on selected categories
     const selectedCategories = list.filter(category => category.selected);
     const selectedCategoryValues = selectedCategories.map(
       category => category.value
     );
-
     let filteredEvents = [];
-
     if (selectedCategories.length === 1 && selectedCategoryValues[0] === 'all') {
       setSelectedCategory('all');
       filteredEvents = mySportData; // Use all data when 'all' category is selected
@@ -393,12 +321,10 @@ export default function Guide() {
       filteredEvents = mySportData.filter(item => {
         // Extract the names from item.categories
         const categoryNames = item?.categories.map(category => category.name);
-        // Check if at least one of the selected categories matches any category name in the item
         return selectedCategoryValues.some(selectedCategory =>
           categoryNames.includes(selectedCategory)
         );
       });
-
     }
     setSelectedCategory(selectedCategoryValues);
     setCategoryData(list);
@@ -411,10 +337,8 @@ export default function Guide() {
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     refetch()
-    console.log("Refreddd")
     wait(2000).then(() => setRefreshing(false));
   }, []);
-
   // handle to navigate to sign up for create account
   const handleCreateAccount = async () => {
     setFvrtModal(!fvrtModal)

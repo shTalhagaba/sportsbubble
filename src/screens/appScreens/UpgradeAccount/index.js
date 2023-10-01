@@ -1,11 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
-  ScrollView,
   ImageBackground,
   StatusBar,
-  FlatList,
   Image,
   TouchableOpacity,
 } from 'react-native';
@@ -19,7 +17,6 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 export default function UpgradeAccount() {
   const navigation = useNavigation();
-
   const [montlyFlag, setMonthlyFlag] = useState(false);
   const [yearlyFlag, setYearlyFlag] = useState(false);
   const [smsFlag, setSmsFlag] = useState(false);
@@ -50,7 +47,6 @@ export default function UpgradeAccount() {
       <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ flexGrow: 1, paddingBottom: 30 }}>
-
         <View style={styles.innerContainer}>
           <Text style={styles.upgradeTxt}>{Strings.upgradeAccount}</Text>
           <View style={styles.filterContainer}>
@@ -138,7 +134,6 @@ export default function UpgradeAccount() {
           </View>
         </View>
       </KeyboardAwareScrollView>
-
     </ImageBackground>
   );
 }

@@ -2,9 +2,9 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Images, Colors } from 'src/utils';
 import { Image, Platform, View } from 'react-native';
-
 import Guide from 'src/screens/appScreens/Guide';
 import Watch from 'src/screens/appScreens/Watch';
+import About from 'src/screens/appScreens/About';
 import Search from 'src/screens/appScreens/Search';
 import Setting from 'src/screens/appScreens/Setting';
 import Legal from 'src/screens/appScreens/Legal';
@@ -15,7 +15,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { refreshData } from 'src/store/types';
 
 const Tab = createBottomTabNavigator();
-
 const SettingNavigator = createNativeStackNavigator();
 const GuideNavigator = createNativeStackNavigator();
 const SearchNavigator = createNativeStackNavigator();
@@ -26,7 +25,7 @@ const GuideNavigation = () => {
       screenOptions={{
         headerShown: false,
       }}>
-      <GuideNavigator.Screen name="Guide" component={Guide} />
+      <GuideNavigator.Screen name="GuideMain" component={Guide} />
       <GuideNavigator.Screen name="Watch" component={Watch} />
     </GuideNavigator.Navigator>
   );
@@ -38,8 +37,9 @@ const SettingNavigation = () => {
       screenOptions={{
         headerShown: false,
       }}>
-      <SettingNavigator.Screen name="Setting" component={Setting} />
+      <SettingNavigator.Screen name="SettingMain" component={Setting} />
       <SettingNavigator.Screen name="Legal" component={Legal} />
+      <SettingNavigator.Screen name="About" component={About} />
     </SettingNavigator.Navigator>
   );
 };
@@ -50,13 +50,11 @@ const SearchNavigation = () => {
       screenOptions={{
         headerShown: false,
       }}>
-      <SearchNavigator.Screen name="Search" component={Search} />
-      <SearchNavigator.Screen name="WatchSearch" component={Watch} />
+      <SearchNavigator.Screen name="SearchMain" component={Search} />
+      <SearchNavigator.Screen name="SearchWatch" component={Watch} />
     </SearchNavigator.Navigator>
   );
 };
-
-
 
 const BottomTab = () => {
   const dispatch = useDispatch();
@@ -64,8 +62,14 @@ const BottomTab = () => {
 
   const tabBarGuideListeners = ({ navigation, route }) => ({
     tabPress: () => {
-      navigation.navigate('Guide'),
+      navigation.navigate('GuideMain'),
         dispatch(refreshData(!reduxData?.refresh)); // Dispatch the action
+    }
+  });
+
+  const tabBarSearchListeners = ({ navigation, route }) => ({
+    tabPress: () => {
+      navigation.navigate('Search')
     }
   });
 
@@ -140,7 +144,7 @@ const BottomTab = () => {
       <Tab.Screen
         name="Search"
         component={SearchNavigation}
-        // listeners={handleSearchStack}
+        listeners={tabBarSearchListeners}
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={styles.bottomContainer}>
@@ -160,7 +164,6 @@ const BottomTab = () => {
           ),
         }}
       />
-
       <Tab.Screen
         name="Setting"
         component={SettingNavigation}

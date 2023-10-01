@@ -1,4 +1,4 @@
-import {ShowMessage} from 'src/components/ShowMessage';
+import { ShowMessage } from 'src/components/ShowMessage';
 
 const regEmail = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
 const regName = /^[a-zA-Z ]*$/; // Characters and spaces allowed
@@ -75,7 +75,7 @@ export const signupValidation = (
         ShowMessage('Please check terms and policy');
       } else {
         return true;
-      } 
+      }
     }
   }
 };
@@ -188,7 +188,7 @@ export const updateProfileValidation = (
     ShowMessage('Name should only contain letters and spaces.');
   } else if (checkValidation(zipCode)) {
     ShowMessage('Please Enter Zip Code.');
-  }  else if (zipCode.length < 4) {
+  } else if (zipCode.length < 4) {
     ShowMessage('Zip Code is too short.');
   } else {
     return true;

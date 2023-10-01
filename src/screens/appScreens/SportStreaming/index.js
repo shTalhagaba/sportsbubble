@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -13,78 +13,16 @@ import {
 import styles from './styles';
 import AppHeader from 'src/components/AppHeader';
 import { Images, Colors } from 'src/utils';
-import { useNavigation } from '@react-navigation/native';
 import Strings from 'src/utils/strings';
-import AppSearch from 'src/components/AppSearch';
 import strings from 'src/utils/strings';
-
-const data = [
-  {
-    id: 1,
-    img: Images.BaseBall,
-    title: 'Baseball',
-    selected: false,
-  },
-  {
-    id: 2,
-    img: Images.BasketBall,
-    title: 'Basketball',
-    selected: false,
-  },
-  {
-    id: 3,
-    img: Images.BaseBall,
-    title: 'Boxing',
-    selected: false,
-  },
-  {
-    id: 4,
-    img: Images.BasketBall,
-    title: 'Baseball',
-    selected: false,
-  },
-  {
-    id: 5,
-    img: Images.BaseBall,
-    title: 'Basketball',
-    selected: false,
-  },
-  {
-    id: 6,
-    img: Images.BasketBall,
-    title: 'Basketball',
-    selected: false,
-  },
-  {
-    id: 7,
-    img: Images.BaseBall,
-    title: 'Boxing',
-    selected: false,
-  },
-  {
-    id: 8,
-    img: Images.BasketBall,
-    title: 'Baseball',
-    selected: false,
-  },
-  {
-    id: 9,
-    img: Images.BaseBall,
-    title: 'Basketball',
-    selected: false,
-  },
-];
+import { sportStreamingList } from 'src/utils/list';
 
 export default function SportStreaming() {
-  const navigation = useNavigation();
-
-  const [mySportData, setSportData] = useState(data);
+  const [mySportData, setSportData] = useState(sportStreamingList);
   const [selectedItems, setSelectedItems] = useState([]);
   const [isFocused, setIsFocused] = useState(true);
   const [searchText, setSearchText] = useState('');
   const [searchFlag, setSearchFlag] = useState(true);
-
-
 
   const handleSelectSports = (item, index) => {
     let list = [...mySportData];
@@ -97,13 +35,8 @@ export default function SportStreaming() {
   const handleFocus = () => {
     setIsFocused(true);
   };
-
-  const handleBlur = () => {
-    setIsFocused(false);
-  };
   const handleInputChange = text => {
     setSearchText(text);
-
   };
   const handleDone = () => {
     setIsFocused(false);
@@ -124,7 +57,6 @@ export default function SportStreaming() {
         translucent
         barStyle="light-content"
       />
-
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
@@ -195,7 +127,6 @@ export default function SportStreaming() {
               />
             </TouchableOpacity>
           </TouchableOpacity>
-
           {/* main list */}
           <FlatList
             data={mySportData}

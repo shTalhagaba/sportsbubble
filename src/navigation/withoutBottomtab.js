@@ -1,5 +1,5 @@
 import React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import UpdatePassword from 'src/screens/appScreens/UpdatePassword';
 import PersonalInfo from 'src/screens/appScreens/PersonalInfo';
 import SportStreaming from 'src/screens/appScreens/SportStreaming';
@@ -7,8 +7,8 @@ import UpgradeAccount from 'src/screens/appScreens/UpgradeAccount';
 import Payment from 'src/screens/appScreens/Payment';
 import Connect from 'src/screens/appScreens/Connect';
 import Term from 'src/screens/appScreens/Term';
-
 const AppNavigator = createNativeStackNavigator();
+
 const WithoutBottomnavigation = () => {
   return (
     <AppNavigator.Navigator

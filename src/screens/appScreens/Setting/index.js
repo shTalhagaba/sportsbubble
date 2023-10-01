@@ -151,7 +151,7 @@ export default function Setting() {
         Container={{ backgroundColor: Colors.backBlack }}
       />
       {/* Powered by sports bubble */}
-      <View style={styles.sbContainer}>
+      {/* <View style={styles.sbContainer}>
         <Image
           source={Images.Sports}
           style={styles.leftArrowIcon}
@@ -163,7 +163,7 @@ export default function Setting() {
           resizeMode={'contain'}
         />
         <Text style={styles.versionTxt}>v {version}</Text>
-      </View>
+      </View> */}
     </ImageBackground>
   );
 }
