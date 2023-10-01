@@ -12,72 +12,13 @@ import {
 import styles from './styles';
 import AppHeader from 'src/components/AppHeader';
 import {Images, Colors} from 'src/utils';
-import {useNavigation} from '@react-navigation/native';
 import Strings from 'src/utils/strings';
 import AppSearch from 'src/components/AppSearch';
+import { sportStreamingList } from 'src/utils/list';
 
-const data = [
-  {
-    id: 1,
-    img: Images.BaseBall,
-    title: 'Baseball',
-    selected: true,
-  },
-  {
-    id: 2,
-    img: Images.BasketBall,
-    title: 'Basketball',
-    selected: false,
-  },
-  {
-    id: 3,
-    img: Images.BaseBall,
-    title: 'Boxing',
-    selected: false,
-  },
-  {
-    id: 4,
-    img: Images.BasketBall,
-    title: 'Baseball',
-    selected: false,
-  },
-  {
-    id: 5,
-    img: Images.BaseBall,
-    title: 'Basketball',
-    selected: false,
-  },
-  {
-    id: 6,
-    img: Images.BasketBall,
-    title: 'Basketball',
-    selected: false,
-  },
-  {
-    id: 7,
-    img: Images.BaseBall,
-    title: 'Boxing',
-    selected: false,
-  },
-  {
-    id: 8,
-    img: Images.BasketBall,
-    title: 'Baseball',
-    selected: false,
-  },
-  {
-    id: 9,
-    img: Images.BaseBall,
-    title: 'Basketball',
-    selected: false,
-  },
-];
 
 export default function SportStreaming() {
-  const navigation = useNavigation();
-
-  const [mySportData, setSportData] = useState(data);
-
+  const [mySportData, setSportData] = useState(sportStreamingList);
   const handleSelectSports = (item, index) => {
     let list = [...mySportData];
     list[index].selected = !list[index].selected;
@@ -90,7 +31,6 @@ export default function SportStreaming() {
       resizeMode="cover"
       style={styles.container}>
       <StatusBar backgroundColor={Colors.mediumBlue} />
-
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}

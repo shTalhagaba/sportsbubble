@@ -8,8 +8,6 @@ import Payment from 'src/screens/appScreens/Payment'
 import Connect from 'src/screens/appScreens/Connect'
 import Term from 'src/screens/appScreens/Term'
 
-
-
 const AppNavigator = createNativeStackNavigator()
 
 const WithoutBottomnavigation = () => {

@@ -9,7 +9,6 @@ import ContactTextInput from 'src/components/ContactTextInput'
 
 export default function UpgradeAccount() {
     const navigation = useNavigation()
-
     const [montlyFlag, setMonthlyFlag] = useState(false)
     const [yearlyFlag, setYearlyFlag] = useState(false)
     const [smsFlag, setSmsFlag] = useState(false)
@@ -23,8 +22,6 @@ export default function UpgradeAccount() {
         setMonthlyFlag(false)
         setYearlyFlag(true)
     }
-
-
 
     return (
         <ImageBackground source={Images.Background2}
@@ -102,9 +99,7 @@ export default function UpgradeAccount() {
                         Contianer={styles.blackBtnContainer}
                     />
                 </View>
-
             </ScrollView>
-
         </ImageBackground>
     );
 }

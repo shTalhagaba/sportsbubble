@@ -72,5 +72,4 @@ export default ScaledSheet.create({
     loginBtnContainer: {
         marginTop: "24@ms0.3"
     },
-
 });

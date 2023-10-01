@@ -27,34 +27,10 @@ import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 import Config from 'react-native-config';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { UpdateEvents } from 'src/utils/functions';
+import { categoryArr, stageToken, wrongEventId } from 'src/utils/list';
 
 const screenWidth = Dimensions.get('window').width;
 const { fontScale } = Dimensions.get('window');
-
-// Sample data for the category slider
-const categoryArr = [
-  {
-    id: 1,
-    title: 'all',
-    value: 'all',
-    selected: true,
-  },
-  {
-    id: 2,
-    title: 'pro',
-    value: 'pro',
-  },
-  {
-    id: 3,
-    title: 'college',
-    value: 'college',
-  },
-  {
-    id: 4,
-    title: 'esports',
-    value: 'e-sports',
-  },
-];
 
 export default function Guide(props) {
   const navigation = useNavigation();
@@ -69,7 +45,6 @@ export default function Guide(props) {
   const [timeData, setTimeData] = useState([]);
   const [categoryData, setCategoryData] = useState(categoryArr);
   const [selectedTimeIndex, setSelectedTimeIndex] = useState(0);
-  const stageToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJodHRwczovL2Rldi0zNTM5MjYyLm9rdGEuY29tL29hdXRoMi92MS90b2tlbiIsImlzcyI6IjBvYTlrN2RpYWRqOUxJN0tkNWQ2Iiwic3ViIjoiMG9hOWs3ZGlhZGo5TEk3S2Q1ZDYifQ.sJCxcymR_X_OtWCZxJ5_AfUbWvKkd1ML8JW-Wl91xV8uJ2paw067kEgfR7QYz6dk3-1-egBjyf1Mifm1cTN1S8JPpkd1NN1Aw6uuky3lt5jmjeHwwqL-XHzIkSjLN_t8zdO5OpDqtlbEqyNGtJFCONJ9K-hCjp7u5FWCZ1nKwIK3X1w-FVjRDLbvJrTrh8IJriqPhiWHfkGbz-jm6yStYXMw3uhcKd164RA2l8utz4jnVRn9ebcOiN_BQb3yvtqBc0CsxB6YKQmmW7Rbpg8cRU3B1zfLfMMu2QVPLYr5vDD2mhK1PwixUZ6UnYrYirXWNNTqyZquGZPQWpIlY9sIwA'
 
   const [eventList, setEventList] = useState(
     reduxData &&
@@ -128,7 +103,7 @@ export default function Guide(props) {
           const { line1, line2, startTime, endTime, rightsHolders, logo1, id, rightsHoldersConnection } = event;
           // Check if the event should be excluded based on id and rightsHoldersConnection
           if (
-            id === '9f25117c-78ed-4af1-a2fb-ed5cef8ed414' ||
+            id === wrongEventId ||
             !rightsHoldersConnection ||
             rightsHoldersConnection.edges.length < 1
           ) {
@@ -426,215 +401,215 @@ export default function Guide(props) {
 
   return (
     <View style={styles.container}>
-    <ImageBackground
-      source={Images.Background}
-      resizeMode="cover"
-      style={styles.container}>
-      <StatusBar
-        backgroundColor={Colors.transparent}
-        translucent
-        barStyle="light-content"
-      />
-      {/* Header with Logo only  */}
-      <AppHeader centerImage={Images.Logo} />
-      {/* Slider all pro  */}
-      <View style={styles.sliderContainer}>
-        <FlatList
-          horizontal
-          data={categoryData}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={
-            fontScale > 1
-              ? { justifyContent: 'center' }
-              : { justifyContent: 'center', flex: 1 }
-          }
-          scrollEnabled={fontScale > 1 ? true : false}
-          renderItem={({ item, index }) => (
-            <TouchableOpacity
-              onPress={() => handleSelectedCategory(item, index)}
-              style={styles.sliderInnerContainer}>
-              <View
-                style={[
-                  styles.sliderInnerMainContainer,
-                  { borderWidth: item?.selected ? moderateScale(2, 0.3) : 0 },
-                ]}>
-                {item?.selected && <View style={styles.rectangle2} />}
-                <ImageBackground
-                  source={
-                    item?.selected
-                      ? Images.ActiveSliderBack
-                      : Images.InActiveSliderBorder
-                  }
-                  style={styles.sliderImageBackground}
-                  imageStyle={
-                    Platform.OS === 'android'
-                      ? {
-                        borderRadius: moderateScale(22, 0.3),
-                        borderWidth: item?.selected
-                          ? 0
-                          : moderateScale(2.5, 0.3),
-                        borderColor: Colors.darkBlue,
-                      }
-                      : {}
-                  }
-                  resizeMode={'stretch'}>
-                  <Image
+      <ImageBackground
+        source={Images.Background}
+        resizeMode="cover"
+        style={styles.container}>
+        <StatusBar
+          backgroundColor={Colors.transparent}
+          translucent
+          barStyle="light-content"
+        />
+        {/* Header with Logo only  */}
+        <AppHeader centerImage={Images.Logo} />
+        {/* Slider all pro  */}
+        <View style={styles.sliderContainer}>
+          <FlatList
+            horizontal
+            data={categoryData}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={
+              fontScale > 1
+                ? { justifyContent: 'center' }
+                : { justifyContent: 'center', flex: 1 }
+            }
+            scrollEnabled={fontScale > 1 ? true : false}
+            renderItem={({ item, index }) => (
+              <TouchableOpacity
+                onPress={() => handleSelectedCategory(item, index)}
+                style={styles.sliderInnerContainer}>
+                <View
+                  style={[
+                    styles.sliderInnerMainContainer,
+                    { borderWidth: item?.selected ? moderateScale(2, 0.3) : 0 },
+                  ]}>
+                  {item?.selected && <View style={styles.rectangle2} />}
+                  <ImageBackground
                     source={
-                      index === 0
-                        ? Images.Trophy
-                        : index === 1
-                          ? Images.Crown
-                          : index === 2
-                            ? Images.College
-                            : Images.Game
+                      item?.selected
+                        ? Images.ActiveSliderBack
+                        : Images.InActiveSliderBorder
                     }
-                    style={styles.sliderIcon}
+                    style={styles.sliderImageBackground}
+                    imageStyle={
+                      Platform.OS === 'android'
+                        ? {
+                          borderRadius: moderateScale(22, 0.3),
+                          borderWidth: item?.selected
+                            ? 0
+                            : moderateScale(2.5, 0.3),
+                          borderColor: Colors.darkBlue,
+                        }
+                        : {}
+                    }
+                    resizeMode={'stretch'}>
+                    <Image
+                      source={
+                        index === 0
+                          ? Images.Trophy
+                          : index === 1
+                            ? Images.Crown
+                            : index === 2
+                              ? Images.College
+                              : Images.Game
+                      }
+                      style={styles.sliderIcon}
+                      resizeMode={'contain'}
+                    />
+                    <Text numberOfLines={1}
+                      style={[styles.sliderTxt, { maxWidth: Platform.OS === "android" ? fontScale > 1 ? "80%" : "100%" : "100%" }]}>
+                      {item?.title.toUpperCase()}
+                    </Text>
+                  </ImageBackground>
+                </View>
+              </TouchableOpacity>
+            )}
+          />
+        </View>
+        {/* time slider */}
+        <GestureRecognizer
+          onSwipeRight={state => {
+            handlePrevious();
+          }}
+          onSwipeLeft={state => {
+            handleNext();
+          }}
+          config={{
+            velocityThreshold: 0.3,
+            directionalOffsetThreshold: 100,
+            gestureIsClickThreshold: 20,
+          }}>
+          <View style={styles.timeSliderContainer}>
+            {isLive ?
+              <View style={styles.liveMainContainer}>
+                <TouchableOpacity
+                  onPress={() => handleLive()}
+                  style={[
+                    styles.liveTimeContainer,
+                    {
+                      backgroundColor: isLive
+                        ? Colors?.mediumGreen
+                        : Colors.mediumBlue,
+                    },
+                  ]}>
+                  <Text
+                    style={
+                      isLive
+                        ? styles.sliderActiveTimeTxt
+                        : styles.sliderInactiveTimeTxt
+                    }>
+                    {'Live'}
+                  </Text>
+                </TouchableOpacity>
+              </View> :
+              <View style={styles.leftIconStyle}>
+                <TouchableOpacity
+                  onPress={() => handlePrevious()}
+                  style={[
+                    styles.leftTimeContainer,
+                    {
+                      backgroundColor: Colors.brandBlue,
+                    },
+                  ]}>
+                  <Image
+                    source={Images.Arrow}
+                    style={[styles.rightIcon, { transform: [{ rotate: '180deg' }] }]}
                     resizeMode={'contain'}
                   />
-                  <Text numberOfLines={1}
-                    style={[styles.sliderTxt, { maxWidth: Platform.OS === "android" ? fontScale > 1 ? "80%" : "100%" : "100%" }]}>
-                    {item?.title.toUpperCase()}
-                  </Text>
-                </ImageBackground>
-              </View>
-            </TouchableOpacity>
-          )}
-        />
-      </View>
-      {/* time slider */}
-      <GestureRecognizer
-        onSwipeRight={state => {
-          handlePrevious();
-        }}
-        onSwipeLeft={state => {
-          handleNext();
-        }}
-        config={{
-          velocityThreshold: 0.3,
-          directionalOffsetThreshold: 100,
-          gestureIsClickThreshold: 20,
-        }}>
-        <View style={styles.timeSliderContainer}>
-          {isLive ?
-            <View style={styles.liveMainContainer}>
+                </TouchableOpacity>
+              </View>}
+            <View
+              style={[styles.timeSliderInnerContainer, { width: screenWidth / 3 }]}>
+              <FlatList
+                horizontal
+                data={timeData.slice(0, 2)}
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{ flex: 1, justifyContent: 'space-around' }}
+                scrollEnabled={fontScale > 1.2 ? true : false}
+                renderItem={({ item, index }) => {
+                  const adjustedIndex = index + currentIndex; // Calculate the adjusted index based on the current index
+                  return (
+                    <View
+                      style={[
+                        styles.timeContainer,
+                        {
+                          backgroundColor: Colors.mediumBlue,
+                        },
+                      ]}>
+                      <Text style={styles.sliderInactiveTimeTxt}>
+                        {timeData[adjustedIndex]?.title}
+                      </Text>
+                    </View>
+                  );
+                }}
+              />
+            </View>
+            <View style={styles.rightIconStyle}>
               <TouchableOpacity
-                onPress={() => handleLive()}
+                onPress={() => handleNext()}
                 style={[
                   styles.liveTimeContainer,
                   {
-                    backgroundColor: isLive
-                      ? Colors?.mediumGreen
-                      : Colors.mediumBlue,
-                  },
-                ]}>
-                <Text
-                  style={
-                    isLive
-                      ? styles.sliderActiveTimeTxt
-                      : styles.sliderInactiveTimeTxt
-                  }>
-                  {'Live'}
-                </Text>
-              </TouchableOpacity>
-            </View> :
-            <View style={styles.leftIconStyle}>
-              <TouchableOpacity
-                onPress={() => handlePrevious()}
-                style={[
-                  styles.leftTimeContainer,
-                  {
                     backgroundColor: Colors.brandBlue,
-                  },
+                  }
                 ]}>
                 <Image
                   source={Images.Arrow}
-                  style={[styles.rightIcon, { transform: [{ rotate: '180deg' }] }]}
+                  style={styles.rightIcon}
                   resizeMode={'contain'}
                 />
               </TouchableOpacity>
-            </View>}
-          <View
-            style={[styles.timeSliderInnerContainer, { width: screenWidth / 3 }]}>
+            </View>
+          </View>
+        </GestureRecognizer>
+        {/* main list  */}
+        {false ? (
+          <View style={{ flex: 1, justifyContent: 'center' }}>
+            <ActivityIndicator color={'#fff'} size={'large'} />
+          </View>
+        ) : (
+          <ScrollView indicatorStyle={'white'}>
             <FlatList
-              horizontal
-              data={timeData.slice(0, 2)}
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{ flex: 1, justifyContent: 'space-around' }}
-              scrollEnabled={fontScale > 1.2 ? true : false}
-              renderItem={({ item, index }) => {
-                const adjustedIndex = index + currentIndex; // Calculate the adjusted index based on the current index
-                return (
-                  <View
-                    style={[
-                      styles.timeContainer,
-                      {
-                        backgroundColor: Colors.mediumBlue,
-                      },
-                    ]}>
-                    <Text style={styles.sliderInactiveTimeTxt}>
-                      {timeData[adjustedIndex]?.title}
-                    </Text>
-                  </View>
-                );
-              }}
-            />
-          </View>
-          <View style={styles.rightIconStyle}>
-            <TouchableOpacity
-              onPress={() => handleNext()}
-              style={[
-                styles.liveTimeContainer,
-                {
-                  backgroundColor:  Colors.brandBlue,
-                }
-              ]}>
-              <Image
-                source={Images.Arrow}
-                style={styles.rightIcon}
-                resizeMode={'contain'}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-      </GestureRecognizer>
-      {/* main list  */}
-      {false ? (
-        <View style={{ flex: 1, justifyContent: 'center' }}>
-          <ActivityIndicator color={'#fff'} size={'large'} />
-        </View>
-      ) : (
-        <ScrollView indicatorStyle={'white'}>
-          <FlatList
-            data={
-              selectedCategory === 'all' && selectedTimeIndex >= 0
-                ? filteredEventList && filteredEventList.length > 0
-                  ? filteredEventList
-                  : selectedTimeIndex > 0
+              data={
+                selectedCategory === 'all' && selectedTimeIndex >= 0
+                  ? filteredEventList && filteredEventList.length > 0
                     ? filteredEventList
-                    : []
-                : filteredEventList
-            }
-            showsVerticalScrollIndicator={false}
-            renderItem={({ item }) => <ItemComponent item={item} />}
-            keyExtractor={item => item?.id}
-            removeClippedSubviews={true} // Unmount components when outside of window
-            initialNumToRender={50} // Reduce initial render amount
-            maxToRenderPerBatch={20} // Reduce number in each render batch
-            updateCellsBatchingPeriod={20} // Increase time between renders
-            windowSize={20} // Reduce the window size
-            ListEmptyComponent={
-              <View>
-                <Text style={styles.emptyTxt}>{Strings.emptyGuideList}</Text>
-              </View>
-            }
-          />
-        </ScrollView>
-      )}
-      <LiveMatchView
-        setLiveMatchModal={setLiveMatchModal}
-        liveMatchModal={liveMatchModal}
-      />
-    </ImageBackground>
+                    : selectedTimeIndex > 0
+                      ? filteredEventList
+                      : []
+                  : filteredEventList
+              }
+              showsVerticalScrollIndicator={false}
+              renderItem={({ item }) => <ItemComponent item={item} />}
+              keyExtractor={item => item?.id}
+              removeClippedSubviews={true} // Unmount components when outside of window
+              initialNumToRender={50} // Reduce initial render amount
+              maxToRenderPerBatch={20} // Reduce number in each render batch
+              updateCellsBatchingPeriod={20} // Increase time between renders
+              windowSize={20} // Reduce the window size
+              ListEmptyComponent={
+                <View>
+                  <Text style={styles.emptyTxt}>{Strings.emptyGuideList}</Text>
+                </View>
+              }
+            />
+          </ScrollView>
+        )}
+        <LiveMatchView
+          setLiveMatchModal={setLiveMatchModal}
+          liveMatchModal={liveMatchModal}
+        />
+      </ImageBackground>
     </View>
   );
 }

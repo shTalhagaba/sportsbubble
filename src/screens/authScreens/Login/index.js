@@ -9,16 +9,12 @@ import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { setUser } from 'src/store/types';
 
-
 export default function Login() {
     const dispatch = useDispatch();
     const navigation = useNavigation()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-
     const [displayPassword, setDisplayPassword] = useState(true);
-
-
     const emailRef = useRef()
     const passwordRef = useRef()
 
@@ -87,7 +83,6 @@ export default function Login() {
                         <Text style={styles.signupTxt}>Sign Up</Text>
                     </TouchableOpacity>
                 </View>
-
             </ScrollView>
         </ImageBackground>
     );

@@ -1,7 +1,6 @@
 import { Colors } from 'src/utils';
 import { ScaledSheet } from "react-native-size-matters";
 
-
 export default ScaledSheet.create({
     container: {
         flex: 1,
@@ -52,7 +51,5 @@ export default ScaledSheet.create({
     modalContainer: {
         marginTop: "0@ms0.3",
         paddingVertical: "40@ms0.3"
-
-
     }
 });

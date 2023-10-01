@@ -1,23 +1,18 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, ScrollView, ImageBackground, StatusBar, TouchableOpacity } from 'react-native';
+import React, { useRef, useState } from 'react';
+import { View, Text, ScrollView, ImageBackground } from 'react-native';
 import styles from './styles';
 import ContactTextInput from 'src/components/ContactTextInput'
 import AppHeader from 'src/components/AppHeader'
-import { Images, Colors, Fonts } from 'src/utils';
+import { Images, Colors } from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
-
 
 export default function WelcomeAccount() {
     const [zipCode, setZipCode] = useState('')
     const [birthday, setBirthday] = useState('')
     const [pronouns, setPronouns] = useState('')
-
-
-
     const zipCodeRef = useRef()
     const birthdayRef = useRef()
     const pronounsRef = useRef()
-
 
     return (
         <ImageBackground source={Images.Background2}
@@ -91,9 +86,7 @@ export default function WelcomeAccount() {
                         <CustomButton
                             title={"Continue"} />
                     </View>
-
                 </View>
-
             </ScrollView>
         </ImageBackground>
     );

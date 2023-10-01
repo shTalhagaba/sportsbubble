@@ -72,7 +72,7 @@ const BottomTab = () => {
 
   const tabBarSearchListeners = ({ navigation, route }) => ({
     tabPress: () => {
-      navigation.navigate('SearchMain')
+      navigation.navigate('Search')
     }
   });
 

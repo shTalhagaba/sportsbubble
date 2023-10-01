@@ -10,11 +10,8 @@ import ContactTextInput from 'src/components/ContactTextInput'
 import CustomButton from 'src/components/CustomButton';
 import CustomModalView from 'src/components/Modal/CustomModal'
 
-
-
 export default function PersonalInfo() {
     const navigation = useNavigation();
-
     const [firstName, setFirstName] = useState('Matthew')
     const [lastName, setLastName] = useState('Dichter')
     const [zipCode, setZipcode] = useState('91364')
@@ -22,14 +19,11 @@ export default function PersonalInfo() {
     const [pronouns, setPronouns] = useState('')
     const [email, setEmail] = useState('mattyd@sportsbubble.io')
     const [cancelAccountModal, setCancelAccountModal] = useState(false)
-
-
     const firstNameRef = useRef()
     const lastNameRef = useRef()
     const zipCodeRef = useRef()
     const dobRef = useRef()
     const emailRef = useRef()
-
 
     return (
         <ImageBackground
@@ -177,9 +171,6 @@ export default function PersonalInfo() {
                 ornageBtnPress={() => setCancelAccountModal(!cancelAccountModal)}
                 Contianer={{ backgroundColor: Colors.black }}
             />
-
-
-
         </ImageBackground>
     );
 }

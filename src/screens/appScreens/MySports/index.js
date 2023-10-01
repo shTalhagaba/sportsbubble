@@ -13,72 +13,7 @@ import { Images, Colors, Strings } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
 import { useNavigation } from '@react-navigation/native';
 import CustomModalView from 'src/components/Modal/CustomModal';
-
-const data = [
-  {
-    id: 1,
-    img: Images.BaseBall,
-    title: 'Baseball',
-    notifcationFlag: false,
-    fvrtFlag: false,
-  },
-  {
-    id: 2,
-    img: Images.BasketBall,
-    title: 'Basketball',
-    notifcationFlag: false,
-    fvrtFlag: false,
-  },
-  {
-    id: 3,
-    img: Images.BaseBall,
-    title: 'Boxing',
-    notifcationFlag: false,
-    fvrtFlag: false,
-  },
-  {
-    id: 4,
-    img: Images.BasketBall,
-    title: 'Baseball',
-    notifcationFlag: false,
-    fvrtFlag: false,
-  },
-  {
-    id: 5,
-    img: Images.BaseBall,
-    title: 'Basketball',
-    notifcationFlag: false,
-    fvrtFlag: false,
-  },
-  {
-    id: 6,
-    img: Images.BasketBall,
-    title: 'Basketball',
-    notifcationFlag: false,
-    fvrtFlag: false,
-  },
-  {
-    id: 7,
-    img: Images.BaseBall,
-    title: 'Boxing',
-    notifcationFlag: false,
-    fvrtFlag: false,
-  },
-  {
-    id: 8,
-    img: Images.BasketBall,
-    title: 'Baseball',
-    notifcationFlag: false,
-    fvrtFlag: false,
-  },
-  {
-    id: 9,
-    img: Images.BaseBall,
-    title: 'Basketball',
-    notifcationFlag: false,
-    fvrtFlag: false,
-  },
-];
+import { sportDummyList } from 'src/utils/list';
 
 export default function Guide() {
   const navigation = useNavigation();
@@ -89,7 +24,7 @@ export default function Guide() {
   const [sportFlag, setSportFlag] = useState(false);
   const [reminderModal, setRemaindarModal] = useState(false);
   const [fvrtModal, setFvrtModal] = useState(false);
-  const [mySportData, setSportData] = useState(data);
+  const [mySportData, setSportData] = useState(sportDummyList);
   const [curremItem, setCurrentItem] = useState({});
   const [curremIndex, setCurrentIndex] = useState();
 

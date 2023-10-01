@@ -30,7 +30,6 @@ export default function Connect(props) {
     }
   };
 
-
   return (
     <ImageBackground
       source={Images.Background2}

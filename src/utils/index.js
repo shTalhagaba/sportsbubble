@@ -4,5 +4,6 @@ import Fonts from './fonts'
 import Strings from './strings'
 import Constants from './constants'
 import Functions from './functions'
+import List from './list'
 
-export {Colors , Images , Fonts, Strings, Constants,Functions}
+export { Colors, Images, Fonts, Strings, Constants, Functions, List }

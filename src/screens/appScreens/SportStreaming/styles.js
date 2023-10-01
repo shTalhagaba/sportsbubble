@@ -1,7 +1,6 @@
 import { Colors, Fonts } from 'src/utils';
 import { ScaledSheet } from "react-native-size-matters";
 
-
 export default ScaledSheet.create({
     container: {
         flex: 1,
@@ -68,7 +67,5 @@ export default ScaledSheet.create({
         width: "10@ms0.3",
         tintColor: Colors.white,
         alignSelf: "center"
-
     },
-
 });

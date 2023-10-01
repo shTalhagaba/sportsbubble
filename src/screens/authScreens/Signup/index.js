@@ -8,7 +8,6 @@ import CustomButton from 'src/components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 import CustomModalView from 'src/components/Modal/CustomModal'
 
-
 export default function Signup() {
     const navigation = useNavigation()
     const [fullName, setFullName] = useState('')
@@ -19,11 +18,8 @@ export default function Signup() {
     const [emailOptCheck, setEmailOptCheck] = useState(false)
     const [termsCheck, setTermsCheck] = useState(false)
     const [verifyModal, setVerifyModal] = useState(false)
-
     const [displayPassword, setDisplayPassword] = useState(true);
     const [displayConfirmPassword, setDisplayConfirmPassword] = useState(true);
-
-
     const fullNameRef = useRef()
     const lastNameRef = useRef()
     const emailRef = useRef()
@@ -44,7 +40,6 @@ export default function Signup() {
             resizeMode="cover"
             style={styles.container}>
             <StatusBar backgroundColor={Colors.mediumBlue} />
-
             <AppHeader
                 centerImage={Images.Logo}
                 LeftImage={Images.LeftIcon}
@@ -170,14 +165,11 @@ export default function Signup() {
                     <CustomButton
                         title={"Continue"}
                         onpress={() => setVerifyModal(!verifyModal)} />
-                    {/* onpress={() => navigation.navigate('WelcomeAccount')} /> */}
-
                     <CustomModalView
                         visible={verifyModal}
                         desTxt={"Please check your inbox to verify your account"}
                         dexTxtStyle={styles.modalContainer} />
                 </View>
-
             </ScrollView>
         </ImageBackground>
     );

@@ -8,7 +8,6 @@ import CustomButton from 'src/components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 import Strings from 'src/utils/strings';
 
-
 export default function UpdatePassword() {
     const navigation = useNavigation()
     const [currentPassword, setCurrentPassword] = useState('')
@@ -17,7 +16,6 @@ export default function UpdatePassword() {
     const currentPasswordRef = useRef()
     const newPasswordRef = useRef()
     const newConfirmPasswordRef = useRef()
-
     const [displayCurrentPassword, setDisplayCurrentPassword] = useState(true);
     const [displayNewPassword, setDisplayNewPassword] = useState(true);
     const [displayNewConfirmPassword, setDisplayNewConfirmPassword] = useState(true);
@@ -27,12 +25,10 @@ export default function UpdatePassword() {
             resizeMode="cover"
             style={styles.container}>
             <StatusBar backgroundColor={Colors.mediumBlue} />
-
             <AppHeader
                 centerImage={Images.Logo}
                 LeftImage={Images.LeftIcon}
                 customLeftImage={{ tintColor: Colors.darkOrange }}
-
                 SimpleView />
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={{ marginHorizontal: 20 }}>

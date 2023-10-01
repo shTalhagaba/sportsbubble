@@ -5,10 +5,8 @@ import { Images, Colors } from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 
-
 export default function WelcomeScreen() {
     const navigation = useNavigation()
-
     return (
         <ImageBackground source={Images.HomeScreen}
             resizeMode="cover"

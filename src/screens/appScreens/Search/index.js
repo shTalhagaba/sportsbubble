@@ -24,7 +24,6 @@ import strings from 'src/utils/strings';
 export default function Search(props) {
   const navigation = useNavigation();
   let isFocused = useIsFocused()
-
   const reduxData = useSelector(state => state.user);
   const currentDate = dayjs(new Date()).toISOString(); // Get the current date and time
   const [searchText, setSearchText] = useState('');
@@ -42,7 +41,7 @@ export default function Search(props) {
     return () => {
       Keyboard.dismiss();
       setIsFocusedFlag(false)
-      setSearchText('')
+      // setSearchText('')
     }
   }, [isFocused]);
 
@@ -51,17 +50,16 @@ export default function Search(props) {
       'keyboardDidShow',
       keyboardDidShow
     );
-
     const keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
       keyboardDidHide
     );
-
     return () => {
       keyboardDidShowListener.remove();
       keyboardDidHideListener.remove();
     };
   }, []);
+
   const keyboardDidShow = () => {
     setIsKeyboardOpen(true);
   };
@@ -95,7 +93,6 @@ export default function Search(props) {
         const searchString = text.split(" ").filter(a => a !== '');
         // Creating an iterable to verify that all words are matched
         let matchedStrings = 0;
-
         for (const text of searchString) {
           for (const key of searchableFields) {
             const value = key.split('.').reduce((obj, prop) => obj && obj[prop], item);

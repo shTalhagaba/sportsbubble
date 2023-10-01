@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Image,
   ImageBackground,
   ScrollView,
   StatusBar,
@@ -43,7 +42,6 @@ export default function Term(props) {
         customLeftImage={{tintColor: Colors.orange}}
         SimpleView
       />
-
       {/* Main tabs  */}
       <View style={styles.mainTabContainer}>
         <Text style={styles.loginTxt}>

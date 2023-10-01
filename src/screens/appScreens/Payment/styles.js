@@ -1,7 +1,6 @@
 import { Colors, Fonts } from 'src/utils';
 import { ScaledSheet } from "react-native-size-matters";
 
-
 export default ScaledSheet.create({
     container: {
         flex: 1,
@@ -134,9 +133,6 @@ export default ScaledSheet.create({
         lineHeight: "21@ms0.3",
     },
     btnContainer: {
-        // marginTop: "40@ms0.3"
         marginBottom: "40@ms0.3"
     },
-
-
 });
