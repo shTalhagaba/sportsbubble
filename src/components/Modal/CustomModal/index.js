@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Modal,
-  Text,
-  TouchableWithoutFeedback,
-  StatusBar,
-} from 'react-native';
+import { View, Modal, Text, TouchableWithoutFeedback, StatusBar } from 'react-native';
 import styles from './styles';
 import { Colors } from 'src/utils';
 import CustomButton from 'src/components/CustomButton';

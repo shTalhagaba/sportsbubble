@@ -1,14 +1,7 @@
-import React, {useState} from 'react';
-import {
-  View,
-  Modal,
-  Text,
-  TouchableWithoutFeedback,
-  StatusBar,
-  TextInput,
-} from 'react-native';
+import React, { useState } from 'react';
+import { View, Modal, Text, TouchableWithoutFeedback, StatusBar, TextInput } from 'react-native';
 import styles from './styles';
-import {Colors} from 'src/utils';
+import { Colors } from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
 
 const CustomVeriificationModal = props => {
@@ -41,17 +34,7 @@ const CustomVeriificationModal = props => {
               {props?.desTxt}
             </Text>
             <View
-              style={{
-                flexDirection: 'row',
-                alignSelf: 'center',
-                alignItems: 'center',
-                marginTop: 3,
-                marginHorizontal: 15,
-                borderColor: Colors.white,
-                borderWidth: 2,
-                padding: 14,
-                borderRadius: 15,
-              }}>
+              style={styles.inputContainer}>
               <TextInput
                 style={styles.inputField}
                 onFocus={handleFocus}

@@ -6,6 +6,17 @@ const styles = ScaledSheet.create({
     flex: 1,
     backgroundColor: Colors.darkBlue80,
   },
+  inputContainer: {
+    flexDirection: 'row',
+    alignSelf: 'center',
+    alignItems: 'center',
+    marginTop: 3,
+    marginHorizontal: 15,
+    borderColor: Colors.white,
+    borderWidth: 2,
+    padding: 14,
+    borderRadius: 15,
+  },
   checkBoxContainer: {
     backgroundColor: Colors.backBlack,
     width: '84%',

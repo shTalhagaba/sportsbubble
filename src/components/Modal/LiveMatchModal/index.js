@@ -1,14 +1,6 @@
 import { Images, Strings } from 'src/utils';
 import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Modal,
-  Text,
-  TouchableWithoutFeedback,
-  Image,
-  TouchableOpacity,
-  StatusBar,
-} from 'react-native';
+import { View, Modal, Text, TouchableWithoutFeedback, Image, TouchableOpacity, StatusBar } from 'react-native';
 import styles from './styles';
 import BlackClose from 'src/assets/images/BlackClose.js';
 import GreenButton from 'src/components/GreenButton';
@@ -66,7 +58,7 @@ const LiveMatch = ({ setLiveMatchModal, liveMatchModal, navigation }) => {
               rightIcon={false}
               Container={styles.greenButtonContainer}
               btnTxt={styles.greenButtonTxt}
-              onpress={() => { 
+              onpress={() => {
                 setLiveMatchModal(!liveMatchModal)
                 navigation.navigate('Watch', { item: content?.fields?.event });
               }}
