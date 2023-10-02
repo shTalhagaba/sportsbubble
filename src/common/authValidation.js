@@ -195,14 +195,16 @@ export const updateProfileValidation = (
   }
 };
 
-export const completeProfileValidation = (zipCode, dob, pronouns) => {
+export const completeProfileValidation = (zipCode, dob) => {
   if (checkValidation(zipCode)) {
     ShowMessage('Please Enter Zip Code.');
   } else if (checkValidation(dob)) {
     ShowMessage('Please Select Date of Birth.');
-  } else if (checkValidation(pronouns)) {
-    ShowMessage('Please Select Pronouns.');
-  } else if (zipCode.length < 4) {
+  }
+  //  else if (checkValidation(pronouns)) {
+  //   ShowMessage('Please Select Pronouns.');
+  // } 
+  else if (zipCode.length < 4) {
     ShowMessage('Zip Code is too short.');
   } else {
     return true;

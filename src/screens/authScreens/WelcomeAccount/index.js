@@ -56,7 +56,7 @@ export default function WelcomeAccount(props) {
   };
   // Handle the submission of the complete profile form
   const submitButton = async () => {
-    if (completeProfileValidation(zipCode, dob, pronouns)) {
+    if (completeProfileValidation(zipCode, dob)) {
       setLoadingLocal(true);
       const inputData = {
         cognitoId: props?.route?.params?.client,
