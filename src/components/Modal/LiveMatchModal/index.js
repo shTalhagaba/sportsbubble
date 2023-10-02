@@ -15,7 +15,7 @@ import GreenButton from 'src/components/GreenButton';
 import { Colors } from 'src/utils';
 import { fetchContentFulContent } from 'src/utils/contentful';
 
-const LiveMatch = ({ setLiveMatchModal, liveMatchModal }) => {
+const LiveMatch = ({ setLiveMatchModal, liveMatchModal, navigation }) => {
   const [content, setContent] = useState(null);
 
   useEffect(() => {
@@ -66,7 +66,10 @@ const LiveMatch = ({ setLiveMatchModal, liveMatchModal }) => {
               rightIcon={false}
               Container={styles.greenButtonContainer}
               btnTxt={styles.greenButtonTxt}
-              onpress={() => { }}
+              onpress={() => { 
+                setLiveMatchModal(!liveMatchModal)
+                navigation.navigate('Watch', { item: content?.fields?.event });
+              }}
             />
           </View>
         </View>

@@ -753,6 +753,7 @@ export default function Guide(props) {
         <LiveMatchView
           setLiveMatchModal={setLiveMatchModal}
           liveMatchModal={liveMatchModal}
+          navigation={navigation}
         />
         {/* My Sport Popup for guest  */}
         {mySportModal ?

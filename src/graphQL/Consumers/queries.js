@@ -44,3 +44,53 @@ query($options: SportOptions, $where: SportWhere) {
   }
 }
 `;
+
+export const FETCH_ALL_RIGHTSHOLDERS = gql`
+query {
+  rightsHolders {
+    name,
+    logoUrl
+  }
+}
+`
+export const GET_FAVORITE_RIGHTSHOLDER = gql`
+query ($cognitoId: String!) {
+  consumers ( where: { cognitoId: $cognitoId } ) {
+    favoriteRightsHolders {
+      name
+    }
+  }
+}
+`
+
+export const SELECT_FAVORITE_RIGHTSHOLDER = gql`
+mutation ($cognitoId: String!, $rightsHolderName: String!) {
+  updateConsumers (
+    where: { cognitoId: $cognitoId },
+    connect: { favoriteRightsHolders: { where: { node: { name: $rightsHolderName } } } }
+  ) {
+    consumers {
+      cognitoId
+      favoriteRightsHolders {
+        name
+      }
+    }
+  }
+}
+`
+
+export const DELETE_FAVORITE_RIGHTSHOLDER = gql`
+mutation ($cognitoId: String!, $rightsHolderName: String!) {
+  updateConsumers (
+    where: { cognitoId: $cognitoId },
+    disconnect: { favoriteRightsHolders: { where: { node: { name: $rightsHolderName } } } }
+  ) {
+    consumers {
+      cognitoId
+      favoriteRightsHolders {
+        name
+      }
+    }
+  }
+}
+`

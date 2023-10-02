@@ -122,4 +122,16 @@ export default ScaledSheet.create({
         marginHorizontal: '10@ms0.3',
         tintColor: Colors.white,
     },
+    focus: {
+        borderWidth: '2@ms0.3',
+        borderColor: Colors.lightBlue,
+    },
+    blur: {
+        borderWidth: '1@ms0.3',
+        borderColor: Colors.lightGreen,
+    },
+    imageRightsIcon: {
+        height: '47@ms0.3',
+        width: '47@ms0.3',
+    },
 });

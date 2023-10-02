@@ -4,12 +4,12 @@ import { Dimensions, View } from 'react-native';
 import WebView from 'react-native-webview';
 const screenWidth = Dimensions.get('window').width;
 
-const SvgRenderer = ({ url, flag }) => {
+const SvgRenderer = ({ url, flag, width, height }) => {
     return (
         flag ?
             <View style={{
-                width: screenWidth / 2.5,
-                height: screenWidth / 4,
+                width: width ? width : screenWidth / 2.5,
+                height: height ? height : screenWidth / 4,
             }}>
                 <WebView
                     source={{
@@ -23,8 +23,8 @@ const SvgRenderer = ({ url, flag }) => {
             </html>`
                     }}
                     style={{
-                        width: screenWidth / 2.5,
-                        height: screenWidth / 4,
+                        width: width ? width : screenWidth / 2.5,
+                        height: height ? height : screenWidth / 4,
                         backgroundColor: 'transparent', // Set background to transparent
                     }}
                     containerStyle={{

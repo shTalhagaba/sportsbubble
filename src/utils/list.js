@@ -78,42 +78,6 @@ export const sportStreamingList = [
     title: 'Boxing',
     selected: false,
   },
-  {
-    id: 4,
-    img: Images.BasketBall,
-    title: 'Baseball',
-    selected: false,
-  },
-  {
-    id: 5,
-    img: Images.BaseBall,
-    title: 'Basketball',
-    selected: false,
-  },
-  {
-    id: 6,
-    img: Images.BasketBall,
-    title: 'Basketball',
-    selected: false,
-  },
-  {
-    id: 7,
-    img: Images.BaseBall,
-    title: 'Boxing',
-    selected: false,
-  },
-  {
-    id: 8,
-    img: Images.BasketBall,
-    title: 'Baseball',
-    selected: false,
-  },
-  {
-    id: 9,
-    img: Images.BaseBall,
-    title: 'Basketball',
-    selected: false,
-  },
 ];
 
 export const optionsList = [

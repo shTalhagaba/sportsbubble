@@ -28,7 +28,7 @@ export default ScaledSheet.create({
   listContainer: {
     paddingRight: '0@ms0.3',
     marginVertical: '0@ms0.3',
-    paddingVertical: '5@ms0.3',
+    paddingBottom: '5@ms0.3',
   },
   fvrtIcon: {
     height: '21@ms0.3',
@@ -155,7 +155,7 @@ export default ScaledSheet.create({
     paddingStart: '1@ms0.3',
     position: 'absolute',
     left: '60@ms0.3',
-    width: '72%',
+    width: '82%',
   },
   leftContainer: {
     flex: 1,
@@ -229,7 +229,7 @@ export default ScaledSheet.create({
     borderWidth: '2@ms0.3',
     borderColor: '#004EBC',
     height: fontScale > 1 ? (width / 4.8) * fontScale : width / 5.1,
-    borderRadius: fontScale > 1 ? 21 * fontScale : '18@ms0.3',
+    borderRadius: fontScale > 1 ? 21 * fontScale : '23@ms0.3',
     width: fontScale > 1 ? (width / 4.8) * fontScale : width / 5.1,
     overflow: 'visible',
   },
@@ -261,7 +261,7 @@ export default ScaledSheet.create({
     top: -4.5,
     height: fontScale > 1 ? (width / 4.9) * fontScale : width / 4.7 - 1,
     width: fontScale > 1 ? (width / 4.9) * fontScale : width / 4.71,
-    borderRadius: fontScale > 1 ? 19 * fontScale : '20@ms0.3',
+    borderRadius: fontScale > 1 ? 19 * fontScale : '27@ms0.3',
     borderWidth: '3@ms0.3',
     borderColor: Colors.brandBlue,
     opacity: 0.3,
