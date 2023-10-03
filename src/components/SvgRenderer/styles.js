@@ -1,10 +1,20 @@
-import { Colors } from 'src/utils'
+import { ScaledSheet } from 'react-native-size-matters';
 import { Dimensions } from 'react-native';
-import { ScaledSheet } from "react-native-size-matters";
+import { Colors } from 'src/utils';
 
 const screenWidth = Dimensions.get('window').width;
+
 const styles = ScaledSheet.create({
     container: {
+        width: screenWidth / 2.5,
+        height: screenWidth / 4,
+    },
+    innerContainer: {
+        width: screenWidth / 2.5,
+        height: screenWidth / 4,
+        backgroundColor: 'transparent', // Set background to transparent
+    },
+    webContainer: {
         borderRadius: 16,
         overflow: 'hidden',
         alignItems: 'center',
@@ -12,7 +22,7 @@ const styles = ScaledSheet.create({
         padding: 15,
         backgroundColor: 'transparent',
     },
-    innerContainer: {
+    webMainContainer: {
         backgroundColor: Colors.mediumBlue,
         borderWidth: 2,
         borderRadius: 16,
@@ -22,7 +32,7 @@ const styles = ScaledSheet.create({
         width: screenWidth / 4.6,
         height: screenWidth / 4.6,
     },
-    innerWebContainer: {
+    webInnerContainer: {
         position: 'absolute',
         left: 0,
         top: 0,
@@ -44,5 +54,6 @@ const styles = ScaledSheet.create({
         backgroundColor: Colors.mediumBlue,
     }
 
-})
-export default styles
+});
+
+export default styles;

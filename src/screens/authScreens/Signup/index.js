@@ -244,7 +244,7 @@ export default function Signup() {
             onPress={() => setDisplayConfirmPassword(!displayConfirmPassword)}
           />
           {/* Checkbox for email opt-in */}
-          <View style={[styles.checkboxContainer, { marginTop: 30 }]}>
+          {/* <View style={[styles.checkboxContainer, { marginTop: 30 }]}>
             <TouchableOpacity
               onPress={() => setEmailOptCheck(!emailOptCheck)}
               style={styles.uncheckBox}>
@@ -262,7 +262,7 @@ export default function Signup() {
             <Text style={[styles.checkBoxTxt, { marginStart: 10 }]}>
               {Strings.signupTerm}
             </Text>
-          </View>
+          </View> */}
           {/* Checkbox for terms and conditions */}
           <View style={[styles.checkboxContainer]}>
             <TouchableOpacity

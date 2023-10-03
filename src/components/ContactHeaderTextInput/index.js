@@ -28,7 +28,7 @@ const ContactHeaderTextInput = props => {
           onChangeText={props.onChangeText}
           keyboardType={props.keyboardType}
           textAlignVertical={props.textAlignVertical}
-          maxLength={props.maxLength} ss
+          maxLength={props.maxLength}
           autoCapitalize={props.autoCapitalize}
           returnKeyType={props.returnKeyType}
           onSubmitEditing={props.onSubmitEditing}

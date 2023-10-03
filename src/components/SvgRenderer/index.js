@@ -1,8 +1,8 @@
+import { Colors } from 'src/utils';
 import React from 'react';
 import { Dimensions, View } from 'react-native';
 import WebView from 'react-native-webview';
 import styles from './styles';
-
 const screenWidth = Dimensions.get('window').width;
 
 const SvgRenderer = ({ url, flag, width, height }) => {
@@ -15,37 +15,35 @@ const SvgRenderer = ({ url, flag, width, height }) => {
                 <WebView
                     source={{
                         html: `
-            <html style="background:transparent;">
-            <body>
-              <div style="height:100vh; width:100vw; background:transparent;">
-                <img src="${url}" height="100%" width="100%" style="background:transparent;" />
-              </div>
-            </body>
-            </html>`
+                        <html style="background:transparent;">
+                        <body>
+                        <div style="height:100vh; width:100vw; background:transparent;">
+                            <img src="${url}" height="100%" width="100%" style="background:transparent;" />
+                        </div>
+                        </body>
+                        </html>`
                     }}
-                    style={{
-                        width: width ? width : screenWidth / 2.5,
-                        height: height ? height : screenWidth / 4,
-                        backgroundColor: 'transparent', // Set background to transparent
-                    }}
-                    containerStyle={styles.container}
+                    style={styles.innerContainer}
+                    containerStyle={styles.webContainer}
+                    scrollEnabled={false} // Disable scrolling
                 />
             </View> :
-            <View style={styles.innerContainer}>
-                <View style={styles.innerWebContainer} />
+            <View style={styles.webMainContainer}>
+                <View style={styles.webInnerContainer} />
                 <WebView
                     source={{
                         html: `
-            <html style="background:#3F5B80;">
-            <body>
-              <div style="height:100vh; width:100vw; background:#3F5B80;">
-                <img src="${url}" height="100%" width="100%" style="background:#3F5B80;" />
-              </div>
-            </body>
-            </html>`
+                        <html style="background:#3F5B80;">
+                        <body>
+                        <div style="height:100vh; width:100vw; background:#3F5B80;">
+                            <img src="${url}" height="100%" width="100%" style="background:#3F5B80;" />
+                        </div>
+                        </body>
+                        </html>`
                     }}
                     style={styles.htmlContainer}
                     containerStyle={styles.htmlInnerContainer}
+                    scrollEnabled={false} // Disable scrolling
                 />
             </View>
     );

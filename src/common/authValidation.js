@@ -2,8 +2,8 @@ import { ShowMessage } from 'src/components/ShowMessage';
 
 const regEmail = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
 const regName = /^[a-zA-Z ]*$/; // Characters and spaces allowed
-const regPassword =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+const regPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
+
 
 export const checkValidation = checkableValue => {
   if (
@@ -90,10 +90,6 @@ export const loginValidation = (email, password) => {
       ShowMessage('Please Enter a Valid Email Address.');
     } else if (checkValidation(password)) {
       ShowMessage('Please Enter Password.');
-    } else if (regPassword.test(trimmedPassword) === false) {
-      ShowMessage(
-        'Password should include uppercase letters, symbols, and numbers.',
-      );
     } else {
       return true;
     }

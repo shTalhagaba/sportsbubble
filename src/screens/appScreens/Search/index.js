@@ -133,10 +133,12 @@ export default function Search(props) {
       });
     } else {
       Keyboard.dismiss();
-      navigation.navigate('SearchWatch', {
-        item: item,
-        searchFlag: true,
-      });
+      setTimeout(()=> {
+        navigation.navigate('SearchWatch', {
+          item: item,
+          searchFlag: true,
+        });
+      }, isKeyboardOpen ? 500 : 0)
     }
   }
 
