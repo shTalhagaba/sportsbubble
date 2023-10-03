@@ -7,11 +7,16 @@ import WelcomeAccount from 'src/screens/authScreens/WelcomeAccount';
 import WelcomeScreen from 'src/screens/authScreens/WelcomeScreen';
 import ResetPassword from 'src/screens/authScreens/ResetPassword';
 import Term from 'src/screens/appScreens/Term';
+import { useSelector } from 'react-redux';
+
 const AuthNavigator = createNativeStackNavigator();
 
 const AuthNavigation = () => {
+    const reduxData = useSelector(state => state.user);
+    console.log(reduxData?.userVerified, "----", reduxData?.userEmail)
     return (
         <AuthNavigator.Navigator
+            initialRouteName={reduxData?.userVerified === null ? "WelcomeScreen" : reduxData?.userVerified === false ? "Signup" : "WelcomeScreen"}
             screenOptions={{
                 headerShown: false
             }} >

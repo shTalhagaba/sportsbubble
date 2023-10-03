@@ -15,6 +15,8 @@ const initialState = {
   guest: false,
   refresh: false,
   selectedTimebar: -1,
+  userVerified: null,
+  userEmail: ''
 };
 
 const user = (state = initialState, action: any) => {
@@ -73,6 +75,30 @@ const user = (state = initialState, action: any) => {
         return {
           ...state,
           user: action.payload,
+        };
+      } catch (e) {
+        alert(e);
+        return state;
+      }
+      break;
+    // User Email
+    case 'SET_USER_EMAIL':
+      try {
+        return {
+          ...state,
+          userEmail: action.payload,
+        };
+      } catch (e) {
+        alert(e);
+        return state;
+      }
+      break;
+    // User Verified
+    case 'SET_USER_VERIFIED':
+      try {
+        return {
+          ...state,
+          userVerified: action.payload,
         };
       } catch (e) {
         alert(e);

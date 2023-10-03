@@ -23,7 +23,6 @@ export const signupValidation = (
   email,
   password,
   confirmPassword,
-  emailOptCheck,
   termsCheck,
 ) => {
   if (checkValidation(firstName)) {
@@ -55,8 +54,6 @@ export const signupValidation = (
       );
     } else if (password !== confirmPassword) {
       ShowMessage("Passwords don't match.");
-    } else if (!emailOptCheck) {
-      ShowMessage('Please check the Email Opt-In.');
     } else if (!termsCheck) {
       ShowMessage('Please accept the Terms and Policy.');
     } else {
@@ -69,8 +66,6 @@ export const signupValidation = (
         ShowMessage('Password should be 6 characters');
       } else if (password !== confirmPassword) {
         ShowMessage("Password don't match");
-      } else if (!emailOptCheck) {
-        ShowMessage('Please check email otp');
       } else if (!termsCheck) {
         ShowMessage('Please check terms and policy');
       } else {

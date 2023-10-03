@@ -11,6 +11,18 @@ export const setUser = (args: any) => {
     payload: args,
   };
 };
+export const setUserVerifiedFlag = (args: any) => {
+  return {
+    type: 'SET_USER_VERIFIED',
+    payload: args,
+  };
+};
+export const setUserEmail = (args: any) => {
+  return {
+    type: 'SET_USER_EMAIL',
+    payload: args,
+  };
+};
 
 export const setUserData = (args: any) => {
   return {

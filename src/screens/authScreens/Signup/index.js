@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -21,15 +21,21 @@ import { userSignup } from 'src/services/authSignup';
 import { resendCode, userOTP } from 'src/services/authOTP';
 import CustomVeriificationModal from 'src/components/Modal/CustomVeriificationModal';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserVerifiedFlag, setUserEmail } from 'src/store/types';
 export default function Signup() {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const reduxData = useSelector(state => state.user);
+
+
   const [fullName, setFullName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [emailOptCheck, setEmailOptCheck] = useState(false);
+  // const [emailOptCheck, setEmailOptCheck] = useState(false);
   const [termsCheck, setTermsCheck] = useState(false);
   const [verifyModal, setVerifyModal] = useState(false);
   const [loadingLocal, setLoadingLocal] = useState(false);
@@ -44,6 +50,31 @@ export default function Signup() {
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
 
+  useEffect(() => {
+    handleCheckVerify()
+  }, [])
+
+  const handleCheckVerify = async () => {
+    console.log("reduxData?.userVerified =>", reduxData?.userVerified)
+    if (reduxData?.userVerified === false) {
+      setVerifyModal(true)
+      ShowMessage("OTP share with your register email");
+      try {
+        setLoadingLocal(true);
+        const user = await resendCode(reduxData?.userEmail);
+        setLoadingLocal(false);
+      } catch (error) {
+        if (error.message.includes(':')) {
+          const myArray = error.message.split(':');
+        } else {
+          ShowMessage(error.message);
+        }
+      } finally {
+        setLoadingLocal(false);
+      }
+    }
+  }
+
   // Function to show the verification modal
   const showVerifyModal = async () => {
     if (
@@ -53,18 +84,21 @@ export default function Signup() {
         email,
         password,
         confirmPassword,
-        emailOptCheck,
         termsCheck,
       )
     ) {
       try {
         setLoadingLocal(true);
         const user = await userSignup(fullName, lastName, email, password);
+        console.log("User => ", user?.userConfirmed)
         setClient(user?.userSub)
+        dispatch(setUserVerifiedFlag(user?.userConfirmed))
+        dispatch(setUserEmail(email))
         setLoadingLocal(false);
         setVerifyModal(!verifyModal);
-        setEmailOptCheck(false)
         setTermsCheck(false)
+        console.log("reduxData?.userVerified  => ", reduxData?.userVerified)
+
       } catch (error) {
         if (error.message.includes(':')) {
           const myArray = error.message.split(':');
@@ -82,7 +116,10 @@ export default function Signup() {
       try {
         setLoadingLocal(true);
         const user = await userOTP(email, otp);
+        console.log("Verfied User => ", user)
+
         if (user === 'SUCCESS') {
+          dispatch(setUserVerifiedFlag(true))
           setVerifyModal(false);
           navigation.navigate('WelcomeAccount', {
             fullName: fullName,
