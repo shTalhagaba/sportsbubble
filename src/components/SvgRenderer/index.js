@@ -1,7 +1,7 @@
-import { Colors } from 'src/utils';
 import React from 'react';
 import { Dimensions, View } from 'react-native';
 import WebView from 'react-native-webview';
+import styles from './styles';
 const screenWidth = Dimensions.get('window').width;
 
 const SvgRenderer = ({ url, flag, width, height }) => {
@@ -22,40 +22,13 @@ const SvgRenderer = ({ url, flag, width, height }) => {
                         </body>
                         </html>`
                     }}
-                    style={{
-                        width: width ? width : screenWidth / 2.5,
-                        height: height ? height : screenWidth / 4,
-                        backgroundColor: 'transparent', // Set background to transparent
-                    }}
-                    containerStyle={{
-                        borderRadius: 16,
-                        overflow: 'hidden',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        padding: 15,
-                        backgroundColor: 'transparent',
-                    }}
+                    style={styles.innerContainer}
+                    containerStyle={styles.webContainer}
                     scrollEnabled={false} // Disable scrolling
                 />
             </View> :
-            <View style={{
-                backgroundColor: Colors.mediumBlue,
-                borderWidth: 2,
-                borderRadius: 16,
-                overflow: 'hidden',
-                borderColor: Colors.mediumBlue,
-                justifyContent: 'center',
-                width: screenWidth / 4.6,
-                height: screenWidth / 4.6,
-            }}>
-                <View style={{
-                    position: 'absolute',
-                    left: 0,
-                    top: 0,
-                    width: '100%',
-                    height: '100%',
-                    backgroundColor: Colors.black15,
-                }} />
+            <View style={styles.webMainContainer}>
+                <View style={styles.webInnerContainer} />
                 <WebView
                     source={{
                         html: `
@@ -67,19 +40,8 @@ const SvgRenderer = ({ url, flag, width, height }) => {
                         </body>
                         </html>`
                     }}
-                    style={{
-                        width: screenWidth / 6,
-                        height: screenWidth / 6,
-                        backgroundColor: 'transparent', // Set background to transparent
-                    }}
-                    containerStyle={{
-                        borderRadius: 16,
-                        overflow: 'hidden',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        padding: 15,
-                        backgroundColor: Colors.mediumBlue,
-                    }}
+                    style={styles.htmlContainer}
+                    containerStyle={styles.htmlInnerContainer}
                     scrollEnabled={false} // Disable scrolling
                 />
             </View>
