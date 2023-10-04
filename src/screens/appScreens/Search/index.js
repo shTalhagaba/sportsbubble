@@ -75,25 +75,17 @@ export default function Search() {
       reduxData.eventList.length > 0
     ) {
       const filtered = reduxData.eventList.filter(item => {
-        // Fields on which search is applicable
-        const searchableFields = ['line1', 'line2', 'sport.name', 'team name', 'league.name'];
-        // Converting user input string into an array of words
-        const searchString = text.split(" ").filter(a => a !== '');
-        // Creating an iterable to verify that all words are matched
-        let matchedStrings = 0;
-        for (const text of searchString) {
-          for (const key of searchableFields) {
-            const value = key.split('.').reduce((obj, prop) => obj && obj[prop], item);
-            if (
-              value !== null &&
-              typeof value === 'string' &&
-              value.toLowerCase().includes(text.toLowerCase())
-            ) {
-              matchedStrings++;
-            }
+        for (const key in item) {
+          const value = item[key];
+          if (
+            value !== null &&
+            typeof value === 'string' &&
+            value.toLowerCase().includes(text.toLowerCase())
+          ) {
+            return true;
           }
         }
-        return matchedStrings === searchString.length;
+          return false;
       });
       setList(filtered);
     }
