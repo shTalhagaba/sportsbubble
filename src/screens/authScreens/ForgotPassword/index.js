@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -6,14 +6,14 @@ import {
   TouchableOpacity,
   StatusBar,
 } from 'react-native';
-import styles from './styles'; 
+import styles from './styles';
 import ContactTextInput from 'src/components/ContactTextInput';
 import AppHeader from 'src/components/AppHeader';
-import {Images, Colors, Strings} from 'src/utils'; 
+import { Images, Colors, Strings } from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
-import {useNavigation} from '@react-navigation/native';
-import {forgotPasswordValidation} from 'src/common/authValidation';
-import {initiateForgotPassword} from 'src/services/authForgotPassword'; 
+import { useNavigation } from '@react-navigation/native';
+import { forgotPasswordValidation } from 'src/common/authValidation';
+import { initiateForgotPassword } from 'src/services/authForgotPassword';
 import LoaderModal from 'src/components/LoaderModal';
 import ShowMessage from 'src/components/ShowMessage';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -69,6 +69,7 @@ export default function ForgotPassword() {
       {/* Scrollable content */}
       <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={{ flexGrow: 1, paddingBottom: 30 }}>
         <View style={{ marginHorizontal: 20 }}>
           {/* Forgot Password text */}

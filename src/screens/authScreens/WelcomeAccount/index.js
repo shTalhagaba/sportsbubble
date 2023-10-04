@@ -128,6 +128,7 @@ export default function WelcomeAccount(props) {
         />
         <KeyboardAwareScrollView
           showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps={'handled'}
           contentContainerStyle={{ flexGrow: 1, paddingBottom: 30 }}>
           <View style={styles.innerContainer}>
             <Text style={styles.welcomeTxt}>

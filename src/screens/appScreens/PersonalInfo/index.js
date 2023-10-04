@@ -177,6 +177,7 @@ export default function PersonalInfo() {
         onPressBack={handleBack}
       />
       <KeyboardAwareScrollView
+        keyboardShouldPersistTaps={'handled'}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ flexGrow: 1, paddingBottom: 30 }}>
         <View style={styles.innerContainer}>

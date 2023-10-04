@@ -93,6 +93,7 @@ export default function Login() {
       />
       <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={{ flexGrow: 1, paddingBottom: 30 }}>
         <View style={styles.innerContainer}>
           <Text style={styles.loginTxt}>{Strings.login}</Text>
