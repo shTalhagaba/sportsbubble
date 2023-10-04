@@ -6,7 +6,7 @@ import {
   ImageBackground,
   StatusBar,
   TouchableOpacity,
-  Image,
+  Image, Keyboard
 } from 'react-native';
 import styles from './styles';
 import ContactTextInput from 'src/components/ContactTextInput';
@@ -49,6 +49,32 @@ export default function Signup() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
+
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      _keyboardDidShow
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      _keyboardDidHide
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
+
+  const _keyboardDidShow = () => {
+    setIsKeyboardOpen(true);
+  };
+
+  const _keyboardDidHide = () => {
+    setIsKeyboardOpen(false);
+  };
 
   useEffect(() => {
     setTimeout(() => {
@@ -184,6 +210,7 @@ export default function Signup() {
       />
       <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={{ flexGrow: 1, paddingBottom: 30 }}>
         <View style={styles.innerContainer}>
           <Text style={styles.signupTxt}>{Strings.signUp}</Text>
@@ -305,6 +332,7 @@ export default function Signup() {
           {/* Checkbox for terms and conditions */}
           <View style={[styles.checkboxContainer]}>
             <TouchableOpacity
+              activeOpacity={0.8}
               onPress={() => setTermsCheck(!termsCheck)}
               style={styles.uncheckBox}>
               {termsCheck && (
@@ -323,7 +351,7 @@ export default function Signup() {
                 <Text style={styles.termsCondition}>
                   {Strings.haveRead}
                 </Text>
-                <TouchableOpacity onPress={() => navigation.navigate('Term', { selected: Strings.termUse })}>
+                <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('Term', { selected: Strings.termUse })}>
                   <Text style={styles.termsConditionBold}>
                     {' '}{Strings.termsofService}
                   </Text>
@@ -333,7 +361,7 @@ export default function Signup() {
                 <Text style={styles.termsCondition}>
                   and{' '}
                 </Text>
-                <TouchableOpacity onPress={() => navigation.navigate('Term', { selected: Strings.privacyPolicy })}>
+                <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('Term', { selected: Strings.privacyPolicy })}>
                   <Text style={styles.termsConditionBold}>
                     {Strings.privacyPolicy2}
                   </Text>
