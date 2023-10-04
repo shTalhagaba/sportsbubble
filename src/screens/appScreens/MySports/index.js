@@ -23,6 +23,7 @@ import { DELETE_CONSUMERS, GET_MY_SPORT, GET_MY_SPORT_LIST, UPDATE_CONSUMERS, UP
 import LoaderModal from 'src/components/LoaderModal';
 import { setSportsList, setUser } from 'src/store/types';
 import { categoryArr, sportDummyList } from 'src/utils/list';
+import { subscribeInterest, unsubscribeInterest } from "../../../components/Pusher/PusherBeans";
 const { fontScale } = Dimensions.get('window');
 
 export default function MySports() {
@@ -88,6 +89,9 @@ export default function MySports() {
           ShowMessage('Added to Favorites successfully!')
           if (data?.updateConsumers?.consumers?.[0]?.favoriteSports && data?.updateConsumers?.consumers?.[0]?.favoriteSports.length > 0) {
             dispatch(setSportsList(data?.updateConsumers?.consumers?.[0]?.favoriteSports));
+            subscribeInterest(data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name)
+            console.log("Subscribe: ", data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name)
+
           }
         }
         console.log('Updated consumer:', data?.updateConsumers?.consumers);
@@ -125,6 +129,8 @@ export default function MySports() {
           ShowMessage('Remove from Favorites successfully!')
           refetch()
         }
+        // Handle the response data as needed
+        console.log('Remove consumer:', data?.updateConsumers?.consumers?.[0]?.favoriteSports);
       } catch (err) {
         console.error('Error updating consumer:', err);
       }
@@ -164,6 +170,9 @@ export default function MySports() {
           ShowMessage(flag ? 'Notification is inActive.' : 'Notification is Active')
           refetch()
         }
+        // Handle the response data as needed
+        unsubscribeInterest(data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name)
+        console.log('Remove consumer:', data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name);
       } catch (err) {
         console.error('Error updating consumer:', err);
       }
@@ -262,7 +271,7 @@ export default function MySports() {
 
   const handleReminder = (item, index, selectedItem) => {
     if (!selectedItem || !selectedItem?.[0]?.notifications) {
-      updateConsumers(item?.categories?.[0], item, flag, selectedItem?.[0]?.notifications)
+      updateConsumers(item?.categories?.[0], item, selectedItem?.[0]?.notifications)
     }
     setCurrentIndex(selectedItem?.[0]);
     setReminderModal(!reminderModal);

@@ -6,14 +6,15 @@ const toastConfig = {
   message: ({ props }) => (
     <View
       style={{
-        height: 40,
+        // height: 40,
         width: "auto",
         backgroundColor: Colors.blueGrey,
         borderRadius: 30,
         shadowRadius: 2,
         justifyContent: "center",
         paddingHorizontal: 15,
-        marginBottom: 40
+        marginBottom: 40,
+        paddingVertical: 6,
       }}
     >
       <Text
@@ -25,7 +26,7 @@ const toastConfig = {
           textAlign: "center",
           padding: 0,
         }}
-        numberOfLines={1}
+        numberOfLines={3}
       >
         {props.body}
       </Text>

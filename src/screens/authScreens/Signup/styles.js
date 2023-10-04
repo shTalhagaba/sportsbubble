@@ -41,7 +41,7 @@ export default ScaledSheet.create({
     marginHorizontal: '20@ms0.3',
   },
   termConditionContainer: {
-    flexDirection: 'row',
+    // flexDirection: 'row',
     marginStart: '10@ms0.3',
     maxWidth: '80%',
   },
@@ -73,6 +73,7 @@ export default ScaledSheet.create({
     borderColor: Colors.white,
     justifyContent: 'center',
     alignItems: 'center',
+    marginStart: '6@ms0.3',
   },
   modalContainer: {
     marginTop: '0@ms0.3',

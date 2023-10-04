@@ -15,6 +15,7 @@ import mySaga from 'src/store/sagas';
 import { LogBox } from 'react-native';
 import Toast from "react-native-toast-message";
 import { toastConfig } from "src/components/ToastConfig";
+import { initializePusher } from './src/components/Pusher/PusherBeans';
 
 const sagaMiddleware = createSagaMiddleware();
 const persistConfig = {
@@ -36,6 +37,8 @@ const httpLink = createHttpLink({
   uri: 'https://09a84a77s4.execute-api.us-west-2.amazonaws.com/dev/graphql', // sb5 dev passport 
   // uri: Config.BASE_URL
 });
+
+initializePusher();
 
 const client = new ApolloClient({
   link: httpLink,

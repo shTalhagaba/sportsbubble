@@ -13,13 +13,17 @@ const AuthNavigator = createNativeStackNavigator();
 
 const AuthNavigation = () => {
     const reduxData = useSelector(state => state.user);
-    console.log(reduxData?.userVerified, "----", reduxData?.userEmail)
+    const memoizedReduxData = React.useMemo(() => reduxData, [reduxData]);
+
+    console.log(memoizedReduxData?.userVerified, "----", memoizedReduxData?.userEmail);
+
     return (
         <AuthNavigator.Navigator
-            initialRouteName={reduxData?.userVerified === null ? "WelcomeScreen" : reduxData?.userVerified === false ? "Signup" : "WelcomeScreen"}
+            // initialRouteName={memoizedReduxData?.userVerified === null ? "WelcomeScreen" : memoizedReduxData?.userVerified === false ? "Signup" : "WelcomeScreen"}
             screenOptions={{
                 headerShown: false
-            }} >
+            }}
+        >
             <AuthNavigator.Screen name="WelcomeScreen" component={WelcomeScreen} />
             <AuthNavigator.Screen name="Login" component={Login} />
             <AuthNavigator.Screen name="Signup" component={Signup} />

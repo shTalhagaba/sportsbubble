@@ -127,19 +127,19 @@ project.ext.envConfigFiles = [
     productFlavors {
         production {
             minSdkVersion rootProject.ext.minSdkVersion
-            applicationId "com.zenix"
+            applicationId "com.sportsbubble"
             targetSdkVersion rootProject.ext.targetSdkVersion
             resValue "string", "build_config_package", "com.zenix"
         }
         staging {
             minSdkVersion rootProject.ext.minSdkVersion
-            applicationId "com.zenix.staging"
+            applicationId "com.sportsbubble.staging"
             targetSdkVersion rootProject.ext.targetSdkVersion
             resValue "string", "build_config_package", "com.zenix"
         }
         development {
             minSdkVersion rootProject.ext.minSdkVersion
-            applicationId "com.zenix.development"
+            applicationId "com.sportsbubble.development"
             targetSdkVersion rootProject.ext.targetSdkVersion
             resValue "string", "build_config_package", "com.zenix"
         }
@@ -200,6 +200,12 @@ implementation project(':instabug-reactnative')
     } else {
         implementation jscFlavor
     }
+
+    implementation 'com.google.firebase:firebase-messaging:20.2.3' // Update to the latest version
+    implementation project(':react-native-pusher-push-notifications')
+    implementation 'com.pusher:push-notifications-android:1.9.0'
+
 }
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle" // <- add this line
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+apply plugin: 'com.google.gms.google-services'

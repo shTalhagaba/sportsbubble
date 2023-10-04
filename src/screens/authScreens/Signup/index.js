@@ -51,7 +51,9 @@ export default function Signup() {
   const confirmPasswordRef = useRef();
 
   useEffect(() => {
-    handleCheckVerify()
+    setTimeout(() => {
+      // handleCheckVerify()
+    }, 500)
   }, [])
 
   const handleCheckVerify = async () => {
@@ -317,20 +319,26 @@ export default function Signup() {
               )}
             </TouchableOpacity>
             <View style={styles.termConditionContainer}>
-              <Text style={styles.termsCondition}>
-                {Strings.haveRead}
-                <Text
-                  onPress={() => navigation.navigate('Term', { selected: Strings.termUse })}
-                  style={styles.termsConditionBold}>
-                  {' ' + Strings.termsofService}
-                </Text>{' '}
-                and{' '}
-                <Text
-                  onPress={() => navigation.navigate('Term', { selected: Strings.privacyPolicy })}
-                  style={styles.termsConditionBold}>
-                  {Strings.privacyPolicy2}
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={styles.termsCondition}>
+                  {Strings.haveRead}
                 </Text>
-              </Text>
+                <TouchableOpacity onPress={() => navigation.navigate('Term', { selected: Strings.termUse })}>
+                  <Text style={styles.termsConditionBold}>
+                    {' '}{Strings.termsofService}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={styles.termsCondition}>
+                  and{' '}
+                </Text>
+                <TouchableOpacity onPress={() => navigation.navigate('Term', { selected: Strings.privacyPolicy })}>
+                  <Text style={styles.termsConditionBold}>
+                    {Strings.privacyPolicy2}
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
           {/* Button to continue to verification */}

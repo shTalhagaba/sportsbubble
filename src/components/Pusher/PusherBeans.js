@@ -1,0 +1,82 @@
+import RNPusherPushNotifications from 'react-native-pusher-push-notifications';
+import Config from 'react-native-config';
+import {Notifications} from 'react-native-notifications';
+
+const defaultIntrests = ["test"];
+var listener = null
+
+export const initializePusher = () => {
+  RNPusherPushNotifications.setInstanceId("5be1bfa8-67c3-4b6b-9bc1-5c1c1ce0cf07")
+  listener = RNPusherPushNotifications.on('registered', (response) => {
+    console.log('response: ',response)
+    defaultIntrests.map((item)=> {
+      subscribeInterest(item);
+    })
+  });
+  RNPusherPushNotifications.on('notification', handleNotification);
+};
+
+export const removeListener = () => {
+  if (listener) {
+    listener.remove()
+  }
+}
+
+const handleNotification = notification => {
+  console.log("notification: ", notification);
+
+  if (Platform.OS === 'ios') {
+    switch (notification?.appState) {
+      case 'inactive':
+        console.log("Notification recieved inactive =====")
+      // inactive: App came in foreground by clicking on notification.
+      //           Use notification.userInfo for redirecting to specific view controller
+      case 'background':
+        console.log("Notification recieved background =====")
+      // background: App is in background and notification is received.
+      //             You can fetch required data here don't do anything with UI
+      case 'active':
+        console.log("Notification recieved active =====")
+      // App is foreground and notification is received. Show a alert or something.
+      default:
+        break;
+    }
+  } else {
+    console.log("android handled notification...");
+    Notifications.registerRemoteNotifications();
+
+    Notifications.events().registerNotificationReceivedForeground((notification, completion) => {
+      console.log(`Notification received in foreground: ${notification.title} : ${notification.body}`);
+      completion({alert: false, sound: false, badge: false});
+    });
+
+    Notifications.events().registerNotificationOpened((notification, completion) => {
+      console.log(`Notification opened: ${notification.payload}`);
+      completion();
+    });
+    }
+};
+
+export const subscribeInterest = interest => {
+  RNPusherPushNotifications.subscribe(
+    interest,
+    (statusCode, response) => {
+      console.error(statusCode, response);
+    },
+    () => {
+      console.log('Success subscribeInterest');
+    }
+  );
+};
+
+export const unsubscribeInterest = interest => {
+  RNPusherPushNotifications.unsubscribe(
+    interest,
+    (statusCode, response) => {
+      console.log(statusCode, response);
+    },
+    () => {
+      console.log('Success unsubscribeInterest');
+    }
+  );
+};

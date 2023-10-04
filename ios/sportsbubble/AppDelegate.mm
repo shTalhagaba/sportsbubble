@@ -1,6 +1,7 @@
 #import "AppDelegate.h"
 
 #import <React/RCTBundleURLProvider.h>
+#import <RNPusherPushNotifications.h>
 
 
 @implementation AppDelegate
@@ -23,6 +24,20 @@
   return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
 }
+
+// Add the following as a new methods to AppDelegate.m
+    - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+      NSLog(@"Registered for remote with token: %@", deviceToken);
+      [[RNPusherPushNotifications alloc] setDeviceToken:deviceToken];
+    }
+
+    - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+      [[RNPusherPushNotifications alloc] handleNotification:userInfo];
+    }
+
+    -(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+      NSLog(@"Remote notification support is unavailable due to error: %@", error.localizedDescription);
+    }
 
 /// This method controls whether the `concurrentRoot`feature of React18 is turned on or off.
 ///

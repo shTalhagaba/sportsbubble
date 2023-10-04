@@ -1,17 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  FlatList,
-  ImageBackground,
-  View,
-  Image,
-  Text,
-  StatusBar,
-  TouchableOpacity,
-  Keyboard,
-  TextInput,
-  Platform,
-  SafeAreaView,
-} from 'react-native';
+import { FlatList, ImageBackground, View, Image, Text, StatusBar, TouchableOpacity, Keyboard, TextInput, Platform, SafeAreaView } from 'react-native';
 import styles from './styles';
 import { Images, Colors, Constants, Strings } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
@@ -21,7 +9,7 @@ import { useSelector } from 'react-redux';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 import strings from 'src/utils/strings';
 
-export default function Search(props) {
+export default function Search() {
   const navigation = useNavigation();
   let isFocused = useIsFocused()
   const reduxData = useSelector(state => state.user);
@@ -59,6 +47,7 @@ export default function Search(props) {
       keyboardDidHideListener.remove();
     };
   }, []);
+
   const keyboardDidShow = () => {
     setIsKeyboardOpen(true);
   };
@@ -86,23 +75,17 @@ export default function Search(props) {
       reduxData.eventList.length > 0
     ) {
       const filtered = reduxData.eventList.filter(item => {
-        // Fields on which search is applicable
-        const searchableFields = ['line1', 'line2', 'sport.name', 'team name', 'league.name'];
-        const searchString = text.split(" ").filter(a => a !== '');
-        let matchedStrings = 0;
-        for (const text of searchString) {
-          for (const key of searchableFields) {
-            const value = key.split('.').reduce((obj, prop) => obj && obj[prop], item);
-            if (
-              value !== null &&
-              typeof value === 'string' &&
-              value.toLowerCase().includes(text.toLowerCase())
-            ) {
-              matchedStrings++;
-            }
+        for (const key in item) {
+          const value = item[key];
+          if (
+            value !== null &&
+            typeof value === 'string' &&
+            value.toLowerCase().includes(text.toLowerCase())
+          ) {
+            return true;
           }
         }
-        return matchedStrings === searchString.length;
+          return false;
       });
       setList(filtered);
     }
@@ -172,15 +155,10 @@ export default function Search(props) {
               styles.searchContainer,
               isFocusedFlag ? styles.focus : styles.blur,
             ]}>
-            <View style={{ flex: 1 }}>
+            <View style={styles.searchMainContainer}>
               {isFocusedFlag && (
                 <View
-                  style={{
-                    flexDirection: 'row',
-                    marginTop: Platform.OS === 'ios' ? -5 : 5,
-                    marginLeft: 15,
-                    alignItems: 'center',
-                  }}>
+                  style={styles.searchInnerContainer}>
                   <Image
                     source={Images.Search}
                     style={styles.searchImageTwo}
@@ -190,12 +168,7 @@ export default function Search(props) {
                 </View>
               )}
               <View
-                style={{
-                  flexDirection: 'row',
-                  alignSelf: 'center',
-                  alignItems: 'center',
-                  marginLeft: 12,
-                }}>
+                style={styles.searchFocusContainer}>
                 {!isFocusedFlag && (
                   <Image
                     source={Images.Search}
@@ -218,7 +191,7 @@ export default function Search(props) {
                 />
               </View>
             </View>
-            <TouchableOpacity onPress={handleClear} style={{ padding: 10 }}>
+            <TouchableOpacity onPress={handleClear} style={styles.clearContainer}>
               <Image
                 source={Images.Cross}
                 style={styles.crossImage}
@@ -226,6 +199,7 @@ export default function Search(props) {
               />
             </TouchableOpacity>
           </TouchableOpacity>
+
           {/* list showing after search */}
           <FlatList
             data={searchText.length > 0 ? list : []}

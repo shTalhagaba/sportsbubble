@@ -1,5 +1,6 @@
 const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
 import CognitoPool from '.';
+import { removeListener } from "../components/Pusher/PusherBeans"; 
 
 const userOTP = (email, otp, mfaSession) => {
   return new Promise((resolve, reject) => {
@@ -57,6 +58,7 @@ const signOut = () => {
               reject(signOutErr);
               return;
             }
+            removeListener()
             console.log('Sign-out successful:', result);
             resolve(result);
           });
