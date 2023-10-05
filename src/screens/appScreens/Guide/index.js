@@ -21,7 +21,7 @@ import { useQuery } from '@apollo/client';
 import dayjs from 'dayjs';
 import { GET_SORTED_EVENTS } from './queries';
 import { useDispatch, useSelector } from 'react-redux';
-import { refreshData, selectedTimebar, setStoreEventList } from 'src/store/types';
+import { refreshData, selectedTimebar, setStoreEventList, setUser } from 'src/store/types';
 import { moderateScale } from 'react-native-size-matters';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 import CustomMySportsModalView from 'src/components/Modal/CustomMySportsModalView';

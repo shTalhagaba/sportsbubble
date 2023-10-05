@@ -8,7 +8,6 @@ import { DEVICE_STANDARD_HEIGHTS, DEVICES } from 'src/utils/devices';
 
 const { height } = Dimensions.get('window');
 const device_name = DeviceInfo.getModel();
-console.log("fontScale => ", fontScale)
 let is_zoomed = false;
 if (DEVICES.includes(device_name)) {
     console.log('is_zoomed : ', DEVICE_STANDARD_HEIGHTS[device_name], height)

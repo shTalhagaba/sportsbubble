@@ -16,7 +16,7 @@ const initialState = {
   refresh: false,
   selectedTimebar: -1,
   userVerified: null,
-  userEmail: ''
+  userSignupData: ''
 };
 
 const user = (state = initialState, action: any) => {
@@ -81,12 +81,12 @@ const user = (state = initialState, action: any) => {
         return state;
       }
       break;
-    // User Email
-    case 'SET_USER_EMAIL':
+    // User signup data
+    case 'SET_USER_SIGNUP_DATA':
       try {
         return {
           ...state,
-          userEmail: action.payload,
+          userSignupData: action.payload,
         };
       } catch (e) {
         alert(e);

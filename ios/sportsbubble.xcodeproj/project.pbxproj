@@ -956,7 +956,7 @@
 				CODE_SIGN_ENTITLEMENTS = sportsbubbleDevelopment.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = N2NJSCBBBJ;
 				INFOPLIST_FILE = "sportsbubble development-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "dev sportsbubble";

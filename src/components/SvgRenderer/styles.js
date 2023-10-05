@@ -44,16 +44,15 @@ const styles = ScaledSheet.create({
         width: screenWidth / 6,
         height: screenWidth / 6,
         backgroundColor: 'transparent', // Set background to transparent
+        margin: 15,
     },
     htmlInnerContainer: {
         borderRadius: 16,
         overflow: 'hidden',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 15,
         backgroundColor: Colors.mediumBlue,
     }
-
 });
 
 export default styles;

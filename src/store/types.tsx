@@ -17,9 +17,9 @@ export const setUserVerifiedFlag = (args: any) => {
     payload: args,
   };
 };
-export const setUserEmail = (args: any) => {
+export const setUserSignupData = (args: any) => {
   return {
-    type: 'SET_USER_EMAIL',
+    type: 'SET_USER_SIGNUP_DATA',
     payload: args,
   };
 };

@@ -51,7 +51,7 @@ export default {
   alertDes: 'Are you sure you want to cancel your account? This will erase your favorites and notification preferences.',
   emptyGuideList: "There are no live events in our schedule during this time period. Tap 'Live' above to see live event listings or swipe right to see upcoming event listings",
   emptySearchList: "Search by Event, Team, League, or Sport to Find Upcoming Event Schedule and Watch Information",
-  emptyEventsSearchList: "There are no live events in our schedule today that match your search. Try another search or tap ‘Cancel’ above to return the Event Guide.",
+  emptyEventsSearchList: "There are no live events in our schedule this week that match your search. Try another search or tap ‘Cancel’ above to return the Event Guide.",
   welcome: "Welcome to",
   liveSportsEventGuide: "Live Sports Event Guide",
   welcomeCreateAccount: "Create an account for fast access to Pro, College, Olympic, and Esports event information & viewing",

@@ -92,22 +92,26 @@ export default function Splash() {
   });
 
   useEffect(() => {
-    // Check user status and navigate accordingly
     if (!loading) {
-      if ((reduxData?.user || reduxData?.guest) &&
-        reduxData?.eventList &&
-        reduxData?.eventList.length > 0
-      ) {
-        setTimeout(() => {
-          navigation.replace('Root');
-        }, 1000);
+      if ((reduxData?.user || reduxData?.guest) && reduxData?.eventList?.length > 0 && reduxData?.userVerified) {
+        navigateToMainScreen();
       } else {
-        setTimeout(() => {
-          navigation.replace('Auth');
-        }, 1000);
+        navigateToAuthScreen();
       }
     }
-  }, [loading, reduxData?.eventList]);
+  }, [!loading]);
+
+  const navigateToMainScreen = () => {
+    setTimeout(() => {
+      navigation.replace('Root');
+    }, 1000);
+  };
+
+  const navigateToAuthScreen = () => {
+    setTimeout(() => {
+      navigation.replace('Auth');
+    }, 1000);
+  };
 
   return (
     <View style={styles.container}>

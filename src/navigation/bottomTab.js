@@ -73,6 +73,12 @@ const BottomTab = () => {
     }
   });
 
+  const tabBarSettingListeners = ({ navigation, route }) => ({
+    tabPress: () => {
+      navigation.navigate('Setting')
+    }
+  });
+
   return (
     <Tab.Navigator
       initialRouteName={'Guide'}
@@ -167,6 +173,7 @@ const BottomTab = () => {
       <Tab.Screen
         name="Setting"
         component={SettingNavigation}
+        listeners={tabBarSettingListeners}
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={styles.bottomContainer}>

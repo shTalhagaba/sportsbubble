@@ -11,6 +11,7 @@ const CustomButton = props => {
       style={[
         styles.container,
         props.Container,
+        props.greennDisable ? { backgroundColor: props?.disabled ? Colors.greyText50 : Colors.buttonGreen } : {},
         props.blue ? { backgroundColor: props?.disabled ? Colors.greyText50 : Colors.brandBlue } : {},
       ]}>
       <View style={[styles.innerContainer, props.innerContainer]}>

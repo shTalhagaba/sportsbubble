@@ -91,7 +91,6 @@ export default function MySports() {
             dispatch(setSportsList(data?.updateConsumers?.consumers?.[0]?.favoriteSports));
             subscribeInterest(data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name)
             console.log("Subscribe: ", data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name)
-
           }
         }
         console.log('Updated consumer:', data?.updateConsumers?.consumers);
@@ -531,7 +530,7 @@ export default function MySports() {
         }}
         otherBtnPress={() => handleCreateAccount()}
       />
-      <LoaderModal visible={reduxData?.user ? loading : false} loadingText={''} />
+      <LoaderModal visible={reduxData?.user ? loading || loadingFavourite : false} loadingText={''} />
     </ImageBackground>
   );
 }

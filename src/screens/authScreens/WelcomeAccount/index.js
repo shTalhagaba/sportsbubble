@@ -23,10 +23,12 @@ import DateTimePickerModal from "react-native-modal-datetime-picker"
 import { useMutation } from '@apollo/client';
 import { CREATE_CONSUMER } from 'src/graphQL';
 import { optionsList } from 'src/utils/list';
+import { useSelector } from 'react-redux';
 
 export default function WelcomeAccount(props) {
   const [createConsumerMutation, { loading, error }] = useMutation(CREATE_CONSUMER);
   const navigation = useNavigation();
+  const reduxData = useSelector(state => state.user);
   const [zipCode, setZipCode] = useState('');
   const [birthday, setBirthday] = useState('');
   const [pronouns, setPronouns] = useState('');
@@ -37,13 +39,13 @@ export default function WelcomeAccount(props) {
   const [firstName, setFirstName] = useState(
     props?.route?.params?.fullName
       ? props?.route?.params?.fullName
-      : 'First Name',
+      : reduxData?.userSignupData?.fullName
+      ? reduxData?.userSignupData?.fullName : 'First Name',
   );
   const zipCodeRef = useRef();
   const birthdayRef = useRef();
   const pronounsRef = useRef();
   const [dob, setDOB] = useState('');
-  const [showDatePicker, setShowDatePicker] = useState(false);
 
   // Toggle the dropdown menu
   const toggleDropdown = () => {
@@ -59,13 +61,13 @@ export default function WelcomeAccount(props) {
     if (completeProfileValidation(zipCode, dob)) {
       setLoadingLocal(true);
       const inputData = {
-        cognitoId: props?.route?.params?.client,
+        cognitoId: reduxData?.userSignupData?.client,
         cognitoZip: zipCode,
       };
       await handleFormSubmit(inputData)
       const user = await signupComplete(
-        props?.route?.params?.email,
-        props?.route?.params?.password,
+        reduxData?.userSignupData?.email,
+        reduxData?.userSignupData?.password,
         zipCode,
         dayjs(dob).format('DD/MM/YYYY'),
         pronouns,

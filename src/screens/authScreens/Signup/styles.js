@@ -14,6 +14,15 @@ export default ScaledSheet.create({
     marginVertical: '10@ms0.3',
     fontFamily: Fonts.Regular,
   },
+  loginTxt: {
+    fontSize: '16@ms0.3',
+    fontWeight: '800',
+    textAlign: 'center',
+    color: Colors.greenText,
+    marginVertical: '10@ms0.3',
+    fontFamily: Fonts.Regular,
+    fontStyle: 'italic',
+  },
   checkBoxTxt: {
     fontSize: '13@ms0.3',
     fontWeight: '500',
@@ -90,5 +99,4 @@ export default ScaledSheet.create({
     fontWeight: '400',
     fontFamily: Fonts.Regular,
   },
-
 });

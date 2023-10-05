@@ -56,15 +56,15 @@ export default function PersonalInfo() {
     }
   }, [data?.userData]);
 
-  // useEffect(() => {
-  //   const user = data?.userData;
-  //   if (user?.name === firstName && user?.family_name === lastName
-  //     && user?.locale === zipCode && user?.gender === pronouns) {
-  //     setButtonDisable(false)
-  //   } else {
-  //     setButtonDisable(true)
-  //   }
-  // }, [firstName, lastName, zipCode, pronouns]);
+  useEffect(() => {
+    const user = data?.userData;
+    if (user?.name === firstName && user?.family_name === lastName
+      && user?.locale === zipCode && user?.gender === pronouns) {
+      setButtonDisable(true)
+    } else {
+      setButtonDisable(false)
+    }
+  }, [firstName, lastName, zipCode, pronouns, buttonDisable]);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -148,14 +148,12 @@ export default function PersonalInfo() {
   };
 
   const handleBack = () => {
-    ShowMessage('Not saving any data successfully');
-    navigation.goBack()
-    // if (!buttonDisable) {
-    //   ShowMessage('Not saving any data successfully');
-    //   navigation.goBack()
-    // } else {
-    //   navigation.goBack()
-    // }
+    if (!buttonDisable) {
+      ShowMessage('Not saving any data successfully');
+      navigation.goBack()
+    } else {
+      navigation.goBack()
+    }
   }
 
   return (
@@ -313,8 +311,8 @@ export default function PersonalInfo() {
             onpress={() => handleUpdateProfile()}
             Container={styles.btnContainer}
             txt={styles.btnContainerTxt}
-            // disabled={buttonDisable}
-            blue={true}
+            disabled={buttonDisable}
+            greennDisable={true}
           />
           <TouchableOpacity
             onPress={() => setCancelAccountModal(!cancelAccountModal)}>

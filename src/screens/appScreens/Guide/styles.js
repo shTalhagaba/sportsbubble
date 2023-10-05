@@ -155,7 +155,7 @@ export default ScaledSheet.create({
     paddingStart: '1@ms0.3',
     position: 'absolute',
     left: '60@ms0.3',
-    width: '82%',
+    width: '72%',
   },
   leftContainer: {
     flex: 1,
@@ -195,7 +195,6 @@ export default ScaledSheet.create({
     fontFamily: Fonts.Regular,
     marginTop: '2@ms0.3',
     marginStart: Platform.OS === "android" ? fontScale > 1 ? "20@ms0.3" : "0@ms0.3" : "0@ms0.3"
-
   },
   eventDateTxt: {
     fontSize: '11@ms0.3',

@@ -106,10 +106,6 @@ export const updatePasswordValidation = (
     ShowMessage('Password should be at least 6 characters long.');
   } else if (checkValidation(newConfirmPassword)) {
     ShowMessage('Please Enter New Password.');
-  } else if (regPassword.test(trimmedCurrentPassword) === false) {
-    ShowMessage(
-      'Current Password should include uppercase letters, symbols, and numbers.',
-    );
   } else if (regPassword.test(trimmedNewPassword) === false) {
     ShowMessage(
       'New Password should include uppercase letters, symbols, and numbers.',
