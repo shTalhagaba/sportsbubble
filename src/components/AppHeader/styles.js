@@ -34,7 +34,9 @@ const styles = ScaledSheet.create({
             : Platform.OS === "android" ?
                 fontScale > 1 ?
                     24 * fontScale : "24@ms0.3" : "24@ms0.3",
-        height: is_zoomed ? '40@ms0.3' : '24@ms0.3',
+        height: is_zoomed ? '40@ms0.3' : Platform.OS === "android" ?
+            fontScale > 1 ?
+                24 * fontScale : "24@ms0.3" : "24@ms0.3",
         resizeMode: 'cover',
         marginRight: Platform.OS === 'ios' ? '25@ms0.3' : '12@ms0.3',
     },
@@ -55,7 +57,7 @@ const styles = ScaledSheet.create({
                     : '24@ms0.3'
                 : Platform.OS === "android" ?
                     fontScale > 1 ?
-                        24 * fontScale : '24@ms0.3'
+                        26 * fontScale : '24@ms0.3'
                     : "24@ms0.3",
         width:
             Platform.OS === "ios" ?

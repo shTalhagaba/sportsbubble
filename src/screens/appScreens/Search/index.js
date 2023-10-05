@@ -116,10 +116,12 @@ export default function Search() {
       });
     } else {
       Keyboard.dismiss();
-      navigation.navigate('SearchWatch', {
-        item: item,
-        searchFlag: true,
-      });
+      setTimeout(()=> {
+        navigation.navigate('SearchWatch', {
+          item: item,
+          searchFlag: true,
+        });
+      }, isKeyboardOpen ? 500 : 0)
     }
   }
 
@@ -138,10 +140,12 @@ export default function Search() {
         <AppHeader
           centerImage={Images.Logo}
           LeftImage={Images.LeftIcon}
-          onPressBack={() =>
+          onPressBack={() => {
+            handleClear()
             navigation.navigate('Guide', {
               screen: 'GuideMain',
             })
+            }
           }
           SimpleView
         />
