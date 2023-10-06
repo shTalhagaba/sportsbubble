@@ -48,7 +48,7 @@ const CustomVerificationModal = (props) => {
                   title={props.blackBtnTxt}
                   Container={styles.blackBtnContainer2}
                   txt={styles.greenButtonTxt}
-                  onpress={props.blackBtnPress} 
+                  onpress={props.blackBtnPress}
                 />
               </View>
             </View>

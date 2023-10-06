@@ -29,7 +29,7 @@ import Config from 'react-native-config';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { UpdateEvents } from 'src/utils/functions';
 import ShowMessage from 'src/components/ShowMessage';
-import { categoryArr, stageToken } from 'src/utils/list';
+import { categoryArr, stageToken, wrongEventId } from 'src/utils/list';
 const screenWidth = Dimensions.get('window').width;
 const { fontScale } = Dimensions.get('window');
 

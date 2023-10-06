@@ -40,7 +40,7 @@ export default function WelcomeAccount(props) {
     props?.route?.params?.fullName
       ? props?.route?.params?.fullName
       : reduxData?.userSignupData?.fullName
-      ? reduxData?.userSignupData?.fullName : 'First Name',
+        ? reduxData?.userSignupData?.fullName : 'First Name',
   );
   const zipCodeRef = useRef();
   const birthdayRef = useRef();
@@ -146,9 +146,9 @@ export default function WelcomeAccount(props) {
               placeholder={Strings.zipCode}
               multiline={false}
               value={zipCode}
-              maxLength={6}
+              // maxLength={6}
               onChangeText={txt => setZipCode(txt)}
-              keyboardType={'default'}
+              keyboardType={'number-pad'}
               autoCapitalize="none"
               returnKeyType={'next'}
               blurOnSubmit={false}

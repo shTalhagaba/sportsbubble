@@ -16,7 +16,7 @@ import { LogBox } from 'react-native';
 import Toast from "react-native-toast-message";
 import { toastConfig } from "src/components/ToastConfig";
 import { initializePusher } from './src/components/Pusher/PusherBeans';
-import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
+import { check, request, PERMISSIONS, RESULTS } from 'react-native-permissions';
 
 
 const sagaMiddleware = createSagaMiddleware();
@@ -53,10 +53,10 @@ const checkNotificationPermission = async () => {
 const requestPermission = async () => {
   const checkPermission = await checkNotificationPermission();
   if (checkPermission !== RESULTS.GRANTED) {
-   const request = await requestNotificationPermission();
-     if(request !== RESULTS.GRANTED){
-          // permission not granted
-      }
+    const request = await requestNotificationPermission();
+    if (request !== RESULTS.GRANTED) {
+      // permission not granted
+    }
   }
 };
 
@@ -74,7 +74,7 @@ const
     colors
       : {
       ...DefaultTheme.colors,
-      background:'black'
+      background: 'black'
       ,
     },
   }
@@ -89,7 +89,9 @@ const App = () => {
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
             <Navigation />
-            <Toast config={toastConfig} ref={(ref) => Toast.setRef(ref)} />
+            <Toast config={toastConfig} ref={(ref) => Toast.setRef(ref)} bottomOffset={15} style={{
+              zIndex: 999,
+            }} />
           </PersistGate>
         </Provider>
       </NavigationContainer>

@@ -225,7 +225,7 @@ export default function PersonalInfo() {
             customInputStyle={{ marginBottom: 5 }}
             multiline={false}
             value={zipCode}
-            maxLength={6}
+            // maxLength={6}
             onChangeText={txt => setZipcode(txt)}
             keyboardType={'number-pad'}
             autoCapitalize="none"

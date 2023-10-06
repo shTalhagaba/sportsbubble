@@ -23,7 +23,7 @@ import { DELETE_CONSUMERS, GET_MY_SPORT, GET_MY_SPORT_LIST, UPDATE_CONSUMERS, UP
 import LoaderModal from 'src/components/LoaderModal';
 import { setSportsList, setUser } from 'src/store/types';
 import { categoryArr, sportDummyList } from 'src/utils/list';
-import { subscribeInterest, unsubscribeInterest } from "../../../components/Pusher/PusherBeans";
+import { subscribeInterest, unsubscribeInterest } from "src/components/Pusher/PusherBeans";
 const { fontScale } = Dimensions.get('window');
 
 export default function MySports() {
@@ -34,7 +34,8 @@ export default function MySports() {
   const [categoryData, setCategoryData] = useState(categoryArr);
   const [reminderModal, setReminderModal] = useState(false);
   const [fvrtModal, setFvrtModal] = useState(reduxData?.guest === true ? true : false);
-  const [mySportData, setSportData] = useState(sportDummyList);
+  const [mySportData, setSportData] = useState([]);
+  // const [mySportData, setSportData] = useState(sportDummyList);
   const [currentIndex, setCurrentIndex] = useState();
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [filteredEventList, setFilteredEventList] = useState([]);
@@ -297,47 +298,50 @@ export default function MySports() {
   };
 
   const handleSelectedCategory = (e, index) => {
-    if (index === 0 && selectedCategory === 'all') {
-      return;
-    }
-    let list = [...categoryData];
-    list[index].selected = !list[index].selected;
-    if (index === 0) {
-      list.forEach((element, idx) => {
-        if (idx !== 0) {
-          element.selected = false;
-        }
-      });
-    } else {
-      const otherSelected = list.slice(1).some(element => element.selected);
-      if (!otherSelected) {
-        list[0].selected = true;
-      } else {
-        list[0].selected = false;
+    if (mySportData?.length > 0) {
+      if (index === 0 && selectedCategory === 'all') {
+        return;
       }
-    }
-    // Filter events based on selected categories
-    const selectedCategories = list.filter(category => category.selected);
-    const selectedCategoryValues = selectedCategories.map(
-      category => category.value
-    );
-    let filteredEvents = [];
-    if (selectedCategories.length === 1 && selectedCategoryValues[0] === 'all') {
-      setSelectedCategory('all');
-      filteredEvents = mySportData; // Use all data when 'all' category is selected
-    } else {
-      filteredEvents = mySportData.filter(item => {
-        // Extract the names from item.categories
-        const categoryNames = item?.categories.map(category => category.name);
-        return selectedCategoryValues.some(selectedCategory =>
-          categoryNames.includes(selectedCategory)
-        );
-      });
-    }
-    setSelectedCategory(selectedCategoryValues);
-    setCategoryData(list);
-    setFilteredEventList(filteredEvents);
-  };
+      let list = [...categoryData];
+      list[index].selected = !list[index].selected;
+      if (index === 0) {
+        list.forEach((element, idx) => {
+          if (idx !== 0) {
+            element.selected = false;
+          }
+        });
+      } else {
+        const otherSelected = list.slice(1).some(element => element.selected);
+        if (!otherSelected) {
+          list[0].selected = true;
+        } else {
+          list[0].selected = false;
+        }
+      }
+      // Filter events based on selected categories
+      const selectedCategories = list.filter(category => category.selected);
+      const selectedCategoryValues = selectedCategories.map(
+        category => category.value
+      );
+      let filteredEvents = [];
+      if (selectedCategories.length === 1 && selectedCategoryValues[0] === 'all') {
+        setSelectedCategory('all');
+        filteredEvents = mySportData; // Use all data when 'all' category is selected
+      } else {
+        filteredEvents = mySportData && mySportData?.length > 0 && mySportData.filter(item => {
+          // Extract the names from item.categories
+          const categoryNames = item?.categories.map(category => category.name);
+          return selectedCategoryValues.some(selectedCategory =>
+            categoryNames.includes(selectedCategory)
+          );
+        });
+      }
+      setSelectedCategory(selectedCategoryValues);
+      setCategoryData(list);
+      setFilteredEventList(filteredEvents);
+    };
+  }
+
 
   const wait = timeout => {
     return new Promise(resolve => setTimeout(resolve, timeout));
@@ -383,6 +387,7 @@ export default function MySports() {
           renderItem={({ item, index }) => (
             <TouchableOpacity
               onPress={() => reduxData?.user ? handleSelectedCategory(item, index) : {}}
+              // disabled={mySportData?.length === 0 ? true : false}
               style={styles.sliderInnerContainer}>
               <View
                 style={[

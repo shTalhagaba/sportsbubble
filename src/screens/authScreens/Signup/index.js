@@ -5,7 +5,7 @@ import {
   ImageBackground,
   StatusBar,
   TouchableOpacity,
-  Image, 
+  Image,
   Keyboard
 } from 'react-native';
 import styles from './styles';
@@ -103,7 +103,7 @@ export default function Signup() {
         const user = await userSignup(fullName, lastName, email, password);
         setClient(user?.userSub)
         dispatch(setUserVerifiedFlag(user?.userConfirmed))
-        dispatch(setUserSignupData({fullName: fullName,email: email,password: password,client: user?.userSub}))
+        dispatch(setUserSignupData({ fullName: fullName, email: email, password: password, client: user?.userSub }))
         setLoadingLocal(false);
         setVerifyModal(!verifyModal);
         setTermsCheck(false)
