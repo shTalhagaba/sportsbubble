@@ -187,6 +187,11 @@ export default ScaledSheet.create({
     marginBottom: '10@ms0.3',
     fontStyle: 'italic',
   },
+  flatContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignSelf: 'center',
+  },
   conectTxt: {
     fontSize: '16@ms0.3',
     fontWeight: '900',

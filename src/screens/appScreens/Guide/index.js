@@ -33,7 +33,7 @@ import { categoryArr, stageToken } from 'src/utils/list';
 const screenWidth = Dimensions.get('window').width;
 const { fontScale } = Dimensions.get('window');
 
-export default function Guide(props) {
+export default function Guide() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   let isFocused = useIsFocused()
@@ -109,7 +109,7 @@ export default function Guide(props) {
           const { line1, line2, startTime, endTime, rightsHolders, logo1, id, rightsHoldersConnection } = event;
           // Check if the event should be excluded based on id and rightsHoldersConnection
           if (
-            id === '9f25117c-78ed-4af1-a2fb-ed5cef8ed414' ||
+            id === wrongEventId ||
             !rightsHoldersConnection ||
             rightsHoldersConnection.edges.length < 1
           ) {
@@ -437,11 +437,7 @@ export default function Guide(props) {
                   : item?.endGrad - item?.startGrad
                 }%`,
             }}></View>
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: Colors.darkBlue,
-            }}></View>
+          <View style={styles.userNameMainContainer}></View>
           <View style={styles.userNameContainer}>
             <Text style={[styles.eventTxt]} numberOfLines={1}>
               {item?.line1 ? item?.line1 : item?.companyName}
@@ -449,7 +445,7 @@ export default function Guide(props) {
             <Text style={styles.titleTxt} numberOfLines={1}>
               {item?.line2 ? item?.line2 : item?.title}
             </Text>
-            <View style={{ flexDirection: 'row' }}>
+            <View style={styles.direction}>
               <Text style={[styles.eventDateTxt]}>
                 {item?.startTime
                   ? dayjs(item?.startTime).format('ddd. MM/D')

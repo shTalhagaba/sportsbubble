@@ -16,6 +16,8 @@ import { LogBox } from 'react-native';
 import Toast from "react-native-toast-message";
 import { toastConfig } from "src/components/ToastConfig";
 import { initializePusher } from './src/components/Pusher/PusherBeans';
+import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
+
 
 const sagaMiddleware = createSagaMiddleware();
 const persistConfig = {
@@ -38,6 +40,27 @@ const httpLink = createHttpLink({
   // uri: Config.BASE_URL
 });
 
+const requestNotificationPermission = async () => {
+  const result = await request(PERMISSIONS.ANDROID.POST_NOTIFICATIONS);
+  return result;
+};
+
+const checkNotificationPermission = async () => {
+  const result = await check(PERMISSIONS.ANDROID.POST_NOTIFICATIONS);
+  return result;
+};
+
+const requestPermission = async () => {
+  const checkPermission = await checkNotificationPermission();
+  if (checkPermission !== RESULTS.GRANTED) {
+   const request = await requestNotificationPermission();
+     if(request !== RESULTS.GRANTED){
+          // permission not granted
+      }
+  }
+};
+
+requestPermission();
 initializePusher();
 
 const client = new ApolloClient({

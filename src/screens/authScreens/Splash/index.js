@@ -80,7 +80,6 @@ export default function Splash() {
           if (!hasLogoUrl) {
             return false;
           }
-
           return true;
         });
         dispatch(setStoreEventList(filteredEvents));

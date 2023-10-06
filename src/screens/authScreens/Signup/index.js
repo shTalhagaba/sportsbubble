@@ -19,7 +19,7 @@ import LoaderModal from 'src/components/LoaderModal';
 import { ShowMessage } from 'src/components/ShowMessage';
 import { userSignup } from 'src/services/authSignup';
 import { resendCode, userOTP } from 'src/services/authOTP';
-import CustomVeriificationModal from 'src/components/Modal/CustomVeriificationModal';
+import CustomVerificationModal from 'src/components/Modal/CustomVerificationModal';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserVerifiedFlag, setUserSignupData } from 'src/store/types';
@@ -358,7 +358,7 @@ export default function Signup() {
             <Text style={styles.loginTxt}>{Strings.login}</Text>
           </TouchableOpacity>
           {/* Verification Modal */}
-          <CustomVeriificationModal
+          <CustomVerificationModal
             visible={verifyModal}
             desTxt={Strings.pleaseCheckInbox}
             dexTxtStyle={styles.modalContainer}

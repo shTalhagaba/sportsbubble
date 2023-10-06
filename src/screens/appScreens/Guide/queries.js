@@ -14,10 +14,6 @@ export const GET_SORTED_EVENTS = gql`
         id
         name
       }
-      sport {
-        id
-        name
-      }
       rightsHolders {
         name
         logoUrl

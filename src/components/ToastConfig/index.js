@@ -13,7 +13,7 @@ const toastConfig = {
         shadowRadius: 2,
         justifyContent: "center",
         paddingHorizontal: 15,
-        marginBottom: 40,
+        marginTop: 40,
         paddingVertical: 6,
       }}
     >

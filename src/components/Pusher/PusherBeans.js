@@ -1,9 +1,18 @@
 import RNPusherPushNotifications from 'react-native-pusher-push-notifications';
 import Config from 'react-native-config';
 import {Notifications} from 'react-native-notifications';
+import Toast from 'react-native-toast-message';
 
 const defaultIntrests = ["test"];
 var listener = null
+
+const showToast = (title, body) => {
+  Toast.show({
+    type: 'success',
+    text1: title,
+    text2: body
+  });
+}
 
 export const initializePusher = () => {
   RNPusherPushNotifications.setInstanceId("5be1bfa8-67c3-4b6b-9bc1-5c1c1ce0cf07")
@@ -37,12 +46,14 @@ const handleNotification = notification => {
       //             You can fetch required data here don't do anything with UI
       case 'active':
         console.log("Notification recieved active =====")
+        showToast(notification?.userInfo?.aps?.data?.title, notification?.userInfo?.aps?.data?.body);
       // App is foreground and notification is received. Show a alert or something.
       default:
         break;
     }
   } else {
     console.log("android handled notification...");
+    showToast(notification.title, notification.body);
     Notifications.registerRemoteNotifications();
 
     Notifications.events().registerNotificationReceivedForeground((notification, completion) => {

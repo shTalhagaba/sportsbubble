@@ -11,7 +11,6 @@ export function getCurrent7DaysTime () {
       currentDate.getMonth(),
       currentDate.getDate()
     )
-
     const endOfDaySeventhDay = new Date(
       seventhDayFromToday.getFullYear(),
       seventhDayFromToday.getMonth(),

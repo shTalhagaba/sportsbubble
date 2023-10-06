@@ -116,7 +116,7 @@ export default function Watch(props) {
             data={mainlist}
             showsHorizontalScrollIndicator={false}
             horizontal
-            contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignSelf: 'center', }}
+            contentContainerStyle={styles.flatContainer}
             renderItem={({ item, index }) => {
               return (
                 <TouchableOpacity
