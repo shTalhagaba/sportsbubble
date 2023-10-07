@@ -30,6 +30,18 @@ export const setUserData = (args: any) => {
     payload: args,
   };
 };
+export const setUserEmail = (args: any) => {
+  return {
+    type: 'SET_USER_EMAIL',
+    payload: args,
+  };
+};
+export const setUserLoginVerified = (args: any) => {
+  return {
+    type: 'SET_USER_LOGIN_VERIFIED',
+    payload: args,
+  };
+};
 
 export const setToken = (args: any) => {
   return {

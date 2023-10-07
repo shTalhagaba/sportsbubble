@@ -22,7 +22,11 @@ import { resendCode, userOTP } from 'src/services/authOTP';
 import CustomVerificationModal from 'src/components/Modal/CustomVerificationModal';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUserVerifiedFlag, setUserSignupData } from 'src/store/types';
+import {
+  setUserVerifiedFlag, setUserSignupData, setUserEmail,
+  setUserLoginVerified
+} from 'src/store/types';
+
 
 export default function Signup() {
   const navigation = useNavigation();
@@ -84,6 +88,11 @@ export default function Signup() {
       setVerifyModal(true)
       setEmail(reduxData?.userSignupData?.email)
     }
+    if (reduxData?.userLoginVerified) {
+      setVerifyModal(true)
+      setEmail(reduxData?.userEmail)
+    }
+
   }
 
   // Function to show the verification modal
@@ -140,6 +149,8 @@ export default function Signup() {
           setClient('')
           setConfirmPassword('')
           setOTP("")
+          dispatch(setUserEmail(''))
+          dispatch(setUserLoginVerified(false))
         }
         setLoadingLocal(false);
       } catch (error) {

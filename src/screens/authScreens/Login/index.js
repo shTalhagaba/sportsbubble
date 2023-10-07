@@ -19,6 +19,8 @@ import {
   setToken,
   setUser,
   setUserData,
+  setUserEmail,
+  setUserLoginVerified
 } from 'src/store/types';
 import { userLogin } from 'src/services/authLogin';
 import { loginValidation } from 'src/common/authValidation';
@@ -67,6 +69,12 @@ export default function Login() {
         if (error.message.includes(':')) {
           const myArray = error.message.split(':');
         } else {
+          if (error.message === "User is not confirmed.") {
+            dispatch(setUserEmail(email))
+            dispatch(setUserLoginVerified(true))
+            navigation.navigate('Signup');
+
+          }
           ShowMessage(error.message);
         }
       } finally {
