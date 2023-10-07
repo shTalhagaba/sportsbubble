@@ -134,14 +134,14 @@ export default function Signup() {
         setLoadingLocal(true);
         const user = await userOTP(email, otp);
         if (user === 'SUCCESS') {
-          dispatch(setUserVerifiedFlag(true))
-          setVerifyModal(false);
           navigation.navigate('WelcomeAccount', {
             fullName: fullName,
             email: email,
             password: password,
             client: client
           });
+          setVerifyModal(false);
+          dispatch(setUserVerifiedFlag(true))
           setFullName('')
           setLastName('')
           setEmail('')
