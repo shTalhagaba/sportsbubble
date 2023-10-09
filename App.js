@@ -74,7 +74,7 @@ const
     colors
       : {
       ...DefaultTheme.colors,
-      background: 'black'
+      background:'black'
       ,
     },
   }
@@ -89,9 +89,7 @@ const App = () => {
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
             <Navigation />
-            <Toast config={toastConfig} ref={(ref) => Toast.setRef(ref)} bottomOffset={15} style={{
-              zIndex: 999,
-            }} />
+            <Toast config={toastConfig} ref={(ref) => Toast.setRef(ref)} />
           </PersistGate>
         </Provider>
       </NavigationContainer>

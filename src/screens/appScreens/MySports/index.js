@@ -14,6 +14,7 @@ import styles from './styles';
 import { Images, Colors, Strings } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
+import CustomMySportsModalView from 'src/components/Modal/CustomMySportsModalView';
 import CustomModalView from 'src/components/Modal/CustomModal';
 import { moderateScale } from 'react-native-size-matters';
 import { useDispatch, useSelector } from 'react-redux';
@@ -387,7 +388,6 @@ export default function MySports() {
           renderItem={({ item, index }) => (
             <TouchableOpacity
               onPress={() => reduxData?.user ? handleSelectedCategory(item, index) : {}}
-              // disabled={mySportData?.length === 0 ? true : false}
               style={styles.sliderInnerContainer}>
               <View
                 style={[
@@ -520,21 +520,23 @@ export default function MySports() {
         blackBtnPress={() => setReminderModal(!reminderModal)}
         otherBtnPress={() => handleNotificationAlert()}
       />
-      {/* Access Features pop up  */}
-      <CustomModalView
-        visible={fvrtModal}
-        desTxt={Strings.accessFeatures}
-        blackBtnTxt={Strings.noThanks}
-        otherBtnTxt={Strings.createFreeAccount}
-        fillBefore={false}
-        btn
-        rowStyle={false}
-        blackBtnPress={() => {
-          setFvrtModal(!fvrtModal)
-          navigation.navigate('Guide')
-        }}
-        otherBtnPress={() => handleCreateAccount()}
-      />
+      {/* My Sport Popup for guest  */}
+      {fvrtModal ?
+        <CustomMySportsModalView
+          visible={fvrtModal}
+          desTxt={Strings.accessFeatures}
+          blackBtnTxt={Strings.noThanks}
+          otherBtnTxt={Strings.createFreeAccount}
+          btn
+          rowStyle={false}
+          blackBtnPress={() => {
+            setFvrtModal(!fvrtModal)
+            navigation.navigate('Guide')
+          }}
+          otherBtnPress={() => {
+            handleCreateAccount();
+          }}
+        /> : null}
       <LoaderModal visible={reduxData?.user ? loading || loadingFavourite : false} loadingText={''} />
     </ImageBackground>
   );

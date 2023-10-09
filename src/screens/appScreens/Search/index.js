@@ -140,10 +140,12 @@ export default function Search() {
         <AppHeader
           centerImage={Images.Logo}
           LeftImage={Images.LeftIcon}
-          onPressBack={() =>
+          onPressBack={() => {
+            handleClear()
             navigation.navigate('Guide', {
               screen: 'GuideMain',
             })
+            }
           }
           SimpleView
         />

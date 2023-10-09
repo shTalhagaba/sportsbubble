@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
+  Alert,
   FlatList,
   ImageBackground,
   StatusBar,
@@ -80,8 +81,23 @@ export default function PersonalInfo() {
       const user = data?.userData;
       if (user?.name === firstName && user?.family_name === lastName
         && user?.locale === zipCode && user?.gender === pronouns) {
-        ShowMessage('Not saving any data successfully');
-        navigation.goBack();
+        // ShowMessage('Not saving any data successfully');
+        Alert.alert(
+          'Changes not saved',
+          'Do you want to leave changes?',
+          [
+            {
+              text: 'No',
+              // onPress: () => resolve(false), // User clicked 'No', resolve with false
+              style: 'cancel',
+            },
+            {
+              text: 'Yes',
+              onPress: () => navigation.goBack(), // User clicked 'Yes', resolve with true
+            },
+          ],
+          { cancelable: false }
+        );
       } else {
         try {
           setLoadingLocal(true);
@@ -103,7 +119,8 @@ export default function PersonalInfo() {
             };
             dispatch(setUserData(updatedProfile));
             ShowMessage('Profile updated successfully!!');
-            navigation.goBack();
+            setButtonDisable(true)
+            // navigation.goBack();
           }
           setLoadingLocal(false);
         } catch (error) {
@@ -149,8 +166,22 @@ export default function PersonalInfo() {
 
   const handleBack = () => {
     if (!buttonDisable) {
-      ShowMessage('Not saving any data successfully');
-      navigation.goBack()
+      Alert.alert(
+        'Changes not saved',
+        'Do you want to leave changes?',
+        [
+          {
+            text: 'No',
+            // onPress: () => resolve(false), // User clicked 'No', resolve with false
+            style: 'cancel',
+          },
+          {
+            text: 'Yes',
+            onPress: () => navigation.goBack(), // User clicked 'Yes', resolve with true
+          },
+        ],
+        { cancelable: false }
+      );
     } else {
       navigation.goBack()
     }

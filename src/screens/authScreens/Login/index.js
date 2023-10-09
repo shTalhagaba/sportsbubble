@@ -73,7 +73,6 @@ export default function Login() {
             dispatch(setUserEmail(email))
             dispatch(setUserLoginVerified(true))
             navigation.navigate('Signup');
-
           }
           ShowMessage(error.message);
         }

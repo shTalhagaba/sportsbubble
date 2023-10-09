@@ -92,7 +92,6 @@ export default function Signup() {
       setVerifyModal(true)
       setEmail(reduxData?.userEmail)
     }
-
   }
 
   // Function to show the verification modal

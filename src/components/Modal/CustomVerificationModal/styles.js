@@ -5,7 +5,6 @@ const styles = ScaledSheet.create({
   mainView: {
     flex: 1,
     backgroundColor: Colors.darkBlue80,
-    // backgroundColor: "rgba(97, 97, 97, 0.59)"
   },
   inputContainer: {
     flexDirection: 'row',

@@ -2,8 +2,7 @@ import { ShowMessage } from 'src/components/ShowMessage';
 
 const regEmail = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
 const regName = /^[a-zA-Z ]*$/; // Characters and spaces allowed
-const regPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
-
+const regPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d\S]{8,}$/;
 
 export const checkValidation = checkableValue => {
   if (

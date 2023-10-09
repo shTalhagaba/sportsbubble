@@ -24,7 +24,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { refreshData, selectedTimebar, setStoreEventList, setUser } from 'src/store/types';
 import { moderateScale } from 'react-native-size-matters';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
-import CustomMySportsModalView from 'src/components/Modal/CustomMySportsModalView';
+import CustomModalView from 'src/components/Modal/CustomModal';
 import Config from 'react-native-config';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { UpdateEvents } from 'src/utils/functions';
@@ -751,23 +751,21 @@ export default function Guide() {
           liveMatchModal={liveMatchModal}
           navigation={navigation}
         />
-        {/* My Sport Popup for guest  */}
-        {mySportModal ?
-          <CustomMySportsModalView
-            visible={mySportModal}
-            desTxt={Strings.accessFeatures}
-            blackBtnTxt={Strings.noThanks}
-            otherBtnTxt={Strings.createFreeAccount}
-            btn
-            rowStyle={false}
-            blackBtnPress={() => {
-              setMySportModal(!mySportModal);
-              setLiveMatchModal(true);
-            }}
-            otherBtnPress={() => {
-              handleCreateAccount();
-            }}
-          /> : null}
+      {/* Access Features pop up  */}
+      <CustomModalView
+        visible={mySportModal}
+        desTxt={Strings.accessFeatures}
+        blackBtnTxt={Strings.noThanks}
+        otherBtnTxt={Strings.createFreeAccount}
+        fillBefore={false}
+        btn
+        rowStyle={false}
+        blackBtnPress={() => {
+          setMySportModal(!mySportModal)
+          setLiveMatchModal(true);
+        }}
+        otherBtnPress={() => handleCreateAccount()}
+      />
       </ImageBackground>
     </View>
   );
