@@ -754,7 +754,7 @@ export default function Guide() {
       {/* Access Features pop up  */}
       <CustomModalView
         visible={mySportModal}
-        desTxt={Strings.accessFeatures}
+        desTxt={Strings.accessFeaturesGuide}
         blackBtnTxt={Strings.noThanks}
         otherBtnTxt={Strings.createFreeAccount}
         fillBefore={false}

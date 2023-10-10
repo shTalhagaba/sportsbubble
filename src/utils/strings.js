@@ -27,6 +27,7 @@ export default {
   no: 'No',
   countryRegion: 'Country or Region',
   yes: 'Yes',
+  accessFeaturesGuide: 'Create an account to customize your experience.',
   accessFeatures: 'You’ll need to register to access these features.',
   noThanks: 'No Thanks',
   upgrade: 'Upgrade',
