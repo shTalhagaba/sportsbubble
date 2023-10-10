@@ -1,6 +1,8 @@
 import { Colors, Fonts } from 'src/utils';
 import { ScaledSheet } from 'react-native-size-matters';
 import { Dimensions, Platform } from 'react-native';
+import DeviceInfo from 'react-native-device-info';
+
 const width = Dimensions.get('window').width;
 const { fontScale } = Dimensions.get('window');
 
@@ -220,7 +222,7 @@ export default ScaledSheet.create({
   sliderContainer: {
     flexDirection: 'row',
     backgroundColor: Colors.greyBackground,
-    height: fontScale > 1 ? 100 * fontScale : '85@ms0.3',
+    height: DeviceInfo.isTablet() ? "130@ms0.3" : fontScale > 1 ? 100 * fontScale : '85@ms0.3',
   },
   sliderInnerContainer: {
     // flex: 1,
