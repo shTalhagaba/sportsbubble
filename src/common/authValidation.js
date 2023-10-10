@@ -41,9 +41,10 @@ export const signupValidation = (
   } else {
     const trimmedEmail = email.trim();
     const trimmedPassword = password.trim();
-    if (regEmail.test(trimmedEmail) === false) {
-      ShowMessage('Please Enter a Valid Email Address.');
-    } else if (checkValidation(password)) {
+    // if (regEmail.test(trimmedEmail) === false) {
+    //   ShowMessage('Please Enter a Valid Email Address.');
+    // } else
+    if (checkValidation(password)) {
       ShowMessage('Please Enter Password.');
     } else if (password.length < 8) {
       ShowMessage('Password should be at least 8 characters long.');
@@ -57,9 +58,10 @@ export const signupValidation = (
       ShowMessage('Please accept the Terms and Policy.');
     } else {
       const trimmedEmail = email.trim();
-      if (regEmail.test(trimmedEmail) === false) {
-        ShowMessage('Please enter valid email');
-      } else if (checkValidation(password)) {
+      // if (regEmail.test(trimmedEmail) === false) {
+      //   ShowMessage('Please enter valid email');
+      // } else
+      if (checkValidation(password)) {
         ShowMessage('Please enter password');
       } else if (password.length < 6) {
         ShowMessage('Password should be 6 characters');
@@ -80,9 +82,10 @@ export const loginValidation = (email, password) => {
   } else {
     const trimmedEmail = email.trim();
     const trimmedPassword = password.trim();
-    if (regEmail.test(trimmedEmail) === false) {
-      ShowMessage('Please Enter a Valid Email Address.');
-    } else if (checkValidation(password)) {
+    // if (regEmail.test(trimmedEmail) === false) {
+    //   ShowMessage('Please Enter a Valid Email Address.');
+    // } else
+    if (checkValidation(password)) {
       ShowMessage('Please Enter Password.');
     } else {
       return true;
@@ -148,9 +151,11 @@ export const resetPasswordValidation = (otp, password) => {
 export const forgotPasswordValidation = email => {
   if (checkValidation(email)) {
     ShowMessage('Please Enter Email Address.');
-  } else if (regEmail.test(email) === false) {
-    ShowMessage('Please Enter a Valid Email Address.');
-  } else {
+  }
+  // else if (regEmail.test(email) === false) {
+  //   ShowMessage('Please Enter a Valid Email Address.');
+  // } 
+  else {
     return true;
   }
 };
