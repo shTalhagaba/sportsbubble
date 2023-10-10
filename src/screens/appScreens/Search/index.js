@@ -24,7 +24,7 @@ export default function Search() {
     if (isFocused) {
       handleFocus()
       inputRef?.current?.focus();
-      Keyboard.dismiss();
+      // Keyboard.dismiss();
     }
     return () => {
       Keyboard.dismiss();
