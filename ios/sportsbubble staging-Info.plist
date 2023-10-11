@@ -37,6 +37,8 @@
 			</dict>
 		</dict>
 	</dict>
+  <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+  <string>$(PRODUCT_NAME) needs access to your device's Location to show events happening near you based on your location. We never use the location for any other purpose without your explicit permission"</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>$(PRODUCT_NAME) needs access to your device's microphone to enable voice recording for adding audio notes to your travel journal entries. We never use the microphone for any other purpose or record audio without your explicit permission."</string>
 	<key>NSPhotoLibraryUsageDescription</key>

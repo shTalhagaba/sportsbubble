@@ -5,9 +5,6 @@ import DeviceInfo from 'react-native-device-info';
 
 const width = Dimensions.get('window').width;
 const { fontScale } = Dimensions.get('window');
-console.log("fontScale => ", fontScale)
-
-console.log("DeviceInfo.isTablet() => ", DeviceInfo.isTablet())
 
 export default ScaledSheet.create({
   container: {

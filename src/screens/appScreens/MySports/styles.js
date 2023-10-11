@@ -2,7 +2,6 @@ import { Colors, Fonts } from 'src/utils';
 import { ScaledSheet } from 'react-native-size-matters';
 import { Dimensions } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-
 const width = Dimensions.get('window').width;
 const { fontScale } = Dimensions.get('window');
 
@@ -54,7 +53,6 @@ export default ScaledSheet.create({
     flexDirection: 'row',
     backgroundColor: Colors.greyBackground,
     height: DeviceInfo.isTablet() ? "130@ms0.3" : fontScale > 1 ? 100 * fontScale : '85@ms0.3',
-
   },
   sliderImageBackground: {
     height: '100%',
