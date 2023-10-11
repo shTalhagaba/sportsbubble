@@ -18,7 +18,8 @@ const initialState = {
   userVerified: null,
   userSignupData: '',
   userEmail: '',
-  userLoginVerified: false
+  userLoginVerified: false,
+  mysportGuest: false
 };
 
 const user = (state = initialState, action: any) => {
@@ -125,6 +126,18 @@ const user = (state = initialState, action: any) => {
         return {
           ...state,
           userVerified: action.payload,
+        };
+      } catch (e) {
+        alert(e);
+        return state;
+      }
+      break;
+    // My Sport Guest
+    case 'SET_MYSPORT_GUEST':
+      try {
+        return {
+          ...state,
+          mysportGuest: action.payload,
         };
       } catch (e) {
         alert(e);

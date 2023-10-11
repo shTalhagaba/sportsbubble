@@ -21,7 +21,7 @@ import { useQuery } from '@apollo/client';
 import dayjs from 'dayjs';
 import { GET_SORTED_EVENTS } from './queries';
 import { useDispatch, useSelector } from 'react-redux';
-import { refreshData, selectedTimebar, setStoreEventList, setUser } from 'src/store/types';
+import { refreshData, selectedTimebar, setStoreEventList, setUser, setMysportGuest } from 'src/store/types';
 import { moderateScale } from 'react-native-size-matters';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 import CustomModalView from 'src/components/Modal/CustomModal';
@@ -30,16 +30,20 @@ import GestureRecognizer from 'react-native-swipe-gestures';
 import { UpdateEvents } from 'src/utils/functions';
 import ShowMessage from 'src/components/ShowMessage';
 import { categoryArr, stageToken, wrongEventId } from 'src/utils/list';
+import CustomMySportsModalView from 'src/components/Modal/CustomMySportsModalView';
+
 const screenWidth = Dimensions.get('window').width;
 const { fontScale } = Dimensions.get('window');
 
-export default function Guide() {
+export default function Guide(props) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   let isFocused = useIsFocused()
   const currentDate = dayjs(new Date()).toISOString(); // Get the current date and time
   const reduxData = useSelector(state => state.user);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [fvrtModal, setFvrtModal] = useState(false);
+
   const [isLive, setIsLive] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [liveMatchModal, setLiveMatchModal] = useState(false);
@@ -67,6 +71,18 @@ export default function Guide() {
   const [endSearchTime, setEndSearchTime] = useState(
     dayjs(new Date()).add(7, 'day').toISOString(),
   );
+  useEffect(() => {
+    console.log("props?.route?.params?.sportPressFlag => ", props?.route?.params?.sportPressFlag);
+    setMySportModal(false);
+    setLiveMatchModal(false);
+    setFvrtModal(true);
+  }, [props?.route?.params?.sportPressFlag]);
+  useEffect(() => {
+    return () =>
+      setFvrtModal(false);
+  }, [props?.route?.params?.sportPressFlag]);
+
+
 
   // Use useEffect to call fetchData every 5 minutes
   useEffect(() => {
@@ -751,21 +767,40 @@ export default function Guide() {
           liveMatchModal={liveMatchModal}
           navigation={navigation}
         />
-      {/* Access Features pop up  */}
-      <CustomModalView
-        visible={mySportModal}
-        desTxt={Strings.accessFeaturesGuide}
-        blackBtnTxt={Strings.noThanks}
-        otherBtnTxt={Strings.createFreeAccount}
-        fillBefore={false}
-        btn
-        rowStyle={false}
-        blackBtnPress={() => {
-          setMySportModal(!mySportModal)
-          setLiveMatchModal(true);
-        }}
-        otherBtnPress={() => handleCreateAccount()}
-      />
+        {/* Access Features pop up  */}
+        <CustomModalView
+          visible={mySportModal}
+          desTxt={Strings.accessFeaturesGuide}
+          blackBtnTxt={Strings.noThanks}
+          otherBtnTxt={Strings.createFreeAccount}
+          fillBefore={false}
+          btn
+          rowStyle={false}
+          blackBtnPress={() => {
+            setMySportModal(!mySportModal)
+            setLiveMatchModal(true);
+          }}
+          otherBtnPress={() => handleCreateAccount()}
+        />
+        {/* My Sport Popup for guest  */}
+        {fvrtModal &&
+
+          <CustomMySportsModalView
+            visible={fvrtModal}
+            desTxt={Strings.accessFeatures}
+            blackBtnTxt={Strings.noThanks}
+            otherBtnTxt={Strings.createFreeAccount}
+            btn
+            rowStyle={false}
+            blackBtnPress={() => {
+              setFvrtModal(!fvrtModal)
+              navigation.navigate('Guide')
+            }}
+            otherBtnPress={() => {
+              handleCreateAccount();
+            }}
+          />
+        }
       </ImageBackground>
     </View>
   );

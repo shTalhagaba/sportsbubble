@@ -12,7 +12,7 @@ import MySports from 'src/screens/appScreens/MySports';
 import { moderateScale, ScaledSheet } from 'react-native-size-matters';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useDispatch, useSelector } from 'react-redux';
-import { refreshData } from 'src/store/types';
+import { refreshData, setMysportGuest } from 'src/store/types';
 
 const Tab = createBottomTabNavigator();
 const SettingNavigator = createNativeStackNavigator();
@@ -25,7 +25,10 @@ const GuideNavigation = () => {
       screenOptions={{
         headerShown: false,
       }}>
-      <GuideNavigator.Screen name="GuideMain" component={Guide} />
+      <GuideNavigator.Screen name="GuideMain" component={Guide}
+        options={{
+          sportPressFlag: Math.random(),
+        }} />
       <GuideNavigator.Screen name="Watch" component={Watch} />
     </GuideNavigator.Navigator>
   );
@@ -62,8 +65,16 @@ const BottomTab = () => {
 
   const tabBarGuideListeners = ({ navigation, route }) => ({
     tabPress: () => {
-      navigation.navigate('GuideMain'),
+      console.log("GuideMain => ")
+      if (!reduxData?.guest) {
+        navigation.navigate('Guide', { sportPressFlag: Math.random() })
         dispatch(refreshData(!reduxData?.refresh)); // Dispatch the action
+      } else {
+        const randomValue = Math.random();
+        console.log("Random NumberGuideMain => =>", randomValue);
+        navigation.navigate('Guide', { sportPressFlag: randomValue });
+        dispatch(refreshData(!reduxData?.refresh)); // Dispatch the action
+      }
     }
   });
 
@@ -78,6 +89,16 @@ const BottomTab = () => {
       navigation.navigate('Setting')
     }
   });
+  const tabBarMySportListeners = ({ navigation, route }) => ({
+    tabPress: () => {
+      if (reduxData?.guest) {
+        const randomValue = Math.random();
+        console.log("Random Number =>", randomValue);
+        navigation.navigate('Guide', { sportPressFlag: randomValue });
+      }
+    }
+  });
+
 
   return (
     <Tab.Navigator
@@ -129,16 +150,17 @@ const BottomTab = () => {
       />
       <Tab.Screen
         name="MySports"
-        component={MySports}
+        component={!reduxData?.guest ? MySports : Guide}
+        listeners={tabBarMySportListeners}
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={styles.bottomContainer}>
               <Image
-                source={focused ? Images.MySportsFiiled : Images.MySports}
+                source={focused && !reduxData?.guest ? Images.MySportsFiiled : Images.MySports}
                 style={[
                   styles.iconImage,
                   {
-                    tintColor: focused ? Colors.lightGreen : Colors.white,
+                    tintColor: focused && !reduxData?.guest ? Colors.lightGreen : Colors.white,
                   },
                 ]}
                 resizeMode={'contain'}
