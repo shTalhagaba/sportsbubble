@@ -25,10 +25,7 @@ const GuideNavigation = () => {
       screenOptions={{
         headerShown: false,
       }}>
-      <GuideNavigator.Screen name="GuideMain" component={Guide}
-        options={{
-          sportPressFlag: Math.random(),
-        }} />
+      <GuideNavigator.Screen name="GuideMain" component={Guide} />
       <GuideNavigator.Screen name="Watch" component={Watch} />
     </GuideNavigator.Navigator>
   );
@@ -65,16 +62,8 @@ const BottomTab = () => {
 
   const tabBarGuideListeners = ({ navigation, route }) => ({
     tabPress: () => {
-      console.log("GuideMain => ")
-      if (!reduxData?.guest) {
-        navigation.navigate('Guide', { sportPressFlag: Math.random() })
-        dispatch(refreshData(!reduxData?.refresh)); // Dispatch the action
-      } else {
-        const randomValue = Math.random();
-        console.log("Random NumberGuideMain => =>", randomValue);
-        navigation.navigate('Guide', { sportPressFlag: randomValue });
-        dispatch(refreshData(!reduxData?.refresh)); // Dispatch the action
-      }
+      navigation.navigate('Guide')
+      dispatch(refreshData(!reduxData?.refresh)); // Dispatch the action
     }
   });
 
@@ -89,16 +78,6 @@ const BottomTab = () => {
       navigation.navigate('Setting')
     }
   });
-  const tabBarMySportListeners = ({ navigation, route }) => ({
-    tabPress: () => {
-      if (reduxData?.guest) {
-        const randomValue = Math.random();
-        console.log("Random Number =>", randomValue);
-        navigation.navigate('Guide', { sportPressFlag: randomValue });
-      }
-    }
-  });
-
 
   return (
     <Tab.Navigator
@@ -150,17 +129,16 @@ const BottomTab = () => {
       />
       <Tab.Screen
         name="MySports"
-        component={!reduxData?.guest ? MySports : Guide}
-        listeners={tabBarMySportListeners}
+        component={MySports}
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={styles.bottomContainer}>
               <Image
-                source={focused && !reduxData?.guest ? Images.MySportsFiiled : Images.MySports}
+                source={focused ? Images.MySportsFiiled : Images.MySports}
                 style={[
                   styles.iconImage,
                   {
-                    tintColor: focused && !reduxData?.guest ? Colors.lightGreen : Colors.white,
+                    tintColor: focused ? Colors.lightGreen : Colors.white,
                   },
                 ]}
                 resizeMode={'contain'}

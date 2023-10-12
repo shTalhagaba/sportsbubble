@@ -42,7 +42,6 @@ export default function Guide(props) {
   const currentDate = dayjs(new Date()).toISOString(); // Get the current date and time
   const reduxData = useSelector(state => state.user);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [fvrtModal, setFvrtModal] = useState(false);
 
   const [isLive, setIsLive] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -71,19 +70,6 @@ export default function Guide(props) {
   const [endSearchTime, setEndSearchTime] = useState(
     dayjs(new Date()).add(7, 'day').toISOString(),
   );
-  useEffect(() => {
-    console.log("props?.route?.params?.sportPressFlag => ", props?.route?.params?.sportPressFlag);
-    setMySportModal(false);
-    setLiveMatchModal(false);
-    setFvrtModal(true);
-  }, [props?.route?.params?.sportPressFlag]);
-  useEffect(() => {
-    return () =>
-      setFvrtModal(false);
-  }, [props?.route?.params?.sportPressFlag]);
-
-
-
   // Use useEffect to call fetchData every 5 minutes
   useEffect(() => {
     searchRefetch();
@@ -782,25 +768,7 @@ export default function Guide(props) {
           }}
           otherBtnPress={() => handleCreateAccount()}
         />
-        {/* My Sport Popup for guest  */}
-        {fvrtModal &&
 
-          <CustomMySportsModalView
-            visible={fvrtModal}
-            desTxt={Strings.accessFeatures}
-            blackBtnTxt={Strings.noThanks}
-            otherBtnTxt={Strings.createFreeAccount}
-            btn
-            rowStyle={false}
-            blackBtnPress={() => {
-              setFvrtModal(!fvrtModal)
-              navigation.navigate('Guide')
-            }}
-            otherBtnPress={() => {
-              handleCreateAccount();
-            }}
-          />
-        }
       </ImageBackground>
     </View>
   );
