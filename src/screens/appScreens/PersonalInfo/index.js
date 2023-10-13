@@ -48,19 +48,20 @@ export default function PersonalInfo() {
   useEffect(() => {
     if (data?.userData) {
       const user = data?.userData;
+      console.log("zipcode =>", user?.['custom:zipcode']);
       setFirstName(user?.name);
-      setLastName(user?.family_name);
+      setLastName(user?.given_name);
       setDob(user?.birthdate ? user?.birthdate : '22-12-1977');
-      setZipcode(user?.locale);
-      setPronouns(user?.gender);
+      setZipcode(user?.['custom:zipcode']);
+      setPronouns(user?.['custom:pronouns']);
       setEmail(user?.email);
     }
   }, [data?.userData]);
 
   useEffect(() => {
     const user = data?.userData;
-    if (user?.name === firstName && user?.family_name === lastName
-      && user?.locale === zipCode && user?.gender === pronouns) {
+    if (user?.name === firstName && user?.given_name === lastName
+      && user?.['custom:zipcode'] === zipCode && user?.['custom:pronouns'] === pronouns) {
       setButtonDisable(true)
     } else {
       setButtonDisable(false)
@@ -79,8 +80,8 @@ export default function PersonalInfo() {
   const handleUpdateProfile = async () => {
     if (updateProfileValidation(firstName, lastName, zipCode)) {
       const user = data?.userData;
-      if (user?.name === firstName && user?.family_name === lastName
-        && user?.locale === zipCode && user?.gender === pronouns) {
+      if (user?.name === firstName && user?.given_name === lastName
+        && user?.['custom:zipcode'] === zipCode && user?.['custom:pronouns'] === pronouns) {
         // ShowMessage('Not saving any data successfully');
         Alert.alert(
           'Changes not saved',
@@ -113,9 +114,9 @@ export default function PersonalInfo() {
             const updatedProfile = {
               ...data?.userData,
               name: firstName,
-              family_name: lastName,
-              locale: zipCode,
-              gender: pronouns,
+              given_name: lastName,
+              'custom:zipcode': zipCode,
+              'custom:pronouns': pronouns,
             };
             dispatch(setUserData(updatedProfile));
             ShowMessage('Profile updated successfully!!');

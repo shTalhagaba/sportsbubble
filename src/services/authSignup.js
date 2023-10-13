@@ -7,10 +7,10 @@ const userSignup = async (fullName, lastName, email, password) => {
     const attributeList = [
       new CognitoUserAttribute({ Name: 'email', Value: email }),
       new CognitoUserAttribute({ Name: 'name', Value: fullName }),
-      new CognitoUserAttribute({ Name: 'family_name', Value: lastName }),
-      new CognitoUserAttribute({ Name: 'locale', Value: '' }),
+      new CognitoUserAttribute({ Name: 'given_name', Value: lastName }),
+      new CognitoUserAttribute({ Name: 'custom:zipcode', Value: '' }),
       new CognitoUserAttribute({ Name: 'birthdate', Value: '' }),
-      new CognitoUserAttribute({ Name: 'gender', Value: '' }),
+      new CognitoUserAttribute({ Name: 'custom:pronouns', Value: '' }),
     ];
     CognitoPool.signUp(email, password, attributeList, null, (err, result) => {
       if (err) {
@@ -42,9 +42,9 @@ const signupComplete = async (
       Password: password,
     });
     const attributeList = [
-      new CognitoUserAttribute({ Name: 'locale', Value: zipcode }), //zipcode
+      new CognitoUserAttribute({ Name: 'custom:zipcode', Value: zipcode }), //zipcode
       new CognitoUserAttribute({ Name: 'birthdate', Value: birthdate }), //birthdate
-      new CognitoUserAttribute({ Name: 'gender', Value: pronouns }), // pronouns
+      new CognitoUserAttribute({ Name: 'custom:pronouns', Value: pronouns }), // pronouns
     ];
     userData.authenticateUser(details, {
       onSuccess: data => {
