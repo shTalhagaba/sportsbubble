@@ -25,6 +25,8 @@ import LoaderModal from 'src/components/LoaderModal';
 import { setSportsList, setUser } from 'src/store/types';
 import { categoryArr, sportDummyList } from 'src/utils/list';
 import { subscribeInterest, unsubscribeInterest } from "src/components/Pusher/PusherBeans";
+import {checkNotifications, requestNotifications, openSettings} from 'react-native-permissions';
+import { initializePusher } from 'src/components/Pusher/PusherBeans';
 const { fontScale } = Dimensions.get('window');
 
 export default function MySports() {
@@ -34,6 +36,7 @@ export default function MySports() {
   const dispatch = useDispatch();
   const [categoryData, setCategoryData] = useState(categoryArr);
   const [reminderModal, setReminderModal] = useState(false);
+  const [settingsModal, setSettingsModal] = useState(false);
   const [fvrtModal, setFvrtModal] = useState(reduxData?.guest === true ? true : false);
   const [mySportData, setSportData] = useState([]);
   // const [mySportData, setSportData] = useState(sportDummyList);
@@ -41,6 +44,7 @@ export default function MySports() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [filteredEventList, setFilteredEventList] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
+  const [isPusherInitiazed, setPusherInitiazed] = useState(false);
 
   const [deleteConsumersMutation, { loading: loadingDelete, error: errorDelete }] = useMutation(DELETE_CONSUMERS);
   const [updateConsumersMutation, { loading: loadingFavourite, error: errorFavourite }] = useMutation(UPDATE_CONSUMERS);
@@ -172,8 +176,10 @@ export default function MySports() {
           refetch()
         }
         // Handle the response data as needed
-        unsubscribeInterest(data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name)
-        console.log('Remove consumer:', data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name);
+        if(isPusherInitiazed){
+          unsubscribeInterest(data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name)
+          console.log('Remove consumer:', data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name);
+        }
       } catch (err) {
         console.error('Error updating consumer:', err);
       }
@@ -270,13 +276,29 @@ export default function MySports() {
     setFilteredEventList(filteredEvents);
   }, [mySportData])
 
-  const handleReminder = (item, index, selectedItem) => {
+  const handleReminder = async (item, index, selectedItem) => {
+    // If event notification already enabled, no need to check permissions
+    if(selectedItem?.[0]?.notifications){
+      updateDB(item, index, selectedItem)
+    } 
+    else {
+      if(await checkPermission()){
+        if(!isPusherInitiazed){
+          initializePusher()
+          setPusherInitiazed(true)
+        }
+        updateDB(item, index, selectedItem)
+      }
+    }
+  };
+
+  const updateDB = (item, index, selectedItem) => {
     if (!selectedItem || !selectedItem?.[0]?.notifications) {
       updateConsumers(item?.categories?.[0], item, selectedItem?.[0]?.notifications)
     }
     setCurrentIndex(selectedItem?.[0]);
-    setReminderModal(!reminderModal);
-  };
+    handleNotificationAlert()
+  }
 
   const handleFvrt = (item, selectedItem) => {
     if (reduxData?.user) {
@@ -295,7 +317,6 @@ export default function MySports() {
     if (currentIndex != -1) {
       updateNotificationConsumers(currentIndex?.id, currentIndex?.notifications)
     }
-    setReminderModal(!reminderModal);
   };
 
   const handleSelectedCategory = (e, index) => {
@@ -360,6 +381,53 @@ export default function MySports() {
       screen: 'Signup',
     });
   };
+
+
+
+  const checkPermission = () => {
+    return new Promise( (resolve, reject) => {
+      checkNotifications().then(({status, settings}) => {
+        //UNAVAILABLE: This feature is not available (on this device / in this context)
+        //DENIED: The permission has not been requested / is denied but requestable
+        //BLOCKED: The permission is denied and not requestable anymore
+        //GRANTED: The permission is granted
+        switch(status) {
+          case "granted":
+            resolve(true)
+            break;
+
+          case "denied":
+            requestNotifications(['alert', 'sound']).then(({status, settings}) => {
+              if (status == "granted") {
+                resolve(true)
+              } else {
+                resolve(false)
+              }
+            });
+            break;
+
+          case "blocked":
+            setSettingsModal(true)
+            resolve(false)
+            break;
+          
+          case "unavailable":
+            ShowMessage(Strings.notSupportedNotifications)
+            resolve(false)
+            break;
+
+          default:
+            // code block
+        }
+      });
+  })
+  }
+
+  const goToSettings = () => {
+    openSettings().catch(() => console.warn('cannot open settings'))
+    setSettingsModal(false)
+  }
+
 
   return (
     <ImageBackground
@@ -537,6 +605,23 @@ export default function MySports() {
             handleCreateAccount();
           }}
         /> : null}
+
+      <CustomModalView
+        visible={settingsModal}
+        headerTxt={Strings.enableNotification}
+        desTxt={Strings.enableNotificationDesc}
+        headerTxtStyle={styles.headerTxtStyle}
+        dexTxtStyle={styles.dexNotiTxtStyle}
+        blackBtnTxt={Strings.cancel}
+        otherBtnTxt={Strings.settings}
+        fillBefore={false}
+        btn
+        rowStyle={true}
+        blue
+        blackBtnPress={() => setSettingsModal(false)}
+        otherBtnPress={() => goToSettings()}
+      />
+
       <LoaderModal visible={reduxData?.user ? loading || loadingFavourite : false} loadingText={''} />
     </ImageBackground>
   );

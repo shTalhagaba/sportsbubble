@@ -12,7 +12,7 @@ import MySports from 'src/screens/appScreens/MySports';
 import { moderateScale, ScaledSheet } from 'react-native-size-matters';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useDispatch, useSelector } from 'react-redux';
-import { refreshData, setMysportGuest } from 'src/store/types';
+import { refreshData } from 'src/store/types';
 
 const Tab = createBottomTabNavigator();
 const SettingNavigator = createNativeStackNavigator();
@@ -62,8 +62,8 @@ const BottomTab = () => {
 
   const tabBarGuideListeners = ({ navigation, route }) => ({
     tabPress: () => {
-      navigation.navigate('Guide')
-      dispatch(refreshData(!reduxData?.refresh)); // Dispatch the action
+      navigation.navigate('GuideMain'),
+        dispatch(refreshData(!reduxData?.refresh)); // Dispatch the action
     }
   });
 

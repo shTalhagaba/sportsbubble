@@ -10,10 +10,10 @@ const AppHeader = props => {
       {props.LeftImage ? (
         <TouchableOpacity
           onPress={
+            props?.onPressBack ? props.onPressBack : () => navigation.goBack()
           }
           style={styles.iconContainer}>
           <Image
-            props?.onPressBack ? props.onPressBack : () => navigation.goBack()
             source={props.LeftImage}
             style={[styles.leftArrowIcon, props.customLeftImage]}
             resizeMode={'contain'}

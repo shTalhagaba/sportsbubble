@@ -219,7 +219,7 @@ export default function WelcomeAccount(props) {
                 />
               </View>
             )}
-            <Text style={styles.sideTxt}>{Strings.wordingForThisTk}</Text>
+            <Text style={styles.sideTxt}>{Strings.preferredPronouns}</Text>
             <View style={styles.btnContainer}>
               <CustomButton
                 title={Strings.continue}

@@ -132,6 +132,12 @@ export default ScaledSheet.create({
     fontSize: '24@ms0.3',
     fontWeight: '400',
   },
+
+  dexNotiTxtStyle: {
+    fontSize: '20@ms0.3',
+    fontWeight: '400',
+  },
+
   emptyTxt: {
     letterSpacing: 0.75,
     color: Colors.white,

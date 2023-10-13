@@ -11,12 +11,6 @@ export const setUser = (args: any) => {
     payload: args,
   };
 };
-export const setMysportGuest = (args: any) => {
-  return {
-    type: 'SET_MYSPORT_GUEST',
-    payload: args,
-  };
-};
 export const setUserVerifiedFlag = (args: any) => {
   return {
     type: 'SET_USER_VERIFIED',
