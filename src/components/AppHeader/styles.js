@@ -33,10 +33,10 @@ const styles = ScaledSheet.create({
             is_zoomed ? '40@ms0.3' : '24@ms0.3'
             : Platform.OS === "android" ?
                 fontScale > 1 ?
-                    26 * fontScale : "24@ms0.3" : "24@ms0.3",
+                26 * fontScale : "24@ms0.3" : "24@ms0.3",
         height: is_zoomed ? '40@ms0.3' : Platform.OS === "android" ?
             fontScale > 1 ?
-                26 * fontScale : "24@ms0.3" : "24@ms0.3",
+            26 * fontScale : "24@ms0.3" : "24@ms0.3",
         resizeMode: 'cover',
         marginRight: Platform.OS === 'ios' ? '25@ms0.3' : '12@ms0.3',
     },
@@ -64,7 +64,7 @@ const styles = ScaledSheet.create({
                 is_zoomed ? '230@ms0.3' : '134@ms0.3' :
                 Platform.OS === "android" ?
                     fontScale > 1 ?
-                        132 * fontScale : '134@ms0.3' : '134@ms0.3',
+                        134 * fontScale : '134@ms0.3' : '134@ms0.3',
     },
     iconContainer: {
         width: '25%',
