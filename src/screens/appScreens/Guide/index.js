@@ -10,7 +10,8 @@ import {
   FlatList,
   Dimensions,
   Platform,
-  ScrollView
+  ScrollView,
+  AppState
 } from 'react-native';
 import styles from './styles';
 import { Images, Colors, Strings, Constants } from 'src/utils';
@@ -76,6 +77,28 @@ export default function Guide() {
       clearInterval(interval);
     };
   }, []);
+  useEffect(() => {
+    const handleAppStateChange = (nextAppState) => {
+      console.log("appState appState =>", nextAppState); // Log the nextAppState, not the previous appState
+
+      if (nextAppState === 'active') {
+        searchRefetch();
+      } else if (nextAppState === 'inactive') {
+        searchRefetch();
+      } else {
+        console.log('App is in the background or inactive');
+      }
+    };
+
+    // Subscribe to AppState changes
+    const appStateSubscription = AppState.addEventListener('change', handleAppStateChange);
+
+    // Unsubscribe and perform cleanup when the component unmounts
+    return () => {
+      appStateSubscription.remove();
+    };
+  }, []);
+
 
 
   useEffect(() => {
@@ -751,21 +774,21 @@ export default function Guide() {
           liveMatchModal={liveMatchModal}
           navigation={navigation}
         />
-      {/* Access Features pop up  */}
-      <CustomModalView
-        visible={mySportModal}
-        desTxt={Strings.accessFeaturesGuide}
-        blackBtnTxt={Strings.noThanks}
-        otherBtnTxt={Strings.createFreeAccount}
-        fillBefore={false}
-        btn
-        rowStyle={false}
-        blackBtnPress={() => {
-          setMySportModal(!mySportModal)
-          setLiveMatchModal(true);
-        }}
-        otherBtnPress={() => handleCreateAccount()}
-      />
+        {/* Access Features pop up  */}
+        <CustomModalView
+          visible={mySportModal}
+          desTxt={Strings.accessFeaturesGuide}
+          blackBtnTxt={Strings.noThanks}
+          otherBtnTxt={Strings.createFreeAccount}
+          fillBefore={false}
+          btn
+          rowStyle={false}
+          blackBtnPress={() => {
+            setMySportModal(!mySportModal)
+            setLiveMatchModal(true);
+          }}
+          otherBtnPress={() => handleCreateAccount()}
+        />
       </ImageBackground>
     </View>
   );
