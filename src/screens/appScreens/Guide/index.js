@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ImageBackground, Text, View, Image, TouchableOpacity, StatusBar, ActivityIndicator, FlatList, Dimensions, Platform, ScrollView } from 'react-native';
+import { ImageBackground, Text, View, Image, TouchableOpacity, StatusBar, ActivityIndicator, FlatList, Dimensions, Platform, ScrollView, AppState } from 'react-native';
 import styles from './styles';
 import { Images, Colors, Strings, Constants } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
@@ -56,6 +56,25 @@ export default function Guide() {
     const interval = setInterval(searchRefetch, 300000);
     return () => {
       clearInterval(interval);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleAppStateChange = (nextAppState) => {
+      console.log("appState appState =>", nextAppState); // Log the nextAppState, not the previous appState
+      if (nextAppState === 'active') {
+        searchRefetch();
+      } else if (nextAppState === 'inactive') {
+        searchRefetch();
+      } else {
+        console.log('App is in the background or inactive');
+      }
+    };
+    // Subscribe to AppState changes
+    const appStateSubscription = AppState.addEventListener('change', handleAppStateChange);
+    // Unsubscribe and perform cleanup when the component unmounts
+    return () => {
+      appStateSubscription.remove();
     };
   }, []);
 
