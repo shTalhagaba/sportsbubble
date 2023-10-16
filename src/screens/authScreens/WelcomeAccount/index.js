@@ -236,7 +236,7 @@ export default function WelcomeAccount(props) {
           mode="date"
           onConfirm={handleConfirm}
           onCancel={hideDatePicker}
-          maximumDate={minimumDOB}
+          maximumDate={new Date()}
         />
       </ImageBackground>
     </View>
