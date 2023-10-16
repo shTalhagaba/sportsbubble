@@ -80,7 +80,6 @@ export default function Guide() {
   useEffect(() => {
     const handleAppStateChange = (nextAppState) => {
       console.log("appState appState =>", nextAppState); // Log the nextAppState, not the previous appState
-
       if (nextAppState === 'active') {
         searchRefetch();
       } else if (nextAppState === 'inactive') {
@@ -89,10 +88,8 @@ export default function Guide() {
         console.log('App is in the background or inactive');
       }
     };
-
     // Subscribe to AppState changes
     const appStateSubscription = AppState.addEventListener('change', handleAppStateChange);
-
     // Unsubscribe and perform cleanup when the component unmounts
     return () => {
       appStateSubscription.remove();

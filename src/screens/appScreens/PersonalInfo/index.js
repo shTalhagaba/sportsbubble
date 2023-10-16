@@ -48,7 +48,6 @@ export default function PersonalInfo() {
   useEffect(() => {
     if (data?.userData) {
       const user = data?.userData;
-      console.log("zipcode =>", user?.['custom:zipcode']);
       setFirstName(user?.name);
       setLastName(user?.given_name);
       setDob(user?.birthdate ? user?.birthdate : '22-12-1977');
