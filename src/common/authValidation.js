@@ -180,25 +180,6 @@ export const updateProfileValidation = (
     return true;
   }
 };
-
-// export const completeProfileValidation = (zipCode, dob) => {
-//   if (checkValidation(zipCode)) {
-//     ShowMessage('Please Enter Zip Code.');
-//   } else if (checkValidation(dob)) {
-//     ShowMessage('Please Select Date of Birth.');
-//   } else if (dob?.length > 0) {
-//     const dateBirth = new Date(dob);
-//     const currentDate = new Date();
-//     const ageInYears = Math.floor((currentDate - dateBirth) / (365 * 24 * 60 * 60 * 1000));
-//     console.log("ageInYears => ", ageInYears)
-//     if (ageInYears < 14)
-//       ShowMessage('Age is less than 14 years.');
-//   } else if (zipCode.length < 4) {
-//     ShowMessage('Zip Code is too short.');
-//   } else {
-//     return true;
-//   }
-// };
 export const completeProfileValidation = (zipCode, dob) => {
   if (checkValidation(zipCode)) {
     ShowMessage('Please Enter Zip Code.');
