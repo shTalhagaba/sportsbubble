@@ -192,8 +192,16 @@ export const completeProfileValidation = (zipCode, dob) => {
     } else {
       const currentDate = new Date();
       const ageInYears = Math.floor((currentDate - dateBirth) / (365 * 24 * 60 * 60 * 1000));
-      console.log("ageInYears => ", ageInYears);
-      if (ageInYears < 14) {
+
+      const currentYear = currentDate.getFullYear();
+      const currentMonth = currentDate.getMonth();
+      const currentDay = currentDate.getDate();
+
+      const birthYear = dateBirth.getFullYear();
+      const birthMonth = dateBirth.getMonth();
+      const birthDay = dateBirth.getDate();
+
+      if (currentYear - birthYear < 14 || (currentYear - birthYear === 14 && (currentMonth < birthMonth || (currentMonth === birthMonth && currentDay < birthDay)))) {
         ShowMessage('Age is less than 14 years.');
       } else if (zipCode.length < 4) {
         ShowMessage('Zip Code is too short.');
@@ -203,4 +211,28 @@ export const completeProfileValidation = (zipCode, dob) => {
     }
   }
 };
+
+// export const completeProfileValidation = (zipCode, dob) => {
+//   if (checkValidation(zipCode)) {
+//     ShowMessage('Please Enter Zip Code.');
+//   } else if (checkValidation(dob)) {
+//     ShowMessage('Please Select Date of Birth.');
+//   } else {
+//     const dateBirth = new Date(dob);
+//     if (isNaN(dateBirth)) {
+//       ShowMessage('Invalid Date of Birth.');
+//     } else {
+//       const currentDate = new Date();
+//       const ageInYears = Math.floor((currentDate - dateBirth) / (365 * 24 * 60 * 60 * 1000));
+//       console.log("ageInYears => ", ageInYears);
+//       if (ageInYears < 14) {
+//         ShowMessage('Age is less than 14 years.');
+//       } else if (zipCode.length < 4) {
+//         ShowMessage('Zip Code is too short.');
+//       } else {
+//         return true;
+//       }
+//     }
+//   }
+// };
 
