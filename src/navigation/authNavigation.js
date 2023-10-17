@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 const AuthNavigator = createNativeStackNavigator();
 
 const AuthNavigation = () => {
-    const reduxData = useSelector(state => state.user);
+    const reduxData = useSelector(state => state.signup);
     const memoizedReduxData = React.useMemo(() => reduxData, [reduxData]);
     // Determine the initial route name based on memoizedReduxData
     const initialRouteName = memoizedReduxData?.userVerified === null

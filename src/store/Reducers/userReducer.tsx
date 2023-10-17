@@ -15,7 +15,6 @@ const initialState = {
   guest: false,
   refresh: false,
   selectedTimebar: -1,
-  userVerified: null,
   userSignupData: '',
   userEmail: '',
   userLoginVerified: false
@@ -113,18 +112,6 @@ const user = (state = initialState, action: any) => {
         return {
           ...state,
           userSignupData: action.payload,
-        };
-      } catch (e) {
-        alert(e);
-        return state;
-      }
-      break;
-    // User Verified
-    case 'SET_USER_VERIFIED':
-      try {
-        return {
-          ...state,
-          userVerified: action.payload,
         };
       } catch (e) {
         alert(e);

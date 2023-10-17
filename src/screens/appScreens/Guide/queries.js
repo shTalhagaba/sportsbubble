@@ -22,6 +22,7 @@ export const GET_SORTED_EVENTS = gql`
         name
       }
       sport {
+        id,
         name
       }
       rightsHoldersConnection {

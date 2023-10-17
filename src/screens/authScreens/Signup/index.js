@@ -32,6 +32,7 @@ export default function Signup() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const reduxData = useSelector(state => state.user);
+  const reduxDataSignup = useSelector(state => state.signup);
   const [fullName, setFullName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -84,7 +85,7 @@ export default function Signup() {
   }, [])
 
   const handleCheckVerify = async () => {
-    if (reduxData?.userVerified === false) {
+    if (reduxDataSignup?.userVerified === false) {
       setVerifyModal(true)
       setEmail(reduxData?.userSignupData?.email)
     }

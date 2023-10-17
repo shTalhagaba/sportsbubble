@@ -51,7 +51,7 @@ export default function MySports() {
   const [updateNotificationMutation, { loading: loadingNotification, error: errorNotification }] = useMutation(UPDATE_NOTIFICATION_CONSUMERS);
 
   // Define a function to execute the mutation
-  const updateConsumers = async (categories, sport, flag) => {
+  const updateConsumers = async (categories, sport, flag, isBellIcon) => {
     if (categories?.id && sport?.id) {
       const updateData = {
         where: {
@@ -92,11 +92,14 @@ export default function MySports() {
           variables: updateData,
         });
         if (!loadingFavourite && data?.updateConsumers?.consumers) {
-          ShowMessage('Added to Favorites successfully!')
+          ShowMessage('Added to Favorites successfully! ', data?.updateConsumers?.consumers)
           if (data?.updateConsumers?.consumers?.[0]?.favoriteSports && data?.updateConsumers?.consumers?.[0]?.favoriteSports.length > 0) {
+            console.log("Adding to Fav:: ", data?.updateConsumers?.consumers?.[0]?.favoriteSports)
             dispatch(setSportsList(data?.updateConsumers?.consumers?.[0]?.favoriteSports));
-            subscribeInterest(data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name)
             console.log("Subscribe: ", data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name)
+            if (isBellIcon) {
+              subscribeInterest(data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name)
+            }
           }
         }
         console.log('Updated consumer:', data?.updateConsumers?.consumers);
@@ -294,7 +297,7 @@ export default function MySports() {
 
   const updateDB = (item, index, selectedItem) => {
     if (!selectedItem || !selectedItem?.[0]?.notifications) {
-      updateConsumers(item?.categories?.[0], item, selectedItem?.[0]?.notifications)
+      updateConsumers(item?.categories?.[0], item, selectedItem?.[0]?.notifications, true)
     }
     setCurrentIndex(selectedItem?.[0]);
     handleNotificationAlert()
@@ -306,7 +309,7 @@ export default function MySports() {
       if (selectedItem && selectedItem.length > 0) {
         deleteConsumers(selectedItem?.[0]?.id)
       } else {
-        updateConsumers(item?.categories?.[0], item, selectedItem?.[0]?.notifications)
+        updateConsumers(item?.categories?.[0], item, selectedItem?.[0]?.notifications, false)
       }
     } else {
       setFvrtModal(!fvrtModal);

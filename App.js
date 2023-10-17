@@ -16,12 +16,12 @@ import { LogBox } from 'react-native';
 import Toast from "react-native-toast-message";
 import { toastConfig } from "src/components/ToastConfig";
 
-
+const blacklist = ['signup']; // Add the keys of slices to exclude
 const sagaMiddleware = createSagaMiddleware();
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['user'],
+  blacklist, // Apply the blacklist
   version: 1,
 };
 
