@@ -1,5 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { ImageBackground, Text, View, Image, TouchableOpacity, StatusBar, ActivityIndicator, FlatList, Dimensions, Platform, ScrollView, AppState } from 'react-native';
+import {
+  ImageBackground,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  StatusBar,
+  ActivityIndicator,
+  FlatList,
+  Dimensions,
+  Platform,
+  ScrollView,
+  AppState
+} from 'react-native';
 import styles from './styles';
 import { Images, Colors, Strings, Constants } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
@@ -9,14 +22,13 @@ import { useQuery } from '@apollo/client';
 import dayjs from 'dayjs';
 import { GET_SORTED_EVENTS } from './queries';
 import { useDispatch, useSelector } from 'react-redux';
-import { refreshData, selectedTimebar, setStoreEventList } from 'src/store/types';
+import { refreshData, selectedTimebar, setStoreEventList, setUser } from 'src/store/types';
 import { moderateScale } from 'react-native-size-matters';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 import Config from 'react-native-config';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { UpdateEvents } from 'src/utils/functions';
 import { categoryArr, stageToken, wrongEventId } from 'src/utils/list';
-
 const screenWidth = Dimensions.get('window').width;
 const { fontScale } = Dimensions.get('window');
 
@@ -33,7 +45,12 @@ export default function Guide() {
   const [timeData, setTimeData] = useState([]);
   const [categoryData, setCategoryData] = useState(categoryArr);
   const [selectedTimeIndex, setSelectedTimeIndex] = useState(0);
-
+  const [featuredEvent, setFeaturedEvent] = useState({});
+  const [reload, setReload] = useState(false);
+  const [list, setList] = useState([]);
+  const [mySportModal, setMySportModal] = useState(
+    reduxData?.guest === true ? true : false,
+  );
   const [eventList, setEventList] = useState(
     reduxData &&
       reduxData?.eventList &&
@@ -58,7 +75,6 @@ export default function Guide() {
       clearInterval(interval);
     };
   }, []);
-
   useEffect(() => {
     const handleAppStateChange = (nextAppState) => {
       console.log("appState appState =>", nextAppState); // Log the nextAppState, not the previous appState
@@ -77,6 +93,7 @@ export default function Guide() {
       appStateSubscription.remove();
     };
   }, []);
+
 
 
   useEffect(() => {
@@ -137,7 +154,6 @@ export default function Guide() {
           return true;
         });
         dispatch(setStoreEventList(filteredEvents));
-        // setEventList(filteredEvents)
       }
     },
     onError: error => {
@@ -235,13 +251,11 @@ export default function Guide() {
         list[0].selected = false;
       }
     }
-
     // Filter events based on selected categories and time
     const selectedCategories = list.filter(category => category.selected);
     const selectedCategoryValues = selectedCategories.map(
       category => category.value,
     );
-
     let filteredEvents = [];
     if (
       selectedCategories.length === 1 &&
@@ -270,7 +284,6 @@ export default function Guide() {
           );
       setSelectedCategory(selectedCategoryValues);
     }
-
     setCategoryData(list);
     setFilteredEventList(filteredEvents);
   };
@@ -371,7 +384,7 @@ export default function Guide() {
                   : item?.endGrad - item?.startGrad
                 }%`,
             }}></View>
-          <View style={styles.userNameMainContianer}></View>
+          <View style={styles.userNameMainContainer}></View>
           <View style={styles.userNameContainer}>
             <Text style={[styles.eventTxt]} numberOfLines={1}>
               {item?.line1 ? item?.line1 : item?.companyName}
