@@ -13,7 +13,6 @@ import AppHeader from 'src/components/AppHeader';
 import { Images, Colors, Strings } from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
-import { signupComplete } from 'src/services/authSignup';
 import ShowMessage from 'src/components/ShowMessage';
 import LoaderModal from 'src/components/LoaderModal';
 import { completeProfileValidation, otpValidation } from 'src/common/authValidation';
@@ -24,7 +23,7 @@ import { useMutation } from '@apollo/client';
 import { CREATE_CONSUMER } from 'src/graphQL';
 import { optionsList } from 'src/utils/list';
 import { useDispatch, useSelector } from 'react-redux';
-import { userSignup } from 'src/services/authSignup';
+import { userSignup, signupComplete } from 'src/services/authSignup';
 import { resendCode, userOTP } from 'src/services/authOTP';
 import CustomVerificationModal from 'src/components/Modal/CustomVerificationModal';
 import {
@@ -103,9 +102,9 @@ export default function WelcomeAccount(props) {
     const dataComplete = await signupComplete(
       reduxData?.userSignupData?.email,
       reduxData?.userSignupData?.password,
-      zipCode,
-      dayjs(dob).format('DD/MM/YYYY'),
-      pronouns,
+      reduxData?.userSignupData?.zipCode,
+      reduxData?.userSignupData?.dob,
+      reduxData?.userSignupData?.pronouns,
     );
     if (dataComplete === 'SUCCESS') {
       try {
@@ -141,6 +140,12 @@ export default function WelcomeAccount(props) {
   // Handle the submission of the complete profile form
   const submitButton = async () => {
     if (completeProfileValidation(zipCode, dob)) {
+      dispatch(setUserSignupData({
+        ...reduxData?.userSignupData,
+        zipCode: zipCode,
+        dob: dayjs(dob).format('DD/MM/YYYY'),
+        pronouns: pronouns
+      }))
       setLoadingLocal(true);
       try {
         const user = await userSignup(reduxData?.userSignupData?.fullName, reduxData?.userSignupData?.lastName, reduxData?.userSignupData?.email, reduxData?.userSignupData?.password);

@@ -72,7 +72,7 @@ export default function Login() {
           if (error.message === "User is not confirmed.") {
             dispatch(setUserEmail(email))
             dispatch(setUserLoginVerified(true))
-            navigation.navigate('Signup');
+            navigation.navigate('WelcomeAccount');
           }
           ShowMessage(error.message);
         }
