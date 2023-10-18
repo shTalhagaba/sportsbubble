@@ -43,7 +43,7 @@ export default function Guide() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLive, setIsLive] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [liveMatchModal, setLiveMatchModal] = useState(false);
+  const [liveMatchModal, setLiveMatchModal] = useState(!reduxData?.guest === true ? true : false,);
   const [timeData, setTimeData] = useState([]);
   const [categoryData, setCategoryData] = useState(categoryArr);
   const [selectedTimeIndex, setSelectedTimeIndex] = useState(0);
