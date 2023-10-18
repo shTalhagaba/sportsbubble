@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -16,19 +16,35 @@ import { useNavigation } from '@react-navigation/native';
 import { signupComplete } from 'src/services/authSignup';
 import ShowMessage from 'src/components/ShowMessage';
 import LoaderModal from 'src/components/LoaderModal';
-import { completeProfileValidation } from 'src/common/authValidation';
+import { completeProfileValidation, otpValidation } from 'src/common/authValidation';
 import dayjs from 'dayjs';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DateTimePickerModal from "react-native-modal-datetime-picker"
 import { useMutation } from '@apollo/client';
 import { CREATE_CONSUMER } from 'src/graphQL';
 import { optionsList } from 'src/utils/list';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { userSignup } from 'src/services/authSignup';
+import { resendCode, userOTP } from 'src/services/authOTP';
+import CustomVerificationModal from 'src/components/Modal/CustomVerificationModal';
+import {
+  setUserVerifiedFlag, setUserEmail,
+  setUserLoginVerified,
+  setUserSignupData,
+  setUser,
+  setGuest,
+  setToken,
+  setJwtToken,
+  setUserData
+} from 'src/store/types';
+import { userLogin } from 'src/services/authLogin';
 
 export default function WelcomeAccount(props) {
   const [createConsumerMutation, { loading, error }] = useMutation(CREATE_CONSUMER);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const reduxData = useSelector(state => state.user);
+  const reduxDataSignup = useSelector(state => state.signup);
   const [zipCode, setZipCode] = useState('');
   const [birthday, setBirthday] = useState('');
   const [pronouns, setPronouns] = useState('');
@@ -46,6 +62,26 @@ export default function WelcomeAccount(props) {
   const birthdayRef = useRef();
   const pronounsRef = useRef();
   const [dob, setDOB] = useState('');
+  const [client, setClient] = useState('');
+  const [verifyModal, setVerifyModal] = useState(false);
+  const [otp, setOTP] = useState();
+
+  useEffect(() => {
+    setTimeout(() => {
+      handleCheckVerify()
+    }, 500)
+  }, [])
+
+  const handleCheckVerify = async () => {
+    if (reduxDataSignup?.userVerified === false) {
+      setVerifyModal(true)
+      setEmail(reduxData?.userSignupData?.email)
+    }
+    if (reduxData?.userLoginVerified) {
+      setVerifyModal(true)
+      setEmail(reduxData?.userEmail)
+    }
+  }
 
   // Toggle the dropdown menu
   const toggleDropdown = () => {
@@ -56,31 +92,115 @@ export default function WelcomeAccount(props) {
     setPronouns(item?.label);
     toggleDropdown();
   };
-  // Handle the submission of the complete profile form
-  const submitButton = async () => {
-    if (completeProfileValidation(zipCode, dob)) {
-      setLoadingLocal(true);
-      const inputData = {
-        cognitoId: reduxData?.userSignupData?.client,
-        cognitoZip: zipCode,
-      };
-      await handleFormSubmit(inputData)
-      const user = await signupComplete(
-        reduxData?.userSignupData?.email,
-        reduxData?.userSignupData?.password,
-        zipCode,
-        dayjs(dob).format('DD/MM/YYYY'),
-        pronouns,
-      );
-      if (user === 'SUCCESS') {
-        setLoadingLocal(false);
+
+  const handleSubmitAPI = async () => {
+    setLoadingLocal(true);
+    const inputData = {
+      cognitoId: client,
+      cognitoZip: zipCode,
+    };
+    await handleFormSubmit(inputData)
+    const dataComplete = await signupComplete(
+      reduxData?.userSignupData?.email,
+      reduxData?.userSignupData?.password,
+      zipCode,
+      dayjs(dob).format('DD/MM/YYYY'),
+      pronouns,
+    );
+    if (dataComplete === 'SUCCESS') {
+      try {
         ShowMessage(Strings.profileCompleted);
-        navigation.replace('Login');
         setZipCode('')
         setDOB('')
         setPronouns('')
         setDate('')
+        const user = await userLogin(reduxData?.userSignupData?.email, reduxData?.userSignupData?.password);
+        user.id = user?.accessToken?.payload?.sub ?? '';
+        // Check if user login was successful
+        if (user?.idToken?.payload) {
+          dispatch(setUser(true));
+          dispatch(setGuest(false));
+          dispatch(setToken(user?.idToken?.jwtToken));
+          dispatch(setJwtToken(user?.accessToken?.jwtToken));
+          dispatch(setUserData(user?.idToken?.payload));
+          navigation.replace('Root'); // Navigate to the 'Root' screen
+          setLoadingLocal(false);
+        }
+      } catch (error) {
+        if (error.message.includes(':')) {
+          const myArray = error.message.split(':');
+        } else {
+          ShowMessage(error.message);
+        }
+        setLoadingLocal(false);
+      } finally {
+        setLoadingLocal(false);
       }
+    }
+  }
+  // Handle the submission of the complete profile form
+  const submitButton = async () => {
+    if (completeProfileValidation(zipCode, dob)) {
+      setLoadingLocal(true);
+      try {
+        const user = await userSignup(reduxData?.userSignupData?.fullName, reduxData?.userSignupData?.lastName, reduxData?.userSignupData?.email, reduxData?.userSignupData?.password);
+        setClient(user?.userSub)
+        dispatch(setUserVerifiedFlag(user?.userConfirmed))
+        setVerifyModal(!verifyModal);
+      } catch (error) {
+        if (error.message.includes(':')) {
+          const myArray = error.message.split(':');
+        } else {
+          ShowMessage(error.message);
+        }
+      } finally {
+        setLoadingLocal(false);
+      }
+      setLoadingLocal(false);
+    }
+  };
+  // Function to handle verification
+  const handleVerify = async () => {
+    if (otpValidation(otp)) {
+      try {
+        setLoadingLocal(true);
+        const user = await userOTP(reduxData?.userSignupData?.email, otp);
+        if (user === 'SUCCESS') {
+          setVerifyModal(false);
+          dispatch(setUserVerifiedFlag(true))
+          setClient('')
+          setOTP("")
+          dispatch(setUserEmail(''))
+          dispatch(setUserLoginVerified(false))
+          setLoadingLocal(false);
+          handleSubmitAPI()
+        }
+      } catch (error) {
+        setLoadingLocal(false);
+        if (error.message.includes(':')) {
+          const myArray = error.message.split(':');
+        } else {
+          ShowMessage(error.message);
+        }
+      } finally {
+        setLoadingLocal(false);
+      }
+    }
+  };
+  // Function to handle resending verification code
+  const handleResendCode = async () => {
+    try {
+      setLoadingLocal(true);
+      const user = await resendCode(email);
+      ShowMessage('Verification code sent successfully!');
+      setLoadingLocal(false);
+    } catch (error) {
+      if (error.message.includes(':')) {
+        const myArray = error.message.split(':');
+      } else {
+        ShowMessage(error.message);
+      }
+    } finally {
       setLoadingLocal(false);
     }
   };
@@ -229,6 +349,19 @@ export default function WelcomeAccount(props) {
               />
             </View>
           </View>
+          {/* Verification Modal */}
+          <CustomVerificationModal
+            visible={verifyModal}
+            desTxt={Strings.pleaseCheckInbox}
+            dexTxtStyle={styles.modalContainer}
+            btn={true}
+            otherBtnTxt={'Verify'}
+            blackBtnTxt={'Resend Code'}
+            otherBtnPress={() => handleVerify()}
+            blackBtnPress={() => handleResendCode()}
+            onChangeText={txt => setOTP(txt)}
+            otpValue={otp}
+          />
         </KeyboardAwareScrollView>
         <LoaderModal visible={loadingLocal} loadingText={''} />
         <DateTimePickerModal

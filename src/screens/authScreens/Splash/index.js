@@ -92,7 +92,7 @@ export default function Splash() {
 
   useEffect(() => {
     if (!loading) {
-      if ((reduxData?.user || reduxData?.guest) && reduxData?.eventList?.length > 0 && reduxData?.userVerified) {
+      if ((reduxData?.user || reduxData?.guest) && reduxData?.eventList?.length > 0) {
         navigateToMainScreen();
       } else {
         navigateToAuthScreen();

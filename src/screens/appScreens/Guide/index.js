@@ -489,7 +489,7 @@ export default function Guide() {
             >
               <Image
                 source={sportsIds.includes(item?.sport?.id) ? Images.FilledFvrt : Images.Favorite}
-                style={[styles.fvrtIcon]}
+                style={[styles.fvrtIcon, sportsIds.includes(item?.sport?.id) ? { tintColor: Colors.darkOrange } : {}]}
                 resizeMode={'contain'}
               />
             </View>

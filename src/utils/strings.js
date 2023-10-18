@@ -104,7 +104,7 @@ export default {
   passwordResetSuccessfully: 'Password reset successfully. You can now log in with your new password.',
   passwordResetInitiation: 'Password reset initiation successfully. Check your email for instructions.',
   alreadyAccount: "Already have an account?",
-  profileCompleted: 'Profile Completed Successfully!! Login to Continue.',
+  profileCompleted: 'Profile Completed Successfully!!',
   emptyFavoriteSportList: "You haven't added any favorite sports yet. Tap 'Star Icon' to choose your favorite sports and get personalized event listings.",
   notSupportedNotifications: "This device does not supports Notifications",
 };

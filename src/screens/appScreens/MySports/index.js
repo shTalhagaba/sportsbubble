@@ -560,7 +560,7 @@ export default function MySports() {
                       source={sportsIds && sportsIds.length > 0 && sportsIds.includes(item?.id) ? Images.FilledFvrt : Images.Favorite}
                       style={[
                         styles.fvrtIcon,
-                        { tintColor: item?.fvrtFlag && Colors.orange },
+                        sportsIds && sportsIds.length > 0 && sportsIds.includes(item?.id) ? { tintColor: Colors.darkOrange }:{},
                       ]}
                       resizeMode={'contain'}
                     />

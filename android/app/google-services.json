@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:673134313408:android:fe598032e2786f36a11225",
+        "mobilesdk_app_id": "1:673134313408:android:5abd49a2f88a527fa11225",
         "android_client_info": {
-          "package_name": "com.sportsbubble"
+          "package_name": "com.sportsbubble.staging"
         }
       },
       "oauth_client": [],

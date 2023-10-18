@@ -14,38 +14,27 @@ import AppHeader from 'src/components/AppHeader';
 import { Images, Colors, Strings } from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
-import { signupValidation, otpValidation } from 'src/common/authValidation';
+import { signupValidation } from 'src/common/authValidation';
 import LoaderModal from 'src/components/LoaderModal';
 import { ShowMessage } from 'src/components/ShowMessage';
-import { userSignup } from 'src/services/authSignup';
-import { resendCode, userOTP } from 'src/services/authOTP';
-import CustomVerificationModal from 'src/components/Modal/CustomVerificationModal';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
-  setUserVerifiedFlag, setUserSignupData, setUserEmail,
-  setUserLoginVerified
+  setUserSignupData
 } from 'src/store/types';
-
 
 export default function Signup() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const reduxData = useSelector(state => state.user);
-  const reduxDataSignup = useSelector(state => state.signup);
   const [fullName, setFullName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  // const [emailOptCheck, setEmailOptCheck] = useState(false);
   const [termsCheck, setTermsCheck] = useState(false);
-  const [verifyModal, setVerifyModal] = useState(false);
   const [loadingLocal, setLoadingLocal] = useState(false);
-  const [otp, setOTP] = useState();
   const [displayPassword, setDisplayPassword] = useState(true);
   const [displayConfirmPassword, setDisplayConfirmPassword] = useState(true);
-  const [client, setClient] = useState('');
   // Refs for input fields
   const fullNameRef = useRef();
   const lastNameRef = useRef();
@@ -55,6 +44,7 @@ export default function Signup() {
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
 
   useEffect(() => {
+    console.log('dfddndjdj')
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       _keyboardDidShow
@@ -78,25 +68,8 @@ export default function Signup() {
     setIsKeyboardOpen(false);
   };
 
-  useEffect(() => {
-    setTimeout(() => {
-      handleCheckVerify()
-    }, 500)
-  }, [])
-
-  const handleCheckVerify = async () => {
-    if (reduxDataSignup?.userVerified === false) {
-      setVerifyModal(true)
-      setEmail(reduxData?.userSignupData?.email)
-    }
-    if (reduxData?.userLoginVerified) {
-      setVerifyModal(true)
-      setEmail(reduxData?.userEmail)
-    }
-  }
-
   // Function to show the verification modal
-  const showVerifyModal = async () => {
+  const handleContinue = async () => {
     if (
       signupValidation(
         fullName,
@@ -108,14 +81,8 @@ export default function Signup() {
       )
     ) {
       try {
-        setLoadingLocal(true);
-        const user = await userSignup(fullName, lastName, email, password);
-        setClient(user?.userSub)
-        dispatch(setUserVerifiedFlag(user?.userConfirmed))
-        dispatch(setUserSignupData({ fullName: fullName, email: email, password: password, client: user?.userSub }))
-        setLoadingLocal(false);
-        setVerifyModal(!verifyModal);
-        setTermsCheck(false)
+        dispatch(setUserSignupData({ fullName: fullName, lastName: lastName, email: email, password: password }))
+        navigation.navigate('WelcomeAccount')
       } catch (error) {
         if (error.message.includes(':')) {
           const myArray = error.message.split(':');
@@ -125,60 +92,6 @@ export default function Signup() {
       } finally {
         setLoadingLocal(false);
       }
-    }
-  };
-  // Function to handle verification
-  const handleVerify = async () => {
-    if (otpValidation(otp)) {
-      try {
-        setLoadingLocal(true);
-        const user = await userOTP(email, otp);
-        if (user === 'SUCCESS') {
-          navigation.navigate('WelcomeAccount', {
-            fullName: fullName,
-            email: email,
-            password: password,
-            client: client
-          });
-          setVerifyModal(false);
-          dispatch(setUserVerifiedFlag(true))
-          setFullName('')
-          setLastName('')
-          setEmail('')
-          setPassword('')
-          setClient('')
-          setConfirmPassword('')
-          setOTP("")
-          dispatch(setUserEmail(''))
-          dispatch(setUserLoginVerified(false))
-        }
-        setLoadingLocal(false);
-      } catch (error) {
-        if (error.message.includes(':')) {
-          const myArray = error.message.split(':');
-        } else {
-          ShowMessage(error.message);
-        }
-      } finally {
-        setLoadingLocal(false);
-      }
-    }
-  };
-  // Function to handle resending verification code
-  const handleResendCode = async () => {
-    try {
-      setLoadingLocal(true);
-      const user = await resendCode(email);
-      ShowMessage('Verification code sent successfully!');
-      setLoadingLocal(false);
-    } catch (error) {
-      if (error.message.includes(':')) {
-        const myArray = error.message.split(':');
-      } else {
-        ShowMessage(error.message);
-      }
-    } finally {
-      setLoadingLocal(false);
     }
   };
 
@@ -299,26 +212,6 @@ export default function Signup() {
             eyeOpen={displayConfirmPassword}
             onPress={() => setDisplayConfirmPassword(!displayConfirmPassword)}
           />
-          {/* Checkbox for email opt-in */}
-          {/* <View style={[styles.checkboxContainer, { marginTop: 30 }]}>
-            <TouchableOpacity
-              onPress={() => setEmailOptCheck(!emailOptCheck)}
-              style={styles.uncheckBox}>
-              {emailOptCheck && (
-                <Image
-                  source={Images.Tick}
-                  style={{
-                    tintColor: Colors.white,
-                    height: 10,
-                    width: 10,
-                  }}
-                />
-              )}
-            </TouchableOpacity>
-            <Text style={[styles.checkBoxTxt, { marginStart: 10 }]}>
-              {Strings.signupTerm}
-            </Text>
-          </View> */}
           {/* Checkbox for terms and conditions */}
           <View style={[styles.checkboxContainer]}>
             <TouchableOpacity
@@ -362,25 +255,12 @@ export default function Signup() {
           {/* Button to continue to verification */}
           <CustomButton
             title={Strings.continue}
-            onpress={() => showVerifyModal()}
+            onpress={() => handleContinue()}
           />
           <Text style={styles.accountTxt}>{Strings.alreadyAccount}</Text>
           <TouchableOpacity onPress={() => navigation.navigate('Login')}>
             <Text style={styles.loginTxt}>{Strings.login}</Text>
           </TouchableOpacity>
-          {/* Verification Modal */}
-          <CustomVerificationModal
-            visible={verifyModal}
-            desTxt={Strings.pleaseCheckInbox}
-            dexTxtStyle={styles.modalContainer}
-            btn={true}
-            otherBtnTxt={'Verify'}
-            blackBtnTxt={'Resend Code'}
-            otherBtnPress={() => handleVerify()}
-            blackBtnPress={() => handleResendCode()}
-            onChangeText={txt => setOTP(txt)}
-            otpValue={otp}
-          />
         </View>
       </KeyboardAwareScrollView>
       {/* Loading modal */}
