@@ -8,14 +8,17 @@ import CustomButton from 'src/components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 import Strings from 'src/utils/strings';
 import { changePassword } from 'src/services/userProfile';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import LoaderModal from 'src/components/LoaderModal';
 import ShowMessage from 'src/components/ShowMessage';
 import { updatePasswordValidation } from 'src/common/authValidation';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { signOut } from 'src/services/authOTP';
+import { setSportsList, setToken, setUser, setUserData } from 'src/store/types';
 
 export default function UpdatePassword() {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const data = useSelector(state => state.user);
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -40,8 +43,26 @@ export default function UpdatePassword() {
           newPassword,
         );
         if (user === 'SUCCESS') {
-          ShowMessage('Password changed successfully.')
-          navigation.goBack(null);
+          signOut()
+          .then((response) => {
+            console.error('response', response);
+            dispatch(setUser(false));
+            dispatch(setUserData({}));
+            dispatch(setToken(''));
+            dispatch(setSportsList([]));
+            navigation.replace('Auth');
+            ShowMessage('Password changed successfully.')
+          })
+          .catch(error => {
+            console.error('Error signing out:', error.message);
+            ShowMessage(error.message)
+            if (error?.message === 'User not authenticated.') {
+              dispatch(setUser(false));
+              dispatch(setUserData({}));
+              dispatch(setToken(''));
+              navigation.replace('Auth');
+            }
+          });
         }
         setLoadingLocal(false);
       } catch (error) {

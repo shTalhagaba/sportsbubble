@@ -2,8 +2,6 @@ import { AuthenticationDetails, CognitoUser } from 'amazon-cognito-identity-js'
 import CognitoPool from '.'
 
 const userLogin = async (email, password) => {
-  console.log("email => ", email)
-  console.log("password => ", password)
   return await new Promise((resolve, reject) => {
     const user = new CognitoUser({
       Username: email,

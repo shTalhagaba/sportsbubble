@@ -22,7 +22,7 @@ import { useQuery } from '@apollo/client';
 import dayjs from 'dayjs';
 import { GET_SORTED_EVENTS } from './queries';
 import { useDispatch, useSelector } from 'react-redux';
-import { refreshData, selectedTimebar, setStoreEventList, setUser } from 'src/store/types';
+import { refreshData, selectedTimebar, setGuest, setStoreEventList, setUser } from 'src/store/types';
 import { moderateScale } from 'react-native-size-matters';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 import CustomModalView from 'src/components/Modal/CustomModal';
@@ -83,8 +83,14 @@ export default function Guide() {
       if (nextAppState === 'active') {
         searchRefetch();
       } else if (nextAppState === 'inactive') {
+        if(reduxData?.guest){
+          dispatch(setGuest(false));
+        } 
         searchRefetch();
       } else {
+        if(reduxData?.guest){
+          dispatch(setGuest(false));
+        } 
         console.log('App is in the background or inactive');
       }
     };

@@ -22,8 +22,6 @@ import { useDispatch } from 'react-redux';
 import {
   setUserSignupData
 } from 'src/store/types';
-import { userData } from 'src/services/getUserData';
-
 
 export default function Signup() {
   const navigation = useNavigation();
@@ -72,13 +70,6 @@ export default function Signup() {
 
   // Function to show the verification modal
   const handleContinue = async () => {
-    // try {
-    //   const result = await userData('abc@yopmail.com');
-    //   console.log('Result:', result);
-    // } catch (error) {
-    //   console.error('Errorrr:', error);
-    // }
-
     if (
       signupValidation(
         fullName,
@@ -103,8 +94,6 @@ export default function Signup() {
       }
     }
   };
-
-
 
   return (
     <ImageBackground

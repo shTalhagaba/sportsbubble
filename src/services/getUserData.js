@@ -2,9 +2,6 @@ import { CognitoUserPool, CognitoUser, AuthenticationDetails } from 'amazon-cogn
 import CognitoPool from '.'
 
 const userData = async (email) => {
-    console.log("Email => ", email);
-    console.log("CognitoPool => ", CognitoPool);
-
     return new Promise((resolve, reject) => {
         try {
             const userData = {
@@ -12,12 +9,7 @@ const userData = async (email) => {
                 Pool: CognitoPool,
             };
             const cognitoUser = new CognitoUser(userData);
-
             cognitoUser.getUser((err, result) => {
-                console.log("err => ", err);
-                console.log("result => ", result);
-
-
                 if (err) {
                     if (err.code === 'UserNotFoundException') {
                         console.log('User does not exist.');
@@ -27,7 +19,6 @@ const userData = async (email) => {
                         reject(err);
                     }
                 } else {
-                    console.log('User exists.');
                     console.log('User details:', result);
                     resolve(result);
                 }
@@ -38,6 +29,4 @@ const userData = async (email) => {
         }
     });
 };
-
-
 export { userData };

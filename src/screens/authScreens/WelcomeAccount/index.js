@@ -50,6 +50,7 @@ export default function WelcomeAccount(props) {
   const [date, setDate] = useState('')
   const [isOpen, setIsOpen] = useState(false);
   const [loadingLocal, setLoadingLocal] = useState(false);
+  const [email, setEmail] = useState('');
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
   const [firstName, setFirstName] = useState(
     props?.route?.params?.fullName

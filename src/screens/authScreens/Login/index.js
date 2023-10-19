@@ -20,7 +20,8 @@ import {
   setUser,
   setUserData,
   setUserEmail,
-  setUserLoginVerified
+  setUserLoginVerified,
+  setUserSignupData
 } from 'src/store/types';
 import { userLogin } from 'src/services/authLogin';
 import { loginValidation } from 'src/common/authValidation';
@@ -64,12 +65,12 @@ export default function Login() {
           navigation.replace('Root'); // Navigate to the 'Root' screen
         }
       } catch (error) {
-        console.log('error : ', error);
         // Handle different types of error messages
         if (error.message.includes(':')) {
           const myArray = error.message.split(':');
         } else {
           if (error.message === "User is not confirmed.") {
+            dispatch(setUserSignupData({ email: email, password: password }))
             dispatch(setUserEmail(email))
             dispatch(setUserLoginVerified(true))
             navigation.navigate('WelcomeAccount');
