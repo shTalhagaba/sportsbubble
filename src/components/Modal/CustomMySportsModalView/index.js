@@ -6,14 +6,14 @@ import CustomButton from 'src/components/CustomButton';
 
 const CustomMySportsModalView = props => {
   return (
-    <Modal animationType="slide" transparent={true} visible={props.visible}>
+    <Modal transparent={true} visible={props.visible}>
       <StatusBar
         backgroundColor={Colors.transparent}
         translucent
         barStyle="light-content"
       />
       <ImageBackground
-        source={Images.BackgroundMySports}
+        source={Images.BackgroundMySportsGuide}
         resizeMode="cover"
         style={styles.container} >
         <TouchableWithoutFeedback style={styles.mainView}>

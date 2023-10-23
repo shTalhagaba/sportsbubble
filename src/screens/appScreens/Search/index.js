@@ -48,6 +48,7 @@ export default function Search() {
     };
   }, []);
 
+  console.log("isKeyboardOpen: ", isKeyboardOpen)
   const keyboardDidShow = () => {
     setIsKeyboardOpen(true);
   };
@@ -78,10 +79,12 @@ export default function Search() {
         for (const key in item) {
           const value = item[key];
           if (
+            key != 'id' &&
             value !== null &&
             typeof value === 'string' &&
             value.toLowerCase().includes(text.toLowerCase())
           ) {
+            console.log("Search:: ", item)
             return true;
           }
         }
@@ -155,7 +158,7 @@ export default function Search() {
             onPress={() => inputRef.current?.focus()} // Focus the input when the TouchableOpacity is pressed
             style={[
               styles.searchContainer,
-              isFocusedFlag ? styles.focus : styles.blur,
+              isKeyboardOpen ? styles.focus : styles.blur,
             ]}>
             <View style={styles.searchMainContainer}>
               {isFocusedFlag && (

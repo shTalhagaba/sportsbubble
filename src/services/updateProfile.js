@@ -4,8 +4,8 @@ import CognitoPool from '.';
 const userUpdateProfile = (fullName, lastName, zipCode, dob, pronouns) => {
   return new Promise((resolve, reject) => {
     const attributeList = [
-      new CognitoUserAttribute({ Name: 'name', Value: fullName }),
-      new CognitoUserAttribute({ Name: 'given_name', Value: lastName }),
+      new CognitoUserAttribute({ Name: 'given_name', Value: fullName }),
+      new CognitoUserAttribute({ Name: 'family_name', Value: lastName }),
       new CognitoUserAttribute({ Name: 'custom:zipcode', Value: zipCode }), //zipcode
       new CognitoUserAttribute({ Name: 'birthdate', Value: dob }), //birthdate
       new CognitoUserAttribute({ Name: 'custom:pronouns', Value: pronouns }), // pronouns

@@ -3,7 +3,7 @@ import Config from 'react-native-config';
 import {Notifications} from 'react-native-notifications';
 import Toast from 'react-native-toast-message';
 
-const defaultIntrests = ["test"];
+const defaultIntrests = [];
 var listener = null
 
 const showToast = (title, body) => {

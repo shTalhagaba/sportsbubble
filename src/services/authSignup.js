@@ -6,8 +6,8 @@ const userSignup = async (fullName, lastName, email, password) => {
   return new Promise((resolve, reject) => {
     const attributeList = [
       new CognitoUserAttribute({ Name: 'email', Value: email }),
-      new CognitoUserAttribute({ Name: 'name', Value: fullName }),
-      new CognitoUserAttribute({ Name: 'given_name', Value: lastName }),
+      new CognitoUserAttribute({ Name: 'given_name', Value: fullName }),
+      new CognitoUserAttribute({ Name: 'family_name', Value: lastName }),
       new CognitoUserAttribute({ Name: 'custom:zipcode', Value: '' }),
       new CognitoUserAttribute({ Name: 'birthdate', Value: '' }),
       new CognitoUserAttribute({ Name: 'custom:pronouns', Value: '' }),

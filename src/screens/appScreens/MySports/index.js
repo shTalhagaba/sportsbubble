@@ -25,8 +25,9 @@ import LoaderModal from 'src/components/LoaderModal';
 import { setSportsList, setUser } from 'src/store/types';
 import { categoryArr, sportDummyList } from 'src/utils/list';
 import { subscribeInterest, unsubscribeInterest } from "src/components/Pusher/PusherBeans";
-import {checkNotifications, requestNotifications, openSettings} from 'react-native-permissions';
+import { checkNotifications, requestNotifications, openSettings } from 'react-native-permissions';
 import { initializePusher } from 'src/components/Pusher/PusherBeans';
+import useSportsList from 'src/services/useSportsList';
 const { fontScale } = Dimensions.get('window');
 
 export default function MySports() {
@@ -34,6 +35,7 @@ export default function MySports() {
   const reduxData = useSelector(state => state.user);
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
+  const { loading, refetch, favoriteSports } = useSportsList('network-only');
   const [categoryData, setCategoryData] = useState(categoryArr);
   const [reminderModal, setReminderModal] = useState(false);
   const [settingsModal, setSettingsModal] = useState(false);
@@ -49,7 +51,7 @@ export default function MySports() {
   const [deleteConsumersMutation, { loading: loadingDelete, error: errorDelete }] = useMutation(DELETE_CONSUMERS);
   const [updateConsumersMutation, { loading: loadingFavourite, error: errorFavourite }] = useMutation(UPDATE_CONSUMERS);
   const [updateNotificationMutation, { loading: loadingNotification, error: errorNotification }] = useMutation(UPDATE_NOTIFICATION_CONSUMERS);
-
+  // console.log("MySports FavoriteSports:: ", favoriteSports)
   // Define a function to execute the mutation
   const updateConsumers = async (categories, sport, flag, isBellIcon) => {
     if (categories?.id && sport?.id) {
@@ -61,7 +63,7 @@ export default function MySports() {
           favoriteSports: [
             {
               node: {
-                notifications: flag ? flag : true,
+                notifications: flag ? false : true,
                 sport: {
                   connect: {
                     where: {
@@ -94,7 +96,6 @@ export default function MySports() {
         if (!loadingFavourite && data?.updateConsumers?.consumers) {
           ShowMessage('Added to Favorites successfully! ', data?.updateConsumers?.consumers)
           if (data?.updateConsumers?.consumers?.[0]?.favoriteSports && data?.updateConsumers?.consumers?.[0]?.favoriteSports.length > 0) {
-            console.log("Adding to Fav:: ", data?.updateConsumers?.consumers?.[0]?.favoriteSports)
             dispatch(setSportsList(data?.updateConsumers?.consumers?.[0]?.favoriteSports));
             console.log("Subscribe: ", data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name)
             if (isBellIcon) {
@@ -179,45 +180,22 @@ export default function MySports() {
           refetch()
         }
         // Handle the response data as needed
-        if(isPusherInitiazed){
+        if (isPusherInitiazed) {
+          if(flag){
           unsubscribeInterest(data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name)
           console.log('Remove consumer:', data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name);
+          }else{
+            subscribeInterest(data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name)
+            console.log('Add consumer:', data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name);
+          }
         }
       } catch (err) {
         console.error('Error updating consumer:', err);
       }
     } else {
-      ShowMessage('Invalid data')
+      // ShowMessage('Invalid data 3')
     }
   };
-
-  const { loading, refetch, error } = useQuery(GET_MY_SPORT, {
-    variables: {
-      consumersWhere2: {
-        cognitoId: reduxData?.userData?.sub,
-      },
-    },
-    fetchPolicy: 'network-only',
-    notifyOnNetworkStatusChange: true,
-    onCompleted: data => {
-      if (reduxData?.user && !loading && data && data?.consumers && data?.consumers.length > 0) {
-        const filteredEvents = data?.consumers?.[0]?.favoriteSports.filter(element => {
-          const { sport, categories } = element;
-          // Check if all required properties exist
-          if (sport?.name
-            && categories && categories.length > 0
-          ) {
-            return true;
-          }
-          return false;
-        });
-        dispatch(setSportsList(filteredEvents));
-      }
-    },
-    onError: error => {
-      console.log('error : ', error);
-    },
-  });
 
   const { loading: listLoading, refetch: listRefetch, error: listError } = useQuery(GET_MY_SPORT_LIST, {
     variables: {
@@ -281,12 +259,12 @@ export default function MySports() {
 
   const handleReminder = async (item, index, selectedItem) => {
     // If event notification already enabled, no need to check permissions
-    if(selectedItem?.[0]?.notifications){
+    if (selectedItem?.[0]?.notifications) {
       updateDB(item, index, selectedItem)
-    } 
+    }
     else {
-      if(await checkPermission()){
-        if(!isPusherInitiazed){
+      if (await checkPermission()) {
+        if (!isPusherInitiazed) {
           initializePusher()
           setPusherInitiazed(true)
         }
@@ -297,28 +275,31 @@ export default function MySports() {
 
   const updateDB = (item, index, selectedItem) => {
     if (!selectedItem || !selectedItem?.[0]?.notifications) {
-      updateConsumers(item?.categories?.[0], item, selectedItem?.[0]?.notifications, true)
+      updateConsumers(item?.categories?.[0], item, item?.[0]?.notifications, true)
+    }else{
+    setCurrentIndex(selectedItem?.[0] || item);
+    handleNotificationAlert(selectedItem?.[0] || item)
     }
-    setCurrentIndex(selectedItem?.[0]);
-    handleNotificationAlert()
   }
 
   const handleFvrt = (item, selectedItem) => {
     if (reduxData?.user) {
       setCurrentIndex(selectedItem?.[0]);
       if (selectedItem && selectedItem.length > 0) {
-        deleteConsumers(selectedItem?.[0]?.id)
+        selectedItem.map((element)=>{
+          deleteConsumers(element?.id)
+        })
       } else {
-        updateConsumers(item?.categories?.[0], item, selectedItem?.[0]?.notifications, false)
+        updateConsumers(item?.categories?.[0], item, selectedItem?.[0]?.notifications, true)
       }
     } else {
       setFvrtModal(!fvrtModal);
     }
   };
 
-  const handleNotificationAlert = () => {
-    if (currentIndex != -1) {
-      updateNotificationConsumers(currentIndex?.id, currentIndex?.notifications)
+  const handleNotificationAlert = (selectedIndex) => {
+    if (selectedIndex) {
+      updateNotificationConsumers(selectedIndex?.id, selectedIndex?.notifications)
     }
   };
 
@@ -388,19 +369,19 @@ export default function MySports() {
 
 
   const checkPermission = () => {
-    return new Promise( (resolve, reject) => {
-      checkNotifications().then(({status, settings}) => {
+    return new Promise((resolve, reject) => {
+      checkNotifications().then(({ status, settings }) => {
         //UNAVAILABLE: This feature is not available (on this device / in this context)
         //DENIED: The permission has not been requested / is denied but requestable
         //BLOCKED: The permission is denied and not requestable anymore
         //GRANTED: The permission is granted
-        switch(status) {
+        switch (status) {
           case "granted":
             resolve(true)
             break;
 
           case "denied":
-            requestNotifications(['alert', 'sound']).then(({status, settings}) => {
+            requestNotifications(['alert', 'sound']).then(({ status, settings }) => {
               if (status == "granted") {
                 resolve(true)
               } else {
@@ -413,17 +394,17 @@ export default function MySports() {
             setSettingsModal(true)
             resolve(false)
             break;
-          
+
           case "unavailable":
             ShowMessage(Strings.notSupportedNotifications)
             resolve(false)
             break;
 
           default:
-            // code block
+          // code block
         }
       });
-  })
+    })
   }
 
   const goToSettings = () => {
@@ -560,7 +541,7 @@ export default function MySports() {
                       source={sportsIds && sportsIds.length > 0 && sportsIds.includes(item?.id) ? Images.FilledFvrt : Images.Favorite}
                       style={[
                         styles.fvrtIcon,
-                        sportsIds && sportsIds.length > 0 && sportsIds.includes(item?.id) ? { tintColor: Colors.darkOrange }:{},
+                        sportsIds && sportsIds.length > 0 && sportsIds.includes(item?.id) ? { tintColor: Colors.darkOrange } : {},
                       ]}
                       resizeMode={'contain'}
                     />
@@ -589,7 +570,7 @@ export default function MySports() {
         rowStyle={true}
         blue
         blackBtnPress={() => setReminderModal(!reminderModal)}
-        otherBtnPress={() => handleNotificationAlert()}
+        otherBtnPress={() => handleNotificationAlert(currentIndex)}
       />
       {/* My Sport Popup for guest  */}
       {fvrtModal ?

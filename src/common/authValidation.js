@@ -202,7 +202,7 @@ export const completeProfileValidation = (zipCode, dob) => {
       const birthDay = dateBirth.getDate();
 
       if (currentYear - birthYear < 14 || (currentYear - birthYear === 14 && (currentMonth < birthMonth || (currentMonth === birthMonth && currentDay < birthDay)))) {
-        ShowMessage('You must be at least 14 years of age.');
+        ShowMessage('Age is less than 14 years.');
       } else if (zipCode.length < 4) {
         ShowMessage('Zip Code is too short.');
       } else {

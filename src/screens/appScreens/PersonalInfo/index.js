@@ -48,8 +48,8 @@ export default function PersonalInfo() {
   useEffect(() => {
     if (data?.userData) {
       const user = data?.userData;
-      setFirstName(user?.name);
-      setLastName(user?.given_name);
+      setFirstName(user?.given_name);
+      setLastName(user?.family_name);
       setDob(user?.birthdate ? user?.birthdate : '22-12-1977');
       setZipcode(user?.['custom:zipcode']);
       setPronouns(user?.['custom:pronouns']);
@@ -59,7 +59,7 @@ export default function PersonalInfo() {
 
   useEffect(() => {
     const user = data?.userData;
-    if (user?.name === firstName && user?.given_name === lastName
+    if (user?.given_name === firstName && user?.family_name === lastName
       && user?.['custom:zipcode'] === zipCode && user?.['custom:pronouns'] === pronouns) {
       setButtonDisable(true)
     } else {
@@ -79,7 +79,7 @@ export default function PersonalInfo() {
   const handleUpdateProfile = async () => {
     if (updateProfileValidation(firstName, lastName, zipCode)) {
       const user = data?.userData;
-      if (user?.name === firstName && user?.given_name === lastName
+      if (user?.given_name === firstName && user?.family_name === lastName
         && user?.['custom:zipcode'] === zipCode && user?.['custom:pronouns'] === pronouns) {
         // ShowMessage('Not saving any data successfully');
         Alert.alert(
@@ -112,8 +112,8 @@ export default function PersonalInfo() {
           if (test === 'SUCCESS') {
             const updatedProfile = {
               ...data?.userData,
-              name: firstName,
-              given_name: lastName,
+              given_name: firstName,
+              family_name: lastName,
               'custom:zipcode': zipCode,
               'custom:pronouns': pronouns,
             };

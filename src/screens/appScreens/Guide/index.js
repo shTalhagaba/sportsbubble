@@ -22,7 +22,7 @@ import { useQuery } from '@apollo/client';
 import dayjs from 'dayjs';
 import { GET_SORTED_EVENTS } from './queries';
 import { useDispatch, useSelector } from 'react-redux';
-import { refreshData, selectedTimebar, setGuest, setStoreEventList, setUser } from 'src/store/types';
+import { refreshData, selectedTimebar, setGuest, setStoreEventList, setUser, setSportsList } from 'src/store/types';
 import { moderateScale } from 'react-native-size-matters';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 import CustomModalView from 'src/components/Modal/CustomModal';
@@ -31,6 +31,8 @@ import GestureRecognizer from 'react-native-swipe-gestures';
 import { UpdateEvents } from 'src/utils/functions';
 import ShowMessage from 'src/components/ShowMessage';
 import { categoryArr, stageToken, wrongEventId } from 'src/utils/list';
+import useSportsList from 'src/services/useSportsList';
+
 const screenWidth = Dimensions.get('window').width;
 const { fontScale } = Dimensions.get('window');
 
@@ -38,6 +40,7 @@ export default function Guide() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   let isFocused = useIsFocused()
+  const favoriteSports = useSportsList('cache-and-network');
   const currentDate = dayjs(new Date()).toISOString(); // Get the current date and time
   const reduxData = useSelector(state => state.user);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -102,11 +105,13 @@ export default function Guide() {
     };
   }, []);
 
-
-
   useEffect(() => {
     if (reduxData?.eventList && reduxData.eventList.length > 0) {
       setEventList(UpdateEvents(reduxData.eventList, startTime, new Date().toISOString()));
+      const filter = reduxData?.eventList.filter((item)=>item.isFeatured)
+      if(filter && filter.length>0){
+        setFeaturedEvent(filter[0])
+      }
     }
   }, [reduxData?.eventList]);
 
@@ -697,16 +702,6 @@ export default function Guide() {
               </View>
               <View
                 style={{
-                  width: featuredEvent?.startTime
-                    ? startTimeWidth(featuredEvent?.startTime)
-                    : 0,
-                }}></View>
-              <View
-                style={{
-                  width: endTimeWidth(featuredEvent?.endTime),
-                }}></View>
-              <View
-                style={{
                   flex: 1,
                 }}></View>
               <View style={styles.userNameContainer}>
@@ -772,11 +767,11 @@ export default function Guide() {
             />
           </ScrollView>
         )}
-        <LiveMatchView
+        {/* <LiveMatchView // comment out sem-691
           setLiveMatchModal={setLiveMatchModal}
           liveMatchModal={liveMatchModal}
           navigation={navigation}
-        />
+        /> */}
         {/* Access Features pop up  */}
         <CustomModalView
           visible={mySportModal}

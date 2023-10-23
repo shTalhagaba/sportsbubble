@@ -6,6 +6,7 @@ import {
   StatusBar,
   FlatList,
   TouchableOpacity,
+  Keyboard
 } from 'react-native';
 import styles from './styles';
 import ContactTextInput from 'src/components/ContactTextInput';
@@ -300,7 +301,10 @@ export default function WelcomeAccount(props) {
               returnKeyType={'next'}
               blurOnSubmit={false}
               rightImage={Images.Calendar}
-              pressRightImage={() => handleShowDatePicker()}
+              pressRightImage={() => {
+                Keyboard.dismiss();
+                handleShowDatePicker();
+              }}
               onSubmitEditing={() => {
                 pronounsRef.current.focus();
               }}
@@ -371,6 +375,7 @@ export default function WelcomeAccount(props) {
         </KeyboardAwareScrollView>
         <LoaderModal visible={loadingLocal} loadingText={''} />
         <DateTimePickerModal
+          date={date}
           isVisible={isDatePickerVisible}
           mode="date"
           onConfirm={handleConfirm}

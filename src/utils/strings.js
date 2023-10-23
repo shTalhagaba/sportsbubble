@@ -14,7 +14,7 @@ export default {
   reportProblem: 'Report a Problem',
   termUse: 'Terms of Use',
   privacyPolicy: 'Privacy Policy/Info We Collect',
-  californiaPolicy: 'California Policy',
+  californiaPolicy: 'Supplemental Notice',
   watchNow: 'Go!',
   personalInfo: 'Personal Info',
   changePassword: 'Change Password',
