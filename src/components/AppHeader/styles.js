@@ -2,13 +2,13 @@ import { Dimensions, Platform } from 'react-native';
 import { Colors } from 'src/utils';
 import { ScaledSheet } from 'react-native-size-matters';
 import DeviceInfo from 'react-native-device-info';
+import { DEVICES, DEVICE_STANDARD_HEIGHTS } from 'src/utils/devices';
+
 const { fontScale } = Dimensions.get('window');
-import { DEVICE_STANDARD_HEIGHTS, DEVICES } from 'src/utils/devices';
-
-
 const { height } = Dimensions.get('window');
 const device_name = DeviceInfo.getModel();
 let is_zoomed = false;
+
 if (DEVICES.includes(device_name)) {
     console.log('is_zoomed : ', DEVICE_STANDARD_HEIGHTS[device_name], height)
     if (DEVICE_STANDARD_HEIGHTS[device_name] > height) {
@@ -33,10 +33,10 @@ const styles = ScaledSheet.create({
             is_zoomed ? '40@ms0.3' : '24@ms0.3'
             : Platform.OS === "android" ?
                 fontScale > 1 ?
-                    26 * fontScale : "24@ms0.3" : "24@ms0.3",
+                    28 * fontScale : "24@ms0.3" : "24@ms0.3",
         height: is_zoomed ? '40@ms0.3' : Platform.OS === "android" ?
             fontScale > 1 ?
-                26 * fontScale : "24@ms0.3" : "24@ms0.3",
+                28 * fontScale : "24@ms0.3" : "24@ms0.3",
         resizeMode: 'cover',
         marginRight: Platform.OS === 'ios' ? '25@ms0.3' : '12@ms0.3',
     },
@@ -57,14 +57,14 @@ const styles = ScaledSheet.create({
                     : '24@ms0.3'
                 : Platform.OS === "android" ?
                     fontScale > 1 ?
-                        28 * fontScale : '24@ms0.3'
+                        33 * fontScale : '24@ms0.3'
                     : "24@ms0.3",
         width:
             Platform.OS === "ios" ?
                 is_zoomed ? '230@ms0.3' : '134@ms0.3' :
                 Platform.OS === "android" ?
                     fontScale > 1 ?
-                        134 * fontScale : '134@ms0.3' : '134@ms0.3',
+                        138 * fontScale : '134@ms0.3' : '134@ms0.3',
     },
     iconContainer: {
         width: '25%',
@@ -75,3 +75,5 @@ const styles = ScaledSheet.create({
 });
 
 export default styles;
+
+
