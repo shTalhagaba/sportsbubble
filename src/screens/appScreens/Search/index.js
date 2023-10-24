@@ -76,19 +76,18 @@ export default function Search() {
       reduxData.eventList.length > 0
     ) {
       const filtered = reduxData.eventList.filter(item => {
-        for (const key in item) {
-          const value = item[key];
-          if (
-            key != 'id' &&
-            value !== null &&
-            typeof value === 'string' &&
-            value.toLowerCase().includes(text.toLowerCase())
-          ) {
-            console.log("Search:: ", item)
-            return true;
-          }
+        if (
+          (item.line1 || item.line2 || item.companyName || item.title) && // specify the main properties to match here
+          item.category &&
+          item.category.name &&
+          item.category.name.toLowerCase().includes(text.toLowerCase()) || // Check 'category.name'
+          item.sport &&
+          item.sport.name &&
+          item.sport.name.toLowerCase().includes(text.toLowerCase()) // Check 'sport.name'
+        ) {
+          return true;
         }
-          return false;
+        return false;
       });
       setList(filtered);
     }
@@ -119,7 +118,7 @@ export default function Search() {
       });
     } else {
       Keyboard.dismiss();
-      setTimeout(()=> {
+      setTimeout(() => {
         navigation.navigate('SearchWatch', {
           item: item,
           searchFlag: true,
@@ -148,7 +147,7 @@ export default function Search() {
             navigation.navigate('Guide', {
               screen: 'GuideMain',
             })
-            }
+          }
           }
           SimpleView
         />
