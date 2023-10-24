@@ -76,9 +76,7 @@ PODS:
   - Instabug (11.13.3)
   - libevent (2.1.12)
   - OpenSSL-Universal (1.1.1100)
-  - Permission-LocationAlways (3.9.3):
-    - RNPermissions
-  - Permission-LocationWhenInUse (3.9.3):
+  - Permission-Notifications (3.10.0):
     - RNPermissions
   - PushNotifications (4.0.0)
   - RCT-Folly (2021.07.22.00):
@@ -405,14 +403,14 @@ PODS:
     - React-Core
   - RNCAsyncStorage (1.19.2):
     - React-Core
-  - RNDateTimePicker (7.6.0):
+  - RNDateTimePicker (7.6.1):
     - React-Core
   - RNDeviceInfo (10.8.0):
     - React-Core
   - RNInstabug (11.13.0):
     - Instabug (= 11.13.3)
     - React-Core
-  - RNPermissions (3.9.3):
+  - RNPermissions (3.10.0):
     - React-Core
   - RNScreens (3.24.0):
     - React-Core
@@ -452,8 +450,7 @@ DEPENDENCIES:
   - FlipperKit/SKIOSNetworkPlugin (= 0.125.0)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - OpenSSL-Universal (= 1.1.1100)
-  - Permission-LocationAlways (from `../node_modules/react-native-permissions/ios/LocationAlways/Permission-LocationAlways.podspec`)
-  - Permission-LocationWhenInUse (from `../node_modules/react-native-permissions/ios/LocationWhenInUse/Permission-LocationWhenInUse.podspec`)
+  - Permission-Notifications (from `../node_modules/react-native-permissions/ios/Notifications`)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
@@ -531,10 +528,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/React/FBReactNativeSpec"
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
-  Permission-LocationAlways:
-    :path: "../node_modules/react-native-permissions/ios/LocationAlways/Permission-LocationAlways.podspec"
-  Permission-LocationWhenInUse:
-    :path: "../node_modules/react-native-permissions/ios/LocationWhenInUse/Permission-LocationWhenInUse.podspec"
+  Permission-Notifications:
+    :path: "../node_modules/react-native-permissions/ios/Notifications"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
@@ -642,8 +637,7 @@ SPEC CHECKSUMS:
   Instabug: f7c3880823873cff9ee70307d373e8266c9ea0f8
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
-  Permission-LocationAlways: b84be511b9d35f71768a6b03c5a56230b257a34a
-  Permission-LocationWhenInUse: 182df86ad56dd01b4aeea467e3fbb73c008cfe2d
+  Permission-Notifications: 9c2d28f2a8622dc1158170d8f10a471af874f0d9
   PushNotifications: 2b2174b28bf48b1fe552686d1f95c53d62a4781d
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
   RCTRequired: bec48f07daf7bcdc2655a0cde84e07d24d2a9e2a
@@ -681,16 +675,16 @@ SPEC CHECKSUMS:
   ReactCommon: 5768a505f0bc7b798dc2becdd3ee6442224f796c
   RNAWSCognito: fb6af611ed80630ef9a60305b12130ac73918f27
   RNCAsyncStorage: f57e929cd7757f2cb3dd8186d123c09e8281a1ad
-  RNDateTimePicker: ccd988deb223cbb2e669e157ec576c2c6217128c
+  RNDateTimePicker: 8fb39263b721223e095248acaf6f406d5b7f6713
   RNDeviceInfo: 5795b418ed3451ebcaf39384e6cf51f60cb931c9
   RNInstabug: a72078ae892268b40d72ce812b213fd8f127c2e9
-  RNPermissions: ac5991487ad04ad1888b26896d44d969e65531b7
+  RNPermissions: 3acba750d9146af1c33a79c013e02f8b48067acc
   RNScreens: b21dc57dfa2b710c30ec600786a3fc223b1b92e7
   RNSVG: 6d07f8f8f246c85e3e16e0bcfc0d047db0c48496
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   Yoga: 5ed1699acbba8863755998a4245daa200ff3817b
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: f5ce42b77762ec794ebcdfaca1f353f421852ec2
+PODFILE CHECKSUM: d52d1b8e7e76a21319867319139ad28ad4a8119f
 
 COCOAPODS: 1.11.3

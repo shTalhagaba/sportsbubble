@@ -48,7 +48,7 @@ export default function WelcomeAccount(props) {
   const [zipCode, setZipCode] = useState('');
   const [birthday, setBirthday] = useState('');
   const [pronouns, setPronouns] = useState('');
-  const [date, setDate] = useState('')
+  const [date, setDate] = useState(new Date())
   const [isOpen, setIsOpen] = useState(false);
   const [loadingLocal, setLoadingLocal] = useState(false);
   const [email, setEmail] = useState('');
