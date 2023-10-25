@@ -205,7 +205,8 @@ export default function Search() {
 
           {/* list showing after search */}
           <FlatList
-            data={searchText.length > 0 ? list : []}
+            data={searchText.length > 0 ? data?.searchEvent : []}
+            onScrollBeginDrag={() => Keyboard.dismiss()}
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps={'handled'}
             onScrollBeginDrag={() => Keyboard.dismiss()}
