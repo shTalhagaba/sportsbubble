@@ -48,7 +48,6 @@ export default function Search() {
     };
   }, []);
 
-  console.log("isKeyboardOpen: ", isKeyboardOpen)
   const keyboardDidShow = () => {
     setIsKeyboardOpen(true);
   };
@@ -77,14 +76,15 @@ export default function Search() {
     ) {
       const filtered = reduxData.eventList.filter(item => {
         if (
-          (item.line1 || item.line2 || item.companyName || item.title) && // specify the main properties to match here
-          item.category &&
-          item.category.name &&
-          item.category.name.toLowerCase().includes(text.toLowerCase()) || // Check 'category.name'
-          item.sport &&
-          item.sport.name &&
-          item.sport.name.toLowerCase().includes(text.toLowerCase()) // Check 'sport.name'
-        ) {
+          (item?.line1.toLowerCase().includes(text.toLowerCase()) || 
+          item?.line2.toLowerCase().includes(text.toLowerCase()) || 
+          item?.category &&
+          item?.category?.name &&
+          item?.category?.name.toLowerCase().includes(text.toLowerCase()) || // Check 'category.name'
+          item?.sport &&
+          item?.sport?.name &&
+          item?.sport?.name.toLowerCase().includes(text.toLowerCase()) // Check 'sport.name'
+        )) {
           return true;
         }
         return false;

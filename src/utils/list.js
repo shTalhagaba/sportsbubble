@@ -83,5 +83,6 @@ export const optionsList = [
   { id: 1, label: 'he/him', value: 'he/him' },
   { id: 2, label: 'she/her', value: 'she/her' },
   { id: 3, label: 'they/them', value: 'they/them' },
-  { id: 4, label: 'not provide', value: 'not provide' },
+  { id: 4, label: 'Rather not provide', value: 'Rather not provide' },
+  { id: 5, label: 'other', value: 'other' }
 ];

@@ -29,6 +29,7 @@ export const GET_SORTED_EVENTS = gql`
         totalCount
         edges {
           rhVideoUrl
+          dmaCodes
           node {
             name
             logoUrl

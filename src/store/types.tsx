@@ -57,6 +57,20 @@ export const setJwtToken = (args: any) => {
   };
 };
 
+export const setRefreshToken = (args: any) => {
+  return {
+    type: 'SET_REFRESH_TOKEN',
+    payload: args,
+  };
+};
+
+export const setDMA = (args: any) => {
+  return {
+    type: 'SET_DMA_COdE',
+    payload: args,
+  };
+};
+
 export const setGuest = (args: any) => {
   return {
     type: 'SET_GUEST',

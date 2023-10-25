@@ -16,6 +16,7 @@ import { useDispatch } from 'react-redux';
 import {
   setGuest,
   setJwtToken,
+  setRefreshToken,
   setToken,
   setUser,
   setUserData,
@@ -59,6 +60,7 @@ export default function Login() {
           dispatch(setGuest(false));
           dispatch(setToken(user?.idToken?.jwtToken));
           dispatch(setJwtToken(user?.accessToken?.jwtToken));
+          dispatch(setRefreshToken(user?.refreshToken?.token));
           dispatch(setUserData(user?.idToken?.payload));
           setEmail('');
           setPassword('');

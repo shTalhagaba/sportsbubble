@@ -18,10 +18,12 @@ import dayjs from 'dayjs';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import SvgRenderer from 'src/components/SvgRenderer';
+import { useSelector } from 'react-redux';
 const screeHeight = Dimensions.get('window').height;
 
 export default function Watch(props) {
   const navigation = useNavigation();
+  const DMA = useSelector((state) => state.dma)
   const currentDate = dayjs(); // Get the current date and time
   const [itemSelected, setItemSelected] = useState(props?.route?.params?.item);
   const [bottomMenu, setBottomMenu] = useState(false);
@@ -39,13 +41,19 @@ export default function Watch(props) {
       let list =
         props?.route?.params?.item?.rightsHoldersConnection?.edges.filter(
           item => {
+            if (['NFL'].includes(itemSelected?.league?.name)) {
+              return item?.node?.weight < 1000 && (item?.dmaCodes.includes(DMA?.code) || item?.dmaCodes.includes('000') || !item?.dmaCodes?.length)
+            }
             const rightsHolder = item?.node;
-            return rightsHolder && rightsHolder.weight < 1000 || rightsHolder.weight === null;
+            return rightsHolder && rightsHolder.weight < 1000;
           },
         );
       let main =
         props?.route?.params?.item?.rightsHoldersConnection?.edges.filter(
           item => {
+            if (['NFL'].includes(itemSelected?.league?.name)) {
+              return item?.node?.weight > 1000 && (item?.dmaCodes.includes(DMA?.code) || item?.dmaCodes.includes('000') || !item?.dmaCodes?.length)
+            }
             const rightsHolder = item?.node;
             return rightsHolder && rightsHolder.weight > 1000;
           },

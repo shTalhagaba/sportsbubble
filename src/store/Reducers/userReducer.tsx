@@ -6,6 +6,7 @@ const initialState = {
   id: '',
   token: '',
   jwtToken: '',
+  refreshToken: '',
   userData: {},
   user: false,
   eventList: [],
@@ -148,6 +149,18 @@ const user = (state = initialState, action: any) => {
         return {
           ...state,
           jwtToken: action.payload,
+        };
+      } catch (e) {
+        alert(e);
+        return state;
+      }
+      break;
+    // refresh token
+    case 'SET_REFRESH_TOKEN':
+      try {
+        return {
+          ...state,
+          refreshToken: action.payload,
         };
       } catch (e) {
         alert(e);

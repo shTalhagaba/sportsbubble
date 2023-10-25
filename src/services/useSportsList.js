@@ -19,7 +19,6 @@ const useSportsList = (policyType) => {
         fetchPolicy: policyType,
         notifyOnNetworkStatusChange: true,
         onCompleted: data => {
-        console.log("%cSports Data == ", 'color: lightgreen', data)
         if (reduxData?.user && !loading && data && data?.consumers && data?.consumers.length > 0) {
             const filteredEvents = data?.consumers?.[0]?.favoriteSports.filter(element => {
             const { sport, categories } = element;

@@ -38,22 +38,21 @@ const httpLink = createHttpLink({
   // uri: Config.BASE_URL
 });
 
-
 const client = new ApolloClient({
   link: httpLink,
   cache: new InMemoryCache(),
   defaultOptions: { watchQuery: { fetchPolicy: 'cache-and-network' } },
 });
-const
-  theme = {
-    ...DefaultTheme,
-    colors
-      : {
-      ...DefaultTheme.colors,
-      background:'black'
-      ,
-    },
-  }
+
+const theme = {
+  ...DefaultTheme,
+  colors
+    : {
+    ...DefaultTheme.colors,
+    background: 'black'
+    ,
+  },
+};
 
 const App = () => {
   LogBox.ignoreLogs(['Warning: ...']);
