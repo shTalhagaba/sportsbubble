@@ -23,7 +23,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import { DELETE_CONSUMERS, GET_MY_SPORT, GET_MY_SPORT_LIST, UPDATE_CONSUMERS, UPDATE_NOTIFICATION_CONSUMERS } from 'src/graphQL';
 import LoaderModal from 'src/components/LoaderModal';
 import { setSportsList, setUser } from 'src/store/types';
-import { categoryArr, sportDummyList } from 'src/utils/list';
+import { categoryArrMySports } from 'src/utils/list';
 import { subscribeInterest, unsubscribeInterest } from "src/components/Pusher/PusherBeans";
 import { checkNotifications, requestNotifications, openSettings } from 'react-native-permissions';
 import { initializePusher } from 'src/components/Pusher/PusherBeans';
@@ -36,12 +36,11 @@ export default function MySports() {
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const { loading, refetch, favoriteSports } = useSportsList('network-only');
-  const [categoryData, setCategoryData] = useState(categoryArr);
+  const [categoryData, setCategoryData] = useState(categoryArrMySports);
   const [reminderModal, setReminderModal] = useState(false);
   const [settingsModal, setSettingsModal] = useState(false);
   const [fvrtModal, setFvrtModal] = useState(reduxData?.guest === true ? true : false);
   const [mySportData, setSportData] = useState([]);
-  // const [mySportData, setSportData] = useState(sportDummyList);
   const [currentIndex, setCurrentIndex] = useState();
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [filteredEventList, setFilteredEventList] = useState([]);
@@ -330,24 +329,42 @@ export default function MySports() {
         category => category.value
       );
       let filteredEvents = [];
+      
       if (selectedCategories.length === 1 && selectedCategoryValues[0] === 'all') {
         setSelectedCategory('all');
         filteredEvents = mySportData; // Use all data when 'all' category is selected
       } else {
-        filteredEvents = mySportData && mySportData?.length > 0 && mySportData.filter(item => {
-          // Extract the names from item.categories
-          const categoryNames = item?.categories.map(category => category.name);
-          return selectedCategoryValues.some(selectedCategory =>
-            categoryNames.includes(selectedCategory)
-          );
-        });
+        // Handle the "Other" category filtering
+        if (selectedCategoryValues.includes('others')) {
+          // Filter out "Pro," "College," and "Esports"
+          filteredEvents = mySportData.filter(item => {
+            // Extract the names from item.categories
+            const categoryNames = item?.categories.map(category => category?.name);
+            return (
+              categoryNames &&
+              categoryNames.length > 0 &&
+              !categoryNames.includes('pro') &&
+              !categoryNames.includes('college') &&
+              !categoryNames.includes('e-sports')
+            );
+          });
+        } else {
+          filteredEvents = mySportData.filter(item => {
+            // Extract the names from item.categories
+            const categoryNames = item?.categories.map(category => category?.name);
+            return selectedCategoryValues.some(selectedCategory =>
+              categoryNames.includes(selectedCategory)
+            );
+          });
+        }
       }
+  
       setSelectedCategory(selectedCategoryValues);
       setCategoryData(list);
       setFilteredEventList(filteredEvents);
-    };
-  }
-
+    }
+  };
+  
 
   const wait = timeout => {
     return new Promise(resolve => setTimeout(resolve, timeout));
@@ -431,12 +448,12 @@ export default function MySports() {
           horizontal
           data={categoryData}
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={
-            fontScale > 1
-              ? { justifyContent: 'center' }
-              : { justifyContent: 'center', flex: 1 }
-          }
-          scrollEnabled={fontScale > 1 ? true : false}
+          // contentContainerStyle={
+          //   fontScale > 1
+          //     ? { justifyContent: 'center' }
+          //     : { justifyContent: 'center', flex: 1 }
+          // }
+          scrollEnabled={true}
           renderItem={({ item, index }) => (
             <TouchableOpacity
               onPress={() => reduxData?.user ? handleSelectedCategory(item, index) : {}}

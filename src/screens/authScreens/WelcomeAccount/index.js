@@ -101,43 +101,36 @@ export default function WelcomeAccount(props) {
       cognitoZip: zipCode,
     };
     await handleFormSubmit(inputData)
-    const dataComplete = await signupComplete(
-      reduxData?.userSignupData?.email,
-      reduxData?.userSignupData?.password,
-      reduxData?.userSignupData?.zipCode,
-      reduxData?.userSignupData?.dob,
-      reduxData?.userSignupData?.pronouns,
-    );
-    if (dataComplete === 'SUCCESS') {
-      try {
-        ShowMessage(Strings.profileCompleted);
-        setZipCode('')
-        setDOB('')
-        setPronouns('')
-        setDate('')
-        const user = await userLogin(reduxData?.userSignupData?.email, reduxData?.userSignupData?.password);
-        user.id = user?.accessToken?.payload?.sub ?? '';
-        // Check if user login was successful
-        if (user?.idToken?.payload) {
-          dispatch(setUser(true));
-          dispatch(setGuest(false));
-          dispatch(setToken(user?.idToken?.jwtToken));
-          dispatch(setJwtToken(user?.accessToken?.jwtToken));
-          dispatch(setUserData(user?.idToken?.payload));
-          navigation.replace('Root'); // Navigate to the 'Root' screen
-          setLoadingLocal(false);
-        }
-      } catch (error) {
-        if (error.message.includes(':')) {
-          const myArray = error.message.split(':');
-        } else {
-          ShowMessage(error.message);
-        }
-        setLoadingLocal(false);
-      } finally {
+    setLoadingLocal(false);
+    try {
+      ShowMessage(Strings.profileCompleted);
+      setZipCode('')
+      setDOB('')
+      setPronouns('')
+      setDate('')
+      const user = await userLogin(reduxData?.userSignupData?.email, reduxData?.userSignupData?.password);
+      user.id = user?.accessToken?.payload?.sub ?? '';
+      // Check if user login was successful
+      if (user?.idToken?.payload) {
+        dispatch(setUser(true));
+        dispatch(setGuest(false));
+        dispatch(setToken(user?.idToken?.jwtToken));
+        dispatch(setJwtToken(user?.accessToken?.jwtToken));
+        dispatch(setUserData(user?.idToken?.payload));
+        navigation.replace('Root'); // Navigate to the 'Root' screen
         setLoadingLocal(false);
       }
+    } catch (error) {
+      if (error.message.includes(':')) {
+        const myArray = error.message.split(':');
+      } else {
+        ShowMessage(error.message);
+      }
+      setLoadingLocal(false);
+    } finally {
+      setLoadingLocal(false);
     }
+
   }
   // Handle the submission of the complete profile form
   const submitButton = async () => {
@@ -150,7 +143,9 @@ export default function WelcomeAccount(props) {
       }))
       setLoadingLocal(true);
       try {
-        const user = await userSignup(reduxData?.userSignupData?.fullName, reduxData?.userSignupData?.lastName, reduxData?.userSignupData?.email, reduxData?.userSignupData?.password);
+        const user = await userSignup(reduxData?.userSignupData?.fullName,
+          reduxData?.userSignupData?.lastName, reduxData?.userSignupData?.email
+          , reduxData?.userSignupData?.password, zipCode, dayjs(dob).format('DD/MM/YYYY'), pronouns);
         setClient(user?.userSub)
         dispatch(setUserVerifiedFlag(user?.userConfirmed))
         setVerifyModal(!verifyModal);

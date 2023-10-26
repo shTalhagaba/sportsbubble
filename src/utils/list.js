@@ -52,6 +52,36 @@ export const categoryArr = [
   },
 ];
 
+// Sample data for the category slider my sports
+export const categoryArrMySports = [
+  {
+    id: 1,
+    title: 'all',
+    value: 'all',
+    selected: true,
+  },
+  {
+    id: 2,
+    title: 'pro',
+    value: 'pro',
+  },
+  {
+    id: 3,
+    title: 'college',
+    value: 'college',
+  },
+  {
+    id: 4,
+    title: 'esports',
+    value: 'e-sports',
+  },
+  {
+    id: 5,
+    title: 'others',
+    value: 'others',
+  },
+];
+
 export const paymentList = [
   { id: 1, name: "Credit", selected: false },
   { id: 2, name: "Debit", selected: false },

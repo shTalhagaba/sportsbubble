@@ -14,7 +14,7 @@ import ShowMessage from 'src/components/ShowMessage';
 import { updatePasswordValidation } from 'src/common/authValidation';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { signOut } from 'src/services/authOTP';
-import { setSportsList, setToken, setUser, setUserData } from 'src/store/types';
+import { setJwtToken, setRefreshToken, setSportsList, setToken, setUser, setUserData } from 'src/store/types';
 
 export default function UpdatePassword() {
   const navigation = useNavigation();
@@ -49,6 +49,8 @@ export default function UpdatePassword() {
             dispatch(setUser(false));
             dispatch(setUserData({}));
             dispatch(setToken(''));
+            dispatch(setJwtToken(''));
+            dispatch(setRefreshToken(''));
             dispatch(setSportsList([]));
             navigation.replace('Auth');
             ShowMessage('Password changed successfully.')
@@ -59,6 +61,8 @@ export default function UpdatePassword() {
             if (error?.message === 'User not authenticated.') {
               dispatch(setUser(false));
               dispatch(setUserData({}));
+              dispatch(setJwtToken(''));
+              dispatch(setRefreshToken(''));
               dispatch(setToken(''));
               navigation.replace('Auth');
             }

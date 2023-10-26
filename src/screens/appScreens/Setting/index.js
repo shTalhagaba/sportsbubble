@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Image,
   ImageBackground,
@@ -9,8 +9,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import styles from './styles';
-import {Images, Colors} from 'src/utils';
-import {useNavigation} from '@react-navigation/native';
+import { Images, Colors } from 'src/utils';
+import { useNavigation } from '@react-navigation/native';
 import AppHeader from 'src/components/AppHeader';
 import ButtonWithIcon from 'src/components/ButtonWithIcon';
 import DeviceInfo from 'react-native-device-info';
@@ -18,7 +18,7 @@ import Strings from 'src/utils/strings';
 import CustomModalView from 'src/components/Modal/CustomModal';
 import Instabug, { InvocationEvent } from 'instabug-reactnative';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSportsList, setToken, setUser, setUserData } from 'src/store/types';
+import { setJwtToken, setRefreshToken, setSportsList, setToken, setUser, setUserData } from 'src/store/types';
 import { signOut } from 'src/services/authOTP';
 import ShowMessage from 'src/components/ShowMessage';
 
@@ -134,6 +134,8 @@ export default function Setting() {
               dispatch(setUser(false));
               dispatch(setUserData({}));
               dispatch(setToken(''));
+              dispatch(setJwtToken(''));
+              dispatch(setRefreshToken(''));
               dispatch(setSportsList([]));
               navigation.replace('Auth');
             })
@@ -144,6 +146,8 @@ export default function Setting() {
                 dispatch(setUser(false));
                 dispatch(setUserData({}));
                 dispatch(setToken(''));
+                dispatch(setJwtToken(''));
+                dispatch(setRefreshToken(''));
                 navigation.replace('Auth');
               }
             });
