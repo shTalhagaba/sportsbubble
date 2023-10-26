@@ -1,6 +1,6 @@
 import RNPusherPushNotifications from 'react-native-pusher-push-notifications';
 import Config from 'react-native-config';
-import {Notifications} from 'react-native-notifications';
+import { Notifications } from 'react-native-notifications';
 import Toast from 'react-native-toast-message';
 
 const defaultIntrests = [];
@@ -17,13 +17,19 @@ const showToast = (title, body) => {
 export const initializePusher = () => {
   RNPusherPushNotifications.setInstanceId("9f629623-f580-41c5-b792-70ab87a1a047")
   listener = RNPusherPushNotifications.on('registered', (response) => {
-    console.log('response: ',response)
-    defaultIntrests.map((item)=> {
+    console.log('response: ', response)
+    defaultIntrests.map((item) => {
       subscribeInterest(item);
     })
   });
   RNPusherPushNotifications.on('notification', handleNotification);
+  RNPusherPushNotifications.setOnSubscriptionsChangedListener(onSubscriptionsChanged);
+
 };
+const onSubscriptionsChanged = (interests) => {
+  console.log("CALLBACK: onSubscriptionsChanged");
+  console.log(interests);
+}
 
 export const removeListener = () => {
   if (listener) {
@@ -33,7 +39,6 @@ export const removeListener = () => {
 
 const handleNotification = notification => {
   console.log("notification: ", notification);
-
   if (Platform.OS === 'ios') {
     switch (notification?.appState) {
       case 'inactive':
@@ -58,17 +63,19 @@ const handleNotification = notification => {
 
     Notifications.events().registerNotificationReceivedForeground((notification, completion) => {
       console.log(`Notification received in foreground: ${notification.title} : ${notification.body}`);
-      completion({alert: false, sound: false, badge: false});
+      completion({ alert: false, sound: false, badge: false });
     });
 
     Notifications.events().registerNotificationOpened((notification, completion) => {
       console.log(`Notification opened: ${notification.payload}`);
       completion();
     });
-    }
+  }
 };
 
 export const subscribeInterest = interest => {
+  console.log("interest => ", interest)
+  console.log("RNPusherPushNotifications => ", RNPusherPushNotifications)
   RNPusherPushNotifications.subscribe(
     interest,
     (statusCode, response) => {

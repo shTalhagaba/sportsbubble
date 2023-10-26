@@ -182,9 +182,12 @@ project.ext.envConfigFiles = [
     }
 }
 
+
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
+    implementation project(':react-native-pusher-push-notifications')
+    implementation 'com.pusher:push-notifications-android:1.4.4'
 
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.0.0")
 implementation project(':instabug-reactnative')
