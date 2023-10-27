@@ -95,14 +95,13 @@ export default function WelcomeAccount(props) {
   };
 
   const handleSubmitAPI = async () => {
-    setLoadingLocal(true);
     const inputData = {
       cognitoId: client,
       cognitoZip: zipCode,
     };
     await handleFormSubmit(inputData)
-    setLoadingLocal(false);
     try {
+      setLoadingLocal(true);
       ShowMessage(Strings.profileCompleted);
       setZipCode('')
       setDOB('')
@@ -117,8 +116,8 @@ export default function WelcomeAccount(props) {
         dispatch(setToken(user?.idToken?.jwtToken));
         dispatch(setJwtToken(user?.accessToken?.jwtToken));
         dispatch(setUserData(user?.idToken?.payload));
-        navigation.replace('Root'); // Navigate to the 'Root' screen
         setLoadingLocal(false);
+        navigation.replace('Root'); // Navigate to the 'Root' screen
       }
     } catch (error) {
       if (error.message.includes(':')) {

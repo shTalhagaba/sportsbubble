@@ -53,15 +53,10 @@ export default function MySports() {
   // console.log("MySports FavoriteSports:: ", favoriteSports)
   // Define a function to execute the mutation
   const updateConsumers = async (categories, sport, flag, isBellIcon) => {
-    try {
-      if (!categories?.id || !sport?.id) {
-        ShowMessage('Invalid data');
-        return;
-      }
-
+    if (categories?.id && sport?.id) {
       const updateData = {
         where: {
-          cognitoId: reduxData?.userData?.sub,
+          cognitoId: reduxData?.userData?.sub
         },
         create: {
           favoriteSports: [
@@ -72,110 +67,49 @@ export default function MySports() {
                   connect: {
                     where: {
                       node: {
-                        id: sport?.id,
-                      },
-                    },
-                  },
+                        id: sport?.id
+                      }
+                    }
+                  }
                 },
                 categories: {
                   connect: [
                     {
                       where: {
                         node: {
-                          id: categories?.id,
-                        },
-                      },
-                    },
-                  ],
-                },
-              },
-            },
-          ],
-        },
+                          id: categories?.id
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
       };
-
-      const { data } = await updateConsumersMutation({
-        variables: updateData,
-      });
-
-      if (!loadingFavourite && data?.updateConsumers?.consumers) {
-        ShowMessage('Added to Favorites successfully! ', data?.updateConsumers?.consumers);
-
-        if (data?.updateConsumers?.consumers?.[0]?.favoriteSports && data?.updateConsumers?.consumers?.[0]?.favoriteSports.length > 0) {
-          dispatch(setSportsList(data?.updateConsumers?.consumers?.[0]?.favoriteSports));
-          console.log("Subscribe: ", data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name);
-
-          if (isBellIcon) {
-            subscribeInterest(data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name);
+      try {
+        const { data } = await updateConsumersMutation({
+          variables: updateData,
+        });
+        if (!loadingFavourite && data?.updateConsumers?.consumers) {
+          ShowMessage('Added to Favorites successfully! ', data?.updateConsumers?.consumers)
+          if (data?.updateConsumers?.consumers?.[0]?.favoriteSports && data?.updateConsumers?.consumers?.[0]?.favoriteSports.length > 0) {
+            dispatch(setSportsList(data?.updateConsumers?.consumers?.[0]?.favoriteSports));
+            console.log("Subscribe: ", data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name)
+            if (isBellIcon) {
+              subscribeInterest(data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name)
+            }
           }
         }
+        console.log('Updated consumer:', data?.updateConsumers?.consumers);
+      } catch (err) {
+        console.error('Error updating consumer:', err);
       }
-
-      console.log('Updated consumer:', data?.updateConsumers?.consumers);
-    } catch (err) {
-      console.error('Error updating consumer:', err);
+    } else {
+      ShowMessage('Invalid data')
     }
   };
-
-
-  // const updateConsumers = async (categories, sport, flag, isBellIcon) => {
-  //   if (categories?.id && sport?.id) {
-  //     const updateData = {
-  //       where: {
-  //         cognitoId: reduxData?.userData?.sub
-  //       },
-  //       create: {
-  //         favoriteSports: [
-  //           {
-  //             node: {
-  //               notifications: flag ? false : true,
-  //               sport: {
-  //                 connect: {
-  //                   where: {
-  //                     node: {
-  //                       id: sport?.id
-  //                     }
-  //                   }
-  //                 }
-  //               },
-  //               categories: {
-  //                 connect: [
-  //                   {
-  //                     where: {
-  //                       node: {
-  //                         id: categories?.id
-  //                       }
-  //                     }
-  //                   }
-  //                 ]
-  //               }
-  //             }
-  //           }
-  //         ]
-  //       }
-  //     };
-  //     try {
-  //       const { data } = await updateConsumersMutation({
-  //         variables: updateData,
-  //       });
-  //       if (!loadingFavourite && data?.updateConsumers?.consumers) {
-  //         ShowMessage('Added to Favorites successfully! ', data?.updateConsumers?.consumers)
-  //         if (data?.updateConsumers?.consumers?.[0]?.favoriteSports && data?.updateConsumers?.consumers?.[0]?.favoriteSports.length > 0) {
-  //           dispatch(setSportsList(data?.updateConsumers?.consumers?.[0]?.favoriteSports));
-  //           console.log("Subscribe: ", data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name)
-  //           if (isBellIcon) {
-  //             subscribeInterest(data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name)
-  //           }
-  //         }
-  //       }
-  //       console.log('Updated consumer:', data?.updateConsumers?.consumers);
-  //     } catch (err) {
-  //       console.error('Error updating consumer:', err);
-  //     }
-  //   } else {
-  //     ShowMessage('Invalid data')
-  //   }
-  // };
   // Define a function to execute the mutation
   const deleteConsumers = async (id) => {
     if (id) {
@@ -214,60 +148,53 @@ export default function MySports() {
   };
   // Define a function to execute the mutation
   const updateNotificationConsumers = async (id, flag) => {
-    try {
-      if (id) {
-        const updateData = {
-          where: {
-            cognitoId: reduxData?.userData?.sub,
-          },
-          update: {
-            favoriteSports: [
-              {
-                update: {
-                  node: {
-                    notifications: !flag,
-                  },
-                },
-                where: {
-                  node: {
-                    id: id,
-                  },
-                },
+    if (id) {
+      const updateData = {
+        where: {
+          cognitoId: reduxData?.userData?.sub
+        },
+        update: {
+          favoriteSports: [
+            {
+              update: {
+                node: {
+                  notifications: !flag
+                }
               },
-            ],
-          },
-        };
-
+              where: {
+                node: {
+                  id: id
+                }
+              }
+            }
+          ]
+        },
+      };
+      try {
         const { data } = await updateNotificationMutation({
           variables: updateData,
         });
-
         if (!loadingFavourite && data?.updateConsumers?.consumers) {
-          ShowMessage(flag ? 'Notification is Inactive' : 'Notification is Active');
-          refetch();
+          ShowMessage(flag ? 'Notification is inActive.' : 'Notification is Active')
+          refetch()
         }
-
-        if (isPusherInitialized) {
-          const sportName = data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name;
-          if (sportName) {
-            if (flag) {
-              unsubscribeInterest(sportName);
-              console.log('Removed consumer:', sportName);
-            } else {
-              subscribeInterest(sportName);
-              console.log('Added consumer:', sportName);
-            }
+        // Handle the response data as needed
+        if (isPusherInitiazed) {
+          if(flag){
+          unsubscribeInterest(data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name)
+          console.log('Remove consumer:', data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name);
+          }else{
+            subscribeInterest(data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name)
+            console.log('Add consumer:', data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name);
           }
         }
-      } else {
-        ShowMessage('Invalid data');
+      } catch (err) {
+        console.error('Error updating consumer:', err);
       }
-    } catch (err) {
-      console.error('Error updating consumer:', err);
-      // Handle the error as needed
+    } else {
+      // ShowMessage('Invalid data 3')
     }
   };
-
 
   const { loading: listLoading, refetch: listRefetch, error: listError } = useQuery(GET_MY_SPORT_LIST, {
     variables: {
@@ -348,9 +275,9 @@ export default function MySports() {
   const updateDB = (item, index, selectedItem) => {
     if (!selectedItem || !selectedItem?.[0]?.notifications) {
       updateConsumers(item?.categories?.[0], item, item?.[0]?.notifications, true)
-    } else {
-      setCurrentIndex(selectedItem?.[0] || item);
-      handleNotificationAlert(selectedItem?.[0] || item)
+    }else{
+    setCurrentIndex(selectedItem?.[0] || item);
+    handleNotificationAlert(selectedItem?.[0] || item)
     }
   }
 
@@ -358,7 +285,7 @@ export default function MySports() {
     if (reduxData?.user) {
       setCurrentIndex(selectedItem?.[0]);
       if (selectedItem && selectedItem.length > 0) {
-        selectedItem.map((element) => {
+        selectedItem.map((element)=>{
           deleteConsumers(element?.id)
         })
       } else {
@@ -402,7 +329,7 @@ export default function MySports() {
         category => category.value
       );
       let filteredEvents = [];
-
+      
       if (selectedCategories.length === 1 && selectedCategoryValues[0] === 'all') {
         setSelectedCategory('all');
         filteredEvents = mySportData; // Use all data when 'all' category is selected
@@ -431,13 +358,13 @@ export default function MySports() {
           });
         }
       }
-
+  
       setSelectedCategory(selectedCategoryValues);
       setCategoryData(list);
       setFilteredEventList(filteredEvents);
     }
   };
-
+  
 
   const wait = timeout => {
     return new Promise(resolve => setTimeout(resolve, timeout));
@@ -455,6 +382,8 @@ export default function MySports() {
       screen: 'Signup',
     });
   };
+
+
 
   const checkPermission = () => {
     return new Promise((resolve, reject) => {

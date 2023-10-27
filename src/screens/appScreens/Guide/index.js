@@ -85,6 +85,10 @@ export default function Guide() {
       console.log("appState appState =>", nextAppState); // Log the nextAppState, not the previous appState
       if (nextAppState === 'active') {
         searchRefetch();
+      } else if (nextAppState === 'background') {
+        if(reduxData?.guest){
+          dispatch(setGuest(reduxData?.guest));
+        } 
       } else if (nextAppState === 'inactive') {
         if(reduxData?.guest){
           dispatch(setGuest(false));
