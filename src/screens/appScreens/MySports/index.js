@@ -36,16 +36,17 @@ export default function MySports() {
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const { loading, refetch, favoriteSports } = useSportsList('network-only');
-  const [categoryData, setCategoryData] = useState(categoryArrMySports);
   const [reminderModal, setReminderModal] = useState(false);
   const [settingsModal, setSettingsModal] = useState(false);
   const [fvrtModal, setFvrtModal] = useState(reduxData?.guest === true ? true : false);
   const [mySportData, setSportData] = useState([]);
   const [currentIndex, setCurrentIndex] = useState();
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [filteredEventList, setFilteredEventList] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [isPusherInitiazed, setPusherInitiazed] = useState(false);
+
+  const [categoryData, setCategoryData] = useState(categoryArrMySports);
+  const [selectedCategory, setSelectedCategory] = useState('pro');
+  const [filteredEventList, setFilteredEventList] = useState([]);
 
   const [deleteConsumersMutation, { loading: loadingDelete, error: errorDelete }] = useMutation(DELETE_CONSUMERS);
   const [updateConsumersMutation, { loading: loadingFavourite, error: errorFavourite }] = useMutation(UPDATE_CONSUMERS);
@@ -235,26 +236,25 @@ export default function MySports() {
   }, [isFocused])
 
   useEffect(() => {
-    let list = [...categoryData];
-    const selectedCategories = list.filter(category => category.selected);
-    const selectedCategoryValues = selectedCategories.map(
-      category => category.value
-    );
     let filteredEvents = [];
-    if (selectedCategories.length === 1 && selectedCategoryValues[0] === 'all') {
-      setSelectedCategory('all');
-      filteredEvents = mySportData; // Use all data when 'all' category is selected
+
+    if (selectedCategory === 'others') {
+      filteredEvents = mySportData.filter(item => {
+        // Filter out "Pro," "College," and "Esports" categories
+        return !item?.categories.some(category => ['pro', 'college', 'e-sports'].includes(category.name));
+      });
     } else {
       filteredEvents = mySportData.filter(item => {
         // Extract the names from item.categories
         const categoryNames = item?.categories.map(category => category.name);
-        return selectedCategoryValues.some(selectedCategory =>
-          categoryNames.includes(selectedCategory)
-        );
+        return categoryNames.includes(selectedCategory);
       });
     }
+
     setFilteredEventList(filteredEvents);
-  }, [mySportData])
+  }, [selectedCategory, mySportData]);
+
+
 
   const handleReminder = async (item, index, selectedItem) => {
     // If event notification already enabled, no need to check permissions
@@ -301,69 +301,150 @@ export default function MySports() {
       updateNotificationConsumers(selectedIndex?.id, selectedIndex?.notifications)
     }
   };
-
   const handleSelectedCategory = (e, index) => {
     if (mySportData?.length > 0) {
-      if (index === 0 && selectedCategory === 'all') {
-        return;
-      }
       let list = [...categoryData];
-      list[index].selected = !list[index].selected;
-      if (index === 0) {
-        list.forEach((element, idx) => {
-          if (idx !== 0) {
-            element.selected = false;
-          }
-        });
-      } else {
-        const otherSelected = list.slice(1).some(element => element.selected);
-        if (!otherSelected) {
-          list[0].selected = true;
-        } else {
-          list[0].selected = false;
-        }
-      }
-      // Filter events based on selected categories
-      const selectedCategories = list.filter(category => category.selected);
-      const selectedCategoryValues = selectedCategories.map(
-        category => category.value
-      );
+      list.forEach(element => {
+        element.selected = false;
+      });
+      list[index].selected = true;
+
+      const selectedCategoryValue = list[index].value;
       let filteredEvents = [];
 
-      if (selectedCategories.length === 1 && selectedCategoryValues[0] === 'all') {
-        setSelectedCategory('all');
-        filteredEvents = mySportData; // Use all data when 'all' category is selected
+      if (selectedCategoryValue === 'other') {
+        filteredEvents = mySportData.filter(item => {
+          const categoryNames = item?.categories?.map(category => category?.name);
+          return (
+            categoryNames &&
+            categoryNames.length > 0 &&
+            !categoryNames.includes('Pro') &&
+            !categoryNames.includes('College') &&
+            !categoryNames.includes('Esports')
+          );
+        });
+      } else if (selectedCategoryValue === 'all') {
+        // Handle the case when 'All' is selected by showing all events
+        filteredEvents = mySportData;
       } else {
-        // Handle the "Other" category filtering
-        if (selectedCategoryValues.includes('others')) {
-          // Filter out "Pro," "College," and "Esports"
-          filteredEvents = mySportData.filter(item => {
-            // Extract the names from item.categories
-            const categoryNames = item?.categories.map(category => category?.name);
-            return (
-              categoryNames &&
-              categoryNames.length > 0 &&
-              !categoryNames.includes('pro') &&
-              !categoryNames.includes('college') &&
-              !categoryNames.includes('e-sports')
-            );
-          });
-        } else {
-          filteredEvents = mySportData.filter(item => {
-            // Extract the names from item.categories
-            const categoryNames = item?.categories.map(category => category?.name);
-            return selectedCategoryValues.some(selectedCategory =>
-              categoryNames.includes(selectedCategory)
-            );
-          });
-        }
+        // Handle the case when a specific category is selected
+        filteredEvents = mySportData.filter(item => {
+          const categoryNames = item?.categories?.map(category => category?.name);
+          return (
+            categoryNames &&
+            categoryNames.includes(selectedCategoryValue)
+          );
+        });
       }
-
-      setSelectedCategory(selectedCategoryValues);
+      setSelectedCategory(selectedCategoryValue); // Update the selected category value
       setCategoryData(list);
       setFilteredEventList(filteredEvents);
     }
   };
+
+
+
+  // const handleSelectedCategory = (e, index) => {
+  //   if (mySportData?.length > 0) {
+  //     let list = [...categoryData];
+
+  //     // Deselect all categories
+  //     list.forEach(element => {
+  //       element.selected = false;
+  //     });
+
+  //     // Select the clicked category
+  //     list[index].selected = true;
+
+  //     const selectedCategoryValue = list[index].value;
+  //     let filteredEvents = [];
+
+  //     if (selectedCategoryValue === 'others') {
+  //       filteredEvents = mySportData.filter(item => {
+  //         const categoryNames = item?.categories.map(category => category?.name);
+  //         return (
+  //           categoryNames &&
+  //           categoryNames.length > 0 &&
+  //           !categoryNames.includes('pro') &&
+  //           !categoryNames.includes('college') &&
+  //           !categoryNames.includes('e-sports')
+  //         );
+  //       });
+  //     } else if (selectedCategoryValue !== 'all') {
+  //       filteredEvents = mySportData.filter(item => {
+  //         const categoryNames = item?.categories.map(category => category?.name);
+  //         return categoryNames.includes(selectedCategoryValue);
+  //       });
+  //     }
+
+  //     setCategoryData(list);
+  //     setFilteredEventList(filteredEvents);
+  //   }
+  // };
+
+
+  // const handleSelectedCategory = (e, index) => {
+  //   if (mySportData?.length > 0) {
+  //     if (index === 0 && selectedCategory === 'all') {
+  //       return;
+  //     }
+  //     let list = [...categoryData];
+  //     list[index].selected = !list[index].selected;
+  //     if (index === 0) {
+  //       list.forEach((element, idx) => {
+  //         if (idx !== 0) {
+  //           element.selected = false;
+  //         }
+  //       });
+  //     } else {
+  //       const otherSelected = list.slice(1).some(element => element.selected);
+  //       if (!otherSelected) {
+  //         list[0].selected = true;
+  //       } else {
+  //         list[0].selected = false;
+  //       }
+  //     }
+  //     // Filter events based on selected categories
+  //     const selectedCategories = list.filter(category => category.selected);
+  //     const selectedCategoryValues = selectedCategories.map(
+  //       category => category.value
+  //     );
+  //     let filteredEvents = [];
+
+  //     if (selectedCategories.length === 1 && selectedCategoryValues[0] === 'all') {
+  //       setSelectedCategory('all');
+  //       filteredEvents = mySportData; // Use all data when 'all' category is selected
+  //     } else {
+  //       // Handle the "Other" category filtering
+  //       if (selectedCategoryValues.includes('others')) {
+  //         // Filter out "Pro," "College," and "Esports"
+  //         filteredEvents = mySportData.filter(item => {
+  //           // Extract the names from item.categories
+  //           const categoryNames = item?.categories.map(category => category?.name);
+  //           return (
+  //             categoryNames &&
+  //             categoryNames.length > 0 &&
+  //             !categoryNames.includes('pro') &&
+  //             !categoryNames.includes('college') &&
+  //             !categoryNames.includes('e-sports')
+  //           );
+  //         });
+  //       } else {
+  //         filteredEvents = mySportData.filter(item => {
+  //           // Extract the names from item.categories
+  //           const categoryNames = item?.categories.map(category => category?.name);
+  //           return selectedCategoryValues.some(selectedCategory =>
+  //             categoryNames.includes(selectedCategory)
+  //           );
+  //         });
+  //       }
+  //     }
+
+  //     setSelectedCategory(selectedCategoryValues);
+  //     setCategoryData(list);
+  //     setFilteredEventList(filteredEvents);
+  //   }
+  // };
 
 
   const wait = timeout => {
