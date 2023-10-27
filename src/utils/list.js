@@ -54,16 +54,18 @@ export const categoryArr = [
 
 // Sample data for the category slider my sports
 export const categoryArrMySports = [
-  {
-    id: 1,
-    title: 'all',
-    value: 'all',
-    selected: true,
-  },
+  // {
+  //   id: 1,
+  //   title: 'all',
+  //   value: 'all',
+  //   selected: true,
+  // },
   {
     id: 2,
     title: 'pro',
     value: 'pro',
+    selected: true,
+
   },
   {
     id: 3,

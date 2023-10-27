@@ -180,10 +180,10 @@ export default function MySports() {
         }
         // Handle the response data as needed
         if (isPusherInitiazed) {
-          if(flag){
-          unsubscribeInterest(data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name)
-          console.log('Remove consumer:', data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name);
-          }else{
+          if (flag) {
+            unsubscribeInterest(data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name)
+            console.log('Remove consumer:', data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name);
+          } else {
             subscribeInterest(data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name)
             console.log('Add consumer:', data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name);
           }
@@ -275,9 +275,9 @@ export default function MySports() {
   const updateDB = (item, index, selectedItem) => {
     if (!selectedItem || !selectedItem?.[0]?.notifications) {
       updateConsumers(item?.categories?.[0], item, item?.[0]?.notifications, true)
-    }else{
-    setCurrentIndex(selectedItem?.[0] || item);
-    handleNotificationAlert(selectedItem?.[0] || item)
+    } else {
+      setCurrentIndex(selectedItem?.[0] || item);
+      handleNotificationAlert(selectedItem?.[0] || item)
     }
   }
 
@@ -285,7 +285,7 @@ export default function MySports() {
     if (reduxData?.user) {
       setCurrentIndex(selectedItem?.[0]);
       if (selectedItem && selectedItem.length > 0) {
-        selectedItem.map((element)=>{
+        selectedItem.map((element) => {
           deleteConsumers(element?.id)
         })
       } else {
@@ -329,7 +329,7 @@ export default function MySports() {
         category => category.value
       );
       let filteredEvents = [];
-      
+
       if (selectedCategories.length === 1 && selectedCategoryValues[0] === 'all') {
         setSelectedCategory('all');
         filteredEvents = mySportData; // Use all data when 'all' category is selected
@@ -358,13 +358,13 @@ export default function MySports() {
           });
         }
       }
-  
+
       setSelectedCategory(selectedCategoryValues);
       setCategoryData(list);
       setFilteredEventList(filteredEvents);
     }
   };
-  
+
 
   const wait = timeout => {
     return new Promise(resolve => setTimeout(resolve, timeout));
@@ -448,11 +448,11 @@ export default function MySports() {
           horizontal
           data={categoryData}
           showsHorizontalScrollIndicator={false}
-          // contentContainerStyle={
-          //   fontScale > 1
-          //     ? { justifyContent: 'center' }
-          //     : { justifyContent: 'center', flex: 1 }
-          // }
+          contentContainerStyle={
+            fontScale > 1
+              ? { justifyContent: 'center' }
+              : { justifyContent: 'center', flex: 1 }
+          }
           scrollEnabled={true}
           renderItem={({ item, index }) => (
             <TouchableOpacity
@@ -486,12 +486,12 @@ export default function MySports() {
                   <Image
                     source={
                       index === 0
-                        ? Images.Trophy
+                        ? Images.Crown
                         : index === 1
-                          ? Images.Crown
+                          ? Images.College
                           : index === 2
-                            ? Images.College
-                            : Images.Game
+                            ? Images.Game
+                            : Images.Trophy
                     }
                     style={styles.sliderIcon}
                     resizeMode={'contain'}
