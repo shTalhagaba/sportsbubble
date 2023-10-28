@@ -8,9 +8,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { CognitoAPI, getCognitoUser, refreshSession } from "src/services/cognitoApi";
 import Config from "react-native-config";
-import { setDMA, setUserData } from "src/store/types";
 import axios from "axios";
 import ShowMessage from "src/components/ShowMessage";
+import { setJwtToken, setRefreshToken, setSportsList, setDMA, setToken, setUser, setUserData } from 'src/store/types';
+
 
 const StackNavigator = createNativeStackNavigator()
 
@@ -29,7 +30,7 @@ const AppStackNavigator = () => {
         const dma = dmaResponse?.data?.dma ?? ''
         dmaCode = dma
         if ((!reduxData?.userData?.['custom:dma'] && dma !== '') || dma !== reduxData?.userData?.['custom:dma']) {
-          await CognitoAPI(reduxData?.userData, 'updateUser', dma )
+          await CognitoAPI(reduxData?.userData, 'updateUser', dma)
           const updatedSession = { ...reduxData?.userData, 'custom:dma': dma }
           dispatch(setUserData(updatedSession))
         } else {
@@ -40,10 +41,10 @@ const AppStackNavigator = () => {
         const geoData = response.data
         dmaCode = geoData?.dma ?? null
       }
-      console.log('dmaCode: ',dmaCode)
+      console.log('dmaCode: ', dmaCode)
       dispatch(setDMA(dmaCode))
     } catch (error) {
-      console.log('setDMACode error : ',error)
+      console.log('setDMACode error : ', error)
       dispatch(setDMA(reduxData?.userData?.['custom:dma'] ?? null))
     }
   }
@@ -60,10 +61,18 @@ const AppStackNavigator = () => {
       const cognitoUser = getCognitoUser(reduxData?.userData?.email)
       await refreshSession(refreshToken, cognitoUser)
     } catch (error) {
+      console.log("Error =>", error)
+      dispatch(setUser(false));
+      dispatch(setUserData({}));
+      dispatch(setToken(''));
+      dispatch(setJwtToken(''));
+      dispatch(setRefreshToken(''));
+      dispatch(setSportsList([]));
+      navigation.replace('Auth');
       ShowMessage('Session expired.')
     }
   }
-  
+
   useEffect(() => {
     console.log('navigation')
     if (reduxData?.userData && reduxData?.userData?.email) {
