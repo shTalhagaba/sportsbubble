@@ -10,6 +10,7 @@ import { CognitoAPI, getCognitoUser, refreshSession } from "src/services/cognito
 import Config from "react-native-config";
 import { setDMA, setUserData } from "src/store/types";
 import axios from "axios";
+import ShowMessage from "src/components/ShowMessage";
 
 const StackNavigator = createNativeStackNavigator()
 
@@ -19,7 +20,6 @@ const AppStackNavigator = () => {
   const reduxData = useSelector(state => state.user);
 
   const setDMACode = async () => {
-    console.log('setDMACode : ',Config.GEO_LOC_URL,reduxData?.userData?.['custom:zipcode'])
     try {
       let dmaCode = ''
       if (reduxData?.userData && reduxData?.userData?.email) {
@@ -49,7 +49,7 @@ const AppStackNavigator = () => {
   }
 
   useEffect(() => {
-    if (reduxData?.guest || reduxData?.userData && reduxData?.userData?.email) {
+    if (reduxData?.guest || (reduxData?.userData && reduxData?.userData?.email)) {
       setDMACode()
     }
   }, [reduxData?.userData])
