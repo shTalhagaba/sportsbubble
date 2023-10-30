@@ -32,6 +32,7 @@ import { UpdateEvents } from 'src/utils/functions';
 import ShowMessage from 'src/components/ShowMessage';
 import { categoryArr, stageToken, wrongEventId } from 'src/utils/list';
 import useSportsList from 'src/services/useSportsList';
+import StarView from 'src/components/StarView';
 
 const screenWidth = Dimensions.get('window').width;
 const { fontScale } = Dimensions.get('window');
@@ -86,18 +87,18 @@ export default function Guide() {
       if (nextAppState === 'active') {
         searchRefetch();
       } else if (nextAppState === 'background') {
-        if(reduxData?.guest){
+        if (reduxData?.guest) {
           dispatch(setGuest(reduxData?.guest));
-        } 
+        }
       } else if (nextAppState === 'inactive') {
-        if(reduxData?.guest){
+        if (reduxData?.guest) {
           dispatch(setGuest(false));
-        } 
+        }
         searchRefetch();
       } else {
-        if(reduxData?.guest){
+        if (reduxData?.guest) {
           dispatch(setGuest(false));
-        } 
+        }
         console.log('App is in the background or inactive');
       }
     };
@@ -112,8 +113,8 @@ export default function Guide() {
   useEffect(() => {
     if (reduxData?.eventList && reduxData.eventList.length > 0) {
       setEventList(UpdateEvents(reduxData.eventList, startTime, new Date().toISOString()));
-      const filter = reduxData?.eventList.filter((item)=>item.isFeatured)
-      if(filter && filter.length>0){
+      const filter = reduxData?.eventList.filter((item) => item.isFeatured)
+      if (filter && filter.length > 0) {
         setFeaturedEvent(filter[0])
       }
     }
@@ -418,8 +419,19 @@ export default function Guide() {
     });
   };
 
+  const isFavorite = (eventData) => {
+    // const sportsIds = list && list.length > 0 ? list.map(item => item?.sport?.id) : [];
+    if (list && list.length > 0 ) {
+      return list?.filter((favSport) => {
+        return (favSport?.sport?.name?.toLowerCase() === eventData?.sport?.name?.toLowerCase() &&
+          favSport?.categories?.[0]?.name?.toLowerCase() === eventData?.category?.name?.toLowerCase()) ||
+          (!['pro', 'college', 'esports'].includes(eventData?.category?.name?.toLowerCase()) && favSport?.sport?.name?.toLowerCase() === eventData?.category?.name?.toLowerCase())
+      })?.length > 0
+    }
+    return false
+  }
+
   const ItemComponent = React.memo(({ item }) => {
-    const sportsIds = list && list.length > 0 ? list.map(item => item?.sport?.id) : [];
     return (
       // dayjs(item?.endTime).isAfter(currentDate) ? (
       <TouchableOpacity
@@ -498,16 +510,9 @@ export default function Guide() {
             </View>
           </View>
           {reduxData?.user && (
-            <View
-              style={{ position: 'absolute', right: 0, alignSelf: 'center' }}
-            // onPress={() => { sportsIds && sportsIds.length > 0 && sportsIds.includes(item?.sport?.id) ? {} : updateConsumers(item?.category, item?.sport) }}
-            >
-              <Image
-                source={sportsIds.includes(item?.sport?.id) ? Images.FilledFvrt : Images.Favorite}
-                style={[styles.fvrtIcon, sportsIds.includes(item?.sport?.id) ? { tintColor: Colors.darkOrange } : {}]}
-                resizeMode={'contain'}
-              />
-            </View>
+            <StarView
+              isFavorite={isFavorite(item)}
+            />
           )}
         </View>
       </TouchableOpacity>

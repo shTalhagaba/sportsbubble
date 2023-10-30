@@ -43,11 +43,6 @@ export default ScaledSheet.create({
     marginVertical: '0@ms0.3',
     paddingBottom: '5@ms0.3',
   },
-  fvrtIcon: {
-    height: '21@ms0.3',
-    width: '21@ms0.3',
-    marginRight: '15@ms0.3',
-  },
   innerContainer: {
     flexDirection: 'row',
     height: fontScale > 1 ? 57 * fontScale : '52@ms0.3',

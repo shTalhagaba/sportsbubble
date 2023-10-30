@@ -48,6 +48,7 @@ export default function Watch(props) {
             return rightsHolder && rightsHolder.weight < 1000;
           },
         );
+      list.sort((a, b) => b.node.weight - a.node.weight);
       let main =
         props?.route?.params?.item?.rightsHoldersConnection?.edges.filter(
           item => {
@@ -58,6 +59,7 @@ export default function Watch(props) {
             return rightsHolder && rightsHolder.weight > 1000;
           },
         );
+      main.sort((a, b) => b.node.weight - a.node.weight);
       setBottomList(list)
       setMainList(main)
       if (list && list.length > 0) {

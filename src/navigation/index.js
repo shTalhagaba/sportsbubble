@@ -39,6 +39,7 @@ const AppStackNavigator = () => {
       } else {
         const response = await axios.get(`${Config.GEO_NBC_URL}`)
         const geoData = response.data
+        console.log('GEO_NBC_URL : ',Config?.GEO_NBC_URL,geoData)
         dmaCode = geoData?.dma ?? null
       }
       console.log('dmaCode: ', dmaCode)
@@ -53,7 +54,7 @@ const AppStackNavigator = () => {
     if (reduxData?.guest || (reduxData?.userData && reduxData?.userData?.email)) {
       setDMACode()
     }
-  }, [reduxData?.userData])
+  }, [reduxData?.userData,reduxData?.guest])
 
   const verifySession = async () => {
     try {
@@ -61,7 +62,6 @@ const AppStackNavigator = () => {
       const cognitoUser = getCognitoUser(reduxData?.userData?.email)
       await refreshSession(refreshToken, cognitoUser)
     } catch (error) {
-      console.log("Error =>", error)
       dispatch(setUser(false));
       dispatch(setUserData({}));
       dispatch(setToken(''));
