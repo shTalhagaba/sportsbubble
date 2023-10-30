@@ -76,14 +76,15 @@ export default function Search() {
     ) {
       const filtered = reduxData.eventList.filter(item => {
         if (
-          (item.line1 || item.line2 || item.companyName || item.title) && // specify the main properties to match here
-          item.category &&
-          item.category.name &&
-          item.category.name.toLowerCase().includes(text.toLowerCase()) || // Check 'category.name'
-          item.sport &&
-          item.sport.name &&
-          item.sport.name.toLowerCase().includes(text.toLowerCase()) // Check 'sport.name'
-        ) {
+          (item?.line1.toLowerCase().includes(text.toLowerCase()) || 
+          item?.line2.toLowerCase().includes(text.toLowerCase()) || 
+          item?.category &&
+          item?.category?.name &&
+          item?.category?.name.toLowerCase().includes(text.toLowerCase()) || // Check 'category.name'
+          item?.sport &&
+          item?.sport?.name &&
+          item?.sport?.name.toLowerCase().includes(text.toLowerCase()) // Check 'sport.name'
+        )) {
           return true;
         }
         return false;
@@ -156,7 +157,7 @@ export default function Search() {
             onPress={() => inputRef.current?.focus()} // Focus the input when the TouchableOpacity is pressed
             style={[
               styles.searchContainer,
-              isFocusedFlag ? styles.focus : styles.blur,
+              isKeyboardOpen ? styles.focus : styles.blur,
             ]}>
             <View style={styles.searchMainContainer}>
               {isFocusedFlag && (
@@ -205,8 +206,7 @@ export default function Search() {
 
           {/* list showing after search */}
           <FlatList
-            data={searchText.length > 0 ? data?.searchEvent : []}
-            onScrollBeginDrag={() => Keyboard.dismiss()}
+            data={searchText.length > 0 ? list : []}
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps={'handled'}
             onScrollBeginDrag={() => Keyboard.dismiss()}
