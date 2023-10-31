@@ -20,7 +20,7 @@ import { moderateScale } from 'react-native-size-matters';
 import { useDispatch, useSelector } from 'react-redux';
 import ShowMessage from 'src/components/ShowMessage';
 import { useMutation, useQuery } from '@apollo/client';
-import { DELETE_CONSUMERS, GET_MY_SPORT, GET_MY_SPORT_LIST, UPDATE_CONSUMERS, UPDATE_NOTIFICATION_CONSUMERS } from 'src/graphQL';
+import { DELETE_CONSUMERS, GET_ALL_SPORTS, UPDATE_CONSUMERS, UPDATE_NOTIFICATION_CONSUMERS } from 'src/graphQL';
 import LoaderModal from 'src/components/LoaderModal';
 import { setSportsList, setUser } from 'src/store/types';
 import { categoryArrMySports } from 'src/utils/list';
@@ -51,45 +51,49 @@ export default function MySports() {
   const [deleteConsumersMutation, { loading: loadingDelete, error: errorDelete }] = useMutation(DELETE_CONSUMERS);
   const [updateConsumersMutation, { loading: loadingFavourite, error: errorFavourite }] = useMutation(UPDATE_CONSUMERS);
   const [updateNotificationMutation, { loading: loadingNotification, error: errorNotification }] = useMutation(UPDATE_NOTIFICATION_CONSUMERS);
-  // console.log("MySports FavoriteSports:: ", favoriteSports)
   // Define a function to execute the mutation
-  const updateConsumers = async (categories, sport, flag, isBellIcon) => {
+  const updateConsumers = async (sport, flag, isBellIcon) => {
     try {
-      if (!categories?.id || !sport?.id) {
+      if (!sport?.name) {
         ShowMessage('Invalid data');
         return;
       }
-
       const updateData = {
         where: {
           cognitoId: reduxData?.userData?.sub
         },
-        create: {
+        update: {
           favoriteSports: [
             {
-              node: {
-                notifications: flag ? false : true,
-                sport: {
-                  connect: {
-                    where: {
-                      node: {
-                        id: sport?.id
-                      }
-                    }
-                  }
-                },
-                categories: {
-                  connect: [
-                    {
-                      where: {
-                        node: {
-                          id: categories?.id
+              create: [
+                {
+                  node: {
+                  notifications: flag ? false : true,
+                  categories: {
+                      connect: [
+                        {
+                          where: {
+                            node: {
+                              ...(selectedCategory === 'other'
+                                ? { name_NOT_IN: ['pro', 'esports', 'college'] }
+                                : { name: selectedCategory })
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    sport: {
+                      connect: {
+                        where: {
+                          node: {
+                            name: sport?.name
+                          }
                         }
                       }
                     }
-                  ]
+                  }
                 }
-              }
+              ]
             }
           ]
         }
@@ -119,26 +123,35 @@ export default function MySports() {
       }
   };
   // Define a function to execute the mutation
-  const deleteConsumers = async (id) => {
-    if (id) {
+  const deleteConsumers = async (element) => {
+    if (element?.name) {
       const updateData = {
         where: {
           cognitoId: reduxData?.userData?.sub
         },
-        delete: {
+        update: {
           favoriteSports: [
             {
-              where: {
-                node: {
-                  id: id,
+              delete: [
+                {
+                  where: {
+                    node: {
+                      ...(selectedCategory === 'other'
+                        ? { categories: { name_NOT_IN: ['pro', 'esports', 'college'] } }
+                        : { categories: { name: selectedCategory } }),
+                      sport: {
+                        name: element?.name
+                      }
+                    }
+                  }
                 }
-              }
+              ]
             }
           ]
-        },
+        }
       };
       try {
-        const { data } = await deleteConsumersMutation({
+        const { data } = await updateConsumersMutation({
           variables: updateData,
         });
         if (!loadingDelete && data?.updateConsumers?.consumers) {
@@ -179,16 +192,13 @@ export default function MySports() {
             ],
           },
         };
-
         const { data } = await updateNotificationMutation({
           variables: updateData,
         });
-
         if (!loadingFavourite && data?.updateConsumers?.consumers) {
           ShowMessage(flag ? 'Notification is Inactive' : 'Notification is Active');
           refetch();
         }
-
         if (isPusherInitiazed) {
           const sportName = data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name;
           if (sportName) {
@@ -210,8 +220,7 @@ export default function MySports() {
     }
   };
 
-
-  const { loading: listLoading, refetch: listRefetch, error: listError } = useQuery(GET_MY_SPORT_LIST, {
+  const { loading: listLoading, refetch: listRefetch, error: listError } = useQuery(GET_ALL_SPORTS, {
     variables: {
       where: {
         showInPassport: true
@@ -280,27 +289,34 @@ export default function MySports() {
 
   const updateDB = (item, index, selectedItem) => {
     if (!selectedItem || !selectedItem?.[0]?.notifications) {
-      updateConsumers(item?.categories?.[0], item, item?.[0]?.notifications, true)
+      updateConsumers(item, item?.[0]?.notifications, true)
     } else {
       setCurrentIndex(selectedItem?.[0] || item);
       handleNotificationAlert(selectedItem?.[0] || item)
     }
   }
 
-  const handleFvrt = (item, selectedItem) => {
-    if (reduxData?.user) {
-      setCurrentIndex(selectedItem?.[0]);
-      if (selectedItem && selectedItem.length > 0) {
-        selectedItem.map((element) => {
-          deleteConsumers(element?.id)
-        })
+  const handleFvrt = async (item, selectedItem) => {
+    try {
+      const toggle = reduxData?.sportsList?.filter((userSport) => {
+        if (selectedCategory === 'other') {
+          const filteredCategories = userSport?.categories?.filter((category) => {
+            return !['pro', 'college', 'esports'].includes(category?.name)
+          })
+          return filteredCategories?.length > 0 && userSport?.sport?.name?.toLowerCase() === item?.name?.toLowerCase()
+        }
+        return userSport?.categories?.[0]?.name?.toLowerCase() === selectedCategory?.toLowerCase() &&
+        userSport?.sport?.name?.toLowerCase() === item?.name?.toLowerCase()
+      })?.length > 0
+      if (toggle) {
+          deleteConsumers(item)
       } else {
-        updateConsumers(item?.categories?.[0], item, selectedItem?.[0]?.notifications, true)
+        updateConsumers(item, item?.[0]?.notifications, true)
       }
-    } else {
-      setFvrtModal(!fvrtModal);
+    } catch (error) {
+      console.log('handleFvrt error : ',error)
     }
-  };
+  }
 
   const handleNotificationAlert = (selectedIndex) => {
     if (selectedIndex) {
@@ -415,6 +431,22 @@ export default function MySports() {
     setSettingsModal(false)
   }
 
+  const isFavoriteCheck = (sport) => {
+    if (reduxData?.sportsList && reduxData?.sportsList.length > 0 ) {
+    return reduxData?.sportsList?.filter((itemSport) => {
+      if (selectedCategory === 'other') {
+        const filteredCategories = itemSport?.categories?.filter((category) => {
+          return !['pro', 'college', 'esports'].includes(category?.name)
+        })
+        return filteredCategories?.length > 0 && itemSport?.sport?.name?.toLowerCase() === sport?.name?.toLowerCase()
+      }
+      return itemSport?.categories?.[0]?.name?.toLowerCase() === selectedCategory?.toLowerCase() &&
+      itemSport?.sport?.name?.toLowerCase() === sport?.name?.toLowerCase()
+    })?.length > 0
+  } 
+  return false
+  }
+
 
   return (
     <ImageBackground
@@ -507,8 +539,8 @@ export default function MySports() {
             onRefresh={onRefresh}
           />}
         renderItem={({ item, index }) => {
-          const sportsIds = reduxData?.sportsList && reduxData?.sportsList.length > 0 ? reduxData?.sportsList.map(element => element?.sport?.id) : [];
-          const selectedItem = reduxData?.sportsList && reduxData?.sportsList.length > 0 ? reduxData?.sportsList.filter(element => element?.sport?.id === item?.id) : [];
+          const selectedItem = reduxData?.sportsList && reduxData?.sportsList.length > 0 
+          ? reduxData?.sportsList.filter(element => element?.categories?.[0]?.name?.toLowerCase() === selectedCategory?.toLowerCase() && element?.sport?.name?.toLowerCase() === item?.name?.toLowerCase()) : [];
           return (
             (reduxData?.user && item?.name && item?.categories?.[0]?.name) || item?.name ?
               <View style={styles.listContainer}>
@@ -541,10 +573,10 @@ export default function MySports() {
                     onPress={() => handleFvrt(item, selectedItem)}
                   >
                     <Image
-                      source={sportsIds && sportsIds.length > 0 && sportsIds.includes(item?.id) ? Images.FilledFvrt : Images.Favorite}
+                      source={isFavoriteCheck(item) ? Images.FilledFvrt : Images.Favorite}
                       style={[
                         styles.fvrtIcon,
-                        sportsIds && sportsIds.length > 0 && sportsIds.includes(item?.id) ? { tintColor: Colors.darkOrange } : {},
+                        isFavoriteCheck(item) ? { tintColor: Colors.darkOrange } : {},
                       ]}
                       resizeMode={'contain'}
                     />

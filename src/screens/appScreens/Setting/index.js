@@ -141,7 +141,7 @@ export default function Setting() {
             })
             .catch(error => {
               console.error('Error signing out:', error.message);
-              ShowMessage(error.message)
+              // ShowMessage(error.message)
               if (error?.message === 'User not authenticated.') {
                 dispatch(setUser(false));
                 dispatch(setUserData({}));

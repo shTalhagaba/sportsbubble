@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
-import { GET_MY_SPORT } from 'src/graphQL';
+import { GET_USER_FAVOURITE_SPORTS } from 'src/graphQL';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSportsList } from 'src/store/types';
 
@@ -9,12 +9,9 @@ const useSportsList = (policyType) => {
     const dispatch = useDispatch();
     const reduxData = useSelector(state => state.user);
     const [favoriteSports, setFavoriteSports] = useState([]);
-
-    const { loading, refetch } = useQuery(GET_MY_SPORT, {
+    const { loading, refetch } = useQuery(GET_USER_FAVOURITE_SPORTS, {
         variables: {
-        consumersWhere2: {
             cognitoId: reduxData?.userData?.sub,
-        },
         },
         fetchPolicy: policyType,
         notifyOnNetworkStatusChange: true,

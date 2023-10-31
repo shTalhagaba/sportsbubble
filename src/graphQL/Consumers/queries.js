@@ -8,37 +8,27 @@ export const GET_CONSUMER = gql`
   }
 `;
 
-export const GET_MY_SPORT = gql`
-query Query($where: FavoriteSportWhere, $consumersWhere2: ConsumerWhere) {
-  consumers(where: $consumersWhere2) {
-    name
-    id
-    cognitoId
-    favoriteSports(where: $where) {
-      id
+export const GET_USER_FAVOURITE_SPORTS = gql`
+query ($cognitoId: String!) {
+  consumers(where: { cognitoId: $cognitoId }) {
+    favoriteSports {
       sport {
-        id
         name
       }
-      notifications
       categories {
-        id
         name
       }
     }
-    createdAt
   }
 }
 `;
 
-export const GET_MY_SPORT_LIST = gql`
-query($options: SportOptions, $where: SportWhere) {
-  sports(options: $options, where: $where)  {
+export const GET_ALL_SPORTS = gql`
+query {
+  sports(where: { showInPassport: true }) {
     name
-    id
-    showInPassport
+    weight
     categories {
-      id
       name
     }
   }

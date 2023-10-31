@@ -11,48 +11,41 @@ mutation CreateConsumer($input: [ConsumerCreateInput!]!) {
 }`;
 
 export const UPDATE_CONSUMERS = gql`
-  mutation UpdateConsumers($where: ConsumerWhere, $create: ConsumerRelationInput, $connectOrCreate: ConsumerConnectOrCreateInput) {
-    updateConsumers(where: $where, create: $create, connectOrCreate: $connectOrCreate) {
-      consumers {
-        id
+mutation UpdateConsumers($update: ConsumerUpdateInput, $where: ConsumerWhere) {
+  updateConsumers(update: $update, where: $where) {
+    consumers {
+      cognitoId
+      cognitoZip
+      favoriteRightsHolders {
         name
-        favoriteSports {
-          id
-          notifications
-          sport {
-            id
-            name
-            genre
-            weight
-          }
-          categories {
-            id
-            name
-          }
+      }
+      favoriteSports {
+        id
+        notifications
+        categories {
+          name
         }
-        cognitoId
+        sport {
+          name
+        }
       }
     }
   }
+}
 `;
 
 export const DELETE_CONSUMERS = gql`
 mutation UpdateConsumers($where: ConsumerWhere, $delete: ConsumerDeleteInput) {
   updateConsumers(where: $where, delete: $delete) {
     consumers {
-      id
-      name
       favoriteSports {
         id
         notifications
         sport {
-          id
           name
-          genre
           weight
         }
         categories {
-          id
           name
         }
       }
