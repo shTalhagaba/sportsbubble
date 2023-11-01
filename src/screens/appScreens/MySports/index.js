@@ -154,7 +154,7 @@ export default function MySports() {
         const { data } = await updateConsumersMutation({
           variables: updateData,
         });
-        if (!loadingDelete && data?.updateConsumers?.consumers) {
+        if (!loadingFavourite && data?.updateConsumers?.consumers) {
           ShowMessage('Remove from Favorites successfully!')
           refetch()
         }
@@ -170,6 +170,7 @@ export default function MySports() {
   // Define a function to execute the mutation
   const updateNotificationConsumers = async (id, flag) => {
     try {
+      console.log('id : ',id)
       if (id) {
         const updateData = {
           where: {

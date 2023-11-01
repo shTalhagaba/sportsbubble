@@ -60,7 +60,7 @@ export default function Login() {
           dispatch(setGuest(false));
           dispatch(setToken(user?.idToken?.jwtToken));
           dispatch(setJwtToken(user?.accessToken?.jwtToken));
-          dispatch(setRefreshToken(user?.refreshToken?.token));
+          dispatch(setRefreshToken(user?.refreshToken));
           dispatch(setUserData(user?.idToken?.payload));
           setEmail('');
           setPassword('');
