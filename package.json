@@ -36,6 +36,7 @@
     "react-native-config": "^1.5.1",
     "react-native-device-info": "^10.5.0",
     "react-native-dropdown-picker": "^5.4.6",
+    "react-native-hyperlink": "^0.0.22",
     "react-native-indicators": "^0.17.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-modal-datetime-picker": "^17.1.0",

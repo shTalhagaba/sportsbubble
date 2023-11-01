@@ -43,6 +43,11 @@ export default ScaledSheet.create({
     marginTop: '24@ms0.3',
   },
   contentTxt: {
-    color: Colors.white
+    color: Colors.white,
+    marginVertical: '2@ms0.3',
+  },
+  contentTxtTop: {
+    color: Colors.white,
+    marginTop: '15@ms0.3',
   }
 });

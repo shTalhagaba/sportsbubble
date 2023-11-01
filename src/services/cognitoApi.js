@@ -4,8 +4,6 @@ import {
   CognitoUserAttribute
 } from 'amazon-cognito-identity-js'
 import CognitoPool from '.'
-import { useDispatch } from 'react-redux'
-import { setJwtToken, setRefreshToken, setSportsList, setToken, setUser, setUserData } from 'src/store/types'
 
 export const getCognitoUser = (email) => {
   try {
@@ -20,20 +18,14 @@ export const getCognitoUser = (email) => {
 }
 
 export const refreshSession = (refreshToken, cognitoUser) => {
-  const dispatch = useDispatch();
+  console.log('refreshToken123 : ',refreshToken)
   return new Promise((resolve, reject) => {
     cognitoUser.refreshSession(
       new CognitoRefreshToken({
-        RefreshToken: refreshToken
+        RefreshToken: refreshToken?.token
       }),
       (error, result) => {
         if (error) {
-          dispatch(setUser(false));
-          dispatch(setUserData({}));
-          dispatch(setToken(''));
-          dispatch(setJwtToken(''));
-          dispatch(setRefreshToken(''));
-          dispatch(setSportsList([]));
           reject(error)
         } else {
           resolve(result)
