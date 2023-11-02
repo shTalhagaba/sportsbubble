@@ -26,6 +26,7 @@ mutation UpdateConsumers($update: ConsumerUpdateInput, $where: ConsumerWhere) {
           name
         }
         sport {
+          id
           name
         }
       }
@@ -59,23 +60,18 @@ export const UPDATE_NOTIFICATION_CONSUMERS = gql`
 mutation UpdateConsumers($where: ConsumerWhere, $update: ConsumerUpdateInput) {
   updateConsumers(where: $where, update: $update) {
     consumers {
-      id
-      name
+      cognitoId
       favoriteSports {
         id
         notifications
         sport {
           id
           name
-          genre
-          weight
         }
         categories {
-          id
           name
         }
       }
-      cognitoId
     }
   }
 }

@@ -18,7 +18,6 @@ export const getCognitoUser = (email) => {
 }
 
 export const refreshSession = (refreshToken, cognitoUser) => {
-  console.log('refreshToken123 : ',refreshToken)
   return new Promise((resolve, reject) => {
     cognitoUser.refreshSession(
       new CognitoRefreshToken({

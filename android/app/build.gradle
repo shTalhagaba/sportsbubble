@@ -129,19 +129,19 @@ project.ext.envConfigFiles = [
             minSdkVersion rootProject.ext.minSdkVersion
             applicationId "com.sportsbubble"
             targetSdkVersion rootProject.ext.targetSdkVersion
-            resValue "string", "build_config_package", "com.zenix"
+            resValue "string", "build_config_package", "com.sportsbubble"
         }
         staging {
             minSdkVersion rootProject.ext.minSdkVersion
             applicationId "com.sportsbubble.staging"
             targetSdkVersion rootProject.ext.targetSdkVersion
-            resValue "string", "build_config_package", "com.zenix"
+            resValue "string", "build_config_package", "com.sportsbubble.staging"
         }
         development {
             minSdkVersion rootProject.ext.minSdkVersion
             applicationId "com.sportsbubble.development"
             targetSdkVersion rootProject.ext.targetSdkVersion
-            resValue "string", "build_config_package", "com.zenix"
+            resValue "string", "build_config_package", "com.sportsbubble.development"
         }
     }
    // ---

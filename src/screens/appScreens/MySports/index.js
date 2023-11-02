@@ -105,19 +105,19 @@ export default function MySports() {
           ShowMessage('Added to Favorites successfully! ', data?.updateConsumers?.consumers)
           if (data?.updateConsumers?.consumers?.[0]?.favoriteSports && data?.updateConsumers?.consumers?.[0]?.favoriteSports.length > 0) {
             dispatch(setSportsList(data?.updateConsumers?.consumers?.[0]?.favoriteSports));
-            console.log("Subscribe: ", data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name)
+            console.log("Subscribe: 123 ", data?.updateConsumers?.consumers?.[0]?.favoriteSports)
             if (isBellIcon) {
               if (await checkPermission()) {
                 if (!isPusherInitiazed) {
                   initializePusher()
                   setPusherInitiazed(true)
                 }
-              subscribeInterest(data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name);
+              subscribeInterest(sport?.name);
               }
             }
           }
         }
-        console.log('Updated consumer:', data?.updateConsumers?.consumers);
+        // console.log('Updated consumer:', data?.updateConsumers?.consumers);
       } catch (err) {
         console.error('Error updating consumer:', err);
       }
@@ -159,7 +159,7 @@ export default function MySports() {
           refetch()
         }
         // Handle the response data as needed
-        console.log('Remove consumer:', data?.updateConsumers?.consumers?.[0]?.favoriteSports);
+        // console.log('Remove consumer:', data?.updateConsumers?.consumers?.[0]?.favoriteSports);
       } catch (err) {
         console.error('Error updating consumer:', err);
       }
@@ -168,10 +168,9 @@ export default function MySports() {
     }
   };
   // Define a function to execute the mutation
-  const updateNotificationConsumers = async (id, flag) => {
+  const updateNotificationConsumers = async (element, flag) => {
     try {
-      console.log('id : ',id)
-      if (id) {
+      if (element) {
         const updateData = {
           where: {
             cognitoId: reduxData?.userData?.sub,
@@ -186,9 +185,19 @@ export default function MySports() {
                 },
                 where: {
                   node: {
-                    id: id,
+                    id: element?.id,
                   },
                 },
+                // where: {
+                //   node: {
+                //     ...(selectedCategory === 'other'
+                //       ? { categories: { name_NOT_IN: ['pro', 'esports', 'college'] } }
+                //       : { categories: { name: selectedCategory } }),
+                //     sport: {
+                //       name: element?.sport?.name
+                //     }
+                //   }
+                // }
               },
             ],
           },
@@ -196,12 +205,12 @@ export default function MySports() {
         const { data } = await updateNotificationMutation({
           variables: updateData,
         });
-        if (!loadingFavourite && data?.updateConsumers?.consumers) {
+        if (!loadingNotification && data?.updateConsumers?.consumers) {
           ShowMessage(flag ? 'Notification is Inactive' : 'Notification is Active');
           refetch();
         }
         if (isPusherInitiazed) {
-          const sportName = data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport.name;
+          const sportName = data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport?.name;
           if (sportName) {
             if (flag) {
               unsubscribeInterest(sportName);
@@ -273,6 +282,7 @@ export default function MySports() {
   }, [selectedCategory, mySportData]);
 
   const handleReminder = async (item, index, selectedItem) => {
+    console.log('selectedItem?.[0]?.notifications : ',selectedItem?.[0]?.notifications)
     // If event notification already enabled, no need to check permissions
     if (selectedItem?.[0]?.notifications) {
       updateDB(item, index, selectedItem)
@@ -289,6 +299,7 @@ export default function MySports() {
   };
 
   const updateDB = (item, index, selectedItem) => {
+    console.log('updateDB : \n\n\n\n\n\n\n',selectedItem.length)
     if (!selectedItem || !selectedItem?.[0]?.notifications) {
       updateConsumers(item, item?.[0]?.notifications, true)
     } else {
@@ -321,7 +332,7 @@ export default function MySports() {
 
   const handleNotificationAlert = (selectedIndex) => {
     if (selectedIndex) {
-      updateNotificationConsumers(selectedIndex?.id, selectedIndex?.notifications)
+      updateNotificationConsumers(selectedIndex, selectedIndex?.notifications)
     }
   };
  
@@ -447,6 +458,12 @@ export default function MySports() {
   } 
   return false
   }
+  const isFavoriteNotification = (item) => {
+    const selectedItem = reduxData?.sportsList && reduxData?.sportsList.length > 0 
+    ? reduxData?.sportsList.filter(element => element?.categories?.[0]?.name?.toLowerCase() === selectedCategory?.toLowerCase() 
+    && element?.sport?.name?.toLowerCase() === item?.name?.toLowerCase() && element?.notifications): [];
+    return selectedItem && selectedItem.length > 0 ? true : false
+  }
 
 
   return (
@@ -541,7 +558,8 @@ export default function MySports() {
           />}
         renderItem={({ item, index }) => {
           const selectedItem = reduxData?.sportsList && reduxData?.sportsList.length > 0 
-          ? reduxData?.sportsList.filter(element => element?.categories?.[0]?.name?.toLowerCase() === selectedCategory?.toLowerCase() && element?.sport?.name?.toLowerCase() === item?.name?.toLowerCase()) : [];
+          ? reduxData?.sportsList.filter(element => element?.categories?.[0]?.name?.toLowerCase() === selectedCategory?.toLowerCase() 
+          && element?.sport?.name?.toLowerCase() === item?.name?.toLowerCase()) : [];
           return (
             (reduxData?.user && item?.name && item?.categories?.[0]?.name) || item?.name ?
               <View style={styles.listContainer}>
@@ -563,7 +581,7 @@ export default function MySports() {
                       style={[
                         styles.bellIcon,
                         {
-                          tintColor: selectedItem?.[0]?.notifications || item?.notifcationFlag
+                          tintColor: isFavoriteNotification(item)
                             ? Colors.darkOrange
                             : Colors.white,
                         },

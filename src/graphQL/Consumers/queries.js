@@ -12,7 +12,9 @@ export const GET_USER_FAVOURITE_SPORTS = gql`
 query ($cognitoId: String!) {
   consumers(where: { cognitoId: $cognitoId }) {
     favoriteSports {
+      notifications
       sport {
+        id
         name
       }
       categories {
@@ -26,6 +28,7 @@ query ($cognitoId: String!) {
 export const GET_ALL_SPORTS = gql`
 query {
   sports(where: { showInPassport: true }) {
+    id
     name
     weight
     categories {
