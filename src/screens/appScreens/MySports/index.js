@@ -282,7 +282,7 @@ export default function MySports() {
   }, [selectedCategory, mySportData]);
 
   const handleReminder = async (item, index, selectedItem) => {
-    console.log('selectedItem?.[0]?.notifications : ',selectedItem?.[0]?.notifications)
+    console.log('handleReminder : ',selectedItem)
     // If event notification already enabled, no need to check permissions
     if (selectedItem?.[0]?.notifications) {
       updateDB(item, index, selectedItem)
@@ -459,10 +459,17 @@ export default function MySports() {
   return false
   }
   const isFavoriteNotification = (item) => {
-    const selectedItem = reduxData?.sportsList && reduxData?.sportsList.length > 0 
-    ? reduxData?.sportsList.filter(element => element?.categories?.[0]?.name?.toLowerCase() === selectedCategory?.toLowerCase() 
-    && element?.sport?.name?.toLowerCase() === item?.name?.toLowerCase() && element?.notifications): [];
-    return selectedItem && selectedItem.length > 0 ? true : false
+    const toggle = reduxData?.sportsList?.filter((userSport) => {
+      if (selectedCategory === 'other') {
+        const filteredCategories = userSport?.categories?.filter((category) => {
+          return !['pro', 'college', 'esports'].includes(category?.name)
+        })
+        return filteredCategories?.length > 0 && userSport?.sport?.name?.toLowerCase() === item?.name?.toLowerCase() && userSport?.notifications
+      }
+      return userSport?.categories?.[0]?.name?.toLowerCase() === selectedCategory?.toLowerCase() &&
+      userSport?.sport?.name?.toLowerCase() === item?.name?.toLowerCase() && userSport?.notifications
+    })?.length > 0
+    return toggle
   }
 
 
@@ -557,9 +564,16 @@ export default function MySports() {
             onRefresh={onRefresh}
           />}
         renderItem={({ item, index }) => {
-          const selectedItem = reduxData?.sportsList && reduxData?.sportsList.length > 0 
-          ? reduxData?.sportsList.filter(element => element?.categories?.[0]?.name?.toLowerCase() === selectedCategory?.toLowerCase() 
-          && element?.sport?.name?.toLowerCase() === item?.name?.toLowerCase()) : [];
+          const selectedItem = reduxData?.sportsList?.filter((userSport) => {
+            if (selectedCategory === 'other') {
+              const filteredCategories = userSport?.categories?.filter((category) => {
+                return !['pro', 'college', 'esports'].includes(category?.name)
+              })
+              return filteredCategories?.length > 0 && userSport?.sport?.name?.toLowerCase() === item?.name?.toLowerCase()
+            }
+            return userSport?.categories?.[0]?.name?.toLowerCase() === selectedCategory?.toLowerCase() &&
+            userSport?.sport?.name?.toLowerCase() === item?.name?.toLowerCase()
+          })
           return (
             (reduxData?.user && item?.name && item?.categories?.[0]?.name) || item?.name ?
               <View style={styles.listContainer}>
