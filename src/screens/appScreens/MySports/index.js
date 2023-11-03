@@ -112,7 +112,7 @@ export default function MySports() {
                   initializePusher()
                   setPusherInitiazed(true)
                 }
-                const sportNamewithoutSpaces = sport?.name.replaceAll("\\s", "");
+                const sportNamewithoutSpaces = sport?.name.replaceAll(" ", "");
               subscribeInterest(selectedCategory+"-"+sportNamewithoutSpaces);
               }
             }
@@ -172,7 +172,7 @@ export default function MySports() {
   const updateNotificationConsumers = async (element, flag) => {
     console.log('notification : ',element, flag)
     try {
-      if (element?.id) {
+      if (selectedCategory === 'other' ? element?.sport?.id : element?.id) {
         const updateData = {
           where: {
             cognitoId: reduxData?.userData?.sub,
@@ -187,7 +187,7 @@ export default function MySports() {
                 },
                 where: {
                   node: {
-                    id: element?.id,
+                    id: selectedCategory === 'other' ? element?.sport?.id : element?.id,
                   },
                 },
               },
@@ -203,14 +203,14 @@ export default function MySports() {
         }
         if (isPusherInitiazed) {
           const sportName = data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport?.name;
-          const sportNamewithoutSpaces = sportName.replaceAll("\\s", "");
+          const sportNamewithoutSpaces = sportName.replaceAll(" ", "");
           if (sportName) {
             if (flag) {
               unsubscribeInterest(selectedCategory+"-"+sportNamewithoutSpaces);
-              console.log('Removed consumer:', sportName);
+              console.log('Removed consumer:', sportNamewithoutSpaces);
             } else {
               subscribeInterest(selectedCategory+"-"+sportNamewithoutSpaces);
-              console.log('Added consumer:', sportName);
+              console.log('Added consumer:', sportNamewithoutSpaces);
             }
           }
         }
