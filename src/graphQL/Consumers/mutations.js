@@ -43,6 +43,7 @@ mutation UpdateConsumers($where: ConsumerWhere, $delete: ConsumerDeleteInput) {
         id
         notifications
         sport {
+          id
           name
           weight
         }
@@ -62,7 +63,6 @@ mutation UpdateConsumers($where: ConsumerWhere, $update: ConsumerUpdateInput) {
     consumers {
       cognitoId
       favoriteSports {
-        id
         notifications
         sport {
           id

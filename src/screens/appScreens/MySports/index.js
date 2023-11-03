@@ -68,8 +68,8 @@ export default function MySports() {
               create: [
                 {
                   node: {
-                  notifications: flag ? false : true,
-                  categories: {
+                    notifications: flag ? false : true,
+                    categories: {
                       connect: [
                         {
                           where: {
@@ -98,30 +98,30 @@ export default function MySports() {
           ]
         }
       };
-        const { data } = await updateConsumersMutation({
-          variables: updateData,
-        });
-        if (!loadingFavourite && data?.updateConsumers?.consumers) {
-          ShowMessage('Added to Favorites successfully! ', data?.updateConsumers?.consumers)
-          if (data?.updateConsumers?.consumers?.[0]?.favoriteSports && data?.updateConsumers?.consumers?.[0]?.favoriteSports.length > 0) {
-            dispatch(setSportsList(data?.updateConsumers?.consumers?.[0]?.favoriteSports));
-            console.log("Subscribe: ", data?.updateConsumers?.consumers?.[0]?.favoriteSports)
-            if (isBellIcon) {
-              if (await checkPermission()) {
-                if (!isPusherInitiazed) {
-                  initializePusher()
-                  setPusherInitiazed(true)
-                }
-                const sportNamewithoutSpaces = sport?.name.replaceAll(" ", "");
-              subscribeInterest(selectedCategory+"-"+sportNamewithoutSpaces);
+      const { data } = await updateConsumersMutation({
+        variables: updateData,
+      });
+      if (!loadingFavourite && data?.updateConsumers?.consumers) {
+        ShowMessage('Added to Favorites successfully! ', data?.updateConsumers?.consumers)
+        if (data?.updateConsumers?.consumers?.[0]?.favoriteSports && data?.updateConsumers?.consumers?.[0]?.favoriteSports.length > 0) {
+          dispatch(setSportsList(data?.updateConsumers?.consumers?.[0]?.favoriteSports));
+          console.log("Subscribe: ", data?.updateConsumers?.consumers?.[0]?.favoriteSports)
+          if (isBellIcon) {
+            if (await checkPermission()) {
+              if (!isPusherInitiazed) {
+                initializePusher()
+                setPusherInitiazed(true)
               }
+              const sportNamewithoutSpaces = sport?.name.replaceAll(" ", "");
+              subscribeInterest(selectedCategory === 'other' ? 'others' : selectedCategory + "-" + sportNamewithoutSpaces);
             }
           }
         }
-        // console.log('Updated consumer:', data?.updateConsumers?.consumers);
-      } catch (err) {
-        console.error('Error updating consumer:', err);
       }
+      // console.log('Updated consumer:', data?.updateConsumers?.consumers);
+    } catch (err) {
+      console.error('Error updating consumer:', err);
+    }
   };
   // Define a function to execute the mutation
   const deleteConsumers = async (element) => {
@@ -157,6 +157,7 @@ export default function MySports() {
         });
         if (!loadingFavourite && data?.updateConsumers?.consumers) {
           ShowMessage('Remove from Favorites successfully!')
+          dispatch(setSportsList(data?.updateConsumers?.consumers?.[0]?.favoriteSports));
           refetch()
         }
         // Handle the response data as needed
@@ -170,9 +171,9 @@ export default function MySports() {
   };
   // Define a function to execute the mutation
   const updateNotificationConsumers = async (element, flag) => {
-    console.log('notification : ',element, flag)
+    const getElementID = selectedCategory === 'other' ? element?.sport?.name : element?.name || element?.sport?.name
     try {
-      if (selectedCategory === 'other' ? element?.sport?.id : element?.id) {
+      if (getElementID) {
         const updateData = {
           where: {
             cognitoId: reduxData?.userData?.sub,
@@ -187,7 +188,12 @@ export default function MySports() {
                 },
                 where: {
                   node: {
-                    id: selectedCategory === 'other' ? element?.sport?.id : element?.id,
+                    ...(selectedCategory === 'other'
+                    ? { categories: { name_NOT_IN: ['pro', 'esports', 'college'] } }
+                    : { categories: { name: selectedCategory } }),
+                  sport: {
+                    name: getElementID,
+                  }
                   },
                 },
               },
@@ -199,6 +205,7 @@ export default function MySports() {
         });
         if (!loadingNotification && data?.updateConsumers?.consumers) {
           ShowMessage(flag === false ? 'Notification is Active' : 'Notification is Inactive');
+          dispatch(setSportsList(data?.updateConsumers?.consumers?.[0]?.favoriteSports));
           refetch();
         }
         if (isPusherInitiazed) {
@@ -206,10 +213,10 @@ export default function MySports() {
           const sportNamewithoutSpaces = sportName.replaceAll(" ", "");
           if (sportName) {
             if (flag) {
-              unsubscribeInterest(selectedCategory+"-"+sportNamewithoutSpaces);
+              unsubscribeInterest(selectedCategory === 'other' ? 'others' : selectedCategory + "-" + sportNamewithoutSpaces);
               console.log('Removed consumer:', sportNamewithoutSpaces);
             } else {
-              subscribeInterest(selectedCategory+"-"+sportNamewithoutSpaces);
+              subscribeInterest(selectedCategory === 'other' ? 'others' : selectedCategory + "-" + sportNamewithoutSpaces);
               console.log('Added consumer:', sportNamewithoutSpaces);
             }
           }
@@ -274,34 +281,8 @@ export default function MySports() {
     setFilteredEventList(filteredEvents);
   }, [selectedCategory, mySportData]);
 
-  const handleReminder = async (item, index, selectedItem) => {
+  const handleReminder = async (item, index) => {
     // If event notification already enabled, no need to check permissions
-    if (selectedItem?.[0]?.notifications) {
-      updateDB(item, index, selectedItem)
-    }
-    else {
-      if (await checkPermission()) {
-        if (!isPusherInitiazed) {
-          initializePusher()
-          setPusherInitiazed(true)
-        }
-        updateDB(item, index, selectedItem)
-      }
-    }
-  };
-
-  const updateDB = (item, index, selectedItem) => {
-    if (!selectedItem || !selectedItem?.[0]?.notifications) {
-      console.log('handleReminder in ',item)
-      updateConsumers(item, item?.[0]?.notifications, true)
-    } else {
-      console.log('handleReminder out ',selectedItem?.[0]?.sport)
-      setCurrentIndex(selectedItem?.[0] || item);
-      handleNotificationAlert(selectedItem?.[0] || item)
-    }
-  }
-
-  const handleFvrt = async (item, selectedItem) => {
     try {
       const toggle = reduxData?.sportsList?.filter((userSport) => {
         if (selectedCategory === 'other') {
@@ -311,43 +292,68 @@ export default function MySports() {
           return filteredCategories?.length > 0 && userSport?.sport?.name?.toLowerCase() === item?.name?.toLowerCase()
         }
         return userSport?.categories?.[0]?.name?.toLowerCase() === selectedCategory?.toLowerCase() &&
-        userSport?.sport?.name?.toLowerCase() === item?.name?.toLowerCase()
+          userSport?.sport?.name?.toLowerCase() === item?.name?.toLowerCase()
+      })
+      if (toggle?.[0] && toggle?.[0]?.notifications) {
+        setCurrentIndex(toggle?.[0]);
+        handleNotificationAlert(toggle?.[0])
+      }
+      else {
+        if (await checkPermission()) {
+          if (!isPusherInitiazed) {
+            initializePusher()
+            setPusherInitiazed(true)
+          }
+          updateConsumers(item, item?.[0]?.notifications, true)
+        }
+      }
+    } catch (error) {
+      console.log('handleFvrt error : ', error)
+    }
+  };
+
+  const handleFvrt = async (item) => {
+    try {
+      const toggle = reduxData?.sportsList?.filter((userSport) => {
+        if (selectedCategory === 'other') {
+          const filteredCategories = userSport?.categories?.filter((category) => {
+            return !['pro', 'college', 'esports'].includes(category?.name)
+          })
+          return filteredCategories?.length > 0 && userSport?.sport?.name?.toLowerCase() === item?.name?.toLowerCase()
+        }
+        return userSport?.categories?.[0]?.name?.toLowerCase() === selectedCategory?.toLowerCase() &&
+          userSport?.sport?.name?.toLowerCase() === item?.name?.toLowerCase()
       })?.length > 0
       if (toggle) {
-          deleteConsumers(item)
+        deleteConsumers(item)
       } else {
         updateConsumers(item, true, false)
       }
     } catch (error) {
-      console.log('handleFvrt error : ',error)
+      console.log('handleFvrt error : ', error)
     }
   }
 
   const handleNotificationAlert = (selectedIndex) => {
-    console.log('selectedIndex : ',selectedIndex?.notifications)
     if (selectedIndex) {
       updateNotificationConsumers(selectedIndex, selectedIndex?.notifications)
     }
   };
- 
+
   const handleSelectedCategory = (e, index) => {
     if (mySportData?.length > 0) {
       let list = [...categoryData];
       const selectedCategoryValue = list[index].value;
-  
+
       if (list[index].selected) {
         // If the category is already selected, do nothing
         return;
       }
-  
       list.forEach(element => {
         element.selected = false;
       });
-  
       list[index].selected = true;
-  
       let filteredEvents = [];
-  
       if (selectedCategoryValue === 'other') {
         filteredEvents = mySportData.filter(item => {
           const categoryNames = item?.categories?.map(category => category?.name?.toLowerCase());
@@ -369,7 +375,6 @@ export default function MySports() {
           );
         });
       }
-  
       setSelectedCategory(selectedCategoryValue); // Update the selected category value
       setCategoryData(list);
       setFilteredEventList(filteredEvents);
@@ -404,7 +409,6 @@ export default function MySports() {
           case "granted":
             resolve(true)
             break;
-
           case "denied":
             requestNotifications(['alert', 'sound']).then(({ status, settings }) => {
               if (status == "granted") {
@@ -414,19 +418,15 @@ export default function MySports() {
               }
             });
             break;
-
           case "blocked":
             setSettingsModal(true)
             resolve(false)
             break;
-
           case "unavailable":
             ShowMessage(Strings.notSupportedNotifications)
             resolve(false)
             break;
-
           default:
-          // code block
         }
       });
     })
@@ -438,19 +438,19 @@ export default function MySports() {
   }
 
   const isFavoriteCheck = (sport) => {
-    if (reduxData?.sportsList && reduxData?.sportsList.length > 0 ) {
-    return reduxData?.sportsList?.filter((itemSport) => {
-      if (selectedCategory === 'other') {
-        const filteredCategories = itemSport?.categories?.filter((category) => {
-          return !['pro', 'college', 'esports'].includes(category?.name)
-        })
-        return filteredCategories?.length > 0 && itemSport?.sport?.name?.toLowerCase() === sport?.name?.toLowerCase()
-      }
-      return itemSport?.categories?.[0]?.name?.toLowerCase() === selectedCategory?.toLowerCase() &&
-      itemSport?.sport?.name?.toLowerCase() === sport?.name?.toLowerCase()
-    })?.length > 0
-  } 
-  return false
+    if (reduxData?.sportsList && reduxData?.sportsList.length > 0) {
+      return reduxData?.sportsList?.filter((itemSport) => {
+        if (selectedCategory === 'other') {
+          const filteredCategories = itemSport?.categories?.filter((category) => {
+            return !['pro', 'college', 'esports'].includes(category?.name)
+          })
+          return filteredCategories?.length > 0 && itemSport?.sport?.name?.toLowerCase() === sport?.name?.toLowerCase()
+        }
+        return itemSport?.categories?.[0]?.name?.toLowerCase() === selectedCategory?.toLowerCase() &&
+          itemSport?.sport?.name?.toLowerCase() === sport?.name?.toLowerCase()
+      })?.length > 0
+    }
+    return false
   }
   const isFavoriteNotification = (item) => {
     const toggle = reduxData?.sportsList?.filter((userSport) => {
@@ -461,7 +461,7 @@ export default function MySports() {
         return filteredCategories?.length > 0 && userSport?.sport?.name?.toLowerCase() === item?.name?.toLowerCase() && userSport?.notifications
       }
       return userSport?.categories?.[0]?.name?.toLowerCase() === selectedCategory?.toLowerCase() &&
-      userSport?.sport?.name?.toLowerCase() === item?.name?.toLowerCase() && userSport?.notifications
+        userSport?.sport?.name?.toLowerCase() === item?.name?.toLowerCase() && userSport?.notifications
     })?.length > 0
     return toggle
   }
@@ -490,7 +490,7 @@ export default function MySports() {
               ? { justifyContent: 'center' }
               : { justifyContent: 'center', flex: 1 }
           }
-          scrollEnabled={fontScale > 1?true:false}
+          scrollEnabled={fontScale > 1 ? true : false}
           renderItem={({ item, index }) => (
             <TouchableOpacity
               onPress={() => reduxData?.user ? handleSelectedCategory(item, index) : {}}
@@ -548,9 +548,7 @@ export default function MySports() {
       </View>
       {/* main list */}
       <FlatList
-        data={selectedCategory === 'all' && mySportData && mySportData.length > 0
-          ? mySportData : reduxData?.user ? filteredEventList : mySportData
-        }
+        data={filteredEventList}
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
@@ -558,18 +556,8 @@ export default function MySports() {
             onRefresh={onRefresh}
           />}
         renderItem={({ item, index }) => {
-          const selectedItem = reduxData?.sportsList?.filter((userSport) => {
-            if (selectedCategory === 'other') {
-              const filteredCategories = userSport?.categories?.filter((category) => {
-                return !['pro', 'college', 'esports'].includes(category?.name)
-              })
-              return filteredCategories?.length > 0 && userSport?.sport?.name?.toLowerCase() === item?.name?.toLowerCase()
-            }
-            return userSport?.categories?.[0]?.name?.toLowerCase() === selectedCategory?.toLowerCase() &&
-            userSport?.sport?.name?.toLowerCase() === item?.name?.toLowerCase()
-          })
           return (
-            (reduxData?.user && item?.name && item?.categories?.[0]?.name)?
+            (reduxData?.user && item?.name && item?.categories?.[0]?.name) ?
               <View style={styles.listContainer}>
                 <View style={styles.innerContainer}>
                   <Image
@@ -581,7 +569,7 @@ export default function MySports() {
                     <Text style={styles.titleTxt}>{item?.name}</Text>
                   </View>
                   <TouchableOpacity
-                    onPress={() => handleReminder(item, index, selectedItem)}
+                    onPress={() => handleReminder(item, index)}
                   >
                     <Image
                       source={Images.Bell}
@@ -597,7 +585,7 @@ export default function MySports() {
                     />
                   </TouchableOpacity>
                   <TouchableOpacity
-                    onPress={() => handleFvrt(item, selectedItem)}
+                    onPress={() => handleFvrt(item)}
                   >
                     <Image
                       source={isFavoriteCheck(item) ? Images.FilledFvrt : Images.Favorite}
