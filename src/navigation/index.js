@@ -68,7 +68,7 @@ const AppStackNavigator = () => {
       dispatch(setJwtToken(''));
       dispatch(setRefreshToken(''));
       dispatch(setSportsList([]));
-      navigation.replace('Auth');
+      navigation.navigate('Auth');
       ShowMessage('Session expired.')
     }
   }

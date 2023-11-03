@@ -105,14 +105,15 @@ export default function MySports() {
           ShowMessage('Added to Favorites successfully! ', data?.updateConsumers?.consumers)
           if (data?.updateConsumers?.consumers?.[0]?.favoriteSports && data?.updateConsumers?.consumers?.[0]?.favoriteSports.length > 0) {
             dispatch(setSportsList(data?.updateConsumers?.consumers?.[0]?.favoriteSports));
-            console.log("Subscribe: 123 ", data?.updateConsumers?.consumers?.[0]?.favoriteSports)
+            console.log("Subscribe: ", data?.updateConsumers?.consumers?.[0]?.favoriteSports)
             if (isBellIcon) {
               if (await checkPermission()) {
                 if (!isPusherInitiazed) {
                   initializePusher()
                   setPusherInitiazed(true)
                 }
-              subscribeInterest(sport?.name);
+                const sportNamewithoutSpaces = sport?.name.replaceAll("\\s", "");
+              subscribeInterest(selectedCategory+"-"+sportNamewithoutSpaces);
               }
             }
           }
@@ -169,8 +170,9 @@ export default function MySports() {
   };
   // Define a function to execute the mutation
   const updateNotificationConsumers = async (element, flag) => {
+    console.log('notification : ',element, flag)
     try {
-      if (element) {
+      if (element?.id) {
         const updateData = {
           where: {
             cognitoId: reduxData?.userData?.sub,
@@ -188,16 +190,6 @@ export default function MySports() {
                     id: element?.id,
                   },
                 },
-                // where: {
-                //   node: {
-                //     ...(selectedCategory === 'other'
-                //       ? { categories: { name_NOT_IN: ['pro', 'esports', 'college'] } }
-                //       : { categories: { name: selectedCategory } }),
-                //     sport: {
-                //       name: element?.sport?.name
-                //     }
-                //   }
-                // }
               },
             ],
           },
@@ -206,17 +198,18 @@ export default function MySports() {
           variables: updateData,
         });
         if (!loadingNotification && data?.updateConsumers?.consumers) {
-          ShowMessage(flag ? 'Notification is Inactive' : 'Notification is Active');
+          ShowMessage(flag === false ? 'Notification is Active' : 'Notification is Inactive');
           refetch();
         }
         if (isPusherInitiazed) {
           const sportName = data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport?.name;
+          const sportNamewithoutSpaces = sportName.replaceAll("\\s", "");
           if (sportName) {
             if (flag) {
-              unsubscribeInterest(sportName);
+              unsubscribeInterest(selectedCategory+"-"+sportNamewithoutSpaces);
               console.log('Removed consumer:', sportName);
             } else {
-              subscribeInterest(sportName);
+              subscribeInterest(selectedCategory+"-"+sportNamewithoutSpaces);
               console.log('Added consumer:', sportName);
             }
           }
@@ -282,7 +275,6 @@ export default function MySports() {
   }, [selectedCategory, mySportData]);
 
   const handleReminder = async (item, index, selectedItem) => {
-    console.log('handleReminder : ',selectedItem)
     // If event notification already enabled, no need to check permissions
     if (selectedItem?.[0]?.notifications) {
       updateDB(item, index, selectedItem)
@@ -299,10 +291,11 @@ export default function MySports() {
   };
 
   const updateDB = (item, index, selectedItem) => {
-    console.log('updateDB : \n\n\n\n\n\n\n',selectedItem.length)
     if (!selectedItem || !selectedItem?.[0]?.notifications) {
+      console.log('handleReminder in ',item)
       updateConsumers(item, item?.[0]?.notifications, true)
     } else {
+      console.log('handleReminder out ',selectedItem?.[0]?.sport)
       setCurrentIndex(selectedItem?.[0] || item);
       handleNotificationAlert(selectedItem?.[0] || item)
     }
@@ -323,7 +316,7 @@ export default function MySports() {
       if (toggle) {
           deleteConsumers(item)
       } else {
-        updateConsumers(item, item?.[0]?.notifications, true)
+        updateConsumers(item, true, false)
       }
     } catch (error) {
       console.log('handleFvrt error : ',error)
@@ -331,6 +324,7 @@ export default function MySports() {
   }
 
   const handleNotificationAlert = (selectedIndex) => {
+    console.log('selectedIndex : ',selectedIndex?.notifications)
     if (selectedIndex) {
       updateNotificationConsumers(selectedIndex, selectedIndex?.notifications)
     }
@@ -575,7 +569,7 @@ export default function MySports() {
             userSport?.sport?.name?.toLowerCase() === item?.name?.toLowerCase()
           })
           return (
-            (reduxData?.user && item?.name && item?.categories?.[0]?.name) || item?.name ?
+            (reduxData?.user && item?.name && item?.categories?.[0]?.name)?
               <View style={styles.listContainer}>
                 <View style={styles.innerContainer}>
                   <Image
@@ -584,7 +578,7 @@ export default function MySports() {
                     resizeMode={'contain'}
                   />
                   <View style={styles.userNameContainer}>
-                    <Text style={styles.titleTxt}>{item?.name || item?.name}</Text>
+                    <Text style={styles.titleTxt}>{item?.name}</Text>
                   </View>
                   <TouchableOpacity
                     onPress={() => handleReminder(item, index, selectedItem)}
