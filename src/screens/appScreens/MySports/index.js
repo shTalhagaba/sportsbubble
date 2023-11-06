@@ -281,7 +281,7 @@ export default function MySports() {
     setFilteredEventList(filteredEvents);
   }, [selectedCategory, mySportData]);
 
-  const handleReminder = async (item, index) => {
+  const handleReminder = async (item, index,favoriteFlag) => {
     // If event notification already enabled, no need to check permissions
     try {
       const toggle = reduxData?.sportsList?.filter((userSport) => {
@@ -304,7 +304,12 @@ export default function MySports() {
             initializePusher()
             setPusherInitiazed(true)
           }
+          if(favoriteFlag && toggle?.[0]){
+            console.log('favoriteFlag && toggle?.[0] ',favoriteFlag , toggle?.[0])
+            handleNotificationAlert(toggle?.[0])
+          }else{
           updateConsumers(item, item?.[0]?.notifications, true)
+          }
         }
       }
     } catch (error) {
@@ -556,6 +561,7 @@ export default function MySports() {
             onRefresh={onRefresh}
           />}
         renderItem={({ item, index }) => {
+          const favouriteStar = isFavoriteCheck(item)
           return (
             (reduxData?.user && item?.name && item?.categories?.[0]?.name) ?
               <View style={styles.listContainer}>
@@ -569,7 +575,7 @@ export default function MySports() {
                     <Text style={styles.titleTxt}>{item?.name}</Text>
                   </View>
                   <TouchableOpacity
-                    onPress={() => handleReminder(item, index)}
+                    onPress={() => handleReminder(item, index,favouriteStar)}
                   >
                     <Image
                       source={Images.Bell}
@@ -588,10 +594,10 @@ export default function MySports() {
                     onPress={() => handleFvrt(item)}
                   >
                     <Image
-                      source={isFavoriteCheck(item) ? Images.FilledFvrt : Images.Favorite}
+                      source={favouriteStar ? Images.FilledFvrt : Images.Favorite}
                       style={[
                         styles.fvrtIcon,
-                        isFavoriteCheck(item) ? { tintColor: Colors.darkOrange } : {},
+                        favouriteStar ? { tintColor: Colors.darkOrange } : {},
                       ]}
                       resizeMode={'contain'}
                     />

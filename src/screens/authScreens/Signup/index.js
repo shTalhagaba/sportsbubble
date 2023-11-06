@@ -44,7 +44,6 @@ export default function Signup() {
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
 
   useEffect(() => {
-    console.log('dfddndjdj')
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       _keyboardDidShow

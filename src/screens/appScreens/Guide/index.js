@@ -41,7 +41,7 @@ export default function Guide() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   let isFocused = useIsFocused()
-  const favoriteSports = useSportsList('cache-and-network');
+  const { loading, refetch, favoriteSports } = useSportsList('network-only');
   const currentDate = dayjs(new Date()).toISOString(); // Get the current date and time
   const reduxData = useSelector(state => state.user);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -280,6 +280,7 @@ export default function Guide() {
 
   useEffect(() => {
     if (isFocused) {
+      refetch()
       if (reduxData?.refresh || reduxData?.selectedTimebar === -1) {
         handleLive()
         dispatch(refreshData(false)); // Dispatch the action
@@ -420,12 +421,11 @@ export default function Guide() {
   };
 
   const isFavorite = (eventData) => {
-    // const sportsIds = list && list.length > 0 ? list.map(item => item?.sport?.id) : [];
-    if (list && list.length > 0 ) {
-      return list?.filter((favSport) => {
+    if (reduxData?.sportsList && reduxData?.sportsList.length > 0 ) {
+      return reduxData?.sportsList?.filter((favSport) => {
         return (favSport?.sport?.name?.toLowerCase() === eventData?.sport?.name?.toLowerCase() &&
-          favSport?.categories?.[0]?.name?.toLowerCase() === eventData?.category?.name?.toLowerCase()) ||
-          (!['pro', 'college', 'esports'].includes(eventData?.category?.name?.toLowerCase()) && favSport?.sport?.name?.toLowerCase() === eventData?.category?.name?.toLowerCase())
+        favSport?.categories?.flatMap((cat) => cat?.name === eventData?.category?.name)?.includes(true)) ||
+        (!['pro', 'college', 'esports'].includes(eventData?.category?.name?.toLowerCase()) && favSport?.sport?.name?.toLowerCase() === eventData?.category?.name?.toLowerCase())
       })?.length > 0
     }
     return false

@@ -26,19 +26,19 @@ export default function Term(props) {
       const privacyPolicy = await fetchContentFulContent('52UJuQgc1nZAm8kLrkAlke');
       const californiaPolicy = await fetchContentFulContent('4QghRl8LFoRAvWRNyTDeX4');
       setContent({
-        termUse: termUse.fields.description.content[0].content[0].value,
-        privacyPolicy: privacyPolicy.fields,
-        californiaPolicy: californiaPolicy.fields.description.content[0].content[0].value
+        termUse: termUse?.fields.description.content[0].content[0].value,
+        privacyPolicy: privacyPolicy?.fields,
+        californiaPolicy: californiaPolicy?.fields.description.content[0].content[0].value
       });
     }
     fetchPromotionContent()
   }, [])
   const RenderContentNode = (node) => {
-    if (node.node.nodeType === 'paragraph') {
+    if (node?.node?.nodeType === 'paragraph') {
       return (
         <Text style={styles.contentTxtTop}>
           {node.node.content.map((textNode, index) => {
-            if (textNode.nodeType === 'hyperlink') {
+            if (textNode?.nodeType === 'hyperlink') {
               // Handle hyperlinks
               return (
                 <Hyperlink
@@ -46,21 +46,21 @@ export default function Term(props) {
                   linkStyle={{ color: Colors.blue, textDecorationLine: 'underline' }}
                   onPress={(url) => Linking.openURL(url)}
                 >
-                  {textNode.content.map((linkText, linkIndex) => (
+                  {textNode?.content.map((linkText, linkIndex) => (
                     <Text
                       key={linkIndex}
-                      style={{ fontWeight: linkText.marks[0]?.type === 'bold' ? '700' : '500' }}
+                      style={{ fontWeight: linkText?.marks?.[0]?.type === 'bold' ? '700' : '500' }}
                     >
-                      {linkText.value}
+                      {linkText?.value}
                     </Text>
                   ))}
                 </Hyperlink>
               );
-            } else if (textNode.nodeType === 'text') {
+            } else if (textNode?.nodeType === 'text') {
               // Handle plain text
               return (
-                <Text key={index} style={{ fontWeight: textNode.marks[0]?.type === 'bold' ? '700' : '500' }}>
-                  {textNode.value}
+                <Text key={index} style={{ fontWeight: textNode?.marks?.[0]?.type === 'bold' ? '700' : '500' }}>
+                  {textNode?.value}
                 </Text>
               );
             }
@@ -115,9 +115,9 @@ export default function Term(props) {
                 props?.route?.params?.selected === Strings.privacyPolicy ?
                   <>
                     <Text style={styles.contentTxt}>
-                      {source.title} {/* Display the title */}
+                      {source?.title} {/* Display the title */}
                     </Text>
-                    {source.description.content.map((contentNode, index) => (
+                    {source?.description?.content.map((contentNode, index) => (
                       <RenderContentNode key={index} node={contentNode} />
                     ))}
                   </>

@@ -5,7 +5,7 @@ import MyTabs from './bottomTab'
 import withoutBottomtab from './withoutBottomtab'
 import Splash from "src/screens/authScreens/Splash";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { CognitoAPI, getCognitoUser, refreshSession } from "src/services/cognitoApi";
 import Config from "react-native-config";
 import axios from "axios";
@@ -72,13 +72,18 @@ const AppStackNavigator = () => {
       ShowMessage('Session expired.')
     }
   }
+  const isFocused = useIsFocused();
 
   useEffect(() => {
-    console.log('navigation')
-    if (reduxData?.userData && reduxData?.userData?.email) {
-      verifySession()
+    if (isFocused) {
+      const unsubscribe = navigation.addListener("state", (event) => {
+        if (reduxData?.userData && reduxData?.userData?.email) {
+          verifySession()
+        }
+      });
+      return unsubscribe;
     }
-  }, [navigation])
+  }, [navigation, isFocused]);
 
   return (
     <StackNavigator.Navigator>
