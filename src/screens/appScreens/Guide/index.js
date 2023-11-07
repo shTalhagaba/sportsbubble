@@ -127,15 +127,6 @@ export default function Guide() {
     },
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
-    context: {
-      headers: {
-        authorization:
-          Platform.OS === "android" ? `Bearer ${stageToken}` :
-            Config?.BEARER_TOKEN
-              ? `Bearer ${Config.BEARER_TOKEN}`
-              : '',
-      },
-    },
     onCompleted: data => {
       if (
         data &&

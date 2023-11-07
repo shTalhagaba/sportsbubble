@@ -117,6 +117,8 @@ project.ext.envConfigFiles = [
    productionrelease: ".env.production",
    developmentrelease: ".env.development",
    developmentdebug: ".env.development",
+   passportrelease: ".env.passport",
+   passportdebug: ".env.passport",
    stagingrelease: ".env.staging",
    stagingdebug: ".env.staging"
 ]
@@ -142,6 +144,12 @@ project.ext.envConfigFiles = [
             applicationId "com.sportsbubble.development"
             targetSdkVersion rootProject.ext.targetSdkVersion
             resValue "string", "build_config_package", "com.sportsbubble.development"
+        }
+        passport {
+            minSdkVersion rootProject.ext.minSdkVersion
+            applicationId "com.sportsbubble.passport"
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            resValue "string", "build_config_package", "com.sportsbubble.passport"
         }
     }
    // ---

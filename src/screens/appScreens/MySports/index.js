@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   StatusBar,
   Dimensions,
-  RefreshControl
+  RefreshControl,
+  Platform
 } from 'react-native';
 import styles from './styles';
 import { Images, Colors, Strings } from 'src/utils';
@@ -254,7 +255,7 @@ export default function MySports() {
       }
     },
     onError: error => {
-      console.log('error : ', error);
+      console.log(' GET_ALL_SPORTS error : ', error);
     },
   });
 
@@ -346,7 +347,6 @@ export default function MySports() {
   };
 
   const handleSelectedCategory = (e, index) => {
-    if (mySportData?.length > 0) {
       let list = [...categoryData];
       const selectedCategoryValue = list[index].value;
 
@@ -383,7 +383,6 @@ export default function MySports() {
       setSelectedCategory(selectedCategoryValue); // Update the selected category value
       setCategoryData(list);
       setFilteredEventList(filteredEvents);
-    }
   };
 
   const wait = timeout => {

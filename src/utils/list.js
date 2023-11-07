@@ -63,7 +63,7 @@ export const categoryArrMySports = [
   {
     id: 2,
     title: 'college',
-    value: 'College',
+    value: 'college',
     selected: false,
   },
   {

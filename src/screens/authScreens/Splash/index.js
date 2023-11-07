@@ -41,15 +41,6 @@ export default function Splash() {
     },
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
-    context: {
-      headers: {
-        authorization:
-          Platform.OS === "android" ? stageToken :
-            Config?.BEARER_TOKEN
-              ? `Bearer ${Config.BEARER_TOKEN}`
-              : '',
-      },
-    },
     onCompleted: data => {
       if (data && data?.sortedEvents) {
         const filteredEvents = (data?.sortedEvents || []).filter(event => {

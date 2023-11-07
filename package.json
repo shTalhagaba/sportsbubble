@@ -24,6 +24,7 @@
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",
     "amazon-cognito-identity-js": "^6.3.2",
+    "apollo-link-context": "^1.0.20",
     "apollo3-cache-persist": "^0.14.1",
     "axios": "^1.5.1",
     "contentful": "^10.5.0",

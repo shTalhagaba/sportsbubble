@@ -12,9 +12,11 @@ import createSagaMiddleware from 'redux-saga';
 import { Provider } from 'react-redux';
 import rootReducer from 'src/store/Reducers/rootReducer';
 import mySaga from 'src/store/sagas';
-import { LogBox } from 'react-native';
+import { LogBox, Platform } from 'react-native';
 import Toast from "react-native-toast-message";
 import { toastConfig } from "src/components/ToastConfig";
+import { stageToken } from 'src/utils/list';
+import { setContext } from 'apollo-link-context';
 
 const blacklist = ['signup']; // Add the keys of slices to exclude
 const sagaMiddleware = createSagaMiddleware();
@@ -34,14 +36,28 @@ const httpLink = createHttpLink({
   // uri: 'https://9oa4ll4zp8.execute-api.us-west-2.amazonaws.com/stage/graphql',  // sb3 staging
   // uri: 'https://cpbubzqq92.execute-api.us-west-2.amazonaws.com/dev/graphql', // same web link
   // uri: 'https://6953ptqg3b.execute-api.us-west-2.amazonaws.com/dev/graphql', // sb2 watch sport dev
-  uri: 'https://09a84a77s4.execute-api.us-west-2.amazonaws.com/dev/graphql', // sb5 dev passport 
-  // uri: Config.BASE_URL
+  // uri: 'https://09a84a77s4.execute-api.us-west-2.amazonaws.com/dev/graphql', // sb5 dev passport 
+  uri: Config.BASE_URL
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = Platform.OS === 'android' ? `Bearer ${stageToken}` : `Bearer ${Config.BEARER_TOKEN}`;
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? token : '',
+    },
+  };
 });
 
 const client = new ApolloClient({
-  link: httpLink,
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
-  defaultOptions: { watchQuery: { fetchPolicy: 'cache-and-network' } },
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: 'cache-and-network',
+    },
+  },
 });
 
 const theme = {

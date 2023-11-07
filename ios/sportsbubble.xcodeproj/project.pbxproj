@@ -43,6 +43,20 @@
 		8AD252E72A8BE375009434F7 /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 928CD786E81E41C58E8BC40A /* Lato-Regular.ttf */; };
 		8AD252E82A8BE377009434F7 /* Lato-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7FA88236A9844606B2FE7731 /* Lato-Thin.ttf */; };
 		8AD252E92A8BE379009434F7 /* Lato-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2BB5870BB8654F81A5120057 /* Lato-ThinItalic.ttf */; };
+		8AF12FAD2AFA2EE800997224 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
+		8AF12FAE2AFA2EE800997224 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		8AF12FB02AFA2EE800997224 /* libPods-sportsbubbleCommonPods-sportsbubbleDevelopment.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 128E797D96BD605BCC3F55B1 /* libPods-sportsbubbleCommonPods-sportsbubbleDevelopment.a */; };
+		8AF12FB22AFA2EE800997224 /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8EB929DCEE7D4136AED466AD /* Lato-Black.ttf */; };
+		8AF12FB32AFA2EE800997224 /* Lato-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6E79C282259D43D190FC762B /* Lato-BlackItalic.ttf */; };
+		8AF12FB42AFA2EE800997224 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3159C7199A284E32A2A28A5D /* Lato-Bold.ttf */; };
+		8AF12FB52AFA2EE800997224 /* Lato-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E120C17725514735851EBBFE /* Lato-BoldItalic.ttf */; };
+		8AF12FB62AFA2EE800997224 /* Lato-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3816C32EFAA24AE2B764D8BA /* Lato-Italic.ttf */; };
+		8AF12FB72AFA2EE800997224 /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85EBC3D84A7A4D379AC96C30 /* Lato-Light.ttf */; };
+		8AF12FB82AFA2EE800997224 /* Lato-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4186B46E6CF049A68CA75CF3 /* Lato-LightItalic.ttf */; };
+		8AF12FB92AFA2EE800997224 /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 928CD786E81E41C58E8BC40A /* Lato-Regular.ttf */; };
+		8AF12FBA2AFA2EE800997224 /* Lato-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7FA88236A9844606B2FE7731 /* Lato-Thin.ttf */; };
+		8AF12FBB2AFA2EE800997224 /* Lato-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2BB5870BB8654F81A5120057 /* Lato-ThinItalic.ttf */; };
+		8AF12FBC2AFA2EE800997224 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		8CE46E65500F46938FBA6BB8 /* Lato-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6E79C282259D43D190FC762B /* Lato-BlackItalic.ttf */; };
 		9093F27C56B248761025C058 /* libPods-sportsbubbleCommonPods-sportsbubbleStaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7AC2FB01D98864628D1F8AC /* libPods-sportsbubbleCommonPods-sportsbubbleStaging.a */; };
 		922965D57C474B5589D09420 /* Lato-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3816C32EFAA24AE2B764D8BA /* Lato-Italic.ttf */; };
@@ -86,6 +100,8 @@
 		89C6BE57DB24E9ADA2F236DE /* Pods-sportsbubble-sportsbubbleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sportsbubble-sportsbubbleTests.release.xcconfig"; path = "Target Support Files/Pods-sportsbubble-sportsbubbleTests/Pods-sportsbubble-sportsbubbleTests.release.xcconfig"; sourceTree = "<group>"; };
 		8A2376912A544DEE00F2EA20 /* sportsbubbleDevelopment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sportsbubbleDevelopment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A2376A72A544DF100F2EA20 /* sportsbubbleStaging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sportsbubbleStaging.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8AF12FC32AFA2EE800997224 /* sportsbubblePassport.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sportsbubblePassport.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8AF12FC42AFA2EE900997224 /* sportsbubblePassport-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "sportsbubblePassport-Info.plist"; path = "/Users/talhasadiq/Documents/GitHub/watchsports-mobile2.02/ios/sportsbubblePassport-Info.plist"; sourceTree = "<absolute>"; };
 		8EB929DCEE7D4136AED466AD /* Lato-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-Black.ttf"; path = "../src/assets/fonts/Lato-Black.ttf"; sourceTree = "<group>"; };
 		928CD786E81E41C58E8BC40A /* Lato-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-Regular.ttf"; path = "../src/assets/fonts/Lato-Regular.ttf"; sourceTree = "<group>"; };
 		A112FEF23E0A1EDD026589E2 /* Pods-sportsbubbleCommonPods-sportsbubbleDevelopment.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sportsbubbleCommonPods-sportsbubbleDevelopment.release.xcconfig"; path = "Target Support Files/Pods-sportsbubbleCommonPods-sportsbubbleDevelopment/Pods-sportsbubbleCommonPods-sportsbubbleDevelopment.release.xcconfig"; sourceTree = "<group>"; };
@@ -120,6 +136,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				9093F27C56B248761025C058 /* libPods-sportsbubbleCommonPods-sportsbubbleStaging.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8AF12FAF2AFA2EE800997224 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8AF12FB02AFA2EE800997224 /* libPods-sportsbubbleCommonPods-sportsbubbleDevelopment.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -189,6 +213,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
 				E52BB8A1A127483897475789 /* Resources */,
+				8AF12FC42AFA2EE900997224 /* sportsbubblePassport-Info.plist */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -201,6 +226,7 @@
 				13B07F961A680F5B00A75B9A /* sportsbubble.app */,
 				8A2376912A544DEE00F2EA20 /* sportsbubbleDevelopment.app */,
 				8A2376A72A544DF100F2EA20 /* sportsbubbleStaging.app */,
+				8AF12FC32AFA2EE800997224 /* sportsbubblePassport.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -310,6 +336,28 @@
 			productReference = 8A2376A72A544DF100F2EA20 /* sportsbubbleStaging.app */;
 			productType = "com.apple.product-type.application";
 		};
+		8AF12FA92AFA2EE800997224 /* sportsbubblePassport */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8AF12FC02AFA2EE800997224 /* Build configuration list for PBXNativeTarget "sportsbubblePassport" */;
+			buildPhases = (
+				8AF12FAA2AFA2EE800997224 /* [CP] Check Pods Manifest.lock */,
+				8AF12FAB2AFA2EE800997224 /* Start Packager */,
+				8AF12FAC2AFA2EE800997224 /* Sources */,
+				8AF12FAF2AFA2EE800997224 /* Frameworks */,
+				8AF12FB12AFA2EE800997224 /* Resources */,
+				8AF12FBD2AFA2EE800997224 /* Bundle React Native code and images */,
+				8AF12FBE2AFA2EE800997224 /* [CP] Embed Pods Frameworks */,
+				8AF12FBF2AFA2EE800997224 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = sportsbubblePassport;
+			productName = sportsbubble;
+			productReference = 8AF12FC32AFA2EE800997224 /* sportsbubblePassport.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -337,6 +385,7 @@
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* sportsbubble */,
+				8AF12FA92AFA2EE800997224 /* sportsbubblePassport */,
 				8A23767D2A544DEE00F2EA20 /* sportsbubbleDevelopment */,
 				8A2376932A544DF100F2EA20 /* sportsbubbleStaging */,
 			);
@@ -397,6 +446,24 @@
 				8AD252E12A8BE366009434F7 /* Lato-BlackItalic.ttf in Resources */,
 				8A23769D2A544DF100F2EA20 /* Images.xcassets in Resources */,
 				8AD252E02A8BE362009434F7 /* Lato-Black.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8AF12FB12AFA2EE800997224 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8AF12FB22AFA2EE800997224 /* Lato-Black.ttf in Resources */,
+				8AF12FB32AFA2EE800997224 /* Lato-BlackItalic.ttf in Resources */,
+				8AF12FB42AFA2EE800997224 /* Lato-Bold.ttf in Resources */,
+				8AF12FB52AFA2EE800997224 /* Lato-BoldItalic.ttf in Resources */,
+				8AF12FB62AFA2EE800997224 /* Lato-Italic.ttf in Resources */,
+				8AF12FB72AFA2EE800997224 /* Lato-Light.ttf in Resources */,
+				8AF12FB82AFA2EE800997224 /* Lato-LightItalic.ttf in Resources */,
+				8AF12FB92AFA2EE800997224 /* Lato-Regular.ttf in Resources */,
+				8AF12FBA2AFA2EE800997224 /* Lato-Thin.ttf in Resources */,
+				8AF12FBB2AFA2EE800997224 /* Lato-ThinItalic.ttf in Resources */,
+				8AF12FBC2AFA2EE800997224 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -522,6 +589,97 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
+		};
+		8AF12FAA2AFA2EE800997224 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-sportsbubbleCommonPods-sportsbubbleDevelopment-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8AF12FAB2AFA2EE800997224 /* Start Packager */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Start Packager";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		8AF12FBD2AFA2EE800997224 /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/.xcode.env.local",
+				"$(SRCROOT)/.xcode.env",
+			);
+			name = "Bundle React Native code and images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
+		};
+		8AF12FBE2AFA2EE800997224 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-sportsbubbleCommonPods-sportsbubbleDevelopment/Pods-sportsbubbleCommonPods-sportsbubbleDevelopment-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-sportsbubbleCommonPods-sportsbubbleDevelopment/Pods-sportsbubbleCommonPods-sportsbubbleDevelopment-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-sportsbubbleCommonPods-sportsbubbleDevelopment/Pods-sportsbubbleCommonPods-sportsbubbleDevelopment-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8AF12FBF2AFA2EE800997224 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-sportsbubbleCommonPods-sportsbubbleDevelopment/Pods-sportsbubbleCommonPods-sportsbubbleDevelopment-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-sportsbubbleCommonPods-sportsbubbleDevelopment/Pods-sportsbubbleCommonPods-sportsbubbleDevelopment-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-sportsbubbleCommonPods-sportsbubbleDevelopment/Pods-sportsbubbleCommonPods-sportsbubbleDevelopment-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -703,6 +861,15 @@
 			files = (
 				8A2376972A544DF100F2EA20 /* AppDelegate.mm in Sources */,
 				8A2376982A544DF100F2EA20 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8AF12FAC2AFA2EE800997224 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8AF12FAD2AFA2EE800997224 /* AppDelegate.mm in Sources */,
+				8AF12FAE2AFA2EE800997224 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -936,7 +1103,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.passport.sportsbubble.development;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sportsbubble.development;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				RESOURCES_TARGETED_DEVICE_FAMILY = "";
@@ -956,7 +1123,7 @@
 				CODE_SIGN_ENTITLEMENTS = sportsbubbleDevelopment.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 30;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = N2NJSCBBBJ;
 				INFOPLIST_FILE = "sportsbubble development-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "dev sportsbubble";
@@ -970,7 +1137,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.passport.sportsbubble.development;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sportsbubble.development;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				RESOURCES_TARGETED_DEVICE_FAMILY = "";
@@ -1024,7 +1191,7 @@
 				CODE_SIGN_ENTITLEMENTS = sportsbubbleStaging.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = N2NJSCBBBJ;
 				INFOPLIST_FILE = "sportsbubble staging-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "stage sportbubble";
@@ -1039,6 +1206,74 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.sportsbubble.staging;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				RESOURCES_TARGETED_DEVICE_FAMILY = "";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		8AF12FC12AFA2EE800997224 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 819C4391844B93630F4B497C /* Pods-sportsbubbleCommonPods-sportsbubbleDevelopment.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = sportsbubbleDevelopment.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = N2NJSCBBBJ;
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = "sportsbubblePassport-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "passport sportsbubble";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.passport.sportsbubble.development;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				RESOURCES_TARGETED_DEVICE_FAMILY = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		8AF12FC22AFA2EE800997224 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A112FEF23E0A1EDD026589E2 /* Pods-sportsbubbleCommonPods-sportsbubbleDevelopment.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = sportsbubblePassport.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 30;
+				DEVELOPMENT_TEAM = N2NJSCBBBJ;
+				INFOPLIST_FILE = "sportsbubble passport-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "passport sportsbubble";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 2.02;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.passport.sportsbubble.development;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				RESOURCES_TARGETED_DEVICE_FAMILY = "";
@@ -1083,6 +1318,15 @@
 			buildConfigurations = (
 				8A2376A52A544DF100F2EA20 /* Debug */,
 				8A2376A62A544DF100F2EA20 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8AF12FC02AFA2EE800997224 /* Build configuration list for PBXNativeTarget "sportsbubblePassport" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8AF12FC12AFA2EE800997224 /* Debug */,
+				8AF12FC22AFA2EE800997224 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

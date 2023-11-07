@@ -1,4 +1,4 @@
-import { CognitoUserPool, CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
+import { CognitoUser } from 'amazon-cognito-identity-js';
 import CognitoPool from '.'
 
 const userData = async (email) => {

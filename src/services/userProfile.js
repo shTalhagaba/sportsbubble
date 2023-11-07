@@ -1,16 +1,12 @@
 const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
 import ShowMessage from 'src/components/ShowMessage';
+import CognitoPool from '.';
 
 const changePassword = (email, oldPassword, newPassword) => {
   return new Promise((resolve, reject) => {
-    const poolData = {
-      UserPoolId: 'us-west-2_nTZIRvqNk',
-      ClientId: '2c4r8a30g1h8vu08kvad3mm7ov',
-    };
-    const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
     const userData = {
       Username: email,
-      Pool: userPool,
+      Pool: CognitoPool,
     };
     const cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
     cognitoUser.authenticateUser(

@@ -11,6 +11,8 @@ export const GET_CONSUMER = gql`
 export const GET_USER_FAVOURITE_SPORTS = gql`
 query ($cognitoId: String!) {
   consumers(where: { cognitoId: $cognitoId }) {
+    cognitoZip
+    cognitoId
     favoriteSports {
       notifications
       sport {
