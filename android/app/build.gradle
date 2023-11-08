@@ -147,9 +147,9 @@ project.ext.envConfigFiles = [
         }
         passport {
             minSdkVersion rootProject.ext.minSdkVersion
-            applicationId "com.sportsbubble.passport"
+            applicationId "com.passport.sportsbubble.development"
             targetSdkVersion rootProject.ext.targetSdkVersion
-            resValue "string", "build_config_package", "com.sportsbubble.passport"
+            resValue "string", "build_config_package", "com.passport.sportsbubble.development"
         }
     }
    // ---
