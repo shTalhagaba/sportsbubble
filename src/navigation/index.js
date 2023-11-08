@@ -77,8 +77,8 @@ const AppStackNavigator = () => {
   useEffect(() => {
     if (isFocused) {
       const unsubscribe = navigation.addListener("state", (event) => {
-        if (reduxData?.userData && reduxData?.userData?.email) {
-          verifySession()
+        if (reduxData?.userData && reduxData?.userData?.email && reduxData?.refreshToken) {
+          // verifySession()
         }
       });
       return unsubscribe;
