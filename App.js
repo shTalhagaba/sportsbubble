@@ -32,6 +32,7 @@ const store = createStore(persistedReducer, applyMiddleware(sagaMiddleware));
 sagaMiddleware.run(mySaga);
 const persistor = persistStore(store);
 
+
 const httpLink = createHttpLink({
   // uri: 'https://9oa4ll4zp8.execute-api.us-west-2.amazonaws.com/stage/graphql',  // sb3 staging
   // uri: 'https://cpbubzqq92.execute-api.us-west-2.amazonaws.com/dev/graphql', // same web link
@@ -73,6 +74,8 @@ const theme = {
 const App = () => {
   LogBox.ignoreLogs(['Warning: ...']);
   LogBox.ignoreAllLogs();
+
+  console.log("Config.BASE_URL => ", Config.BASE_URL)
 
   return (
     <ApolloProvider client={client}>

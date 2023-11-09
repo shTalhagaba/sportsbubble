@@ -1,8 +1,22 @@
 apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
-
+apply plugin: 'com.google.gms.google-services'
+apply from: project(":react-native-config").projectDir.getPath() + "/dotenv.gradle"
+apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
 import com.android.build.OutputFile
 
+
+project.ext.envConfigFiles = [
+   productiondebug: ".env.production",
+   productionrelease: ".env.production",
+   developmentrelease: ".env.development",
+   developmentdebug: ".env.development",
+   passportrelease: ".env.passport",
+   passportdebug: ".env.passport",
+   stagingrelease: ".env.staging",
+   stagingdebug: ".env.staging",
+   anothercustombuild: ".env",
+]
 /**
  * This is the configuration block to customize your React Native Android app.
  * By default you don't need to apply any configuration, just uncomment the lines you need.
@@ -64,7 +78,7 @@ def enableSeparateBuildPerCPUArchitecture = false
  * Set this to true to Run Proguard on Release builds to minify the Java bytecode.
  */
 def enableProguardInReleaseBuilds = false
-
+d∂
 /**
  * The preferred build flavor of JavaScriptCore (JSC)
  *
@@ -90,8 +104,7 @@ def reactNativeArchitectures() {
 
 android {
     ndkVersion rootProject.ext.ndkVersion
-
-    compileSdkVersion rootProject.ext.compileSdkVersion
+     compileSdkVersion rootProject.ext.compileSdkVersion
 
     namespace "com.sportsbubble"
     defaultConfig {
@@ -101,30 +114,6 @@ android {
         versionCode 1
         versionName "2.02"
     }
-
-    splits {
-        abi {
-            reset()
-            enable enableSeparateBuildPerCPUArchitecture
-            universalApk false  // If true, also generate a universal APK
-            include (*reactNativeArchitectures())
-        }
-    }
-
-    // add this block
-project.ext.envConfigFiles = [
-   productiondebug: ".env.production",
-   productionrelease: ".env.production",
-   developmentrelease: ".env.development",
-   developmentdebug: ".env.development",
-   passportrelease: ".env.passport",
-   passportdebug: ".env.passport",
-   stagingrelease: ".env.staging",
-   stagingdebug: ".env.staging"
-]
-// ---
-
-    // add this block
     flavorDimensions "default"
     productFlavors {
         production {
@@ -152,7 +141,16 @@ project.ext.envConfigFiles = [
             resValue "string", "build_config_package", "com.sportsbubble.passport"
         }
     }
-   // ---
+
+    splits {
+        abi {
+            reset()
+            enable enableSeparateBuildPerCPUArchitecture
+            universalApk false  // If true, also generate a universal APK
+            include (*reactNativeArchitectures())
+        }
+    }
+
     signingConfigs {
         debug {
             storeFile file('debug.keystore')
@@ -196,7 +194,7 @@ dependencies {
     implementation("com.facebook.react:react-android")
     implementation project(':react-native-pusher-push-notifications')
     implementation 'com.pusher:push-notifications-android:1.4.4'
-
+    implementation project(':react-native-config')
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.0.0")
 implementation project(':instabug-reactnative')
 
@@ -217,6 +215,5 @@ implementation project(':instabug-reactnative')
     implementation 'com.pusher:push-notifications-android:1.9.0'
 
 }
-apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle" // <- add this line
-apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
-apply plugin: 'com.google.gms.google-services'
+
+
