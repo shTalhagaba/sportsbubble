@@ -209,8 +209,8 @@ implementation project(':instabug-reactnative')
 project.ext.envConfigFiles = [
    productiondebug: ".env.production",
    productionrelease: ".env.production",
-   developmentrelease: ".env",
-   developmentdebug: ".env",
+   developmentrelease: ".env.development",
+   developmentdebug: ".env.development",
    passportrelease: ".env.passport",
    passportdebug: ".env.passport",
    stagingrelease: ".env.staging",
