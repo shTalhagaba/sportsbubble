@@ -45,6 +45,7 @@ const styles = ScaledSheet.create({
         height: screenWidth / 6,
         backgroundColor: 'transparent', // Set background to transparent
         margin: 15,
+        overflow: 'hidden',
     },
     htmlInnerContainer: {
         borderRadius: 16,

@@ -70,7 +70,7 @@ export default function Login() {
     const notificationsResponse = await checkNotifications()
     if (notificationsResponse?.status === 'granted'){
         initializePusher();
-        interestList.forEach(interest => subscribeInterest(interest))
+        interestList && interestList?.length>0 && interestList.forEach(interest => subscribeInterest(interest))
       } 
       navigation.replace('Root'); // Navigate to the 'Root' screen
   };

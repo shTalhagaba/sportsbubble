@@ -45,7 +45,7 @@ export default function Setting() {
     })
     checkNotifications().then(({ status, settings }) => {
       if (status === 'granted'){
-        interestList.forEach(interest => unsubscribeInterest(interest))
+        interestList && interestList?.length>0 && interestList.forEach(interest => unsubscribeInterest(interest))
       } 
     })
   };
