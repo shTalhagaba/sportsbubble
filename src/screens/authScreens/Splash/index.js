@@ -17,7 +17,6 @@ import { GET_SORTED_EVENTS } from 'src/screens/appScreens/Guide/queries';
 import dayjs from 'dayjs';
 import { setStoreEventList } from 'src/store/types';
 import { useDispatch, useSelector } from 'react-redux';
-import Config from 'react-native-config';
 import { stageToken } from 'src/utils/list';
 
 export default function Splash() {
@@ -41,6 +40,11 @@ export default function Splash() {
     },
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
+    context: {
+      headers: {
+        authorization:`Bearer ${stageToken}`,
+      },
+    },
     onCompleted: data => {
       if (data && data?.sortedEvents) {
         const filteredEvents = (data?.sortedEvents || []).filter(event => {

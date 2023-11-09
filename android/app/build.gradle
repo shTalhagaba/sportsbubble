@@ -112,19 +112,6 @@ android {
     }
 
     // add this block
-project.ext.envConfigFiles = [
-   productiondebug: ".env.production",
-   productionrelease: ".env.production",
-   developmentrelease: ".env.development",
-   developmentdebug: ".env.development",
-   passportrelease: ".env.passport",
-   passportdebug: ".env.passport",
-   stagingrelease: ".env.staging",
-   stagingdebug: ".env.staging"
-]
-// ---
-
-    // add this block
     flavorDimensions "default"
     productFlavors {
         production {
@@ -196,7 +183,7 @@ dependencies {
     implementation("com.facebook.react:react-android")
     implementation project(':react-native-pusher-push-notifications')
     implementation 'com.pusher:push-notifications-android:1.4.4'
-
+implementation project(':react-native-config')
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.0.0")
 implementation project(':instabug-reactnative')
 
@@ -217,6 +204,19 @@ implementation project(':instabug-reactnative')
     implementation 'com.pusher:push-notifications-android:1.9.0'
 
 }
+
+    // add this block
+project.ext.envConfigFiles = [
+   productiondebug: ".env.production",
+   productionrelease: ".env.production",
+   developmentrelease: ".env",
+   developmentdebug: ".env",
+   passportrelease: ".env.passport",
+   passportdebug: ".env.passport",
+   stagingrelease: ".env.staging",
+   stagingdebug: ".env.staging"
+]
+// ---
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle" // <- add this line
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
 apply plugin: 'com.google.gms.google-services'

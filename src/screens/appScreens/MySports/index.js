@@ -26,7 +26,7 @@ import LoaderModal from 'src/components/LoaderModal';
 import { setSportsList, setUser } from 'src/store/types';
 import { categoryArrMySports } from 'src/utils/list';
 import { subscribeInterest, unsubscribeInterest } from "src/components/Pusher/PusherBeans";
-import { checkNotifications, requestNotifications, openSettings } from 'react-native-permissions';
+import { checkNotifications, requestNotifications, openSettings, request, check, PERMISSIONS } from 'react-native-permissions';
 import { initializePusher } from 'src/components/Pusher/PusherBeans';
 import useSportsList from 'src/services/useSportsList';
 const { fontScale } = Dimensions.get('window');
@@ -402,7 +402,14 @@ export default function MySports() {
     });
   };
 
-  const checkPermission = () => {
+  const checkPermission = async () => {
+    if(Platform.OS === 'android'){
+      // const result = await request(PERMISSIONS.ANDROID.POST_NOTIFICATIONS);
+      const result = await check(PERMISSIONS.ANDROID.POST_NOTIFICATIONS);
+      console.log('requestNotifications result ',result)
+
+     
+    }else{
     return new Promise((resolve, reject) => {
       checkNotifications().then(({ status, settings }) => {
         //UNAVAILABLE: This feature is not available (on this device / in this context)
@@ -434,6 +441,7 @@ export default function MySports() {
         }
       });
     })
+  }
   }
 
   const goToSettings = () => {
