@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, View } from 'react-native';
+import { Dimensions, Platform, View } from 'react-native';
 import WebView from 'react-native-webview';
 import styles from './styles';
 const screenWidth = Dimensions.get('window').width;
@@ -13,7 +13,16 @@ const SvgRenderer = ({ url, flag, width, height }) => {
         }}>
                 <WebView
                     source={{
-                        html: `
+                        html: Platform.OS === 'android'?
+                        `
+                        <html style="background:transparent;">
+                        <body>
+                        <div style="height:60vh; width:60vw; background:transparent;">
+                            <img src="${url}" height="100%" width="100%" style="background:transparent;" />
+                        </div>
+                        </body>
+                        </html>`
+                        :`
                         <html style="background:transparent;">
                         <body>
                         <div style="height:100vh; width:100vw; background:transparent;">
