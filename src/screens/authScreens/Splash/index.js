@@ -17,8 +17,6 @@ import { GET_SORTED_EVENTS } from 'src/screens/appScreens/Guide/queries';
 import dayjs from 'dayjs';
 import { setStoreEventList } from 'src/store/types';
 import { useDispatch, useSelector } from 'react-redux';
-import Config from 'react-native-config';
-import { stageToken } from 'src/utils/list';
 
 export default function Splash() {
   const navigation = useNavigation();
