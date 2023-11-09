@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback} from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   ImageBackground,
   Text,
@@ -12,15 +12,15 @@ import {
   Platform,
 } from 'react-native';
 import styles from './styles';
-import {Images, Colors, Strings} from 'src/utils';
+import { Images, Colors, Strings } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
-import {useIsFocused, useNavigation} from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import CustomMySportsModalView from 'src/components/Modal/CustomMySportsModalView';
 import CustomModalView from 'src/components/Modal/CustomModal';
-import {moderateScale} from 'react-native-size-matters';
-import {useDispatch, useSelector} from 'react-redux';
+import { moderateScale } from 'react-native-size-matters';
+import { useDispatch, useSelector } from 'react-redux';
 import ShowMessage from 'src/components/ShowMessage';
-import {useMutation, useQuery} from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import {
   DELETE_CONSUMERS,
   GET_ALL_SPORTS,
@@ -28,8 +28,8 @@ import {
   UPDATE_NOTIFICATION_CONSUMERS,
 } from 'src/graphQL';
 import LoaderModal from 'src/components/LoaderModal';
-import {setSportsList, setUser} from 'src/store/types';
-import {categoryArrMySports} from 'src/utils/list';
+import { setSportsList, setUser } from 'src/store/types';
+import { categoryArrMySports } from 'src/utils/list';
 import {
   subscribeInterest,
   unsubscribeInterest,
@@ -39,16 +39,16 @@ import {
   requestNotifications,
   openSettings,
 } from 'react-native-permissions';
-import {initializePusher} from 'src/components/Pusher/PusherBeans';
+import { initializePusher } from 'src/components/Pusher/PusherBeans';
 import useSportsList from 'src/services/useSportsList';
-const {fontScale} = Dimensions.get('window');
+const { fontScale } = Dimensions.get('window');
 
 export default function MySports() {
   const navigation = useNavigation();
   const reduxData = useSelector(state => state.user);
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
-  const {loading, refetch, favoriteSports} = useSportsList('network-only');
+  const { loading, refetch, favoriteSports } = useSportsList('network-only');
   const [reminderModal, setReminderModal] = useState(false);
   const [settingsModal, setSettingsModal] = useState(false);
   const [fvrtModal, setFvrtModal] = useState(
@@ -64,22 +64,22 @@ export default function MySports() {
 
   const [
     deleteConsumersMutation,
-    {loading: loadingDelete, error: errorDelete},
+    { loading: loadingDelete, error: errorDelete },
   ] = useMutation(DELETE_CONSUMERS);
   const [
     updateConsumersMutation,
-    {loading: loadingFavourite, error: errorFavourite},
+    { loading: loadingFavourite, error: errorFavourite },
   ] = useMutation(UPDATE_CONSUMERS);
   const [
     updateNotificationMutation,
-    {loading: loadingNotification, error: errorNotification},
+    { loading: loadingNotification, error: errorNotification },
   ] = useMutation(UPDATE_NOTIFICATION_CONSUMERS);
 
   // Initialize Pusher
   useEffect(() => pusherInitalizer(), []);
 
   const pusherInitalizer = () => {
-    checkNotifications().then(({status, settings}) => {
+    checkNotifications().then(({ status, settings }) => {
       if (status === 'granted') initializePusher();
     });
   };
@@ -108,8 +108,8 @@ export default function MySports() {
                           where: {
                             node: {
                               ...(selectedCategory === 'other'
-                                ? {name_NOT_IN: ['pro', 'esports', 'college']}
-                                : {name: selectedCategory}),
+                                ? { name_NOT_IN: ['pro', 'esports', 'college'] }
+                                : { name: selectedCategory }),
                             },
                           },
                         },
@@ -131,7 +131,7 @@ export default function MySports() {
           ],
         },
       };
-      const {data} = await updateConsumersMutation({
+      const { data } = await updateConsumersMutation({
         variables: updateData,
       });
       if (!loadingFavourite && data?.updateConsumers?.consumers) {
@@ -158,8 +158,8 @@ export default function MySports() {
               const sportNamewithoutSpaces = sport?.name.replaceAll(' ', '');
               subscribeInterest(
                 (selectedCategory === 'other' ? 'others' : selectedCategory) +
-                  '-' +
-                  sportNamewithoutSpaces,
+                '-' +
+                sportNamewithoutSpaces,
               );
             }
           }
@@ -186,11 +186,11 @@ export default function MySports() {
                     node: {
                       ...(selectedCategory === 'other'
                         ? {
-                            categories: {
-                              name_NOT_IN: ['pro', 'esports', 'college'],
-                            },
-                          }
-                        : {categories: {name: selectedCategory}}),
+                          categories: {
+                            name_NOT_IN: ['pro', 'esports', 'college'],
+                          },
+                        }
+                        : { categories: { name: selectedCategory } }),
                       sport: {
                         name: element?.name,
                       },
@@ -203,7 +203,7 @@ export default function MySports() {
         },
       };
       try {
-        const {data} = await updateConsumersMutation({
+        const { data } = await updateConsumersMutation({
           variables: updateData,
         });
         if (!loadingFavourite && data?.updateConsumers?.consumers) {
@@ -216,8 +216,8 @@ export default function MySports() {
           const sportNamewithoutSpaces = element?.name.replaceAll(' ', '');
           unsubscribeInterest(
             (selectedCategory === 'other' ? 'others' : selectedCategory) +
-              '-' +
-              sportNamewithoutSpaces,
+            '-' +
+            sportNamewithoutSpaces,
           );
           refetch();
         }
@@ -254,11 +254,11 @@ export default function MySports() {
                   node: {
                     ...(selectedCategory === 'other'
                       ? {
-                          categories: {
-                            name_NOT_IN: ['pro', 'esports', 'college'],
-                          },
-                        }
-                      : {categories: {name: selectedCategory}}),
+                        categories: {
+                          name_NOT_IN: ['pro', 'esports', 'college'],
+                        },
+                      }
+                      : { categories: { name: selectedCategory } }),
                     sport: {
                       name: getElementID,
                     },
@@ -268,7 +268,7 @@ export default function MySports() {
             ],
           },
         };
-        const {data} = await updateNotificationMutation({
+        const { data } = await updateNotificationMutation({
           variables: updateData,
         });
         if (!loadingNotification && data?.updateConsumers?.consumers) {
@@ -290,15 +290,15 @@ export default function MySports() {
           if (flag) {
             unsubscribeInterest(
               (selectedCategory === 'other' ? 'others' : selectedCategory) +
-                '-' +
-                sportNamewithoutSpaces,
+              '-' +
+              sportNamewithoutSpaces,
             );
             console.log('Removed consumer:', sportNamewithoutSpaces);
           } else {
             subscribeInterest(
               (selectedCategory === 'other' ? 'others' : selectedCategory) +
-                '-' +
-                sportNamewithoutSpaces,
+              '-' +
+              sportNamewithoutSpaces,
             );
             console.log('Added consumer:', sportNamewithoutSpaces);
           }
@@ -333,7 +333,7 @@ export default function MySports() {
         data?.sports.length > 0
       ) {
         const filteredEvents = data?.sports.filter(element => {
-          const {name, categories} = element;
+          const { name, categories } = element;
           // Check if all required properties exist
           if (name && categories && categories.length > 0) {
             return true;
@@ -391,7 +391,7 @@ export default function MySports() {
         }
         return (
           userSport?.categories?.[0]?.name?.toLowerCase() ===
-            selectedCategory?.toLowerCase() &&
+          selectedCategory?.toLowerCase() &&
           userSport?.sport?.name?.toLowerCase() === item?.name?.toLowerCase()
         );
       });
@@ -431,12 +431,12 @@ export default function MySports() {
             return (
               filteredCategories?.length > 0 &&
               userSport?.sport?.name?.toLowerCase() ===
-                item?.name?.toLowerCase()
+              item?.name?.toLowerCase()
             );
           }
           return (
             userSport?.categories?.[0]?.name?.toLowerCase() ===
-              selectedCategory?.toLowerCase() &&
+            selectedCategory?.toLowerCase() &&
             userSport?.sport?.name?.toLowerCase() === item?.name?.toLowerCase()
           );
         })?.length > 0;
@@ -522,7 +522,7 @@ export default function MySports() {
 
   const checkPermission = () => {
     return new Promise((resolve, reject) => {
-      checkNotifications().then(({status, settings}) => {
+      checkNotifications().then(({ status, settings }) => {
         //UNAVAILABLE: This feature is not available (on this device / in this context)
         //DENIED: The permission has not been requested / is denied but requestable
         //BLOCKED: The permission is denied and not requestable anymore
@@ -533,7 +533,7 @@ export default function MySports() {
             break;
           case 'denied':
             requestNotifications(['alert', 'sound']).then(
-              ({status, settings}) => {
+              ({ status, settings }) => {
                 if (status == 'granted') {
                   resolve(true);
                 } else {
@@ -574,12 +574,12 @@ export default function MySports() {
             return (
               filteredCategories?.length > 0 &&
               itemSport?.sport?.name?.toLowerCase() ===
-                sport?.name?.toLowerCase()
+              sport?.name?.toLowerCase()
             );
           }
           return (
             itemSport?.categories?.[0]?.name?.toLowerCase() ===
-              selectedCategory?.toLowerCase() &&
+            selectedCategory?.toLowerCase() &&
             itemSport?.sport?.name?.toLowerCase() === sport?.name?.toLowerCase()
           );
         })?.length > 0
@@ -597,13 +597,13 @@ export default function MySports() {
           return (
             filteredCategories?.length > 0 &&
             userSport?.sport?.name?.toLowerCase() ===
-              item?.name?.toLowerCase() &&
+            item?.name?.toLowerCase() &&
             userSport?.notifications
           );
         }
         return (
           userSport?.categories?.[0]?.name?.toLowerCase() ===
-            selectedCategory?.toLowerCase() &&
+          selectedCategory?.toLowerCase() &&
           userSport?.sport?.name?.toLowerCase() === item?.name?.toLowerCase() &&
           userSport?.notifications
         );
@@ -631,11 +631,11 @@ export default function MySports() {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={
             fontScale > 1
-              ? {justifyContent: 'center'}
-              : {justifyContent: 'center', flex: 1}
+              ? { justifyContent: 'center' }
+              : { justifyContent: 'center', flex: 1 }
           }
           scrollEnabled={fontScale > 1 ? true : false}
-          renderItem={({item, index}) => (
+          renderItem={({ item, index }) => (
             <TouchableOpacity
               onPress={() =>
                 reduxData?.user ? handleSelectedCategory(item, index) : {}
@@ -644,7 +644,7 @@ export default function MySports() {
               <View
                 style={[
                   styles.sliderInnerMainContainer,
-                  {borderWidth: item?.selected ? moderateScale(2, 0.3) : 0},
+                  { borderWidth: item?.selected ? moderateScale(2, 0.3) : 0 },
                 ]}>
                 {item?.selected && <View style={styles.rectangle2} />}
                 <ImageBackground
@@ -657,12 +657,12 @@ export default function MySports() {
                   imageStyle={
                     Platform.OS === 'android'
                       ? {
-                          borderRadius: moderateScale(22, 0.3),
-                          borderWidth: item?.selected
-                            ? 0
-                            : moderateScale(2.5, 0.3),
-                          borderColor: Colors.darkBlue,
-                        }
+                        borderRadius: moderateScale(22, 0.3),
+                        borderWidth: item?.selected
+                          ? 0
+                          : moderateScale(2.5, 0.3),
+                        borderColor: Colors.darkBlue,
+                      }
                       : {}
                   }
                   resizeMode={'stretch'}>
@@ -671,10 +671,10 @@ export default function MySports() {
                       index === 0
                         ? Images.Crown
                         : index === 1
-                        ? Images.College
-                        : index === 2
-                        ? Images.Game
-                        : Images.Trophy
+                          ? Images.College
+                          : index === 2
+                            ? Images.Game
+                            : Images.Trophy
                     }
                     style={styles.sliderIcon}
                     resizeMode={'contain'}
@@ -699,7 +699,7 @@ export default function MySports() {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
-        renderItem={({item, index}) => {
+        renderItem={({ item, index }) => {
           const favouriteStar = isFavoriteCheck(item);
           return reduxData?.user &&
             item?.name &&
@@ -734,7 +734,7 @@ export default function MySports() {
                     source={favouriteStar ? Images.FilledFvrt : Images.Favorite}
                     style={[
                       styles.fvrtIcon,
-                      favouriteStar ? {tintColor: Colors.darkOrange} : {},
+                      favouriteStar ? { tintColor: Colors.darkOrange } : {},
                     ]}
                     resizeMode={'contain'}
                   />
