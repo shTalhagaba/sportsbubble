@@ -81,7 +81,7 @@ export default function Splash() {
 
   useEffect(() => {
     if (!loading) {
-      if ((reduxData?.user || reduxData?.guest) && reduxData?.eventList?.length > 0) {
+      if ((reduxData?.user) && reduxData?.eventList?.length > 0) {
         navigateToMainScreen();
       } else {
         navigateToAuthScreen();
