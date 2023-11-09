@@ -26,7 +26,7 @@ import LoaderModal from 'src/components/LoaderModal';
 import { setSportsList, setUser } from 'src/store/types';
 import { categoryArrMySports } from 'src/utils/list';
 import { subscribeInterest, unsubscribeInterest } from "src/components/Pusher/PusherBeans";
-import { checkNotifications, requestNotifications, openSettings, request, check, PERMISSIONS } from 'react-native-permissions';
+import { checkNotifications, requestNotifications, openSettings } from 'react-native-permissions';
 import { initializePusher } from 'src/components/Pusher/PusherBeans';
 import useSportsList from 'src/services/useSportsList';
 const { fontScale } = Dimensions.get('window');
@@ -43,7 +43,6 @@ export default function MySports() {
   const [mySportData, setSportData] = useState([]);
   const [currentIndex, setCurrentIndex] = useState();
   const [refreshing, setRefreshing] = useState(false);
-  const [isPusherInitiazed, setPusherInitiazed] = useState(false);
 
   const [categoryData, setCategoryData] = useState(categoryArrMySports);
   const [selectedCategory, setSelectedCategory] = useState('pro');
@@ -52,6 +51,16 @@ export default function MySports() {
   const [deleteConsumersMutation, { loading: loadingDelete, error: errorDelete }] = useMutation(DELETE_CONSUMERS);
   const [updateConsumersMutation, { loading: loadingFavourite, error: errorFavourite }] = useMutation(UPDATE_CONSUMERS);
   const [updateNotificationMutation, { loading: loadingNotification, error: errorNotification }] = useMutation(UPDATE_NOTIFICATION_CONSUMERS);
+
+  // Initialize Pusher
+  useEffect(() =>  pusherInitalizer(),[])
+
+  const pusherInitalizer = () => {
+     checkNotifications().then(({ status, settings }) => {
+      if (status === 'granted') initializePusher();
+    })
+  }
+  
   // Define a function to execute the mutation
   const updateConsumers = async (sport, flag, isBellIcon) => {
     try {
@@ -109,12 +118,9 @@ export default function MySports() {
           console.log("Subscribe: ", data?.updateConsumers?.consumers?.[0]?.favoriteSports)
           if (isBellIcon) {
             if (await checkPermission()) {
-              if (!isPusherInitiazed) {
                 initializePusher()
-                setPusherInitiazed(true)
-              }
               const sportNamewithoutSpaces = sport?.name.replaceAll(" ", "");
-              subscribeInterest(selectedCategory === 'other' ? 'others' : selectedCategory + "-" + sportNamewithoutSpaces);
+              subscribeInterest((selectedCategory === 'other' ? 'others' : selectedCategory) + "-" + sportNamewithoutSpaces);
             }
           }
         }
@@ -159,6 +165,8 @@ export default function MySports() {
         if (!loadingFavourite && data?.updateConsumers?.consumers) {
           ShowMessage('Remove from Favorites successfully!')
           dispatch(setSportsList(data?.updateConsumers?.consumers?.[0]?.favoriteSports));
+          const sportNamewithoutSpaces = element?.name.replaceAll(" ", "");
+          unsubscribeInterest((selectedCategory === 'other' ? 'others' : selectedCategory) + "-" + sportNamewithoutSpaces);
           refetch()
         }
         // Handle the response data as needed
@@ -209,19 +217,17 @@ export default function MySports() {
           dispatch(setSportsList(data?.updateConsumers?.consumers?.[0]?.favoriteSports));
           refetch();
         }
-        if (isPusherInitiazed) {
-          const sportName = data?.updateConsumers?.consumers?.[0]?.favoriteSports?.[0]?.sport?.name;
+          const sportName = element?.sport?.name;
           const sportNamewithoutSpaces = sportName.replaceAll(" ", "");
           if (sportName) {
             if (flag) {
-              unsubscribeInterest(selectedCategory === 'other' ? 'others' : selectedCategory + "-" + sportNamewithoutSpaces);
+              unsubscribeInterest((selectedCategory === 'other' ? 'others' : selectedCategory) + "-" + sportNamewithoutSpaces);
               console.log('Removed consumer:', sportNamewithoutSpaces);
             } else {
-              subscribeInterest(selectedCategory === 'other' ? 'others' : selectedCategory + "-" + sportNamewithoutSpaces);
+              subscribeInterest((selectedCategory === 'other' ? 'others' : selectedCategory) + "-" + sportNamewithoutSpaces);
               console.log('Added consumer:', sportNamewithoutSpaces);
             }
           }
-        }
       } else {
         ShowMessage('Invalid data');
       }
@@ -301,10 +307,7 @@ export default function MySports() {
       }
       else {
         if (await checkPermission()) {
-          if (!isPusherInitiazed) {
             initializePusher()
-            setPusherInitiazed(true)
-          }
           if(favoriteFlag && toggle?.[0]){
             console.log('favoriteFlag && toggle?.[0] ',favoriteFlag , toggle?.[0])
             handleNotificationAlert(toggle?.[0])
@@ -402,14 +405,7 @@ export default function MySports() {
     });
   };
 
-  const checkPermission = async () => {
-    if(Platform.OS === 'android'){
-      // const result = await request(PERMISSIONS.ANDROID.POST_NOTIFICATIONS);
-      const result = await check(PERMISSIONS.ANDROID.POST_NOTIFICATIONS);
-      console.log('requestNotifications result ',result)
-
-     
-    }else{
+  const checkPermission = () => {
     return new Promise((resolve, reject) => {
       checkNotifications().then(({ status, settings }) => {
         //UNAVAILABLE: This feature is not available (on this device / in this context)
@@ -441,7 +437,6 @@ export default function MySports() {
         }
       });
     })
-  }
   }
 
   const goToSettings = () => {

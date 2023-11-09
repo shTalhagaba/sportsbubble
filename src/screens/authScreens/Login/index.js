@@ -29,6 +29,12 @@ import { loginValidation } from 'src/common/authValidation';
 import LoaderModal from 'src/components/LoaderModal';
 import { ShowMessage } from 'src/components/ShowMessage';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useLazyQuery } from '@apollo/client';
+import { GET_USER_FAVOURITE_SPORTS } from 'src/graphQL';
+import { subscribeInterest } from "src/components/Pusher/PusherBeans";
+import { checkNotifications } from 'react-native-permissions';
+import { initializePusher } from 'src/components/Pusher/PusherBeans';
+
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -41,9 +47,32 @@ export default function Login() {
   const emailRef = useRef();
   const passwordRef = useRef();
 
+  // To Intialize Pusher on Login
+  const [userSports, { loading, data: userSportsData }] = useLazyQuery(GET_USER_FAVOURITE_SPORTS, {
+    fetchPolicy: 'no-cache'
+  })
+
   // Function to handle sign-in button press
   const buttonSignin = () => {
     login();
+  };
+
+  // Function to Initialize Interest
+  const handleInitialPusher = async () => {
+    const interestList = userSportsData?.consumers?.[0]?.favoriteSports?.flatMap(favoriteSport => {
+      if (!favoriteSport?.notifications) return []
+      if (!['pro', 'esports', 'college']?.includes(favoriteSport?.categories?.[0]?.name)) {
+        return `others-${favoriteSport?.sport?.name?.replaceAll(' ', '')}`
+      } else {
+        return `${favoriteSport?.categories?.[0]?.name}-${favoriteSport?.sport?.name?.replaceAll(' ', '')}`
+      }
+    })
+    const notificationsResponse = await checkNotifications()
+    if (notificationsResponse?.status === 'granted'){
+        initializePusher();
+        interestList.forEach(interest => subscribeInterest(interest))
+      } 
+      navigation.replace('Root'); // Navigate to the 'Root' screen
   };
 
   // Async function to handle user login
@@ -62,9 +91,14 @@ export default function Login() {
           dispatch(setJwtToken(user?.accessToken?.jwtToken));
           dispatch(setRefreshToken(user?.refreshToken));
           dispatch(setUserData(user?.idToken?.payload));
+          await userSports({
+            variables: {
+              cognitoId: user?.id
+            }
+          })
           setEmail('');
           setPassword('');
-          navigation.replace('Root'); // Navigate to the 'Root' screen
+          handleInitialPusher();
         }
       } catch (error) {
         // Handle different types of error messages

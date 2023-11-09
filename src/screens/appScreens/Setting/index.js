@@ -21,6 +21,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setJwtToken, setRefreshToken, setSportsList, setToken, setUser, setUserData } from 'src/store/types';
 import { signOut } from 'src/services/authOTP';
 import ShowMessage from 'src/components/ShowMessage';
+import { checkNotifications } from 'react-native-permissions';
+import { unsubscribeInterest } from "src/components/Pusher/PusherBeans";
+
 
 export default function Setting() {
   const navigation = useNavigation();
@@ -28,6 +31,24 @@ export default function Setting() {
   const dispatch = useDispatch();
   const [logoutModal, setLogoutModal] = useState(false);
   const data = useSelector(state => state.user);
+  const sportsList = data?.sportsList
+
+  // Function to remove notification 
+  const handleInitialPusher = () => {
+    const interestList = sportsList?.flatMap(favoriteSport => {
+      if (!favoriteSport?.notifications) return []
+      if (!['pro', 'esports', 'college']?.includes(favoriteSport?.categories?.[0]?.name)) {
+        return `others-${favoriteSport?.sport?.name?.replaceAll(' ', '')}`
+      } else {
+        return `${favoriteSport?.categories?.[0]?.name}-${favoriteSport?.sport?.name?.replaceAll(' ', '')}`
+      }
+    })
+    checkNotifications().then(({ status, settings }) => {
+      if (status === 'granted'){
+        interestList.forEach(interest => unsubscribeInterest(interest))
+      } 
+    })
+  };
 
   useEffect(() => {
     Instabug.init({
@@ -131,6 +152,7 @@ export default function Setting() {
           signOut()
             .then((response) => {
               console.error('response', response);
+              handleInitialPusher();
               dispatch(setUser(false));
               dispatch(setUserData({}));
               dispatch(setToken(''));
