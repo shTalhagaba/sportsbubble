@@ -54,6 +54,7 @@ export default function Guide() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLive, setIsLive] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('all');
+
   const [liveMatchModal, setLiveMatchModal] = useState(
     !reduxData?.guest === true ? true : false,
   );
@@ -79,6 +80,7 @@ export default function Guide() {
   const [endSearchTime, setEndSearchTime] = useState(
     dayjs(new Date()).add(7, 'day').toISOString(),
   );
+  const isLiveModalVisible = !reduxData?.guest === true ? true : false;
 
   // Use useEffect to call fetchData every 5 minutes
   useEffect(() => {
@@ -198,11 +200,13 @@ export default function Guide() {
     const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
     return `${formattedHours} ${period}`;
   };
+
   useEffect(() => {
     setList(reduxData?.sportsList);
     setReload(!reload);
     setEventList(eventList);
   }, [reduxData?.sportsList]);
+
 
   // Define a function to execute the mutation
   const updateConsumers = async (categories, sport) => {
@@ -330,6 +334,7 @@ export default function Guide() {
   }, [selectedCategory, startTime, reduxData?.eventList]);
 
   const handleSelectedCategory = (e, index) => {
+    console.log("Index =>", index)
     if (index === 0 && selectedCategory === 'all') {
       return;
     }
@@ -392,7 +397,12 @@ export default function Guide() {
       setSelectedCategory(selectedCategoryValues);
     }
     setCategoryData(list);
-    setFilteredEventList(filteredEvents);
+    const filteredEvent = UpdateEvents(
+      filteredEvents,
+      startTime,
+      new Date().toISOString(),
+    );
+    setFilteredEventList(filteredEvent);
   };
 
   const handleSelectTime = (index, method) => {
@@ -518,10 +528,10 @@ export default function Guide() {
                 ? Colors.mediumGreen
                 : Colors.mediumBlue,
               width: `${item?.endGrad + item.startGrad <= 86
-                  ? item?.endGrad - item?.startGrad
-                  : item?.endGrad + item?.startGrad >= 86
-                    ? 86 - item?.startGrad
-                    : item?.endGrad - item?.startGrad
+                ? item?.endGrad - item?.startGrad
+                : item?.endGrad + item?.startGrad >= 86
+                  ? 86 - item?.startGrad
+                  : item?.endGrad - item?.startGrad
                 }%`,
             }}></View>
           <View style={styles.userNameMainContainer}></View>
