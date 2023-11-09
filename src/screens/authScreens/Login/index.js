@@ -82,7 +82,6 @@ export default function Login() {
         setLoadingLocal(true);
         const user = await userLogin(email, password);
         user.id = user?.accessToken?.payload?.sub ?? '';
-        setLoadingLocal(false);
         // Check if user login was successful
         if (user?.idToken?.payload) {
           dispatch(setUser(true));
@@ -98,7 +97,8 @@ export default function Login() {
           })
           setEmail('');
           setPassword('');
-          handleInitialPusher();
+          await handleInitialPusher();
+          setLoadingLocal(false);
         }
       } catch (error) {
         // Handle different types of error messages
@@ -109,6 +109,7 @@ export default function Login() {
             dispatch(setUserSignupData({ email: email, password: password }))
             dispatch(setUserEmail(email))
             dispatch(setUserLoginVerified(true))
+            dispatch(setGuest(false));
             navigation.navigate('WelcomeAccount');
           }
           ShowMessage(error.message);
