@@ -155,7 +155,7 @@ export default function MySports() {
           if (isBellIcon) {
             if (await checkPermission()) {
               initializePusher();
-              const sportNamewithoutSpaces = sport?.name.replaceAll(' ', '');
+              const sportNamewithoutSpaces = sport?.name.replaceAll(/[^A-Z0-9]+/ig, "");
               subscribeInterest(
                 (selectedCategory === 'other' ? 'others' : selectedCategory) +
                 '-' +
@@ -285,7 +285,7 @@ export default function MySports() {
           refetch();
         }
         const sportName = element?.sport?.name;
-        const sportNamewithoutSpaces = sportName.replaceAll(' ', '');
+        const sportNamewithoutSpaces = sportName.replaceAll(/[^A-Z0-9]+/ig, "");
         if (sportName) {
           if (flag) {
             unsubscribeInterest(
