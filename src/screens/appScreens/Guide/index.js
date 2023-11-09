@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ImageBackground,
   Text,
@@ -11,43 +11,52 @@ import {
   Dimensions,
   Platform,
   ScrollView,
-  AppState
+  AppState,
 } from 'react-native';
 import styles from './styles';
-import { Images, Colors, Strings, Constants } from 'src/utils';
+import {Images, Colors, Strings, Constants} from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
-import { useNavigation, useIsFocused } from '@react-navigation/native';
+import {useNavigation, useIsFocused} from '@react-navigation/native';
 import LiveMatchView from 'src/components/Modal/LiveMatchModal';
-import { useQuery } from '@apollo/client';
+import {useQuery} from '@apollo/client';
 import dayjs from 'dayjs';
-import { GET_SORTED_EVENTS } from './queries';
-import { useDispatch, useSelector } from 'react-redux';
-import { refreshData, selectedTimebar, setGuest, setStoreEventList, setUser, setSportsList } from 'src/store/types';
-import { moderateScale } from 'react-native-size-matters';
+import {GET_SORTED_EVENTS} from './queries';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  refreshData,
+  selectedTimebar,
+  setGuest,
+  setStoreEventList,
+  setUser,
+  setSportsList,
+} from 'src/store/types';
+import {moderateScale} from 'react-native-size-matters';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 import CustomModalView from 'src/components/Modal/CustomModal';
 import Config from 'react-native-config';
 import GestureRecognizer from 'react-native-swipe-gestures';
-import { UpdateEvents } from 'src/utils/functions';
+import {UpdateEvents} from 'src/utils/functions';
 import ShowMessage from 'src/components/ShowMessage';
-import { categoryArr, stageToken, wrongEventId } from 'src/utils/list';
+import {categoryArr, stageToken, wrongEventId} from 'src/utils/list';
 import useSportsList from 'src/services/useSportsList';
 import StarView from 'src/components/StarView';
 
 const screenWidth = Dimensions.get('window').width;
-const { fontScale } = Dimensions.get('window');
+const {fontScale} = Dimensions.get('window');
 
 export default function Guide() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  let isFocused = useIsFocused()
-  const { loading, refetch, favoriteSports } = useSportsList('network-only');
+  let isFocused = useIsFocused();
+  const {loading, refetch, favoriteSports} = useSportsList('network-only');
   const currentDate = dayjs(new Date()).toISOString(); // Get the current date and time
   const reduxData = useSelector(state => state.user);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLive, setIsLive] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [liveMatchModal, setLiveMatchModal] = useState(!reduxData?.guest === true ? true : false,);
+  const [liveMatchModal, setLiveMatchModal] = useState(
+    !reduxData?.guest === true ? true : false,
+  );
   const [timeData, setTimeData] = useState([]);
   const [categoryData, setCategoryData] = useState(categoryArr);
   const [selectedTimeIndex, setSelectedTimeIndex] = useState(0);
@@ -58,9 +67,7 @@ export default function Guide() {
     reduxData?.guest === true ? true : false,
   );
   const [eventList, setEventList] = useState(
-    reduxData &&
-      reduxData?.eventList &&
-      reduxData?.eventList.length > 0
+    reduxData && reduxData?.eventList && reduxData?.eventList.length > 0
       ? reduxData?.eventList
       : [],
   );
@@ -82,8 +89,8 @@ export default function Guide() {
     };
   }, []);
   useEffect(() => {
-    const handleAppStateChange = (nextAppState) => {
-      console.log("appState appState =>", nextAppState); // Log the nextAppState, not the previous appState
+    const handleAppStateChange = nextAppState => {
+      console.log('appState appState =>', nextAppState); // Log the nextAppState, not the previous appState
       if (nextAppState === 'active') {
         searchRefetch();
       } else if (nextAppState === 'background') {
@@ -103,7 +110,10 @@ export default function Guide() {
       }
     };
     // Subscribe to AppState changes
-    const appStateSubscription = AppState.addEventListener('change', handleAppStateChange);
+    const appStateSubscription = AppState.addEventListener(
+      'change',
+      handleAppStateChange,
+    );
     // Unsubscribe and perform cleanup when the component unmounts
     return () => {
       appStateSubscription.remove();
@@ -112,15 +122,21 @@ export default function Guide() {
 
   useEffect(() => {
     if (reduxData?.eventList && reduxData.eventList.length > 0) {
-      setEventList(UpdateEvents(reduxData.eventList, startTime, new Date().toISOString()));
-      const filter = reduxData?.eventList.filter((item) => item.isFeatured)
+      setEventList(
+        UpdateEvents(reduxData.eventList, startTime, new Date().toISOString()),
+      );
+      const filter = reduxData?.eventList.filter(item => item.isFeatured);
       if (filter && filter.length > 0) {
-        setFeaturedEvent(filter[0])
+        setFeaturedEvent(filter[0]);
       }
     }
   }, [reduxData?.eventList]);
 
-  const { loading: searchLoading, refetch: searchRefetch, error: searchError } = useQuery(GET_SORTED_EVENTS, {
+  const {
+    loading: searchLoading,
+    refetch: searchRefetch,
+    error: searchError,
+  } = useQuery(GET_SORTED_EVENTS, {
     variables: {
       startTime: startSearchTime,
       endTime: endSearchTime,
@@ -128,12 +144,18 @@ export default function Guide() {
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
     onCompleted: data => {
-      if (
-        data &&
-        data?.sortedEvents.length > 0
-      ) {
+      if (data && data?.sortedEvents.length > 0) {
         const filteredEvents = (data?.sortedEvents || []).filter(event => {
-          const { line1, line2, startTime, endTime, rightsHolders, logo1, id, rightsHoldersConnection } = event;
+          const {
+            line1,
+            line2,
+            startTime,
+            endTime,
+            rightsHolders,
+            logo1,
+            id,
+            rightsHoldersConnection,
+          } = event;
           // Check if the event should be excluded based on id and rightsHoldersConnection
           if (
             id === wrongEventId ||
@@ -170,24 +192,24 @@ export default function Guide() {
     },
   });
 
-  const formatTime = (time) => {
-    const hours = time.getHours()
-    const period = hours >= 12 ? 'PM' : 'AM'
-    const formattedHours = hours % 12 === 0 ? 12 : hours % 12
-    return `${formattedHours} ${period}`
-  }
+  const formatTime = time => {
+    const hours = time.getHours();
+    const period = hours >= 12 ? 'PM' : 'AM';
+    const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
+    return `${formattedHours} ${period}`;
+  };
   useEffect(() => {
-    setList(reduxData?.sportsList)
-    setReload(!reload)
-    setEventList(eventList)
-  }, [reduxData?.sportsList])
+    setList(reduxData?.sportsList);
+    setReload(!reload);
+    setEventList(eventList);
+  }, [reduxData?.sportsList]);
 
   // Define a function to execute the mutation
   const updateConsumers = async (categories, sport) => {
     if (categories?.id && sport?.id) {
       const updateData = {
         where: {
-          cognitoId: reduxData?.userData?.sub
+          cognitoId: reduxData?.userData?.sub,
         },
         update: {
           favoriteSports: [
@@ -198,36 +220,43 @@ export default function Guide() {
                   connect: {
                     where: {
                       node: {
-                        id: sport?.id
-                      }
-                    }
-                  }
+                        id: sport?.id,
+                      },
+                    },
+                  },
                 },
                 categories: {
                   connect: [
                     {
                       where: {
                         node: {
-                          id: categories?.id
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          ]
-        }
+                          id: categories?.id,
+                        },
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+          ],
+        },
       };
       try {
-        const { data } = await updateConsumersMutation({
+        const {data} = await updateConsumersMutation({
           variables: updateData,
         });
         if (!loadingFavourite && data?.updateConsumers?.consumers) {
-          ShowMessage('Added to Favorites successfully!')
-          if (data?.updateConsumers?.consumers?.[0]?.favoriteSports && data?.updateConsumers?.consumers?.[0]?.favoriteSports.length > 0) {
-            setList(data?.updateConsumers?.consumers?.[0]?.favoriteSports)
-            dispatch(setSportsList(data?.updateConsumers?.consumers?.[0]?.favoriteSports));
+          ShowMessage('Added to Favorites successfully!');
+          if (
+            data?.updateConsumers?.consumers?.[0]?.favoriteSports &&
+            data?.updateConsumers?.consumers?.[0]?.favoriteSports.length > 0
+          ) {
+            setList(data?.updateConsumers?.consumers?.[0]?.favoriteSports);
+            dispatch(
+              setSportsList(
+                data?.updateConsumers?.consumers?.[0]?.favoriteSports,
+              ),
+            );
           }
         }
         // Handle the response data as needed
@@ -236,29 +265,29 @@ export default function Guide() {
         console.error('Error updating consumer:', err);
       }
     } else {
-      ShowMessage('Invalid data')
+      ShowMessage('Invalid data');
     }
   };
 
   const getTimeList = () => {
     const hoursList = [];
     for (let i = 1; i < 169; i++) {
-      const nextHour = new Date(new Date().getTime() + i * 60 * 60 * 1000)
+      const nextHour = new Date(new Date().getTime() + i * 60 * 60 * 1000);
       const roundedHour = new Date(
         nextHour.getFullYear(),
         nextHour.getMonth(),
         nextHour.getDate(),
         nextHour.getHours(),
         0,
-        0
-      )
+        0,
+      );
       const timeObject = {
         id: i,
         title: formatTime(roundedHour),
         selected: false,
         datetime: roundedHour.toISOString(),
-      }
-      hoursList.push(timeObject)
+      };
+      hoursList.push(timeObject);
     }
     const timeData = hoursList.flat();
     setTimeData(timeData);
@@ -271,22 +300,26 @@ export default function Guide() {
 
   useEffect(() => {
     if (isFocused) {
-      refetch()
+      refetch();
       if (reduxData?.refresh || reduxData?.selectedTimebar === -1) {
-        handleLive()
+        handleLive();
         dispatch(refreshData(false)); // Dispatch the action
       } else {
-        setSelectedTimeIndex(reduxData?.selectedTimebar)
+        setSelectedTimeIndex(reduxData?.selectedTimebar);
       }
-      searchRefetch()
+      searchRefetch();
       getTimeList();
     }
   }, [isFocused, reduxData?.refresh]);
 
   useEffect(() => {
     if (reduxData?.eventList && reduxData?.eventList.length > 0) {
-      const filteredEvents = UpdateEvents(reduxData.eventList, startTime, new Date().toISOString())
-      const list = filteredEvents.filter((event) => {
+      const filteredEvents = UpdateEvents(
+        reduxData.eventList,
+        startTime,
+        new Date().toISOString(),
+      );
+      const list = filteredEvents.filter(event => {
         const isCategoryMatch =
           selectedCategory.includes('all') ||
           selectedCategory.includes(event.category.name.toLowerCase());
@@ -295,7 +328,6 @@ export default function Guide() {
       setFilteredEventList(list);
     }
   }, [selectedCategory, startTime, reduxData?.eventList]);
-
 
   const handleSelectedCategory = (e, index) => {
     if (index === 0 && selectedCategory === 'all') {
@@ -310,11 +342,13 @@ export default function Guide() {
     list[index].selected = !list[index].selected;
     if (index === 0) {
       // Deselect all other categories if 'all' category is selected
-      list.forEach((element, idx) => {
-        if (idx !== 0) {
-          element.selected = false;
-        }
-      });
+      list &&
+        list?.length > 0 &&
+        list && list?.length>0 && list.forEach((element, idx) => {
+          if (idx !== 0) {
+            element.selected = false;
+          }
+        });
     } else {
       // Check if all other categories are deselected
       const otherSelected = list.slice(1).some(element => element.selected);
@@ -339,22 +373,22 @@ export default function Guide() {
         selectedTimeIndex === 0
           ? eventList
           : eventList.filter(event =>
-            dayjs(event.startTime).isAfter(formattedTime),
-          );
+              dayjs(event.startTime).isAfter(formattedTime),
+            );
     } else {
       filteredEvents =
         selectedTimeIndex === 0
           ? eventList.filter(event =>
-            selectedCategoryValues.includes(
-              event.category.name.toLowerCase(),
-            ),
-          )
-          : eventList.filter(
-            event =>
               selectedCategoryValues.includes(
                 event.category.name.toLowerCase(),
-              ) && dayjs(event.startTime).isAfter(formattedTime),
-          );
+              ),
+            )
+          : eventList.filter(
+              event =>
+                selectedCategoryValues.includes(
+                  event.category.name.toLowerCase(),
+                ) && dayjs(event.startTime).isAfter(formattedTime),
+            );
       setSelectedCategory(selectedCategoryValues);
     }
     setCategoryData(list);
@@ -362,13 +396,19 @@ export default function Guide() {
   };
 
   const handleSelectTime = (index, method) => {
-    setStartTime(index === 0 ? new Date() : method == 'add' ? dayjs(new Date(startTime))
-      .add(1, 'hours')
-      .set('minutes', 0)
-      .set('second', 0) : dayjs(new Date(startTime))
-        .subtract(1, 'hours')
-        .set('minutes', 0)
-        .set('second', 0));
+    setStartTime(
+      index === 0
+        ? new Date()
+        : method == 'add'
+        ? dayjs(new Date(startTime))
+            .add(1, 'hours')
+            .set('minutes', 0)
+            .set('second', 0)
+        : dayjs(new Date(startTime))
+            .subtract(1, 'hours')
+            .set('minutes', 0)
+            .set('second', 0),
+    );
     const updatedTimeData = timeData.map((element, i) => ({
       ...element,
       selected: i === index,
@@ -392,7 +432,7 @@ export default function Guide() {
       setCurrentIndex(prevIndex => prevIndex - 1);
       setIsLive(false);
     } else {
-      handleLive()
+      handleLive();
     }
   };
 
@@ -400,7 +440,7 @@ export default function Guide() {
     handleSelectTime(0);
     setCurrentIndex(0);
     setIsLive(true);
-    dispatch(selectedTimebar(-1))
+    dispatch(selectedTimebar(-1));
   };
   // handle to navigate to sign up for create account
   const handleCreateAccount = async () => {
@@ -411,24 +451,34 @@ export default function Guide() {
     });
   };
 
-  const isFavorite = (eventData) => {
-    if (reduxData?.sportsList && reduxData?.sportsList.length > 0 ) {
-      return reduxData?.sportsList?.filter((favSport) => {
-        return (favSport?.sport?.name?.toLowerCase() === eventData?.sport?.name?.toLowerCase() &&
-        favSport?.categories?.flatMap((cat) => cat?.name === eventData?.category?.name)?.includes(true)) ||
-        (!['pro', 'college', 'esports'].includes(eventData?.category?.name?.toLowerCase()) && favSport?.sport?.name?.toLowerCase() === eventData?.category?.name?.toLowerCase())
-      })?.length > 0
+  const isFavorite = eventData => {
+    if (reduxData?.sportsList && reduxData?.sportsList.length > 0) {
+      return (
+        reduxData?.sportsList?.filter(favSport => {
+          return (
+            (favSport?.sport?.name?.toLowerCase() ===
+              eventData?.sport?.name?.toLowerCase() &&
+              favSport?.categories
+                ?.flatMap(cat => cat?.name === eventData?.category?.name)
+                ?.includes(true)) ||
+            (!['pro', 'college', 'esports'].includes(
+              eventData?.category?.name?.toLowerCase(),
+            ) &&
+              favSport?.sport?.name?.toLowerCase() ===
+                eventData?.category?.name?.toLowerCase())
+          );
+        })?.length > 0
+      );
     }
-    return false
-  }
+    return false;
+  };
 
-  const ItemComponent = React.memo(({ item }) => {
+  const ItemComponent = React.memo(({item}) => {
     return (
-      // dayjs(item?.endTime).isAfter(currentDate) ? (
       <TouchableOpacity
         style={styles.listContainer}
         onPress={() => {
-          dispatch(selectedTimebar(selectedTimeIndex))
+          dispatch(selectedTimebar(selectedTimeIndex));
           if (
             item &&
             item?.rightsHoldersConnection &&
@@ -445,7 +495,7 @@ export default function Guide() {
               },
             });
           } else {
-            navigation.navigate('Watch', { item: item });
+            navigation.navigate('Watch', {item: item});
           }
         }}>
         <View style={styles.innerContainer}>
@@ -464,16 +514,16 @@ export default function Guide() {
             }}></View>
           <View
             style={{
-              // width: endTimeWidth(item?.endTime),
               backgroundColor: item?.live
                 ? Colors.mediumGreen
                 : Colors.mediumBlue,
-              width: `${item?.endGrad + item.startGrad <= 86
-                ? item?.endGrad - item?.startGrad
-                : item?.endGrad + item?.startGrad >= 86
+              width: `${
+                item?.endGrad + item.startGrad <= 86
+                  ? item?.endGrad - item?.startGrad
+                  : item?.endGrad + item?.startGrad >= 86
                   ? 86 - item?.startGrad
                   : item?.endGrad - item?.startGrad
-                }%`,
+              }%`,
             }}></View>
           <View style={styles.userNameMainContainer}></View>
           <View style={styles.userNameContainer}>
@@ -494,20 +544,15 @@ export default function Guide() {
                 {' '}
                 {item?.startTime
                   ? `${dayjs(item?.startTime).format('h:mma')} - ${dayjs(
-                    item?.endTime,
-                  ).format('h:mma')}`
+                      item?.endTime,
+                    ).format('h:mma')}`
                   : item?.time}
               </Text>
             </View>
           </View>
-          {reduxData?.user && (
-            <StarView
-              isFavorite={isFavorite(item)}
-            />
-          )}
+          {reduxData?.user && <StarView isFavorite={isFavorite(item)} />}
         </View>
       </TouchableOpacity>
-      // ) : null
     );
   });
 
@@ -532,18 +577,18 @@ export default function Guide() {
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={
               fontScale > 1
-                ? { justifyContent: 'center' }
-                : { justifyContent: 'center', flex: 1 }
+                ? {justifyContent: 'center'}
+                : {justifyContent: 'center', flex: 1}
             }
             scrollEnabled={fontScale > 1 ? true : false}
-            renderItem={({ item, index }) => (
+            renderItem={({item, index}) => (
               <TouchableOpacity
                 onPress={() => handleSelectedCategory(item, index)}
                 style={styles.sliderInnerContainer}>
                 <View
                   style={[
                     styles.sliderInnerMainContainer,
-                    { borderWidth: item?.selected ? moderateScale(2, 0.3) : 0 },
+                    {borderWidth: item?.selected ? moderateScale(2, 0.3) : 0},
                   ]}>
                   {item?.selected && <View style={styles.rectangle2} />}
                   <ImageBackground
@@ -556,12 +601,12 @@ export default function Guide() {
                     imageStyle={
                       Platform.OS === 'android'
                         ? {
-                          borderRadius: moderateScale(22, 0.3),
-                          borderWidth: item?.selected
-                            ? 0
-                            : moderateScale(2.5, 0.3),
-                          borderColor: Colors.darkBlue,
-                        }
+                            borderRadius: moderateScale(22, 0.3),
+                            borderWidth: item?.selected
+                              ? 0
+                              : moderateScale(2.5, 0.3),
+                            borderColor: Colors.darkBlue,
+                          }
                         : {}
                     }
                     resizeMode={'stretch'}>
@@ -570,16 +615,27 @@ export default function Guide() {
                         index === 0
                           ? Images.Trophy
                           : index === 1
-                            ? Images.Crown
-                            : index === 2
-                              ? Images.College
-                              : Images.Game
+                          ? Images.Crown
+                          : index === 2
+                          ? Images.College
+                          : Images.Game
                       }
                       style={styles.sliderIcon}
                       resizeMode={'contain'}
                     />
-                    <Text numberOfLines={1}
-                      style={[styles.sliderTxt, { maxWidth: Platform.OS === "android" ? fontScale > 1 ? "80%" : "100%" : "100%" }]}>
+                    <Text
+                      numberOfLines={1}
+                      style={[
+                        styles.sliderTxt,
+                        {
+                          maxWidth:
+                            Platform.OS === 'android'
+                              ? fontScale > 1
+                                ? '80%'
+                                : '100%'
+                              : '100%',
+                        },
+                      ]}>
                       {item?.title.toUpperCase()}
                     </Text>
                   </ImageBackground>
@@ -602,7 +658,7 @@ export default function Guide() {
             gestureIsClickThreshold: 20,
           }}>
           <View style={styles.timeSliderContainer}>
-            {isLive ?
+            {isLive ? (
               <View style={styles.liveMainContainer}>
                 <TouchableOpacity
                   onPress={() => handleLive()}
@@ -623,7 +679,8 @@ export default function Guide() {
                     {'Live'}
                   </Text>
                 </TouchableOpacity>
-              </View> :
+              </View>
+            ) : (
               <View style={styles.leftIconStyle}>
                 <TouchableOpacity
                   onPress={() => handlePrevious()}
@@ -635,20 +692,30 @@ export default function Guide() {
                   ]}>
                   <Image
                     source={Images.Arrow}
-                    style={[styles.rightIcon, { transform: [{ rotate: '180deg' }] }]}
+                    style={[
+                      styles.rightIcon,
+                      {transform: [{rotate: '180deg'}]},
+                    ]}
                     resizeMode={'contain'}
                   />
                 </TouchableOpacity>
-              </View>}
+              </View>
+            )}
             <View
-              style={[styles.timeSliderInnerContainer, { width: screenWidth / 3 }]}>
+              style={[
+                styles.timeSliderInnerContainer,
+                {width: screenWidth / 3},
+              ]}>
               <FlatList
                 horizontal
                 data={timeData.slice(0, 2)}
                 showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{ flex: 1, justifyContent: 'space-around' }}
+                contentContainerStyle={{
+                  flex: 1,
+                  justifyContent: 'space-around',
+                }}
                 scrollEnabled={fontScale > 1.2 ? true : false}
-                renderItem={({ item, index }) => {
+                renderItem={({item, index}) => {
                   const adjustedIndex = index + currentIndex; // Calculate the adjusted index based on the current index
                   return (
                     <View
@@ -673,7 +740,7 @@ export default function Guide() {
                   styles.liveTimeContainer,
                   {
                     backgroundColor: Colors.brandBlue,
-                  }
+                  },
                 ]}>
                 <Image
                   source={Images.Arrow}
@@ -685,13 +752,19 @@ export default function Guide() {
           </View>
         </GestureRecognizer>
         {/* featured event */}
-        {featuredEvent && featuredEvent?.logo1 && (selectedCategory === 'all' || selectedCategory.includes(featuredEvent?.category?.name.toLowerCase())) ? (
+        {featuredEvent &&
+        featuredEvent?.logo1 &&
+        (selectedCategory === 'all' ||
+          selectedCategory.includes(
+            featuredEvent?.category?.name.toLowerCase(),
+          )) ? (
           <TouchableOpacity style={styles.listContainer}>
-            <View style={[{ backgroundColor: Colors.brandBlue, paddingBottom: 5 }]}>
+            <View
+              style={[{backgroundColor: Colors.brandBlue, paddingBottom: 5}]}>
               <View
                 style={[
                   styles.imageContainer,
-                  { backgroundColor: Colors.brandBlue },
+                  {backgroundColor: Colors.brandBlue},
                 ]}>
                 <ImageWithPlaceHolder
                   source={featuredEvent?.logo1}
@@ -705,7 +778,9 @@ export default function Guide() {
                   flex: 1,
                 }}></View>
               <View style={styles.userNameContainer}>
-                <Text style={[styles.eventTxt, { marginTop: 5 }]} numberOfLines={1}>
+                <Text
+                  style={[styles.eventTxt, {marginTop: 5}]}
+                  numberOfLines={1}>
                   {featuredEvent?.line1}
                 </Text>
                 <Text style={styles.titleTxt} numberOfLines={1}>
@@ -713,7 +788,7 @@ export default function Guide() {
                     ? featuredEvent?.line2
                     : featuredEvent?.title}
                 </Text>
-                <View style={{ flexDirection: 'row' }}>
+                <View style={{flexDirection: 'row'}}>
                   <Text style={[styles.eventDateTxt]}>
                     {' '}
                     {featuredEvent?.startTime
@@ -725,8 +800,8 @@ export default function Guide() {
                     {' '}
                     {featuredEvent?.startTime
                       ? `${dayjs(featuredEvent?.startTime).format(
-                        'h:mma',
-                      )} - ${dayjs(featuredEvent?.endTime).format('h:mma')}`
+                          'h:mma',
+                        )} - ${dayjs(featuredEvent?.endTime).format('h:mma')}`
                       : featuredEvent?.time}
                   </Text>
                 </View>
@@ -736,7 +811,7 @@ export default function Guide() {
         ) : null}
         {/* main list  */}
         {false ? (
-          <View style={{ flex: 1, justifyContent: 'center' }}>
+          <View style={{flex: 1, justifyContent: 'center'}}>
             <ActivityIndicator color={'#fff'} size={'large'} />
           </View>
         ) : (
@@ -747,12 +822,12 @@ export default function Guide() {
                   ? filteredEventList && filteredEventList.length > 0
                     ? filteredEventList
                     : selectedTimeIndex > 0
-                      ? filteredEventList
-                      : []
+                    ? filteredEventList
+                    : []
                   : filteredEventList
               }
               showsVerticalScrollIndicator={false}
-              renderItem={({ item }) => <ItemComponent item={item} />}
+              renderItem={({item}) => <ItemComponent item={item} />}
               keyExtractor={item => item?.id}
               removeClippedSubviews={true} // Unmount components when outside of window
               initialNumToRender={50} // Reduce initial render amount
@@ -782,7 +857,7 @@ export default function Guide() {
           btn
           rowStyle={false}
           blackBtnPress={() => {
-            setMySportModal(!mySportModal)
+            setMySportModal(!mySportModal);
             setLiveMatchModal(true);
           }}
           otherBtnPress={() => handleCreateAccount()}

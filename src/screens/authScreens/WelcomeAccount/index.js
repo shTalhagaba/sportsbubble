@@ -368,6 +368,7 @@ export default function WelcomeAccount(props) {
           />
         </KeyboardAwareScrollView>
         <LoaderModal visible={loadingLocal} loadingText={''} />
+        {date && isDatePickerVisible?
         <DateTimePickerModal
           date={date}
           isVisible={isDatePickerVisible}
@@ -375,7 +376,7 @@ export default function WelcomeAccount(props) {
           onConfirm={handleConfirm}
           onCancel={hideDatePicker}
           maximumDate={new Date()}
-        />
+        />:null}
       </ImageBackground>
     </View>
 
