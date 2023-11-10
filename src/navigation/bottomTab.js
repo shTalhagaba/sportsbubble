@@ -81,13 +81,35 @@ const BottomTab = () => {
 
   return (
     <Tab.Navigator
+      // initialRouteName={'Guide'}
+      // tabBarOptions={{
+      //   showIcon: true,
+      //   showLabel: false,
+      //   keyboardHidesTabBar: true,
+      // }}
+      // screenOptions={{
+      //   headerShown: false,
+      //   tabBarStyle: {
+      //     backgroundColor:
+      //       Platform.OS === 'ios'
+      //         ? Colors.appColorBackground90
+      //         : Colors.backBlack,
+      //     height:
+      //       Platform.OS === 'android'
+      //         ? moderateScale(72, 0.3)
+      //         : moderateScale(80, 0.3),
+      //     paddingTop:
+      //       Platform.OS === 'android'
+      //         ? moderateScale(2, 0.3)
+      //         : moderateScale(15, 0.3),
+      //     borderTopWidth: 2,
+      //     borderTopColor: '#3E4349',
+      //   },
+      // }}
       initialRouteName={'Guide'}
-      tabBarOptions={{
-        showIcon: true,
-        showLabel: false,
-        keyboardHidesTabBar: true,
-      }}
       screenOptions={{
+        tabBarLabelStyle: { display: 'none' },
+        tabBarHideOnKeyboard: true,
         headerShown: false,
         tabBarStyle: {
           backgroundColor:
@@ -104,8 +126,10 @@ const BottomTab = () => {
               : moderateScale(15, 0.3),
           borderTopWidth: 2,
           borderTopColor: '#3E4349',
-        },
-      }}>
+        }
+      }}
+
+    >
       <Tab.Screen
         name="Guide"
         component={GuideNavigation}
