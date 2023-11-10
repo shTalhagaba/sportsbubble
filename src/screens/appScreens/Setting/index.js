@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import styles from './styles';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Images, Colors } from 'src/utils';
 import { useNavigation } from '@react-navigation/native';
 import AppHeader from 'src/components/AppHeader';
@@ -22,7 +23,7 @@ import { setJwtToken, setRefreshToken, setSportsList, setToken, setUser, setUser
 import { signOut } from 'src/services/authOTP';
 import ShowMessage from 'src/components/ShowMessage';
 import { checkNotifications } from 'react-native-permissions';
-import { unsubscribeInterest } from "src/components/Pusher/PusherBeans";
+import { unsubscribeInterest } from "src/components/Pusher/PusherBeams";
 
 
 export default function Setting() {
@@ -32,7 +33,6 @@ export default function Setting() {
   const [logoutModal, setLogoutModal] = useState(false);
   const data = useSelector(state => state.user);
   const sportsList = data?.sportsList
-
   // Function to remove notification 
   const handleInitialPusher = () => {
     const interestList = sportsList?.flatMap(favoriteSport => {
@@ -49,6 +49,11 @@ export default function Setting() {
       } 
     })
   };
+
+  const removeAsyncStorage = async () => {
+    await AsyncStorage.removeItem('refreshToken');
+    await AsyncStorage.removeItem('accessToken');
+  }
 
   useEffect(() => {
     Instabug.init({
@@ -158,6 +163,7 @@ export default function Setting() {
               dispatch(setToken(''));
               dispatch(setJwtToken(''));
               dispatch(setRefreshToken(''));
+              removeAsyncStorage();
               dispatch(setSportsList([]));
               navigation.replace('Auth');
             })
@@ -170,6 +176,7 @@ export default function Setting() {
                 dispatch(setToken(''));
                 dispatch(setJwtToken(''));
                 dispatch(setRefreshToken(''));
+                removeAsyncStorage();
                 navigation.replace('Auth');
               }
             });

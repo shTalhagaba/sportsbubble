@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, Text, ImageBackground, StatusBar } from 'react-native';
 import styles from './styles';
 import ContactTextInput from 'src/components/ContactTextInput';
@@ -31,6 +32,11 @@ export default function UpdatePassword() {
   const [displayNewPassword, setDisplayNewPassword] = useState(true);
   const [displayNewConfirmPassword, setDisplayNewConfirmPassword] = useState(true);
 
+  const removeAsyncStorage = async () => {
+    await AsyncStorage.removeItem('refreshToken');
+    await AsyncStorage.removeItem('accessToken');
+  }
+
   const updatePassword = async () => {
     if (
       updatePasswordValidation(currentPassword, newPassword, newConfirmPassword)
@@ -51,6 +57,7 @@ export default function UpdatePassword() {
             dispatch(setToken(''));
             dispatch(setJwtToken(''));
             dispatch(setRefreshToken(''));
+            removeAsyncStorage();
             dispatch(setSportsList([]));
             navigation.replace('Auth');
             ShowMessage('Password changed successfully.')
@@ -63,6 +70,7 @@ export default function UpdatePassword() {
               dispatch(setUserData({}));
               dispatch(setJwtToken(''));
               dispatch(setRefreshToken(''));
+              removeAsyncStorage();
               dispatch(setToken(''));
               navigation.replace('Auth');
             }

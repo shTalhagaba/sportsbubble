@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from './styles';
 import { Images, Colors } from 'src/utils';
 import { useNavigation } from '@react-navigation/native';
@@ -146,6 +147,8 @@ export default function PersonalInfo() {
         dispatch(setToken(''));
         dispatch(setJwtToken(''));
         dispatch(setRefreshToken(''));
+        await AsyncStorage.removeItem('refreshToken');
+        await AsyncStorage.removeItem('accessToken');
         setLoadingLocal(false);
         setCancelAccountModal(!cancelAccountModal);
         navigation.replace('Auth');

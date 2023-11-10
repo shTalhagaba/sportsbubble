@@ -1,10 +1,10 @@
 import React from 'react';
-import {Dimensions, Platform, View} from 'react-native';
+import { Dimensions, Platform, View } from 'react-native';
 import WebView from 'react-native-webview';
 import styles from './styles';
 const screenWidth = Dimensions.get('window').width;
 
-const SvgRenderer = ({url, flag, width, height}) => {
+const SvgRenderer = ({ url, flag, width, height }) => {
   return flag ? (
     <View
       style={{

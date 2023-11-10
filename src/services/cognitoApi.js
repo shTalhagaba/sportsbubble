@@ -4,6 +4,7 @@ import {
   CognitoUserAttribute
 } from 'amazon-cognito-identity-js'
 import CognitoPool from '.'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const getCognitoUser = (email) => {
   try {
@@ -21,7 +22,7 @@ export const refreshSession = (refreshToken, cognitoUser) => {
   return new Promise((resolve, reject) => {
     cognitoUser.refreshSession(
       new CognitoRefreshToken({
-        RefreshToken: refreshToken?.token
+        RefreshToken: refreshToken
       }),
       (error, result) => {
         if (error) {
@@ -40,9 +41,9 @@ export const CognitoAPI = async (
   values = null
 ) => {
   const email = reduxData?.userData?.email
-  const refreshToken = reduxData?.refreshToken
+  const refreshToken =  await AsyncStorage.getItem('refreshToken');
   const cognitoUser = getCognitoUser(email)
-  await refreshSession(refreshToken, cognitoUser)
+  await refreshSession(JSON.parse(refreshToken), cognitoUser)
   switch (action) {
     case 'updateUser':
       return await handleUserData(cognitoUser, values)

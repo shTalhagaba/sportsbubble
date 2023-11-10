@@ -33,13 +33,13 @@ import { categoryArrMySports } from 'src/utils/list';
 import {
   subscribeInterest,
   unsubscribeInterest,
-} from 'src/components/Pusher/PusherBeans';
+  initializePusher
+} from 'src/components/Pusher/PusherBeams';
 import {
   checkNotifications,
   requestNotifications,
   openSettings,
 } from 'react-native-permissions';
-import { initializePusher } from 'src/components/Pusher/PusherBeans';
 import useSportsList from 'src/services/useSportsList';
 const { fontScale } = Dimensions.get('window');
 

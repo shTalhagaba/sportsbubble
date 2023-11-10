@@ -1,6 +1,6 @@
 const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
 import CognitoPool from '.';
-import { removeListener } from "../components/Pusher/PusherBeans"; 
+import { removeListener } from "../components/Pusher/PusherBeams"; 
 
 const userOTP = (email, otp, mfaSession) => {
   return new Promise((resolve, reject) => {

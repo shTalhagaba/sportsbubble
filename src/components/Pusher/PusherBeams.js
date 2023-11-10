@@ -2,6 +2,7 @@ import RNPusherPushNotifications from 'react-native-pusher-push-notifications';
 import Config from 'react-native-config';
 import { Notifications } from 'react-native-notifications';
 import Toast from 'react-native-toast-message';
+import { navigateUsingRef } from '../../../App';
 
 const defaultIntrests = [];
 var listener = null
@@ -13,7 +14,6 @@ const showToast = (title, body) => {
     text2: body
   });
 }
-
 export const initializePusher = () => {
   RNPusherPushNotifications.setInstanceId(Config.INSTANCE_ID)
   listener = RNPusherPushNotifications.on('registered', (response) => {
@@ -42,17 +42,11 @@ const handleNotification = notification => {
   if (Platform.OS === 'ios') {
     switch (notification?.appState) {
       case 'inactive':
-        console.log("Notification recieved inactive =====")
-      // inactive: App came in foreground by clicking on notification.
-      //           Use notification.userInfo for redirecting to specific view controller
+        navigateUsingRef('GuideMain')
       case 'background':
-        console.log("Notification recieved background =====")
-      // background: App is in background and notification is received.
-      //             You can fetch required data here don't do anything with UI
+        navigateUsingRef('GuideMain')
       case 'active':
-        console.log("Notification recieved active =====")
         showToast(notification?.userInfo?.aps?.data?.title, notification?.userInfo?.aps?.data?.body);
-      // App is foreground and notification is received. Show a alert or something.
       default:
         break;
     }

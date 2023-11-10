@@ -2,10 +2,11 @@ import React, { useEffect } from "react"
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AuthNavigator from './authNavigation';
 import MyTabs from './bottomTab'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import withoutBottomtab from './withoutBottomtab'
 import Splash from "src/screens/authScreens/Splash";
 import { useDispatch, useSelector } from "react-redux";
-import { useIsFocused, useNavigation } from "@react-navigation/native";
+import { useNavigation, useNavigationState } from "@react-navigation/native";
 import { CognitoAPI, getCognitoUser, refreshSession } from "src/services/cognitoApi";
 import Config from "react-native-config";
 import axios from "axios";
@@ -17,6 +18,7 @@ const StackNavigator = createNativeStackNavigator()
 
 const AppStackNavigator = () => {
   const navigation = useNavigation();
+  const navigateState = useNavigationState(state => state)
   const dispatch = useDispatch();
   const reduxData = useSelector(state => state.user);
 
@@ -58,32 +60,28 @@ const AppStackNavigator = () => {
 
   const verifySession = async () => {
     try {
-      const refreshToken = reduxData?.refreshToken
+      const refreshToken = await AsyncStorage.getItem('refreshToken');
       const cognitoUser = getCognitoUser(reduxData?.userData?.email)
-      await refreshSession(refreshToken, cognitoUser)
+      await refreshSession(JSON.parse(refreshToken), cognitoUser)
     } catch (error) {
       dispatch(setUser(false));
       dispatch(setUserData({}));
       dispatch(setToken(''));
       dispatch(setJwtToken(''));
       dispatch(setRefreshToken(''));
+      await AsyncStorage.removeItem('refreshToken');
+      await AsyncStorage.removeItem('accessToken');
       dispatch(setSportsList([]));
       navigation.navigate('Auth');
       ShowMessage('Session expired.')
     }
   }
-  const isFocused = useIsFocused();
 
   useEffect(() => {
-    if (isFocused) {
-      const unsubscribe = navigation.addListener("state", (event) => {
-        if (reduxData?.userData && reduxData?.userData?.email && reduxData?.refreshToken) {
-          // verifySession()
-        }
-      });
-      return unsubscribe;
-    }
-  }, [navigation, isFocused]);
+        if (reduxData?.userData?.email) {
+          verifySession()
+      };
+  }, [navigateState]);
 
   return (
     <StackNavigator.Navigator>

@@ -6,6 +6,7 @@ import {
   StatusBar,
   TouchableOpacity,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from './styles';
 import ContactTextInput from 'src/components/ContactTextInput';
 import AppHeader from 'src/components/AppHeader';
@@ -31,9 +32,8 @@ import { ShowMessage } from 'src/components/ShowMessage';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useLazyQuery } from '@apollo/client';
 import { GET_USER_FAVOURITE_SPORTS } from 'src/graphQL';
-import { subscribeInterest } from "src/components/Pusher/PusherBeans";
+import { subscribeInterest, initializePusher } from "src/components/Pusher/PusherBeams";
 import { checkNotifications } from 'react-native-permissions';
-import { initializePusher } from 'src/components/Pusher/PusherBeans';
 
 
 export default function Login() {
@@ -97,6 +97,8 @@ export default function Login() {
           })
           setEmail('');
           setPassword('');
+          await AsyncStorage.setItem('accessToken',JSON.stringify(user?.idToken?.jwtToken));
+          await AsyncStorage.setItem('refreshToken',JSON.stringify(user?.refreshToken?.token));
           await handleInitialPusher();
           setLoadingLocal(false);
         }
