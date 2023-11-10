@@ -57,10 +57,12 @@ const handleNotification = notification => {
 
     Notifications.events().registerNotificationReceivedForeground((notification, completion) => {
       console.log(`Notification received in foreground: ${notification.title} : ${notification.body}`);
+      navigateUsingRef('GuideMain')
       completion({ alert: false, sound: false, badge: false });
     });
 
     Notifications.events().registerNotificationOpened((notification, completion) => {
+      navigateUsingRef('GuideMain')
       console.log(`Notification opened: ${notification.payload}`);
       completion();
     });
