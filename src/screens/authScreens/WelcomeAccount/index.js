@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Keyboard
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from './styles';
 import ContactTextInput from 'src/components/ContactTextInput';
 import AppHeader from 'src/components/AppHeader';
@@ -116,6 +117,8 @@ export default function WelcomeAccount(props) {
         dispatch(setToken(user?.idToken?.jwtToken));
         dispatch(setJwtToken(user?.accessToken?.jwtToken));
         dispatch(setUserData(user?.idToken?.payload));
+        await AsyncStorage.setItem('accessToken',JSON.stringify(user?.idToken?.jwtToken));
+        await AsyncStorage.setItem('refreshToken',JSON.stringify(user?.refreshToken?.token));
         setLoadingLocal(false);
         navigation.replace('Root'); // Navigate to the 'Root' screen
       }

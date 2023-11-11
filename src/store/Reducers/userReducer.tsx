@@ -1,6 +1,6 @@
 const initialState = {
   isLoggedIn: false,
-  email: 'haa@gmail.com',
+  email: null,
   firstName: '',
   lastName: '',
   id: '',

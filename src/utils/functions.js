@@ -28,7 +28,7 @@ export function getCurrent7DaysTime () {
   }
   
   export function UpdateEvents (events, currentTime, timeNow) {
-    let updatedEvents = events?.length > 0 && events
+    let updatedEvents = events
       ?.filter((event) => {
         const endEvent = new Date(event.endTime)
         return (

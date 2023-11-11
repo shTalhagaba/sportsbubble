@@ -23,7 +23,7 @@ import { setJwtToken, setRefreshToken, setSportsList, setToken, setUser, setUser
 import { signOut } from 'src/services/authOTP';
 import ShowMessage from 'src/components/ShowMessage';
 import { checkNotifications } from 'react-native-permissions';
-import { unsubscribeInterest } from "src/components/Pusher/PusherBeams";
+import { initializePusher, unsubscribeInterest } from "src/components/Pusher/PusherBeams";
 
 
 export default function Setting() {
@@ -38,13 +38,14 @@ export default function Setting() {
     const interestList = sportsList?.flatMap(favoriteSport => {
       if (!favoriteSport?.notifications) return []
       if (!['pro', 'esports', 'college']?.includes(favoriteSport?.categories?.[0]?.name)) {
-        return `others-${favoriteSport?.sport?.name?.replaceAll(' ', '')}`
+        return `others-${favoriteSport?.sport?.name?.replaceAll(/[^A-Z0-9]+/ig, '')}`
       } else {
-        return `${favoriteSport?.categories?.[0]?.name}-${favoriteSport?.sport?.name?.replaceAll(' ', '')}`
+        return `${favoriteSport?.categories?.[0]?.name}-${favoriteSport?.sport?.name?.replaceAll(/[^A-Z0-9]+/ig, '')}`
       }
     })
     checkNotifications().then(({ status, settings }) => {
       if (status === 'granted'){
+        initializePusher()
         interestList && interestList?.length>0 && interestList.forEach(interest => unsubscribeInterest(interest))
       } 
     })

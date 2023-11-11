@@ -40,6 +40,8 @@ import ShowMessage from 'src/components/ShowMessage';
 import { categoryArr, stageToken, wrongEventId } from 'src/utils/list';
 import useSportsList from 'src/services/useSportsList';
 import StarView from 'src/components/StarView';
+import { initializePusher, subscribeInterest } from 'src/components/Pusher/PusherBeams';
+import { checkNotifications } from 'react-native-permissions';
 
 const screenWidth = Dimensions.get('window').width;
 const { fontScale } = Dimensions.get('window');
@@ -88,6 +90,34 @@ export default function Guide() {
       clearInterval(interval);
     };
   }, []);
+
+  const subscribeToInterests = async (interestList) => {
+    const { status } = await checkNotifications()
+    if (status === 'granted') {
+      initializePusher()
+      for await (const interest of interestList) {
+        subscribeInterest(interest)
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (reduxData?.sportsList?.length > 0) {
+      const interestList = reduxData?.sportsList?.flatMap(favoriteSport => {
+        if (!favoriteSport?.notifications) return []
+        
+        if (!['pro', 'esports', 'college']?.includes(favoriteSport?.categories?.[0]?.name)) {
+          return `others-${favoriteSport?.sport?.name?.replaceAll(/[^A-Z0-9]+/ig, '')}`
+        } else {
+          return `${favoriteSport?.categories?.[0]?.name}-${favoriteSport?.sport?.name?.replaceAll(/[^A-Z0-9]+/ig, '')}`
+        }
+      })
+      if( interestList && interestList?.length > 0 ) {
+        subscribeToInterests(interestList)
+      }
+    }
+  }, [reduxData?.sportsList])
+
   useEffect(() => {
     const handleAppStateChange = nextAppState => {
       console.log('appState appState =>', nextAppState); // Log the nextAppState, not the previous appState

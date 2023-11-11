@@ -15,6 +15,7 @@ import ShowMessage from 'src/components/ShowMessage';
 import { updatePasswordValidation } from 'src/common/authValidation';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { signOut } from 'src/services/authOTP';
+import { CognitoAPI } from "src/services/cognitoApi";
 import { setJwtToken, setRefreshToken, setSportsList, setToken, setUser, setUserData } from 'src/store/types';
 
 export default function UpdatePassword() {
@@ -49,6 +50,7 @@ export default function UpdatePassword() {
           newPassword,
         );
         if (user === 'SUCCESS') {
+          await CognitoAPI(data, 'globalLogout')
           signOut()
           .then((response) => {
             console.error('response', response);

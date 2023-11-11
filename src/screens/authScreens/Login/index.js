@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -13,7 +13,7 @@ import AppHeader from 'src/components/AppHeader';
 import { Images, Colors, Strings } from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   setGuest,
   setJwtToken,
@@ -33,7 +33,10 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { useLazyQuery } from '@apollo/client';
 import { GET_USER_FAVOURITE_SPORTS } from 'src/graphQL';
 import { subscribeInterest, initializePusher } from "src/components/Pusher/PusherBeams";
-import { checkNotifications } from 'react-native-permissions';
+import {
+  checkNotifications,
+  requestNotifications
+} from 'react-native-permissions';
 
 
 export default function Login() {
@@ -46,6 +49,7 @@ export default function Login() {
   const [loadingLocal, setLoadingLocal] = useState(false);
   const emailRef = useRef();
   const passwordRef = useRef();
+  const user = useSelector(state => state.user)
 
   // To Intialize Pusher on Login
   const [userSports, { loading, data: userSportsData }] = useLazyQuery(GET_USER_FAVOURITE_SPORTS, {
@@ -57,22 +61,58 @@ export default function Login() {
     login();
   };
 
+  const checkUserState = async () => {
+    if (user?.userData?.email) {
+      await userSports({
+        variables: {
+          cognitoId: user?.userData?.sub
+        }
+      })
+    }
+  }
+  const handleSports = async () => {
+    if (userSportsData) {
+      await handleInitialPusher()
+      navigation.replace('Root')
+    }
+  }
+  useEffect(() => {
+    handleSports()
+  }, [userSportsData])
+
+  useEffect(() => {
+    checkUserState()
+  }, [user?.userData])
+
+
+  const subscribeToInterests = async (interestList) => {
+    for await (const interest of interestList) {
+      subscribeInterest(interest)
+    }
+  }
+
   // Function to Initialize Interest
   const handleInitialPusher = async () => {
     const interestList = userSportsData?.consumers?.[0]?.favoriteSports?.flatMap(favoriteSport => {
       if (!favoriteSport?.notifications) return []
+      
       if (!['pro', 'esports', 'college']?.includes(favoriteSport?.categories?.[0]?.name)) {
-        return `others-${favoriteSport?.sport?.name?.replaceAll(' ', '')}`
+        return `others-${favoriteSport?.sport?.name?.replaceAll(/[^A-Z0-9]+/ig, '')}`
       } else {
-        return `${favoriteSport?.categories?.[0]?.name}-${favoriteSport?.sport?.name?.replaceAll(' ', '')}`
+        return `${favoriteSport?.categories?.[0]?.name}-${favoriteSport?.sport?.name?.replaceAll(/[^A-Z0-9]+/ig, '')}`
       }
     })
-    const notificationsResponse = await checkNotifications()
-    if (notificationsResponse?.status === 'granted'){
-        initializePusher();
-        interestList && interestList?.length>0 && interestList.forEach(interest => subscribeInterest(interest))
-      } 
-      navigation.replace('Root'); // Navigate to the 'Root' screen
+    if( interestList && interestList?.length > 0 ){ 
+      initializePusher()
+      const { status } = await checkNotifications()
+      if (status === 'granted') {
+        subscribeToInterests(interestList)
+      }
+
+      else if (status === 'denied') {
+        await requestNotifications(['alert', 'sound'])
+      }
+    }
   };
 
   // Async function to handle user login
@@ -90,11 +130,6 @@ export default function Login() {
           dispatch(setJwtToken(user?.accessToken?.jwtToken));
           dispatch(setRefreshToken(user?.refreshToken));
           dispatch(setUserData(user?.idToken?.payload));
-          await userSports({
-            variables: {
-              cognitoId: user?.id
-            }
-          })
           setEmail('');
           setPassword('');
           await AsyncStorage.setItem('accessToken',JSON.stringify(user?.idToken?.jwtToken));
