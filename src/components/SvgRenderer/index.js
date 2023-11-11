@@ -19,8 +19,8 @@ const SvgRenderer = ({ url, flag, width, height }) => {
       }}>
       <WebView
         source={{
-          html: `
-            <html>
+          html: Platform.OS === 'android'
+            ? ` <html>
               <head>
                 ${viewportMetaTag}
               </head>
@@ -30,7 +30,14 @@ const SvgRenderer = ({ url, flag, width, height }) => {
                 </div>
               </body>
             </html>
-          `,
+          `:
+            `<html style="background:transparent;">
+          <body>
+          <div style="height:100vh; width:100vw; background:transparent;">
+              <img src="${url}" height="100%" width="100%" style="background:transparent;" />
+          </div>
+          </body>
+          </html>`
         }}
         style={styles.innerContainer}
         containerStyle={styles.webContainer}
@@ -42,7 +49,8 @@ const SvgRenderer = ({ url, flag, width, height }) => {
       <View style={styles.webInnerContainer} />
       <WebView
         source={{
-          html: `
+          html: Platform.OS === 'android'
+            ? `
             <html>
               <head>
                 ${viewportMetaTag}
@@ -52,8 +60,15 @@ const SvgRenderer = ({ url, flag, width, height }) => {
                   <img src="${url}" height="100%" width="100%" style="background: transparent; object-fit: contain;" />
                 </div>
               </body>
-            </html>
-          `,
+            </html>`
+            :
+            `<html style="background:#3F5B80;">
+                    <body>
+                      <div style="height:90vh; width:90vw; background:#3F5B80; display: flex; align-items: center; justify-content: center;">
+                        <img src="${url}" style="width: 100%; height: 100%; object-fit: contain; background:#3F5B80;" />
+                      </div>
+                    </body>
+                    </html>`,
         }}
         style={styles.htmlContainer}
         containerStyle={styles.htmlInnerContainer}
