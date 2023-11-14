@@ -10,6 +10,7 @@ const SvgRenderer = ({ url, flag, width, height }) => {
     Platform.OS === 'android'
       ? '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover" />'
       : '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />';
+  const viewportMetaTagWatch = '<meta name="viewport" content="width=device-width, initial-scale=1">';
 
   return flag ? (
     <View
@@ -52,15 +53,16 @@ const SvgRenderer = ({ url, flag, width, height }) => {
           html: Platform.OS === 'android'
             ? `
             <html>
-              <head>
-                ${viewportMetaTag}
-              </head>
-              <body style="background: #3F5B80; margin-left: 1vw; padding: 0; justify-content: center; align-items: center; height: 100vh; overflow: hidden;">
-                <div style="height: 25vh; width: 25vw; background: #3F5B80; display: flex; align-items: center; justify-content: center;">
-                  <img src="${url}" height="100%" width="100%" style="background: transparent; object-fit: contain;" />
-                </div>
-              </body>
-            </html>`
+            <head>
+              ${viewportMetaTag}
+            </head>
+            <body style="background: #3F5B80; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden;">
+              <div style="height: 75vh; width: 75vw; background: #3F5B80; display: flex; align-items: center; justify-content: center;">
+                <img src="${url}" style="height: 100%; width: 100%; object-fit: contain;" />
+              </div>
+            </body>
+          </html>
+            `
             :
             `<html style="background:#3F5B80;">
                     <body>

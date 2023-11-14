@@ -261,9 +261,9 @@ export default function Watch(props) {
                   renderItem={({ item }) => <ItemComponent item={item} />}
                 /> */}
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                {otherList.map((item, index) => (
-                  <ItemComponent key={index} item={item} />
-                ))}
+                  {otherList.map((item, index) => (
+                    <ItemComponent key={index} item={item} />
+                  ))}
                 </ScrollView>
               </View>
             </ImageBackground>
