@@ -284,8 +284,8 @@ export default ScaledSheet.create({
     marginRight: '10@ms0.3',
   },
   bottomInnerContainer: {
-    width: screenWidth / 4.5,
-    height: screenWidth / 4.5,
+    width: screenWidth / 4.6,
+    height: screenWidth / 4.6,
     backgroundColor: Colors.mediumBlue,
     borderWidth: '2@ms0.3',
     borderRadius: '16@ms0.3',
@@ -303,8 +303,9 @@ export default ScaledSheet.create({
   },
   bottomFlatlist: {
     marginTop: 1,
-    marginHorizontal: 1,
+    marginHorizontal: 10,
     marginTop: '12@ms0.3',
+    flexDirection:'row'
   },
   listBackground: {
     position: 'absolute',

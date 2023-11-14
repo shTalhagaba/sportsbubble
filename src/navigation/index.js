@@ -32,7 +32,7 @@ const AppStackNavigator = () => {
         const dma = dmaResponse?.data?.dma ?? ''
         dmaCode = dma
         if ((!reduxData?.userData?.['custom:dma'] && dma !== '') || dma !== reduxData?.userData?.['custom:dma']) {
-          await CognitoAPI(reduxData?.userData, 'updateUser', dma)
+          await CognitoAPI(reduxData, 'updateUser', dma)
           const updatedSession = { ...reduxData?.userData, 'custom:dma': dma }
           dispatch(setUserData(updatedSession))
         } else {

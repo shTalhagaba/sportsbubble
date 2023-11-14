@@ -28,8 +28,8 @@ export default function Watch(props) {
   const [itemSelected, setItemSelected] = useState(props?.route?.params?.item);
   const [bottomMenu, setBottomMenu] = useState(false);
   const [bottomShow, setBottomShow] = useState(false);
-  const [mainlist, setMainList] = useState([]);
-  const [bottomList, setBottomList] = useState([]);
+  const [partnerlist, setPartnerList] = useState([]);
+  const [otherList, setOtherList] = useState([]);
 
   useEffect(() => {
     setItemSelected(props?.route?.params?.item);
@@ -38,7 +38,7 @@ export default function Watch(props) {
         props?.route?.params?.item?.rightsHoldersConnection?.edges.length > 0) ||
       props?.route?.params?.item?.rightsHoldersConnection?.totalCount > 0
     ) {
-      let list =
+      let others =
         props?.route?.params?.item?.rightsHoldersConnection?.edges.filter(
           item => {
             if (['NFL'].includes(itemSelected?.league?.name)) {
@@ -48,8 +48,8 @@ export default function Watch(props) {
             return rightsHolder && rightsHolder.weight < 1000;
           },
         );
-      // list.sort((a, b) => b.node.weight - a.node.weight);
-      let main =
+      // others.sort((a, b) => b.node.weight - a.node.weight);
+      let partners =
         props?.route?.params?.item?.rightsHoldersConnection?.edges.filter(
           item => {
             if (['NFL'].includes(itemSelected?.league?.name)) {
@@ -59,10 +59,10 @@ export default function Watch(props) {
             return rightsHolder && rightsHolder.weight > 1000;
           },
         );
-      // main.sort((a, b) => b.node.weight - a.node.weight);
-      setBottomList(list)
-      setMainList(main)
-      if (list && list.length > 0) {
+      // partners.sort((a, b) => b.node.weight - a.node.weight);
+      setOtherList(others)
+      setPartnerList(partners)
+      if (others && others.length > 0) {
         setBottomShow(true);
       }
     }
@@ -123,7 +123,7 @@ export default function Watch(props) {
               : Strings.connectToWatch}
           </Text>
           <FlatList
-            data={mainlist}
+            data={partnerlist}
             showsHorizontalScrollIndicator={false}
             horizontal
             contentContainerStyle={styles.flatContainer}
@@ -166,8 +166,7 @@ export default function Watch(props) {
         </View>
       </>)
   }
-
-  const ItemComponent = ({ item }) => {
+  const ItemComponent = React.memo(({ item }) => {
     return (
       <View style={styles.bottomListContainer}>
         <View style={styles.bottomInnerContainer}>
@@ -191,7 +190,7 @@ export default function Watch(props) {
         </View>
       </View>
     )
-  }
+  })
 
   return (
     <ImageBackground
@@ -241,7 +240,7 @@ export default function Watch(props) {
           directionalOffsetThreshold: 100,
           gestureIsClickThreshold: 20,
         }}>
-        {bottomShow && bottomList.length > 0 &&
+        {bottomShow && otherList.length > 0 &&
           (bottomMenu ? (
             <ImageBackground
               source={Images.CircleBGLarge}
@@ -252,13 +251,20 @@ export default function Watch(props) {
               </TouchableOpacity>
               <Text style={styles.wayToWatch}>{Strings.otherWays}</Text>
               <View style={styles.bottomFlatlist}>
-                <FlatList
-                  data={bottomList}
+                {/* <FlatList
+                  data={otherList}
                   showsVerticalScrollIndicator={false}
                   contentContainerStyle={{ justifyContent: 'center' }}
                   horizontal
+                  windowSize={5} // Adjust the window size as needed
+                  keyExtractor={(item,index) => index.toString()}
                   renderItem={({ item }) => <ItemComponent item={item} />}
-                />
+                /> */}
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                {otherList.map((item, index) => (
+                  <ItemComponent key={index} item={item} />
+                ))}
+                </ScrollView>
               </View>
             </ImageBackground>
           ) : (

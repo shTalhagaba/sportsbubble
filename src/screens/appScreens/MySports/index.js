@@ -207,7 +207,7 @@ export default function MySports() {
           variables: updateData,
         });
         if (!loadingFavourite && data?.updateConsumers?.consumers) {
-          ShowMessage('Remove from Favorites successfully!');
+          ShowMessage('Removed from Favorites successfully!');
           dispatch(
             setSportsList(
               data?.updateConsumers?.consumers?.[0]?.favoriteSports,
@@ -222,7 +222,6 @@ export default function MySports() {
           refetch();
         }
         // Handle the response data as needed
-        // console.log('Remove consumer:', data?.updateConsumers?.consumers?.[0]?.favoriteSports);
       } catch (err) {
         console.error('Error updating consumer:', err);
       }
