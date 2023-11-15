@@ -260,7 +260,7 @@ export default function Watch(props) {
                   keyExtractor={(item,index) => index.toString()}
                   renderItem={({ item }) => <ItemComponent item={item} />}
                 /> */}
-                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{justifyContent:'center',flex:1}}>
                   {otherList.map((item, index) => (
                     <ItemComponent key={index} item={item} />
                   ))}
