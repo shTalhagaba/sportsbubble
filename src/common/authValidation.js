@@ -26,14 +26,10 @@ export const signupValidation = (
 ) => {
   if (checkValidation(firstName)) {
     ShowMessage('Please Enter First Name.');
-  } else if (firstName.length < 3) {
-    ShowMessage('First Name should be at least 3 characters long.');
   } else if (regName.test(firstName) === false) {
     ShowMessage('Name should only contain letters and spaces.');
   } else if (checkValidation(lastName)) {
     ShowMessage('Please Enter Last Name.');
-  } else if (lastName.length < 3) {
-    ShowMessage('Last Name should be at least 3 characters long.');
   } else if (regName.test(lastName) === false) {
     ShowMessage('Name should only contain letters and spaces.');
   } else if (checkValidation(email)) {
@@ -162,14 +158,10 @@ export const updateProfileValidation = (
 ) => {
   if (checkValidation(firstName)) {
     ShowMessage('Please Enter First Name.');
-  } else if (firstName.length < 3) {
-    ShowMessage('First Name should be at least 3 characters long.');
-  } else if (regName.test(firstName) === false) {
+  }  else if (regName.test(firstName) === false) {
     ShowMessage('Name should only contain letters and spaces.');
   } else if (checkValidation(lastName)) {
     ShowMessage('Please Enter Last Name.');
-  } else if (lastName.length < 3) {
-    ShowMessage('Last Name should be at least 3 characters long.');
   } else if (regName.test(lastName) === false) {
     ShowMessage('Name should only contain letters and spaces.');
   } else if (checkValidation(zipCode)) {
