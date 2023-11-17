@@ -93,6 +93,7 @@ export default function Login() {
 
   // Function to Initialize Interest
   const handleInitialPusher = async () => {
+    setLoadingLocal(true);
     const interestList = userSportsData?.consumers?.[0]?.favoriteSports?.flatMap(favoriteSport => {
       if (!favoriteSport?.notifications) return []
       
@@ -113,6 +114,7 @@ export default function Login() {
         await requestNotifications(['alert', 'sound'])
       }
     }
+    setLoadingLocal(false);
   };
 
   // Async function to handle user login
@@ -138,6 +140,7 @@ export default function Login() {
           setLoadingLocal(false);
         }
       } catch (error) {
+        setLoadingLocal(false);
         // Handle different types of error messages
         if (error.message.includes(':')) {
           const myArray = error.message.split(':');
@@ -151,9 +154,7 @@ export default function Login() {
           }
           ShowMessage(error.message);
         }
-      } finally {
-        setLoadingLocal(false);
-      }
+      } 
     }
   }
 

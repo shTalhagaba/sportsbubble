@@ -305,7 +305,7 @@ export default ScaledSheet.create({
     marginTop: 1,
     marginHorizontal: 10,
     marginTop: '12@ms0.3',
-    flexDirection: 'row'
+    flexDirection:'row'
   },
   listBackground: {
     position: 'absolute',

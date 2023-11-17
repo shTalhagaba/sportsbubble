@@ -48,7 +48,7 @@ export default function Watch(props) {
             return rightsHolder && rightsHolder.weight < 1000;
           },
         );
-      // others.sort((a, b) => b.node.weight - a.node.weight);
+      others.sort((a, b) => b.node.weight - a.node.weight);
       let partners =
         props?.route?.params?.item?.rightsHoldersConnection?.edges.filter(
           item => {
@@ -59,7 +59,7 @@ export default function Watch(props) {
             return rightsHolder && rightsHolder.weight > 1000;
           },
         );
-      // partners.sort((a, b) => b.node.weight - a.node.weight);
+      partners.sort((a, b) => b.node.weight - a.node.weight);
       setOtherList(others)
       setPartnerList(partners)
       if (others && others.length > 0) {
@@ -260,10 +260,9 @@ export default function Watch(props) {
                   keyExtractor={(item,index) => index.toString()}
                   renderItem={({ item }) => <ItemComponent item={item} />}
                 /> */}
-                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{justifyContent:'center',flex:1}}>
-                  {otherList.map((item, index) => (
-                    <ItemComponent key={index} item={item} />
-                  ))}
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ justifyContent: 'center', flex: 1 }}>                {otherList.map((item, index) => (
+                  <ItemComponent key={index} item={item} />
+                ))}
                 </ScrollView>
               </View>
             </ImageBackground>
