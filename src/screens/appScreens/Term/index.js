@@ -21,7 +21,6 @@ export default function Term(props) {
   });
 
   useEffect(() => {
-    console.log("props?.route?.params?.selected  => ", props?.route?.params?.selected)
     async function fetchPromotionContent() {
       const termUse = await fetchContentFulContent('XuhxvmlTfU1MCjuELLHvY');
       const privacyPolicy = await fetchContentFulContent('52UJuQgc1nZAm8kLrkAlke');

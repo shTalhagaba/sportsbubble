@@ -45,7 +45,6 @@
 		8AD252E92A8BE379009434F7 /* Lato-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2BB5870BB8654F81A5120057 /* Lato-ThinItalic.ttf */; };
 		8AF12FAD2AFA2EE800997224 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		8AF12FAE2AFA2EE800997224 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		8AF12FB02AFA2EE800997224 /* libPods-sportsbubbleCommonPods-sportsbubbleDevelopment.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 128E797D96BD605BCC3F55B1 /* libPods-sportsbubbleCommonPods-sportsbubbleDevelopment.a */; };
 		8AF12FB22AFA2EE800997224 /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8EB929DCEE7D4136AED466AD /* Lato-Black.ttf */; };
 		8AF12FB32AFA2EE800997224 /* Lato-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6E79C282259D43D190FC762B /* Lato-BlackItalic.ttf */; };
 		8AF12FB42AFA2EE800997224 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3159C7199A284E32A2A28A5D /* Lato-Bold.ttf */; };
@@ -62,19 +61,20 @@
 		9093F27C56B248761025C058 /* libPods-sportsbubbleCommonPods-sportsbubbleStaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7AC2FB01D98864628D1F8AC /* libPods-sportsbubbleCommonPods-sportsbubbleStaging.a */; };
 		922965D57C474B5589D09420 /* Lato-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3816C32EFAA24AE2B764D8BA /* Lato-Italic.ttf */; };
 		ADA1B15644D1428687317762 /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8EB929DCEE7D4136AED466AD /* Lato-Black.ttf */; };
+		C9EB319CF768CB758E8FFD73 /* libPods-sportsbubbleCommonPods-sportsbubblePassport.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF90BEB388602B3CB2E1D8D8 /* libPods-sportsbubbleCommonPods-sportsbubblePassport.a */; };
 		E084AEC84D1872AC680DA74A /* libPods-sportsbubbleCommonPods-sportsbubble.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A18861C80EFBE04976E94D1 /* libPods-sportsbubbleCommonPods-sportsbubble.a */; };
 		ECD8B23834F04A46A20E135B /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85EBC3D84A7A4D379AC96C30 /* Lato-Light.ttf */; };
 		F2CE8393DF55448F837BAA3A /* Lato-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E120C17725514735851EBBFE /* Lato-BoldItalic.ttf */; };
-		FFC0C99651DB8535D5292FAB /* libPods-sportsbubbleCommonPods-sportsbubbleDevelopment.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 128E797D96BD605BCC3F55B1 /* libPods-sportsbubbleCommonPods-sportsbubbleDevelopment.a */; };
+		FFC0C99651DB8535D5292FAB /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* sportsbubbleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = sportsbubbleTests.m; sourceTree = "<group>"; };
+		04B14FE1391282ADFAB285BE /* Pods-sportsbubbleCommonPods-sportsbubblePassport.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sportsbubbleCommonPods-sportsbubblePassport.debug.xcconfig"; path = "Target Support Files/Pods-sportsbubbleCommonPods-sportsbubblePassport/Pods-sportsbubbleCommonPods-sportsbubblePassport.debug.xcconfig"; sourceTree = "<group>"; };
 		04B71A572A54AC1E00FA415D /* sportsbubble development-info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "sportsbubble development-info.plist"; sourceTree = "<group>"; };
 		04B71A592A54AC4300FA415D /* sportsbubble staging-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "sportsbubble staging-Info.plist"; sourceTree = "<group>"; };
 		0B77796A4C1375CF37251133 /* Pods-sportsbubbleCommonPods-sportsbubble.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sportsbubbleCommonPods-sportsbubble.debug.xcconfig"; path = "Target Support Files/Pods-sportsbubbleCommonPods-sportsbubble/Pods-sportsbubbleCommonPods-sportsbubble.debug.xcconfig"; sourceTree = "<group>"; };
-		128E797D96BD605BCC3F55B1 /* libPods-sportsbubbleCommonPods-sportsbubbleDevelopment.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-sportsbubbleCommonPods-sportsbubbleDevelopment.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07F961A680F5B00A75B9A /* sportsbubble.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sportsbubble.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = sportsbubble/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = sportsbubble/AppDelegate.mm; sourceTree = "<group>"; };
@@ -108,12 +108,14 @@
 		928CD786E81E41C58E8BC40A /* Lato-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-Regular.ttf"; path = "../src/assets/fonts/Lato-Regular.ttf"; sourceTree = "<group>"; };
 		A112FEF23E0A1EDD026589E2 /* Pods-sportsbubbleCommonPods-sportsbubbleDevelopment.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sportsbubbleCommonPods-sportsbubbleDevelopment.release.xcconfig"; path = "Target Support Files/Pods-sportsbubbleCommonPods-sportsbubbleDevelopment/Pods-sportsbubbleCommonPods-sportsbubbleDevelopment.release.xcconfig"; sourceTree = "<group>"; };
 		A1D0AD79C51480ED0F30F64F /* Pods-sportsbubbleCommonPods-sportsbubbleStaging.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sportsbubbleCommonPods-sportsbubbleStaging.debug.xcconfig"; path = "Target Support Files/Pods-sportsbubbleCommonPods-sportsbubbleStaging/Pods-sportsbubbleCommonPods-sportsbubbleStaging.debug.xcconfig"; sourceTree = "<group>"; };
+		B5054371538C74AC87FCB39B /* Pods-sportsbubbleCommonPods-sportsbubblePassport.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sportsbubbleCommonPods-sportsbubblePassport.release.xcconfig"; path = "Target Support Files/Pods-sportsbubbleCommonPods-sportsbubblePassport/Pods-sportsbubbleCommonPods-sportsbubblePassport.release.xcconfig"; sourceTree = "<group>"; };
 		B7AC2FB01D98864628D1F8AC /* libPods-sportsbubbleCommonPods-sportsbubbleStaging.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-sportsbubbleCommonPods-sportsbubbleStaging.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC6677D12AC85DB300D64FE3 /* sportsbubble.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = sportsbubble.entitlements; path = sportsbubble/sportsbubble.entitlements; sourceTree = "<group>"; };
 		DC6677D22AC85DD200D64FE3 /* sportsbubbleDevelopment.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = sportsbubbleDevelopment.entitlements; sourceTree = "<group>"; };
 		DC6677D32AC85DE800D64FE3 /* sportsbubbleStaging.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = sportsbubbleStaging.entitlements; sourceTree = "<group>"; };
 		E120C17725514735851EBBFE /* Lato-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-BoldItalic.ttf"; path = "../src/assets/fonts/Lato-BoldItalic.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		EF90BEB388602B3CB2E1D8D8 /* libPods-sportsbubbleCommonPods-sportsbubblePassport.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-sportsbubbleCommonPods-sportsbubblePassport.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,7 +131,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FFC0C99651DB8535D5292FAB /* libPods-sportsbubbleCommonPods-sportsbubbleDevelopment.a in Frameworks */,
+				FFC0C99651DB8535D5292FAB /* (null) in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,7 +147,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8AF12FB02AFA2EE800997224 /* libPods-sportsbubbleCommonPods-sportsbubbleDevelopment.a in Frameworks */,
+				C9EB319CF768CB758E8FFD73 /* libPods-sportsbubbleCommonPods-sportsbubblePassport.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,9 +189,9 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				6A18861C80EFBE04976E94D1 /* libPods-sportsbubbleCommonPods-sportsbubble.a */,
-				128E797D96BD605BCC3F55B1 /* libPods-sportsbubbleCommonPods-sportsbubbleDevelopment.a */,
 				B7AC2FB01D98864628D1F8AC /* libPods-sportsbubbleCommonPods-sportsbubbleStaging.a */,
 				583FDCC765C34F241CBCBF3C /* libPods-sportsbubbleCommonPods-sportsbubbleTests.a */,
+				EF90BEB388602B3CB2E1D8D8 /* libPods-sportsbubbleCommonPods-sportsbubblePassport.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -249,6 +251,8 @@
 				1941AC4D3F3B9CBD299EC832 /* Pods-sportsbubbleCommonPods-sportsbubbleStaging.release.xcconfig */,
 				6791342D49583F65B152BE8F /* Pods-sportsbubbleCommonPods-sportsbubbleTests.debug.xcconfig */,
 				48F2880A7A3BFEAAE4840877 /* Pods-sportsbubbleCommonPods-sportsbubbleTests.release.xcconfig */,
+				04B14FE1391282ADFAB285BE /* Pods-sportsbubbleCommonPods-sportsbubblePassport.debug.xcconfig */,
+				B5054371538C74AC87FCB39B /* Pods-sportsbubbleCommonPods-sportsbubblePassport.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -609,7 +613,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-sportsbubbleCommonPods-sportsbubbleDevelopment-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-sportsbubbleCommonPods-sportsbubblePassport-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -657,15 +661,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-sportsbubbleCommonPods-sportsbubbleDevelopment/Pods-sportsbubbleCommonPods-sportsbubbleDevelopment-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-sportsbubbleCommonPods-sportsbubblePassport/Pods-sportsbubbleCommonPods-sportsbubblePassport-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-sportsbubbleCommonPods-sportsbubbleDevelopment/Pods-sportsbubbleCommonPods-sportsbubbleDevelopment-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-sportsbubbleCommonPods-sportsbubblePassport/Pods-sportsbubbleCommonPods-sportsbubblePassport-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-sportsbubbleCommonPods-sportsbubbleDevelopment/Pods-sportsbubbleCommonPods-sportsbubbleDevelopment-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-sportsbubbleCommonPods-sportsbubblePassport/Pods-sportsbubbleCommonPods-sportsbubblePassport-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8AF12FBF2AFA2EE800997224 /* [CP] Copy Pods Resources */ = {
@@ -674,15 +678,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-sportsbubbleCommonPods-sportsbubbleDevelopment/Pods-sportsbubbleCommonPods-sportsbubbleDevelopment-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-sportsbubbleCommonPods-sportsbubblePassport/Pods-sportsbubbleCommonPods-sportsbubblePassport-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-sportsbubbleCommonPods-sportsbubbleDevelopment/Pods-sportsbubbleCommonPods-sportsbubbleDevelopment-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-sportsbubbleCommonPods-sportsbubblePassport/Pods-sportsbubbleCommonPods-sportsbubblePassport-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-sportsbubbleCommonPods-sportsbubbleDevelopment/Pods-sportsbubbleCommonPods-sportsbubbleDevelopment-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-sportsbubbleCommonPods-sportsbubblePassport/Pods-sportsbubbleCommonPods-sportsbubblePassport-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */ = {
@@ -1127,7 +1131,7 @@
 				CODE_SIGN_ENTITLEMENTS = sportsbubbleDevelopment.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 25;
 				DEVELOPMENT_TEAM = N2NJSCBBBJ;
 				INFOPLIST_FILE = "sportsbubble development-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "dev sportsbubble";
@@ -1195,7 +1199,7 @@
 				CODE_SIGN_ENTITLEMENTS = sportsbubbleStaging.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = N2NJSCBBBJ;
 				INFOPLIST_FILE = "sportsbubble staging-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "stage sportbubble";
@@ -1221,7 +1225,7 @@
 		};
 		8AF12FC12AFA2EE800997224 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 819C4391844B93630F4B497C /* Pods-sportsbubbleCommonPods-sportsbubbleDevelopment.debug.xcconfig */;
+			baseConfigurationReference = 04B14FE1391282ADFAB285BE /* Pods-sportsbubbleCommonPods-sportsbubblePassport.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1256,14 +1260,14 @@
 		};
 		8AF12FC22AFA2EE800997224 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A112FEF23E0A1EDD026589E2 /* Pods-sportsbubbleCommonPods-sportsbubbleDevelopment.release.xcconfig */;
+			baseConfigurationReference = B5054371538C74AC87FCB39B /* Pods-sportsbubbleCommonPods-sportsbubblePassport.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = sportsbubblePassport.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 32;
+				CURRENT_PROJECT_VERSION = 37;
 				DEVELOPMENT_TEAM = N2NJSCBBBJ;
 				INFOPLIST_FILE = "sportsbubble passport-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "passport sportsbubble";

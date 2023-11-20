@@ -140,14 +140,14 @@ export default function WelcomeAccount(props) {
       dispatch(setUserSignupData({
         ...reduxData?.userSignupData,
         zipCode: zipCode,
-        dob: dayjs(dob).format('DD/MM/YYYY'),
+        dob: dayjs(dob).format('MM/DD/YYYY'),
         pronouns: pronouns
       }))
       setLoadingLocal(true);
       try {
         const user = await userSignup(reduxData?.userSignupData?.fullName,
           reduxData?.userSignupData?.lastName, reduxData?.userSignupData?.email
-          , reduxData?.userSignupData?.password, zipCode, dayjs(dob).format('DD/MM/YYYY'), pronouns);
+          , reduxData?.userSignupData?.password, zipCode, dayjs(dob).format('MM/DD/YYYY'), pronouns);
         setClient(user?.userSub)
         dispatch(setUserVerifiedFlag(user?.userConfirmed))
         setVerifyModal(!verifyModal);

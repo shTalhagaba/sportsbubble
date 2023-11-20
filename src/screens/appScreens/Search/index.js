@@ -100,12 +100,20 @@ export default function Search() {
       inputRef?.current?.focus()
     }
   }
+
+    const hasRightHolders = (rightHolders) => {
+    return (
+      rightHolders?.edges?.filter((edge) => edge?.node?.weight > 1000).length >
+      0
+    )
+  }
   const handleDetails = (item) => {
     if (item &&
       item?.rightsHoldersConnection &&
       item?.rightsHoldersConnection?.totalCount === 1 &&
       dayjs(currentDate).isAfter(item?.startTime) &&
-      dayjs(currentDate).isBefore(item?.endTime)
+      dayjs(currentDate).isBefore(item?.endTime) &&
+      hasRightHolders(item?.rightsHoldersConnection)
     ) {
       Keyboard.dismiss();
       navigation.navigate('withoutBottomtab', {

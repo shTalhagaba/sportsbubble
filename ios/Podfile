@@ -59,7 +59,10 @@ abstract_target 'sportsbubbleCommonPods' do
   #   inherit! :complete
   #   # Pods for testing
   # end
-
+  target 'sportsbubblePassport' do
+    inherit! :complete
+    # Pods for testing
+  end
   target 'sportsbubbleDevelopment' do
     inherit! :complete
     # Pods for testing

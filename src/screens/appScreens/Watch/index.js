@@ -206,9 +206,7 @@ export default function Watch(props) {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        // onPressBack={searchFlag ? () => navigation.navigate('SearchWatch') : null}
         SimpleView
-      // headerContainer={styles.headerContainer}
       />
       {/* Main View */}
       {screeHeight < 600 ?
@@ -251,16 +249,8 @@ export default function Watch(props) {
               </TouchableOpacity>
               <Text style={styles.wayToWatch}>{Strings.otherWays}</Text>
               <View style={styles.bottomFlatlist}>
-                {/* <FlatList
-                  data={otherList}
-                  showsVerticalScrollIndicator={false}
-                  contentContainerStyle={{ justifyContent: 'center' }}
-                  horizontal
-                  windowSize={5} // Adjust the window size as needed
-                  keyExtractor={(item,index) => index.toString()}
-                  renderItem={({ item }) => <ItemComponent item={item} />}
-                /> */}
-                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ justifyContent: 'center', flex: 1 }}>                {otherList.map((item, index) => (
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ justifyContent: 'center', flex: 1 }}>                
+                {otherList.map((item, index) => (
                   <ItemComponent key={index} item={item} />
                 ))}
                 </ScrollView>

@@ -234,71 +234,6 @@ export default function Guide() {
     setEventList(eventList);
   }, [reduxData?.sportsList]);
 
-  // Define a function to execute the mutation
-  const updateConsumers = async (categories, sport) => {
-    if (categories?.id && sport?.id) {
-      const updateData = {
-        where: {
-          cognitoId: reduxData?.userData?.sub,
-        },
-        update: {
-          favoriteSports: [
-            {
-              node: {
-                notifications: true,
-                sport: {
-                  connect: {
-                    where: {
-                      node: {
-                        id: sport?.id,
-                      },
-                    },
-                  },
-                },
-                categories: {
-                  connect: [
-                    {
-                      where: {
-                        node: {
-                          id: categories?.id,
-                        },
-                      },
-                    },
-                  ],
-                },
-              },
-            },
-          ],
-        },
-      };
-      try {
-        const { data } = await updateConsumersMutation({
-          variables: updateData,
-        });
-        if (!loadingFavourite && data?.updateConsumers?.consumers) {
-          ShowMessage('Added to Favorites successfully!');
-          if (
-            data?.updateConsumers?.consumers?.[0]?.favoriteSports &&
-            data?.updateConsumers?.consumers?.[0]?.favoriteSports.length > 0
-          ) {
-            setList(data?.updateConsumers?.consumers?.[0]?.favoriteSports);
-            dispatch(
-              setSportsList(
-                data?.updateConsumers?.consumers?.[0]?.favoriteSports,
-              ),
-            );
-          }
-        }
-        // Handle the response data as needed
-        console.log('Updated consumer:', data?.updateConsumers?.consumers);
-      } catch (err) {
-        console.error('Error updating consumer:', err);
-      }
-    } else {
-      ShowMessage('Invalid data');
-    }
-  };
-
   const getTimeList = () => {
     const hoursList = [];
     for (let i = 1; i < 169; i++) {
@@ -509,6 +444,13 @@ export default function Guide() {
     return false;
   };
 
+  const hasRightHolders = (rightHolders) => {
+    return (
+      rightHolders?.edges?.filter((edge) => edge?.node?.weight > 1000).length >
+      0
+    )
+  }
+
   const ItemComponent = React.memo(({ item }) => {
     return (
       <TouchableOpacity
@@ -520,7 +462,8 @@ export default function Guide() {
             item?.rightsHoldersConnection &&
             item?.rightsHoldersConnection?.totalCount === 1 &&
             dayjs(currentDate).isAfter(item?.startTime) &&
-            dayjs(currentDate).isBefore(item?.endTime)
+            dayjs(currentDate).isBefore(item?.endTime) &&
+            hasRightHolders(item?.rightsHoldersConnection)
           ) {
             navigation.navigate('withoutBottomtab', {
               screen: 'Connect',
