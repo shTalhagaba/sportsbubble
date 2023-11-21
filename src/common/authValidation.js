@@ -45,7 +45,7 @@ export const signupValidation = (
       ShowMessage('Password should be at least 8 characters long.');
     } else if (regPassword.test(trimmedPassword) === false) {
       ShowMessage(
-        'Password should include uppercase letters, symbols, and numbers.',
+        'Password should include uppercase letters and numbers.',
       );
     } else if (password !== confirmPassword) {
       ShowMessage("Passwords don't match.");
@@ -103,7 +103,7 @@ export const updatePasswordValidation = (
     ShowMessage('Please Enter New Password.');
   } else if (regPassword.test(trimmedNewPassword) === false) {
     ShowMessage(
-      'New Password should include uppercase letters, symbols, and numbers.',
+      'New Password should include uppercase letters and numbers.',
     );
   } else if (newPassword !== newConfirmPassword) {
     ShowMessage("Passwords don't match.");
@@ -134,7 +134,7 @@ export const resetPasswordValidation = (otp, password) => {
     ShowMessage('Password should be at least 8 characters long.');
   } else if (regPassword.test(trimmedPassword) === false) {
     ShowMessage(
-      'New Password should include uppercase letters, symbols, and numbers.',
+      'New Password should include uppercase letters and numbers.',
     );
   } else {
     return true;
