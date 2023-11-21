@@ -526,6 +526,7 @@ export default function MySports() {
         //DENIED: The permission has not been requested / is denied but requestable
         //BLOCKED: The permission is denied and not requestable anymore
         //GRANTED: The permission is granted
+        console.log('status - ',status)
         switch (status) {
           case 'granted':
             resolve(true);
@@ -535,6 +536,9 @@ export default function MySports() {
               ({ status, settings }) => {
                 if (status == 'granted') {
                   resolve(true);
+                } else if(status == 'blocked'){
+                  setSettingsModal(true);
+                  resolve(false);
                 } else {
                   resolve(false);
                 }
