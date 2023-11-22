@@ -67,6 +67,10 @@ const images = {
     ESPN_Plus: require("src/assets/images/ESPN_Plus.png"),
     FuboTV_logo: require("src/assets/images/FuboTV_logo.png"),
     MySportsFiiled: require("src/assets/images/MySportsFiiled.png"),
+    TooltipTwo: require("src/assets/images/TooltipTwo.png"),
+    TooltipOne: require("src/assets/images/TooltipOne.png"),
+    TooltipThree: require("src/assets/images/TooltipThree.png"),
+    TooltipClose: require("src/assets/images/TooltipClose.png")
 }
 
 export default images

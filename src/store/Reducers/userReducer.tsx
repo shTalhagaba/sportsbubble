@@ -18,7 +18,8 @@ const initialState = {
   selectedTimebar: -1,
   userSignupData: '',
   userEmail: '',
-  userLoginVerified: false
+  userLoginVerified: false,
+  tooltipStatus: true
 };
 
 const user = (state = initialState, action: any) => {
@@ -173,6 +174,18 @@ const user = (state = initialState, action: any) => {
         return {
           ...state,
           guest: action.payload,
+        };
+      } catch (e) {
+        alert(e);
+        return state;
+      }
+      break;
+    // guest
+    case 'SET_TOOLTIP_STATUS':
+      try {
+        return {
+          ...state,
+          tooltipStatus: action.payload,
         };
       } catch (e) {
         alert(e);
