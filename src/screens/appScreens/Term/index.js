@@ -26,9 +26,9 @@ export default function Term(props) {
       const privacyPolicy = await fetchContentFulContent('52UJuQgc1nZAm8kLrkAlke');
       const californiaPolicy = await fetchContentFulContent('4QghRl8LFoRAvWRNyTDeX4');
       setContent({
-        termUse: termUse?.fields.description.content[0].content[0].value,
+        termUse: termUse?.fields,
         privacyPolicy: privacyPolicy?.fields,
-        californiaPolicy: californiaPolicy?.fields.description.content[0].content[0].value
+        californiaPolicy: californiaPolicy?.fields
       });
     }
     fetchPromotionContent()
@@ -115,9 +115,9 @@ export default function Term(props) {
                 // props?.route?.params?.selected === Strings.privacyPolicy ?
                 source !== null && typeof source === 'object' ?
                   <>
-                    <Text style={styles.contentTxt}>
-                      {source?.title} {/* Display the title */}
-                    </Text>
+                    {/* <Text style={styles.contentTxt}>
+                      {source?.title} 
+                    </Text> */}
                     {source?.description?.content.map((contentNode, index) => (
                       <RenderContentNode key={index} node={contentNode} />
                     ))}

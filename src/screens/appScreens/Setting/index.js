@@ -32,6 +32,7 @@ export default function Setting() {
   const dispatch = useDispatch();
   const [logoutModal, setLogoutModal] = useState(false);
   const data = useSelector(state => state.user);
+  const flags = useSelector(state => state?.feature?.flags);
   const sportsList = data?.sportsList
   // Function to remove notification 
   const handleInitialPusher = () => {
@@ -85,7 +86,7 @@ export default function Setting() {
         <Text style={styles.loginTxt}>{Strings.settings}</Text>
         <View style={styles.innerContainer}>
           {/* changes for next version */}
-          {data?.user && (
+          {flags?.WEB2 && data?.user && (
             <>
               <ButtonWithIcon
                 title={Strings.personalInfo}
@@ -125,7 +126,7 @@ export default function Setting() {
             title={Strings.reportProblem}
             onpress={() => Instabug.show()}
           />
-          {data?.user && (
+          {flags?.WEB2 && data?.user && (
             <TouchableOpacity
               onPress={() => setLogoutModal(!logoutModal)}
               style={{
@@ -184,20 +185,6 @@ export default function Setting() {
         }}
         Container={{ backgroundColor: Colors.backBlack }}
       />
-      {/* Powered by sports bubble */}
-      {/* <View style={styles.sbContainer}>
-        <Image
-          source={Images.Sports}
-          style={styles.leftArrowIcon}
-          resizeMode={'contain'}
-        />
-        <Image
-          source={Images.PoweredSB}
-          style={styles.powerImage}
-          resizeMode={'contain'}
-        />
-        <Text style={styles.versionTxt}>v {version}</Text>
-      </View> */}
     </ImageBackground>
   );
 }

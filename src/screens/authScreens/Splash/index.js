@@ -18,6 +18,7 @@ import dayjs from 'dayjs';
 import { setFeatureFlag, setStoreEventList } from 'src/store/types';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
+import Config from 'react-native-config';
 
 export default function Splash() {
   const navigation = useNavigation();
@@ -31,7 +32,7 @@ export default function Splash() {
 
   const getFeatureFlags = async () => {
     try {
-      const flags = await axios.get('https://dfj4syg8c5w70.cloudfront.net/feature-flags/flags.json')
+      const flags = await axios.get(Config.FLAGS_URL)
       setFlag(flags?.data)
       dispatch(setFeatureFlag(flags?.data))
       return flags
@@ -116,7 +117,7 @@ export default function Splash() {
   };
 
   const navigateToAuthScreen = () => {
-    if (!flag?.WEB2) {
+    if (flag?.WEB2) {
       setTimeout(() => {
         navigation.replace('Auth');
       }, 1000);
