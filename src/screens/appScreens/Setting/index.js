@@ -45,10 +45,10 @@ export default function Setting() {
       }
     })
     checkNotifications().then(({ status, settings }) => {
-      if (status === 'granted'){
+      if (status === 'granted') {
         initializePusher()
-        interestList && interestList?.length>0 && interestList.forEach(interest => unsubscribeInterest(interest))
-      } 
+        interestList && interestList?.length > 0 && interestList.forEach(interest => unsubscribeInterest(interest))
+      }
     })
   };
 
@@ -86,7 +86,7 @@ export default function Setting() {
         <Text style={styles.loginTxt}>{Strings.settings}</Text>
         <View style={styles.innerContainer}>
           {/* changes for next version */}
-          {flags?.WEB2 && data?.user && (
+          {!flags?.WEB2 && data?.user && (
             <>
               <ButtonWithIcon
                 title={Strings.personalInfo}
@@ -126,7 +126,7 @@ export default function Setting() {
             title={Strings.reportProblem}
             onpress={() => Instabug.show()}
           />
-          {flags?.WEB2 && data?.user && (
+          {!flags?.WEB2 && data?.user && (
             <TouchableOpacity
               onPress={() => setLogoutModal(!logoutModal)}
               style={{

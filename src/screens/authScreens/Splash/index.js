@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ImageBackground,
   StatusBar,
@@ -9,14 +9,14 @@ import {
   Platform,
 } from 'react-native';
 import styles from './styles';
-import {Images, Colors} from 'src/utils';
-import {useNavigation} from '@react-navigation/native';
+import { Images, Colors } from 'src/utils';
+import { useNavigation } from '@react-navigation/native';
 import DeviceInfo from 'react-native-device-info';
-import {useQuery} from '@apollo/client';
-import {GET_SORTED_EVENTS} from 'src/screens/appScreens/Guide/queries';
+import { useQuery } from '@apollo/client';
+import { GET_SORTED_EVENTS } from 'src/screens/appScreens/Guide/queries';
 import dayjs from 'dayjs';
-import {setFeatureFlag, setStoreEventList} from 'src/store/types';
-import {useDispatch, useSelector} from 'react-redux';
+import { setFeatureFlag, setStoreEventList } from 'src/store/types';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import Config from 'react-native-config';
 
@@ -49,7 +49,7 @@ export default function Splash() {
     }
   }, []);
 
-  const {loading, refetch, error} = useQuery(GET_SORTED_EVENTS, {
+  const { loading, refetch, error } = useQuery(GET_SORTED_EVENTS, {
     variables: {
       startTime: dayjs(startTime)
         .set('minutes', 0)
@@ -129,7 +129,7 @@ export default function Splash() {
   };
 
   const navigateToAuthScreen = () => {
-    if (flag?.WEB2) {
+    if (!flag?.WEB2) {
       setTimeout(() => {
         navigation.replace('Auth');
       }, 1000);
@@ -144,11 +144,11 @@ export default function Splash() {
     <View style={styles.container}>
       <ImageBackground
         source={Images.Background2}
-        style={{height: '100%', width: '100%'}}
+        style={{ height: '100%', width: '100%' }}
         resizeMode="cover">
         <ImageBackground
           source={Images.SplashBackTop}
-          style={{height: height / 2.5}}
+          style={{ height: height / 2.5 }}
           resizeMode="cover">
           <StatusBar
             backgroundColor={Colors.transparent}
@@ -156,7 +156,7 @@ export default function Splash() {
             barStyle="light-content"
           />
         </ImageBackground>
-        <View style={[styles.logoStyle, {marginTop: height / 4}]}>
+        <View style={[styles.logoStyle, { marginTop: height / 4 }]}>
           <Image
             source={Images.LogoText}
             style={styles.logo}
