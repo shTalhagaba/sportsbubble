@@ -127,3 +127,10 @@ export const selectedTimebar = (args: any) => {
   };
 };
 
+export const setFeatureFlag = (args: any) => {
+  return {
+    type: 'SET_FEATURE_FLAG',
+    payload: args,
+  };
+};
+

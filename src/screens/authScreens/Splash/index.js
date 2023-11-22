@@ -15,16 +15,36 @@ import DeviceInfo from 'react-native-device-info';
 import { useQuery } from '@apollo/client';
 import { GET_SORTED_EVENTS } from 'src/screens/appScreens/Guide/queries';
 import dayjs from 'dayjs';
-import { setStoreEventList } from 'src/store/types';
+import { setFeatureFlag, setStoreEventList } from 'src/store/types';
 import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
 
 export default function Splash() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const reduxData = useSelector(state => state.user);
+  const flags = useSelector(state => state?.feature?.flags);
   const [startTime, setStartTime] = useState(dayjs(new Date()).toISOString());
   const height = Dimensions.get('window').height;
   const version = DeviceInfo.getVersion();
+  const [flag, setFlag] = useState(undefined)
+
+  const getFeatureFlags = async () => {
+    try {
+      const flags = await axios.get('https://dfj4syg8c5w70.cloudfront.net/feature-flags/flags.json')
+      setFlag(flags?.data)
+      dispatch(setFeatureFlag(flags?.data))
+      return flags
+    } catch (error) {
+      return false
+    }
+  }
+
+  useEffect(() => {
+    if (!flag) {
+      getFeatureFlags()
+    }
+  }, [])
 
   const { loading, refetch, error } = useQuery(GET_SORTED_EVENTS, {
     variables: {
@@ -96,9 +116,15 @@ export default function Splash() {
   };
 
   const navigateToAuthScreen = () => {
-    setTimeout(() => {
-      navigation.replace('Auth');
-    }, 1000);
+    if (!flag?.WEB2) {
+      setTimeout(() => {
+        navigation.replace('Auth');
+      }, 1000);
+    } else {
+      setTimeout(() => {
+        navigation.replace('Root');
+      }, 1000);
+    }
   };
 
   return (

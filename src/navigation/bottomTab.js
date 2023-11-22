@@ -59,6 +59,7 @@ const SearchNavigation = () => {
 const BottomTab = () => {
   const dispatch = useDispatch();
   const reduxData = useSelector(state => state.user);
+  const flags = useSelector(state => state?.feature?.flags);
 
   const tabBarGuideListeners = ({ navigation, route }) => ({
     tabPress: () => {
@@ -81,31 +82,6 @@ const BottomTab = () => {
 
   return (
     <Tab.Navigator
-      // initialRouteName={'Guide'}
-      // tabBarOptions={{
-      //   showIcon: true,
-      //   showLabel: false,
-      //   keyboardHidesTabBar: true,
-      // }}
-      // screenOptions={{
-      //   headerShown: false,
-      //   tabBarStyle: {
-      //     backgroundColor:
-      //       Platform.OS === 'ios'
-      //         ? Colors.appColorBackground90
-      //         : Colors.backBlack,
-      //     height:
-      //       Platform.OS === 'android'
-      //         ? moderateScale(72, 0.3)
-      //         : moderateScale(80, 0.3),
-      //     paddingTop:
-      //       Platform.OS === 'android'
-      //         ? moderateScale(2, 0.3)
-      //         : moderateScale(15, 0.3),
-      //     borderTopWidth: 2,
-      //     borderTopColor: '#3E4349',
-      //   },
-      // }}
       initialRouteName={'Guide'}
       screenOptions={{
         tabBarLabelStyle: { display: 'none' },
@@ -151,26 +127,27 @@ const BottomTab = () => {
           ),
         }}
       />
-      <Tab.Screen
-        name="MySports"
-        component={MySports}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <View style={styles.bottomContainer}>
-              <Image
-                source={focused ? Images.MySportsFiiled : Images.MySports}
-                style={[
-                  styles.iconImage,
-                  {
-                    tintColor: focused ? Colors.lightGreen : Colors.white,
-                  },
-                ]}
-                resizeMode={'contain'}
-              />
-            </View>
-          ),
-        }}
-      />
+      {!flags?.WEB2 ?
+        <Tab.Screen
+          name="MySports"
+          component={MySports}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <View style={styles.bottomContainer}>
+                <Image
+                  source={focused ? Images.MySportsFiiled : Images.MySports}
+                  style={[
+                    styles.iconImage,
+                    {
+                      tintColor: focused ? Colors.lightGreen : Colors.white,
+                    },
+                  ]}
+                  resizeMode={'contain'}
+                />
+              </View>
+            ),
+          }}
+        /> : null}
       <Tab.Screen
         name="Search"
         component={SearchNavigation}
