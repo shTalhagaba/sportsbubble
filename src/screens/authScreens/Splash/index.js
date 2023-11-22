@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ImageBackground,
   StatusBar,
@@ -9,14 +9,14 @@ import {
   Platform,
 } from 'react-native';
 import styles from './styles';
-import { Images, Colors } from 'src/utils';
-import { useNavigation } from '@react-navigation/native';
+import {Images, Colors} from 'src/utils';
+import {useNavigation} from '@react-navigation/native';
 import DeviceInfo from 'react-native-device-info';
-import { useQuery } from '@apollo/client';
-import { GET_SORTED_EVENTS } from 'src/screens/appScreens/Guide/queries';
+import {useQuery} from '@apollo/client';
+import {GET_SORTED_EVENTS} from 'src/screens/appScreens/Guide/queries';
 import dayjs from 'dayjs';
-import { setFeatureFlag, setStoreEventList } from 'src/store/types';
-import { useDispatch, useSelector } from 'react-redux';
+import {setFeatureFlag, setStoreEventList} from 'src/store/types';
+import {useDispatch, useSelector} from 'react-redux';
 import axios from 'axios';
 import Config from 'react-native-config';
 
@@ -28,28 +28,31 @@ export default function Splash() {
   const [startTime, setStartTime] = useState(dayjs(new Date()).toISOString());
   const height = Dimensions.get('window').height;
   const version = DeviceInfo.getVersion();
-  const [flag, setFlag] = useState(undefined)
+  const [flag, setFlag] = useState(undefined);
 
   const getFeatureFlags = async () => {
     try {
-      const flags = await axios.get(Config.FLAGS_URL)
-      setFlag(flags?.data)
-      dispatch(setFeatureFlag(flags?.data))
-      return flags
+      const flags = await axios.get(
+        'https://dfj4syg8c5w70.cloudfront.net/feature-flags/flags.json',
+      );
+      setFlag(flags?.data);
+      dispatch(setFeatureFlag(flags?.data));
+      return flags;
     } catch (error) {
-      return false
+      return false;
     }
-  }
+  };
 
   useEffect(() => {
     if (!flag) {
-      getFeatureFlags()
+      getFeatureFlags();
     }
-  }, [])
+  }, []);
 
-  const { loading, refetch, error } = useQuery(GET_SORTED_EVENTS, {
+  const {loading, refetch, error} = useQuery(GET_SORTED_EVENTS, {
     variables: {
-      startTime: dayjs(startTime).set('minutes', 0)
+      startTime: dayjs(startTime)
+        .set('minutes', 0)
         .set('second', 0)
         .toISOString(),
       endTime: dayjs(startTime)
@@ -63,7 +66,16 @@ export default function Splash() {
     onCompleted: data => {
       if (data && data?.sortedEvents) {
         const filteredEvents = (data?.sortedEvents || []).filter(event => {
-          const { line1, line2, startTime, endTime, logo1, rightsHolders, id, rightsHoldersConnection } = event;
+          const {
+            line1,
+            line2,
+            startTime,
+            endTime,
+            logo1,
+            rightsHolders,
+            id,
+            rightsHoldersConnection,
+          } = event;
           // Check if the event should be excluded based on id and rightsHoldersConnection
           if (
             id === '9f25117c-78ed-4af1-a2fb-ed5cef8ed414' ||
@@ -102,7 +114,7 @@ export default function Splash() {
 
   useEffect(() => {
     if (!loading) {
-      if ((reduxData?.user) && reduxData?.eventList?.length > 0) {
+      if (reduxData?.user && reduxData?.eventList?.length > 0) {
         navigateToMainScreen();
       } else {
         navigateToAuthScreen();
@@ -132,11 +144,11 @@ export default function Splash() {
     <View style={styles.container}>
       <ImageBackground
         source={Images.Background2}
-        style={{ height: '100%', width: '100%' }}
+        style={{height: '100%', width: '100%'}}
         resizeMode="cover">
         <ImageBackground
           source={Images.SplashBackTop}
-          style={{ height: height / 2.5 }}
+          style={{height: height / 2.5}}
           resizeMode="cover">
           <StatusBar
             backgroundColor={Colors.transparent}
@@ -144,7 +156,7 @@ export default function Splash() {
             barStyle="light-content"
           />
         </ImageBackground>
-        <View style={[styles.logoStyle, { marginTop: height / 4 }]}>
+        <View style={[styles.logoStyle, {marginTop: height / 4}]}>
           <Image
             source={Images.LogoText}
             style={styles.logo}
@@ -163,7 +175,9 @@ export default function Splash() {
             style={styles.powerImage}
             resizeMode="contain"
           />
-          <Text style={styles.versionTxt}>v {version}</Text>
+          <Text style={styles.versionTxt}>
+            v {flag?.WEB3 || flags?.WEB3 ? '2.03' : flag?.WEB2 || flags?.WEB2 ? '2.02' : version}
+          </Text>
         </View>
       </ImageBackground>
     </View>
