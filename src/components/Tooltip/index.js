@@ -18,6 +18,22 @@ const DATA = [
         id: 3,
         TooltipImage: Images.TooltipThree,
     },
+    {
+        id: 4,
+        TooltipImage: Images.TooltipFour,
+    },
+    {
+        id: 5,
+        TooltipImage: Images.TooltipFive,
+    },
+    {
+        id: 6,
+        TooltipImage: Images.TooltipSix,
+    },
+    {
+        id: 6,
+        TooltipImage: Images.TooltipSeven,
+    },
 ]
 const Tooltip = (props) => {
     const listRef = useRef(null);
@@ -66,3 +82,4 @@ const Tooltip = (props) => {
     );
 };
 export default Tooltip;
+

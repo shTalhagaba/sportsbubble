@@ -70,7 +70,11 @@ const images = {
     TooltipTwo: require("src/assets/images/TooltipTwo.png"),
     TooltipOne: require("src/assets/images/TooltipOne.png"),
     TooltipThree: require("src/assets/images/TooltipThree.png"),
-    TooltipClose: require("src/assets/images/TooltipClose.png")
+    TooltipClose: require("src/assets/images/TooltipClose.png"),
+    TooltipFour: require("src/assets/images/TooltipFour.png"),
+    TooltipFive: require("src/assets/images/TooltipFive.png"),
+    TooltipSix: require("src/assets/images/TooltipSix.png"),
+    TooltipSeven: require("src/assets/images/TooltipSeven.png"),
 }
 
 export default images
