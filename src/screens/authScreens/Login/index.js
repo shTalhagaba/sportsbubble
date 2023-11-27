@@ -50,7 +50,6 @@ export default function Login() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const user = useSelector(state => state.user)
-
   // To Intialize Pusher on Login
   const [userSports, { loading, data: userSportsData }] = useLazyQuery(GET_USER_FAVOURITE_SPORTS, {
     fetchPolicy: 'no-cache'
@@ -73,7 +72,11 @@ export default function Login() {
   const handleSports = async () => {
     if (userSportsData) {
       await handleInitialPusher()
-      navigation.replace('Root')
+      if (user?.tooltipStatus) {
+        navigation.replace("Tooltip")
+      } else {
+        navigation.replace('Root')
+      }
     }
   }
   useEffect(() => {
@@ -96,14 +99,14 @@ export default function Login() {
     setLoadingLocal(true);
     const interestList = userSportsData?.consumers?.[0]?.favoriteSports?.flatMap(favoriteSport => {
       if (!favoriteSport?.notifications) return []
-      
+
       if (!['pro', 'esports', 'college']?.includes(favoriteSport?.categories?.[0]?.name)) {
         return `others-${favoriteSport?.sport?.name?.replaceAll(/[^A-Z0-9]+/ig, '')}`
       } else {
         return `${favoriteSport?.categories?.[0]?.name}-${favoriteSport?.sport?.name?.replaceAll(/[^A-Z0-9]+/ig, '')}`
       }
     })
-    if( interestList && interestList?.length > 0 ){ 
+    if (interestList && interestList?.length > 0) {
       initializePusher()
       const { status } = await checkNotifications()
       if (status === 'granted') {
@@ -134,8 +137,8 @@ export default function Login() {
           dispatch(setUserData(user?.idToken?.payload));
           setEmail('');
           setPassword('');
-          await AsyncStorage.setItem('accessToken',JSON.stringify(user?.idToken?.jwtToken));
-          await AsyncStorage.setItem('refreshToken',JSON.stringify(user?.refreshToken?.token));
+          await AsyncStorage.setItem('accessToken', JSON.stringify(user?.idToken?.jwtToken));
+          await AsyncStorage.setItem('refreshToken', JSON.stringify(user?.refreshToken?.token));
           await handleInitialPusher();
           setLoadingLocal(false);
         }
@@ -154,7 +157,7 @@ export default function Login() {
           }
           ShowMessage(error.message);
         }
-      } 
+      }
     }
   }
 

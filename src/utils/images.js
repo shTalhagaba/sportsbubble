@@ -75,6 +75,15 @@ const images = {
     TooltipFive: require("src/assets/images/TooltipFive.png"),
     TooltipSix: require("src/assets/images/TooltipSix.png"),
     TooltipSeven: require("src/assets/images/TooltipSeven.png"),
+    SliderOne: require("src/assets/images/SliderOne.png"),
+    SliderTwo: require("src/assets/images/SliderTwo.png"),
+    SliderThree: require("src/assets/images/SliderThree.png"),
+    SliderFour: require("src/assets/images/SliderFour.png"),
+    SliderFive: require("src/assets/images/SliderFive.png"),
+    SliderSix: require("src/assets/images/SliderSix.png"),
+    SliderSeven: require("src/assets/images/SliderSeven.png"),
+    LeftArrow: require("src/assets/images/LeftArrow.png"),
+    RightSlider: require("src/assets/images/RightSlider.png"),
 }
 
 export default images

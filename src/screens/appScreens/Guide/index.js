@@ -535,13 +535,12 @@ export default function Guide() {
       </TouchableOpacity>
     );
   });
-  console.log(reduxData?.tooltipStatus)
 
   return (
     <>
-      <TooltipView
+      {/* <TooltipView
         visible={reduxData?.tooltipStatus}
-        closePress={() => dispatch(setTooltipStatus(false))} />
+        closePress={() => dispatch(setTooltipStatus(false))} /> */}
 
       <View style={styles.container}>
         <ImageBackground
