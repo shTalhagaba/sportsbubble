@@ -53,7 +53,7 @@ export default ScaledSheet.create({
         width:'78%',
     },
     titleTxt: {
-        fontSize: "14@ms0.3",
+        fontSize: "16@ms0.3",
         fontWeight: "800",
         lineHeight: "25@ms0.3",
         color: Colors.white,

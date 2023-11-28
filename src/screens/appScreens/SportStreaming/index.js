@@ -245,7 +245,7 @@ export default function SportStreaming() {
             </TouchableOpacity>
           </TouchableOpacity>
           {/* main list */}
-          {false ?
+          {loading ?
             <View style={{ flex: 1, justifyContent: 'center' }}>
               <ActivityIndicator color={'#fff'} size={'large'} />
             </View> :
@@ -268,7 +268,7 @@ export default function SportStreaming() {
                       <View style={styles.listBackground} />
                       <View style={styles.imageContainer}>
                         <ImageWithPlaceHolder
-                          source={item?.node?.logoUrl}
+                          source={item?.logoUrl}
                           placeholderSource={Constants.placeholder_trophy_icon}
                           style={styles.imageRightsIcon}
                           logoUrl={true}

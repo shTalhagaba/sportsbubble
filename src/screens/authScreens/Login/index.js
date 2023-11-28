@@ -86,11 +86,15 @@ export default function Login() {
 
 
   const subscribeToInterests = async (interestList) => {
-    for await (const interest of interestList) {
-      subscribeInterest(interest)
+    try {
+      for (const interest of interestList) {
+        await subscribeInterest(interest);
+      }
+      console.log('All interests subscribed successfully');
+    } catch (error) {
+      console.error('Error subscribing to interests:', error);
     }
-  }
-
+  };
   // Function to Initialize Interest
   const handleInitialPusher = async () => {
     setLoadingLocal(true);

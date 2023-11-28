@@ -50,6 +50,7 @@ export default ScaledSheet.create({
   logoutIcon: {
     height: '9@ms0.3',
     width: '16@ms0.3',
+    marginTop: '5@ms0.3',
   },
   innerContainer: {
     marginTop: '24@ms0.3',

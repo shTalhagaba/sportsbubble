@@ -132,8 +132,8 @@ export default function Setting() {
               style={{
                 flexDirection: 'row',
                 marginTop: 24,
-                alignItems: 'center',
                 marginLeft: 24,
+                height: 35
               }}>
               <Image source={Images.LeftArrowIcon} style={styles.logoutIcon} />
               <Text style={styles.logoutTxt}>{Strings.logout}</Text>
