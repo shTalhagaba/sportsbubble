@@ -50,6 +50,7 @@ export default function Guide() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   let isFocused = useIsFocused();
+  const flags = useSelector(state => state?.feature?.flags);
   const { loading, refetch, favoriteSports } = useSportsList('network-only');
   const currentDate = dayjs(new Date()).toISOString(); // Get the current date and time
   const reduxData = useSelector(state => state.user);
@@ -730,7 +731,7 @@ export default function Guide() {
           </View>
         </GestureRecognizer>
         {/* featured event */}
-        {featuredEvent &&
+        {flags?.WEB4 && featuredEvent &&
           featuredEvent?.logo1 &&
           (selectedCategory === 'all' ||
             selectedCategory.includes(

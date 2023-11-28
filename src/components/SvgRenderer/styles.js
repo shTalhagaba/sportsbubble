@@ -32,6 +32,15 @@ const styles = ScaledSheet.create({
         width: screenWidth / 4.6,
         height: screenWidth / 4.6,
     },
+    webMainContainerFlag: {
+        backgroundColor: Colors.mediumBlue,
+        overflow: 'hidden',
+        justifyContent: 'center',
+        width: screenWidth / 5.8,
+        height: screenWidth / 5.8,
+        borderTopLeftRadius: 16,
+        borderBottomLeftRadius: 16,
+    },
     webInnerContainer: {
         position: 'absolute',
         left: 0,
@@ -43,6 +52,13 @@ const styles = ScaledSheet.create({
     htmlContainer: {
         width: screenWidth / 6,
         height: screenWidth / 6,
+        backgroundColor: 'transparent', // Set background to transparent
+        margin: 15,
+        overflow: 'hidden',
+    },
+    htmlContainerSport: {
+        width: screenWidth / 7,
+        height: screenWidth / 7,
         backgroundColor: 'transparent', // Set background to transparent
         margin: 15,
         overflow: 'hidden',

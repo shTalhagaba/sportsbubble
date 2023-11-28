@@ -245,7 +245,7 @@ export default function SportStreaming() {
             </TouchableOpacity>
           </TouchableOpacity>
           {/* main list */}
-          {loading ?
+          {false ?
             <View style={{ flex: 1, justifyContent: 'center' }}>
               <ActivityIndicator color={'#fff'} size={'large'} />
             </View> :
@@ -262,17 +262,23 @@ export default function SportStreaming() {
                 <View style={styles.listContainer}>
                   <View style={styles.innerListContainer}>
                     {item && item?.logoUrl && (item?.logoUrl.includes('.svg')) ?
-                      <SvgRenderer url={item?.logoUrl} flag={true} width={47} height={47} />
+                      <SvgRenderer url={item?.logoUrl} sportFlag={true} width={47} height={47} />
                       :
-                      <ImageWithPlaceHolder
-                        source={item?.logoUrl}
-                        placeholderSource={Constants.placeholder_trophy_icon}
-                        style={styles.imageRightsIcon}
-                        logoUrl={true}
-                        widthLogo={48}
-                        heightLogo={48}
-                        resizeMode="contain"
-                      />}
+                      <View style={styles.listInnerContainer}>
+                      <View style={styles.listBackground} />
+                      <View style={styles.imageContainer}>
+                        <ImageWithPlaceHolder
+                          source={item?.node?.logoUrl}
+                          placeholderSource={Constants.placeholder_trophy_icon}
+                          style={styles.imageRightsIcon}
+                          logoUrl={true}
+                          widthLogo={48}
+                          heightLogo={48}
+                          resizeMode="contain"
+                        />
+                      </View>
+                    </View>}
+                    <View style={styles.list2Container}>
                     <View style={styles.userNameContainer}>
                       <Text style={styles.titleTxt} numberOfLines={2}>{item?.name || item?.title}</Text>
                     </View>
@@ -290,6 +296,7 @@ export default function SportStreaming() {
                         <Image source={Images.Tick} style={styles.tickImage} />
                       )}
                     </TouchableOpacity>
+                    </View>
                   </View>
                 </View>
               )}

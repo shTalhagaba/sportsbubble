@@ -1,5 +1,7 @@
 import { Colors, Fonts } from 'src/utils';
 import { ScaledSheet } from "react-native-size-matters";
+import { Dimensions, Platform } from 'react-native';
+const screenWidth = Dimensions.get('window').width;
 
 export default ScaledSheet.create({
     container: {
@@ -28,10 +30,13 @@ export default ScaledSheet.create({
     },
     listContainer: {
         marginVertical: "4@ms0.3",
-        paddingVertical: "6@ms0.3",
         borderRadius: "16@ms0.3",
         backgroundColor: "#2B3B50",
-        paddingHorizontal: "6@ms0.3"
+    },
+    list2Container: {
+        paddingVertical: "5@ms0.3",
+        paddingHorizontal: "5@ms0.3",
+        flexDirection:'row'
     },
     innerListContainer: {
         flexDirection: "row",
@@ -42,12 +47,13 @@ export default ScaledSheet.create({
         width: "44@ms0.3",
     },
     userNameContainer: {
-        paddingStart: "15@ms0.3",
+        paddingStart: "8@ms0.3",
         justifyContent: "center",
-        flex: 1
+        // flex: 1
+        width:'78%',
     },
     titleTxt: {
-        fontSize: "16@ms0.3",
+        fontSize: "14@ms0.3",
         fontWeight: "800",
         lineHeight: "25@ms0.3",
         color: Colors.white,
@@ -60,7 +66,9 @@ export default ScaledSheet.create({
         borderWidth: "1.3@ms0.3",
         borderRadius: "20@ms0.3",
         marginRight: "18@ms0.3",
-        justifyContent: "center"
+        justifyContent: "center",
+        alignSelf:'center',
+        marginStart: "2@ms0.3",
     },
     tickImage: {
         height: "11@ms0.3",
@@ -134,4 +142,28 @@ export default ScaledSheet.create({
         height: '47@ms0.3',
         width: '47@ms0.3',
     },
+    listInnerContainer: {
+        backgroundColor: Colors.mediumBlue,
+        overflow: 'hidden',
+        justifyContent: 'center',
+        borderTopLeftRadius: 16,
+        borderBottomLeftRadius: 16,
+        width: screenWidth / 5.8,
+        height: screenWidth / 5.8,
+      },
+      listBackground: {
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        width: '100%',
+        height: '100%',
+      },
+      imageContainer: {
+        alignItems: 'center',
+        margin: '0.3@ms0.3',
+        paddingHorizontal: Platform.OS === 'android' ? 15 : 18,
+        overflow: 'hidden',
+        justifyContent:'center',
+      },
 });
+

@@ -1,17 +1,15 @@
 import React from 'react';
-import {Image, ImageBackground, StatusBar, Text, View} from 'react-native';
+import { Image, ImageBackground, StatusBar, Text, View } from 'react-native';
 import styles from './styles';
-import {Images, Colors, Strings} from 'src/utils';
+import { Images, Colors, Strings } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
 import ButtonWithIcon from 'src/components/ButtonWithIcon';
 import DeviceInfo from 'react-native-device-info';
-import {useNavigation} from '@react-navigation/native';
-import {useSelector} from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Legal() {
   const navigation = useNavigation();
   const version = DeviceInfo.getVersion();
-  const flags = useSelector(state => state?.feature?.flags);
 
   return (
     <ImageBackground
@@ -27,7 +25,7 @@ export default function Legal() {
       <AppHeader
         centerImage={Images.Logo}
         LeftImage={Images.LeftIcon}
-        customLeftImage={{tintColor: Colors.orange}}
+        customLeftImage={{ tintColor: Colors.orange }}
         SimpleView
       />
       {/* Main tabs  */}
@@ -39,7 +37,7 @@ export default function Legal() {
             onpress={() =>
               navigation.navigate('withoutBottomtab', {
                 screen: 'Term',
-                params: {selected: Strings.termUse},
+                params: { selected: Strings.termUse },
               })
             }
           />
@@ -48,7 +46,7 @@ export default function Legal() {
             onpress={() =>
               navigation.navigate('withoutBottomtab', {
                 screen: 'Term',
-                params: {selected: Strings.privacyPolicy},
+                params: { selected: Strings.privacyPolicy },
               })
             }
           />
@@ -57,7 +55,7 @@ export default function Legal() {
             onpress={() =>
               navigation.navigate('withoutBottomtab', {
                 screen: 'Term',
-                params: {selected: Strings.californiaPolicy},
+                params: { selected: Strings.californiaPolicy },
               })
             }
           />
@@ -75,9 +73,7 @@ export default function Legal() {
           style={styles.powerImage}
           resizeMode={'contain'}
         />
-        <Text style={styles.versionTxt}>
-          v {flags?.WEB3 ? '2.03' : flags?.WEB2 ? '2.02' : version}
-        </Text>
+        <Text style={styles.versionTxt}>v {version}</Text>
       </View>
     </ImageBackground>
   );

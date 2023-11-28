@@ -5,7 +5,7 @@ import styles from './styles';
 
 const screenWidth = Dimensions.get('window').width;
 
-const SvgRenderer = ({ url, flag, width, height }) => {
+const SvgRenderer = ({ url, flag, width, height, sportFlag }) => {
   const viewportMetaTag =
     Platform.OS === 'android'
       ? '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover" />'
@@ -46,7 +46,7 @@ const SvgRenderer = ({ url, flag, width, height }) => {
       />
     </View>
   ) : (
-    <View style={styles.webMainContainer}>
+    <View style={[sportFlag ? styles.webMainContainerFlag : styles.webMainContainer]}>
       <View style={styles.webInnerContainer} />
       <WebView
         source={{
@@ -72,8 +72,8 @@ const SvgRenderer = ({ url, flag, width, height }) => {
                     </body>
                     </html>`,
         }}
-        style={styles.htmlContainer}
-        containerStyle={styles.htmlInnerContainer}
+        style={sportFlag ? styles.htmlContainerSport : styles.htmlContainer}
+        containerStyle={[styles.htmlInnerContainer, { borderRadius: sportFlag ? 0 : 16 }]}
         scrollEnabled={false} // Disable scrolling
       />
     </View>

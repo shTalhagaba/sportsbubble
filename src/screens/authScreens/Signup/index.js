@@ -230,21 +230,21 @@ export default function Signup() {
             </TouchableOpacity>
             <View style={styles.termConditionContainer}>
               <View style={{ flexDirection: 'row' }}>
-                <Text style={styles.termsCondition}>
-                  {Strings.haveRead}
-                </Text>
-                <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('Term', { selected: Strings.termUse })}>
-                  <Text style={styles.termsConditionBold}>
+                <Text style={styles.termsCondition} allowFontScaling={false}>
+                  {Strings.haveRead}               
+                  </Text>
+                <TouchableOpacity onPress={() => navigation.navigate('Term', { selected: Strings.termUse })}>
+                  <Text style={styles.termsConditionBold} allowFontScaling={false}>
                     {' '}{Strings.termsofService}
                   </Text>
                 </TouchableOpacity>
               </View>
               <View style={{ flexDirection: 'row' }}>
-                <Text style={styles.termsCondition}>
+                <Text style={styles.termsCondition} allowFontScaling={false}>
                   and{' '}
                 </Text>
                 <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('Term', { selected: Strings.privacyPolicy })}>
-                  <Text style={styles.termsConditionBold}>
+                  <Text style={styles.termsConditionBold} allowFontScaling={false}>
                     {Strings.privacyPolicy2}
                   </Text>
                 </TouchableOpacity>
