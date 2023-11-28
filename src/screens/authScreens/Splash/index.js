@@ -124,12 +124,12 @@ export default function Splash() {
 
   const navigateToMainScreen = () => {
     setTimeout(() => {
-      // navigation.replace('Root');
-      if (reduxData?.tooltipStatus) {
-        navigation.replace("Tooltip")
-      } else {
-        navigation.replace('Root')
-      }
+      navigation.replace('Root');
+      // if (reduxData?.tooltipStatus) {
+      //   navigation.replace("Tooltip")
+      // } else {
+      //   navigation.replace('Root')
+      // }
     }, 1000);
   };
 
@@ -140,12 +140,12 @@ export default function Splash() {
       }, 1000);
     } else {
       setTimeout(() => {
-        // navigation.replace('Root');
-        if (reduxData?.tooltipStatus) {
-          navigation.replace("Tooltip")
-        } else {
-          navigation.replace('Root')
-        }
+        navigation.replace('Root');
+        // if (reduxData?.tooltipStatus) {
+        //   navigation.replace("Tooltip")
+        // } else {
+        //   navigation.replace('Root')
+        // }
       }, 1000);
     }
   };

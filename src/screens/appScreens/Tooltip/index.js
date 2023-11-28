@@ -53,7 +53,15 @@ const Tooltip = () => {
                 <View key={index} style={styles.renderItemContainer}>
                     {item?.TooltipImage && <Image source={item?.TooltipImage} style={styles.tooltipImage} resizeMode={"contain"} />}
                 </View>
-                <View style={{ position: "absolute", bottom: index === 0 ? 168 : 75, flexDirection: "row", alignItems: "center", }}>
+                <View style={{
+                    position: "absolute", bottom: index === 0 ? 168 :
+                        index === 6 ?
+                            128 :
+                            index === 5 ?
+                                138 : 75,
+
+                    flexDirection: "row", alignItems: "center",
+                }}>
                     <TouchableWithoutFeedback onPress={() => handleBackIndicator()}>
                         <Image source={Images.LeftArrow} style={{ height: 16, width: 14, marginRight: 6 }} />
                     </TouchableWithoutFeedback>

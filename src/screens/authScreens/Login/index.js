@@ -72,11 +72,13 @@ export default function Login() {
   const handleSports = async () => {
     if (userSportsData) {
       await handleInitialPusher()
-      if (user?.tooltipStatus) {
-        navigation.replace("Tooltip")
-      } else {
-        navigation.replace('Root')
-      }
+      navigation.replace('Root')
+
+      // if (user?.tooltipStatus) {
+      //   navigation.replace("Tooltip")
+      // } else {
+      //   navigation.replace('Root')
+      // }
     }
   }
   useEffect(() => {
