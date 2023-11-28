@@ -8,15 +8,16 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import styles from './styles';
-import {Images, Colors, Strings} from 'src/utils';
+import { Images, Colors, Strings } from 'src/utils';
 import CustomButton from 'src/components/CustomButton';
-import {useNavigation} from '@react-navigation/native';
-import {setGuest, setUser} from 'src/store/types';
-import {useDispatch} from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
+import { setGuest, setUser } from 'src/store/types';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function WelcomeScreen() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const reduxData = useSelector(state => state.user);
 
   return (
     <View style={styles.containerTop}>
@@ -63,8 +64,14 @@ export default function WelcomeScreen() {
               onPress={() => {
                 dispatch(setGuest(true));
                 dispatch(setUser(false));
-                navigation.replace('Root');
-              }}
+                // navigation.replace('Root');
+                if (reduxData?.tooltipStatus) {
+                  navigation.replace("Tooltip")
+                } else {
+                  navigation.replace('Root')
+                }
+              }
+              }
               style={styles.guestContainer}>
               <Text style={styles.guestTxt}>{Strings.continueGuest}</Text>
               <Image

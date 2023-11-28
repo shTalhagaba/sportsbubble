@@ -134,7 +134,7 @@ export default function Splash() {
   };
 
   const navigateToAuthScreen = () => {
-    if (flag?.WEB2) {
+    if (!flag?.WEB2) {
       setTimeout(() => {
         navigation.replace('Auth');
       }, 1000);
