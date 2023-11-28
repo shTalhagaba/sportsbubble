@@ -117,10 +117,15 @@ export default function WelcomeAccount(props) {
         dispatch(setToken(user?.idToken?.jwtToken));
         dispatch(setJwtToken(user?.accessToken?.jwtToken));
         dispatch(setUserData(user?.idToken?.payload));
-        await AsyncStorage.setItem('accessToken',JSON.stringify(user?.idToken?.jwtToken));
-        await AsyncStorage.setItem('refreshToken',JSON.stringify(user?.refreshToken?.token));
+        await AsyncStorage.setItem('accessToken', JSON.stringify(user?.idToken?.jwtToken));
+        await AsyncStorage.setItem('refreshToken', JSON.stringify(user?.refreshToken?.token));
         setLoadingLocal(false);
-        navigation.replace('Root'); // Navigate to the 'Root' screen
+        // navigation.replace('Root'); // Navigate to the 'Root' screen
+        if (reduxData?.tooltipStatus) {
+          navigation.replace("Tooltip")
+        } else {
+          navigation.replace('Root')
+        }
       }
     } catch (error) {
       if (error.message.includes(':')) {
@@ -371,15 +376,15 @@ export default function WelcomeAccount(props) {
           />
         </KeyboardAwareScrollView>
         <LoaderModal visible={loadingLocal} loadingText={''} />
-        {date && isDatePickerVisible?
-        <DateTimePickerModal
-          date={date}
-          isVisible={isDatePickerVisible}
-          mode="date"
-          onConfirm={handleConfirm}
-          onCancel={hideDatePicker}
-          maximumDate={new Date()}
-        />:null}
+        {date && isDatePickerVisible ?
+          <DateTimePickerModal
+            date={date}
+            isVisible={isDatePickerVisible}
+            mode="date"
+            onConfirm={handleConfirm}
+            onCancel={hideDatePicker}
+            maximumDate={new Date()}
+          /> : null}
       </ImageBackground>
     </View>
 

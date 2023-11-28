@@ -33,7 +33,7 @@ export default function Signup() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [termsCheck, setTermsCheck] = useState(false);
   const [loadingLocal, setLoadingLocal] = useState(false);
-  const [displayPassword, setDisplayPassword] = useState(true);
+  const [displayPassword,] = useState(true);
   const [displayConfirmPassword, setDisplayConfirmPassword] = useState(true);
   // Refs for input fields
   const fullNameRef = useRef();
