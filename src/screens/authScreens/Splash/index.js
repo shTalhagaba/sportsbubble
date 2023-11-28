@@ -163,7 +163,9 @@ export default function Splash() {
             style={styles.powerImage}
             resizeMode="contain"
           />
-          <Text style={styles.versionTxt}>v {version}</Text>
+          <Text style={styles.versionTxt}>
+            v {flag?.WEB3 || flags?.WEB3 ? '2.03' : flag?.WEB2 || flags?.WEB2 ? '2.02' : version}
+          </Text>
         </View>
       </ImageBackground>
     </View>

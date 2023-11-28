@@ -27,16 +27,13 @@ import {
   selectedTimebar,
   setGuest,
   setStoreEventList,
-  setUser,
-  setSportsList,
+  setUser
 } from 'src/store/types';
 import { moderateScale } from 'react-native-size-matters';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 import CustomModalView from 'src/components/Modal/CustomModal';
-import Config from 'react-native-config';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { UpdateEvents } from 'src/utils/functions';
-import ShowMessage from 'src/components/ShowMessage';
 import { categoryArr, stageToken, wrongEventId } from 'src/utils/list';
 import useSportsList from 'src/services/useSportsList';
 import StarView from 'src/components/StarView';
@@ -106,14 +103,14 @@ export default function Guide() {
     if (reduxData?.sportsList?.length > 0) {
       const interestList = reduxData?.sportsList?.flatMap(favoriteSport => {
         if (!favoriteSport?.notifications) return []
-        
+
         if (!['pro', 'esports', 'college']?.includes(favoriteSport?.categories?.[0]?.name)) {
           return `others-${favoriteSport?.sport?.name?.replaceAll(/[^A-Z0-9]+/ig, '')}`
         } else {
           return `${favoriteSport?.categories?.[0]?.name}-${favoriteSport?.sport?.name?.replaceAll(/[^A-Z0-9]+/ig, '')}`
         }
       })
-      if( interestList && interestList?.length > 0 ) {
+      if (interestList && interestList?.length > 0) {
         subscribeToInterests(interestList)
       }
     }
@@ -498,10 +495,10 @@ export default function Guide() {
                 ? Colors.mediumGreen
                 : Colors.mediumBlue,
               width: `${item?.endGrad + item.startGrad <= 86
-                  ? item?.endGrad - item?.startGrad
-                  : item?.endGrad + item?.startGrad >= 86
-                    ? 86 - item?.startGrad
-                    : item?.endGrad - item?.startGrad
+                ? item?.endGrad - item?.startGrad
+                : item?.endGrad + item?.startGrad >= 86
+                  ? 86 - item?.startGrad
+                  : item?.endGrad - item?.startGrad
                 }%`,
             }}></View>
           <View style={styles.userNameMainContainer}></View>
@@ -821,11 +818,12 @@ export default function Guide() {
             />
           </ScrollView>
         )}
-        {/* <LiveMatchView // comment out sem-691
-          setLiveMatchModal={setLiveMatchModal}
-          liveMatchModal={liveMatchModal}
-          navigation={navigation}
-        /> */}
+        {flags?.WEB4 ?
+          <LiveMatchView
+            setLiveMatchModal={setLiveMatchModal}
+            liveMatchModal={liveMatchModal}
+            navigation={navigation}
+          /> : null}
         {/* Access Features pop up  */}
         <CustomModalView
           visible={mySportModal}

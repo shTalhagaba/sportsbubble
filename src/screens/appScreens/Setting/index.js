@@ -14,21 +14,18 @@ import { Images, Colors } from 'src/utils';
 import { useNavigation } from '@react-navigation/native';
 import AppHeader from 'src/components/AppHeader';
 import ButtonWithIcon from 'src/components/ButtonWithIcon';
-import DeviceInfo from 'react-native-device-info';
 import Strings from 'src/utils/strings';
 import CustomModalView from 'src/components/Modal/CustomModal';
 import Instabug, { InvocationEvent } from 'instabug-reactnative';
 import { useDispatch, useSelector } from 'react-redux';
 import { setJwtToken, setRefreshToken, setSportsList, setToken, setUser, setUserData } from 'src/store/types';
 import { signOut } from 'src/services/authOTP';
-import ShowMessage from 'src/components/ShowMessage';
 import { checkNotifications } from 'react-native-permissions';
 import { initializePusher, unsubscribeInterest } from "src/components/Pusher/PusherBeams";
 
 
 export default function Setting() {
   const navigation = useNavigation();
-  const version = DeviceInfo.getVersion();
   const dispatch = useDispatch();
   const [logoutModal, setLogoutModal] = useState(false);
   const data = useSelector(state => state.user);
@@ -45,10 +42,10 @@ export default function Setting() {
       }
     })
     checkNotifications().then(({ status, settings }) => {
-      if (status === 'granted'){
+      if (status === 'granted') {
         initializePusher()
-        interestList && interestList?.length>0 && interestList.forEach(interest => unsubscribeInterest(interest))
-      } 
+        interestList && interestList?.length > 0 && interestList.forEach(interest => unsubscribeInterest(interest))
+      }
     })
   };
 
@@ -104,14 +101,15 @@ export default function Setting() {
                   })
                 }
               />
-              <ButtonWithIcon
-                title={Strings.sportsStreamingApps}
-                onpress={() =>
-                  navigation.navigate('withoutBottomtab', {
-                    screen: 'SportStreaming',
-                  })
-                }
-              />
+              {flags?.WEB4 ?
+                <ButtonWithIcon
+                  title={Strings.sportsStreamingApps}
+                  onpress={() =>
+                    navigation.navigate('withoutBottomtab', {
+                      screen: 'SportStreaming',
+                    })
+                  }
+                /> : null}
             </>
           )}
           <ButtonWithIcon
