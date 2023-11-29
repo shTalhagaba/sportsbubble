@@ -49,5 +49,19 @@ export default ScaledSheet.create({
   contentTxtTop: {
     color: Colors.white,
     marginTop: '15@ms0.3',
-  }
+  },
+  tableContainer: {
+    borderWidth: 1,
+    borderColor: 'white',
+    marginVertical: 10,
+  },
+  tableRow: {
+    flexDirection: 'row',
+  },
+  tableCell: {
+    borderWidth: 1,
+    borderColor: 'white',
+    padding: 8,
+    flex:1,
+  },
 });

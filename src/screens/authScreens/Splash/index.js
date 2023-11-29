@@ -33,6 +33,7 @@ export default function Splash() {
   const getFeatureFlags = async () => {
     try {
       const flags = await axios.get(Config.FLAGS_URL)
+      console.log('Config.FLAGS_URL ',Config,flags?.data)
       setFlag(flags?.data)
       dispatch(setFeatureFlag(flags?.data))
       return flags
@@ -164,7 +165,7 @@ export default function Splash() {
             resizeMode="contain"
           />
           <Text style={styles.versionTxt}>
-            v {flag?.WEB3 || flags?.WEB3 ? '2.03' : flag?.WEB2 || flags?.WEB2 ? '2.02' : version}
+            v {flag?.WEB3 || flags?.WEB3 ? '2.03' : flag?.WEB2 || flags?.WEB2 ? '2.02' : "2.01"}
           </Text>
         </View>
       </ImageBackground>

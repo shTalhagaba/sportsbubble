@@ -31,6 +31,7 @@ export default ScaledSheet.create({
     color: Colors.darkOrange,
     marginVertical: '30@ms0.3',
     fontFamily: Fonts.Regular,
+    lineHeight: '22@ms0.3'
   },
   accountTxt: {
     fontSize: '15@ms0.3',
