@@ -1,6 +1,7 @@
 import React, { useEffect } from "react"
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AuthNavigator from './authNavigation';
+import TooltipNavigator from './tooltipNavigation';
 import MyTabs from './bottomTab'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import withoutBottomtab from './withoutBottomtab'
@@ -41,7 +42,7 @@ const AppStackNavigator = () => {
       } else {
         const response = await axios.get(`${Config.GEO_NBC_URL}`)
         const geoData = response.data
-        console.log('GEO_NBC_URL : ',Config?.GEO_NBC_URL,geoData)
+        console.log('GEO_NBC_URL : ', Config?.GEO_NBC_URL, geoData)
         dmaCode = geoData?.dma ?? null
       }
       console.log('dmaCode: ', dmaCode)
@@ -56,7 +57,7 @@ const AppStackNavigator = () => {
     if (reduxData?.guest || (reduxData?.userData && reduxData?.userData?.email)) {
       setDMACode()
     }
-  }, [reduxData?.userData,reduxData?.guest])
+  }, [reduxData?.userData, reduxData?.guest])
 
   const verifySession = async () => {
     try {
@@ -78,9 +79,9 @@ const AppStackNavigator = () => {
   }
 
   useEffect(() => {
-        if (reduxData?.userData?.email) {
-          verifySession()
-      };
+    if (reduxData?.userData?.email) {
+      verifySession()
+    };
   }, [navigateState]);
 
   return (
@@ -93,6 +94,11 @@ const AppStackNavigator = () => {
       <StackNavigator.Screen
         name="Auth"
         component={AuthNavigator}
+        options={{ headerShown: false }}
+      />
+      <StackNavigator.Screen
+        name="Tooltip"
+        component={TooltipNavigator}
         options={{ headerShown: false }}
       />
       <StackNavigator.Screen

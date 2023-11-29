@@ -77,6 +77,12 @@ export const setGuest = (args: any) => {
     payload: args,
   };
 };
+export const setTooltipStatus = (args: any) => {
+  return {
+    type: 'SET_TOOLTIP_STATUS',
+    payload: args,
+  };
+};
 
 export const setStoreEventList = (args: any) => {
   return {

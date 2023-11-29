@@ -67,6 +67,23 @@ const images = {
     ESPN_Plus: require("src/assets/images/ESPN_Plus.png"),
     FuboTV_logo: require("src/assets/images/FuboTV_logo.png"),
     MySportsFiiled: require("src/assets/images/MySportsFiiled.png"),
+    TooltipTwo: require("src/assets/images/TooltipTwo.png"),
+    TooltipOne: require("src/assets/images/TooltipOne.png"),
+    TooltipThree: require("src/assets/images/TooltipThree.png"),
+    TooltipClose: require("src/assets/images/TooltipClose.png"),
+    TooltipFour: require("src/assets/images/TooltipFour.png"),
+    TooltipFive: require("src/assets/images/TooltipFive.png"),
+    TooltipSix: require("src/assets/images/TooltipSix.png"),
+    TooltipSeven: require("src/assets/images/TooltipSeven.png"),
+    SliderOne: require("src/assets/images/SliderOne.png"),
+    SliderTwo: require("src/assets/images/SliderTwo.png"),
+    SliderThree: require("src/assets/images/SliderThree.png"),
+    SliderFour: require("src/assets/images/SliderFour.png"),
+    SliderFive: require("src/assets/images/SliderFive.png"),
+    SliderSix: require("src/assets/images/SliderSix.png"),
+    SliderSeven: require("src/assets/images/SliderSeven.png"),
+    LeftArrow: require("src/assets/images/LeftArrow.png"),
+    RightSlider: require("src/assets/images/RightSlider.png"),
 }
 
 export default images
