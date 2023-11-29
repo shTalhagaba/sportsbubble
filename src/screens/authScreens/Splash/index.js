@@ -33,7 +33,7 @@ export default function Splash() {
   const getFeatureFlags = async () => {
     try {
       const flags = await axios.get(Config.FLAGS_URL)
-      console.log('Config.FLAGS_URL ',Config,flags?.data)
+      console.log('Config.FLAGS_URL ', Config, flags?.data)
       setFlag(flags?.data)
       dispatch(setFeatureFlag(flags?.data))
       return flags
@@ -118,7 +118,7 @@ export default function Splash() {
   };
 
   const navigateToAuthScreen = () => {
-    if (flag?.WEB2) {
+    if (!flag?.WEB2) {
       setTimeout(() => {
         navigation.replace('Auth');
       }, 1000);
