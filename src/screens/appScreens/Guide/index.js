@@ -27,14 +27,15 @@ import {
   selectedTimebar,
   setGuest,
   setStoreEventList,
-  setUser
+  setUser,
+  setTooltipStatus
 } from 'src/store/types';
 import { moderateScale } from 'react-native-size-matters';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 import CustomModalView from 'src/components/Modal/CustomModal';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { UpdateEvents } from 'src/utils/functions';
-import { categoryArr, stageToken, wrongEventId } from 'src/utils/list';
+import { categoryArr, wrongEventId } from 'src/utils/list';
 import useSportsList from 'src/services/useSportsList';
 import StarView from 'src/components/StarView';
 import { initializePusher, subscribeInterest } from 'src/components/Pusher/PusherBeams';
@@ -533,6 +534,10 @@ export default function Guide() {
   });
 
   return (
+    <>
+    {/* <TooltipView
+      visible={reduxData?.tooltipStatus}
+      closePress={() => dispatch(setTooltipStatus(false))} /> */}
     <View style={styles.container}>
       <ImageBackground
         source={Images.Background}
@@ -841,5 +846,6 @@ export default function Guide() {
         />
       </ImageBackground>
     </View>
+    </>
   );
 }

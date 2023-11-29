@@ -22,9 +22,10 @@ export default function Term(props) {
 
   useEffect(() => {
     async function fetchPromotionContent() {
-      const termUse = await fetchContentFulContent('XuhxvmlTfU1MCjuELLHvY');
+      const termUse = await fetchContentFulContent('64plgJDecqRVW4KQX9PgQ8');
       const privacyPolicy = await fetchContentFulContent('52UJuQgc1nZAm8kLrkAlke');
       const californiaPolicy = await fetchContentFulContent('4QghRl8LFoRAvWRNyTDeX4');
+      console.log('Strings.californiaPolicy : ',JSON.stringify(californiaPolicy,2))
       setContent({
         termUse: termUse?.fields,
         privacyPolicy: privacyPolicy?.fields,
@@ -68,14 +69,33 @@ export default function Term(props) {
           })}
         </Text>
       );
+    } else if (node?.node?.nodeType === 'table') {
+      // Handle tables
+      return (
+        <View style={styles.tableContainer}>
+          {node.node.content.map((row, rowIndex) => (
+            <View key={rowIndex} style={styles.tableRow}>
+              {row.content.map((cell, cellIndex) => (
+                <View key={cellIndex} style={styles.tableCell}>
+                  {cell?.content.map((contentNode, contentIndex) => (
+                    <RenderContentNode key={contentIndex} node={contentNode} />
+                  ))}
+                </View>
+              ))}
+            </View>
+          ))}
+        </View>
+      );
     }
+  
     // Handle other content node types here if needed
     return null; // Return null for unsupported content node types
   };
-
+  
+  
   let source =
     props?.route?.params?.selected === Strings.termUse
-      ? content.termUse
+      ? content?.termUse
       : props?.route?.params?.selected === Strings.privacyPolicy
         ? content?.privacyPolicy
         : props?.route?.params?.selected === Strings.californiaPolicy
@@ -110,9 +130,7 @@ export default function Term(props) {
           indicatorStyle={'white'}
           style={{ flex: 1, marginVertical: 25 }}>
           <View>
-            {
-              content.termUse && (
-                // props?.route?.params?.selected === Strings.privacyPolicy ?
+            {(
                 source !== null && typeof source === 'object' ?
                   <>
                     {/* <Text style={styles.contentTxt}>

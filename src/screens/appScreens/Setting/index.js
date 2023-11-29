@@ -85,14 +85,15 @@ export default function Setting() {
           {/* changes for next version */}
           {flags?.WEB2 && data?.user && (
             <>
-              <ButtonWithIcon
-                title={Strings.personalInfo}
-                onpress={() =>
-                  navigation.navigate('withoutBottomtab', {
-                    screen: 'PersonalInfo',
-                  })
-                }
-              />
+              {flags?.WEB3 ?
+                <ButtonWithIcon
+                  title={Strings.personalInfo}
+                  onpress={() =>
+                    navigation.navigate('withoutBottomtab', {
+                      screen: 'PersonalInfo',
+                    })
+                  }
+                /> : null}
               <ButtonWithIcon
                 title={Strings.changePassword}
                 onpress={() =>

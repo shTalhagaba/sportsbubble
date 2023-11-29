@@ -4,13 +4,11 @@ import styles from './styles';
 import { Images, Colors, Strings } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
 import ButtonWithIcon from 'src/components/ButtonWithIcon';
-import DeviceInfo from 'react-native-device-info';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 
 export default function Legal() {
   const navigation = useNavigation();
-  const version = DeviceInfo.getVersion();
   const flags = useSelector(state => state?.feature?.flags);
 
   return (
@@ -75,7 +73,7 @@ export default function Legal() {
           style={styles.powerImage}
           resizeMode={'contain'}
         />
-        <Text style={styles.versionTxt}>v {flags?.WEB3 ? '2.03' : flags?.WEB2 ? '2.02' : version}</Text>
+        <Text style={styles.versionTxt}>v {flags?.WEB3 ? '2.03' : flags?.WEB2 ? '2.02' : "2.01"}</Text>
       </View>
     </ImageBackground>
   );
