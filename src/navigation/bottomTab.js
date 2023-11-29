@@ -10,20 +10,59 @@ import Setting from 'src/screens/appScreens/Setting';
 import Legal from 'src/screens/appScreens/Legal';
 import MySports from 'src/screens/appScreens/MySports';
 import { moderateScale, ScaledSheet } from 'react-native-size-matters';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createNativeStackNavigator, } from '@react-navigation/native-stack';
 import { useDispatch, useSelector } from 'react-redux';
 import { refreshData } from 'src/store/types';
+import { Easing } from "react-native";
 
 const Tab = createBottomTabNavigator();
 const SettingNavigator = createNativeStackNavigator();
 const GuideNavigator = createNativeStackNavigator();
 const SearchNavigator = createNativeStackNavigator();
 
+const config = {
+  animation: "spring",
+  config: {
+    stiffness: 1000,
+    damping: 50,
+    mass: 3,
+    overshootClamping: false,
+    restDisplacmentThrehold: 0.01,
+    restSpeedThrehold: 0.01
+  }
+}
+const closeConfig = {
+  animation: "timing",
+  config: {
+    duration: 200,
+    easng: Easing.linear
+  }
+}
+
 const GuideNavigation = () => {
   return (
     <GuideNavigator.Navigator
       screenOptions={{
         headerShown: false,
+        gestureEnabled: true,
+        transitionpec: {
+          open: config,
+          close: closeConfig
+        },
+        cardStyleInterpolator: ({ current, layouts }) => {
+          return {
+            cardStyle: {
+              transform: [
+                {
+                  translateX: current.progress.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [layouts.screen.width, 0],
+                  }),
+                },
+              ],
+            },
+          };
+        },
       }}>
       <GuideNavigator.Screen name="GuideMain" component={Guide} />
       <GuideNavigator.Screen name="Watch" component={Watch} />
@@ -36,6 +75,25 @@ const SettingNavigation = () => {
     <SettingNavigator.Navigator
       screenOptions={{
         headerShown: false,
+        gestureEnabled: true,
+        transitionpec: {
+          open: config,
+          close: closeConfig
+        },
+        cardStyleInterpolator: ({ current, layouts }) => {
+          return {
+            cardStyle: {
+              transform: [
+                {
+                  translateX: current.progress.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [layouts.screen.width, 0],
+                  }),
+                },
+              ],
+            },
+          };
+        },
       }}>
       <SettingNavigator.Screen name="SettingMain" component={Setting} />
       <SettingNavigator.Screen name="Legal" component={Legal} />
@@ -49,6 +107,25 @@ const SearchNavigation = () => {
     <SearchNavigator.Navigator
       screenOptions={{
         headerShown: false,
+        gestureEnabled: true,
+        transitionpec: {
+          open: config,
+          close: closeConfig
+        },
+        cardStyleInterpolator: ({ current, layouts }) => {
+          return {
+            cardStyle: {
+              transform: [
+                {
+                  translateX: current.progress.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [layouts.screen.width, 0],
+                  }),
+                },
+              ],
+            },
+          };
+        },
       }}>
       <SearchNavigator.Screen name="SearchMain" component={Search} />
       <SearchNavigator.Screen name="SearchWatch" component={Watch} />
@@ -80,6 +157,8 @@ const BottomTab = () => {
     }
   });
 
+
+
   return (
     <Tab.Navigator
       initialRouteName={'Guide'}
@@ -102,7 +181,27 @@ const BottomTab = () => {
               : moderateScale(15, 0.3),
           borderTopWidth: 2,
           borderTopColor: '#3E4349',
-        }
+        },
+        gestureEnabled: true,
+        transitionpec: {
+          open: config,
+          close: closeConfig
+        },
+        cardStyleInterpolator: ({ current, layouts }) => {
+          return {
+            cardStyle: {
+              transform: [
+                {
+                  translateX: current.progress.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [layouts.screen.width, 0],
+                  }),
+                },
+              ],
+            },
+          };
+        },
+
       }}
 
     >

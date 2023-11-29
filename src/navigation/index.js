@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createNativeStackNavigator, } from '@react-navigation/native-stack';
 import AuthNavigator from './authNavigation';
 import TooltipNavigator from './tooltipNavigation';
 import MyTabs from './bottomTab'
@@ -13,9 +13,29 @@ import Config from "react-native-config";
 import axios from "axios";
 import ShowMessage from "src/components/ShowMessage";
 import { setJwtToken, setRefreshToken, setSportsList, setDMA, setToken, setUser, setUserData } from 'src/store/types';
+import { Easing } from "react-native";
 
 
 const StackNavigator = createNativeStackNavigator()
+
+const config = {
+  animation: "spring",
+  config: {
+    stiffness: 1000,
+    damping: 50,
+    mass: 3,
+    overshootClamping: false,
+    restDisplacmentThrehold: 0.01,
+    restSpeedThrehold: 0.01
+  }
+}
+const closeConfig = {
+  animation: "timing",
+  config: {
+    duration: 200,
+    easng: Easing.linear
+  }
+}
 
 const AppStackNavigator = () => {
   const navigation = useNavigation();
@@ -85,26 +105,50 @@ const AppStackNavigator = () => {
   }, [navigateState]);
 
   return (
-    <StackNavigator.Navigator>
-      <StackNavigator.Screen name="Splash" component={Splash} options={{ headerShown: false }} />
-      <StackNavigator.Screen name="Root" options={{ headerShown: false }}>
+    <StackNavigator.Navigator
+      screenOptions={{
+        gestureEnabled: true,
+        transitionpec: {
+          open: config,
+          close: closeConfig
+        },
+        // cardStyleInterpolator: cardStyleInterpolators.forHorizontalIOS,
+        cardStyleInterpolator: ({ current, layouts }) => {
+          return {
+            cardStyle: {
+              transform: [
+                {
+                  translateX: current.progress.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [layouts.screen.width, 0],
+                  }),
+                },
+              ],
+            },
+          };
+        },
+
+
+      }}>
+      <StackNavigator.Screen name="Splash" component={Splash} options={{ headerShown: false, }} />
+      <StackNavigator.Screen name="Root" options={{ headerShown: false, gestureEnabled: true }}>
         {props => <MyTabs {...props} />}
       </StackNavigator.Screen>
       {/* Auth Navigator: Include Login and Signup */}
       <StackNavigator.Screen
         name="Auth"
         component={AuthNavigator}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, gestureEnabled: true }}
       />
       <StackNavigator.Screen
         name="Tooltip"
         component={TooltipNavigator}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, gestureEnabled: true }}
       />
       <StackNavigator.Screen
         name="withoutBottomtab"
         component={withoutBottomtab}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, gestureEnabled: true }}
       />
     </StackNavigator.Navigator>
   )
