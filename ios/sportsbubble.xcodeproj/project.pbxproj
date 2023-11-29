@@ -26,6 +26,7 @@
 		1E5EA2159A5C451CBBAB8E68 /* Lato-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2BB5870BB8654F81A5120057 /* Lato-ThinItalic.ttf */; };
 		1FDB8259E0A24A6E81E90ADC /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3159C7199A284E32A2A28A5D /* Lato-Bold.ttf */; };
 		4D4D088A2DE646D689165EC5 /* Lato-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4186B46E6CF049A68CA75CF3 /* Lato-LightItalic.ttf */; };
+		5C9644F533739CC74DBF785A /* libPods-sportsbubbleCommonPods-sportsbubbleDevelopment.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FF5A31BD48F6DC61AF7ADED6 /* libPods-sportsbubbleCommonPods-sportsbubbleDevelopment.a */; };
 		5D100BC066BD4759A68C1B16 /* Lato-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7FA88236A9844606B2FE7731 /* Lato-Thin.ttf */; };
 		8A2376812A544DEE00F2EA20 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		8A2376822A544DEE00F2EA20 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -116,6 +117,7 @@
 		E120C17725514735851EBBFE /* Lato-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-BoldItalic.ttf"; path = "../src/assets/fonts/Lato-BoldItalic.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		EF90BEB388602B3CB2E1D8D8 /* libPods-sportsbubbleCommonPods-sportsbubblePassport.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-sportsbubbleCommonPods-sportsbubblePassport.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF5A31BD48F6DC61AF7ADED6 /* libPods-sportsbubbleCommonPods-sportsbubbleDevelopment.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-sportsbubbleCommonPods-sportsbubbleDevelopment.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +134,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FFC0C99651DB8535D5292FAB /* (null) in Frameworks */,
+				5C9644F533739CC74DBF785A /* libPods-sportsbubbleCommonPods-sportsbubbleDevelopment.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -192,6 +195,7 @@
 				B7AC2FB01D98864628D1F8AC /* libPods-sportsbubbleCommonPods-sportsbubbleStaging.a */,
 				583FDCC765C34F241CBCBF3C /* libPods-sportsbubbleCommonPods-sportsbubbleTests.a */,
 				EF90BEB388602B3CB2E1D8D8 /* libPods-sportsbubbleCommonPods-sportsbubblePassport.a */,
+				FF5A31BD48F6DC61AF7ADED6 /* libPods-sportsbubbleCommonPods-sportsbubbleDevelopment.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1131,7 +1135,7 @@
 				CODE_SIGN_ENTITLEMENTS = sportsbubbleDevelopment.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 28;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_TEAM = N2NJSCBBBJ;
 				INFOPLIST_FILE = "sportsbubble development-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "dev sportsbubble";
@@ -1199,7 +1203,7 @@
 				CODE_SIGN_ENTITLEMENTS = sportsbubbleStaging.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = N2NJSCBBBJ;
 				INFOPLIST_FILE = "sportsbubble staging-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "stage sportbubble";
@@ -1267,7 +1271,7 @@
 				CODE_SIGN_ENTITLEMENTS = sportsbubblePassport.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 39;
+				CURRENT_PROJECT_VERSION = 41;
 				DEVELOPMENT_TEAM = N2NJSCBBBJ;
 				INFOPLIST_FILE = "sportsbubble passport-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "passport sportsbubble";
