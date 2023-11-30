@@ -10,7 +10,7 @@ import Setting from 'src/screens/appScreens/Setting';
 import Legal from 'src/screens/appScreens/Legal';
 import MySports from 'src/screens/appScreens/MySports';
 import { moderateScale, ScaledSheet } from 'react-native-size-matters';
-import { createNativeStackNavigator, } from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useDispatch, useSelector } from 'react-redux';
 import { refreshData } from 'src/store/types';
 import { Easing } from "react-native";
@@ -156,8 +156,6 @@ const BottomTab = () => {
       navigation.navigate('Setting')
     }
   });
-
-
 
   return (
     <Tab.Navigator

@@ -3,7 +3,6 @@ import { View, Image, FlatList, StatusBar, SafeAreaView, TouchableOpacity, Dimen
 import styles from './styles';
 import { Images } from 'src/utils';
 import { TouchableWithoutFeedback } from 'react-native';
-import { setrStatus } from 'src/store/types';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { Platform } from 'react-native';

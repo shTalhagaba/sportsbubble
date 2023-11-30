@@ -72,7 +72,7 @@ export default {
   confirmPassword: "Confirm Password",
   signupTerm: "Email Opt-in lorem ipsum dolor sit amet consectetur.",
   haveRead: "I have read and agree to the",
-  termsofService: "Terms of Service",
+  termsofService: "Terms of Use",
   privacyPolicy2: "Privacy Policy",
   search: "Search",
   continue: "Continue",

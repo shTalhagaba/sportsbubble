@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     },
     tooltipImage: {
         width: Dimensions.get('screen').width,
-        height: Dimensions.get('screen').height - 10,
+        height: Dimensions.get('screen').height-10,
         marginBottom: 30,
     },
 })

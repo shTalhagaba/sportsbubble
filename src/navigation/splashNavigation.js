@@ -27,6 +27,7 @@ const AppNavigation = () => {
     <AppNavigator.Navigator
       screenOptions={{
         gestureEnabled: true,
+        headerShown: false,
         transitionpec: {
           open: config,
           close: closeConfig

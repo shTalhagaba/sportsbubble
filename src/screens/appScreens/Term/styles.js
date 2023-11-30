@@ -50,18 +50,37 @@ export default ScaledSheet.create({
     color: Colors.white,
     marginTop: '15@ms0.3',
   },
+  contentTxtBulltetTop: {
+    color: Colors.white,
+    marginTop: '10@ms0.3',
+  },
   tableContainer: {
-    borderWidth: 1,
+    borderWidth: '1@ms0.3',
     borderColor: 'white',
-    marginVertical: 10,
+    marginVertical: '10@ms0.3',
   },
   tableRow: {
     flexDirection: 'row',
   },
   tableCell: {
-    borderWidth: 1,
+    borderWidth: '1@ms0.3',
     borderColor: 'white',
-    padding: 8,
-    flex:1,
+    padding: '8@ms0.3',
+    flex: 1,
+  },
+  unorderedListContainer: {
+    marginLeft: '10@ms0.3',
+  },
+  listItemContainer: {
+    alignItems: 'flex-start',
+    marginBottom: '5@ms0.3',
+  },
+  bullet: {
+    fontSize: '20@ms0.3',
+    color: 'white',
+    lineHeight: '20@ms0.3',
+  },
+  listItemContentContainer: {
+    flex: 1,
   },
 });

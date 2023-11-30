@@ -33,6 +33,7 @@ const WithoutBottomnavigation = () => {
   return (
     <AppNavigator.Navigator
       screenOptions={{
+        headerShown: false,
         gestureEnabled: true,
         transitionpec: {
           open: config,
