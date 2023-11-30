@@ -73,7 +73,7 @@ export default function Legal() {
           style={styles.powerImage}
           resizeMode={'contain'}
         />
-        <Text style={styles.versionTxt}>v {flags?.WEB3 ? '2.03' : flags?.WEB2 ? '2.02' : "2.01"}</Text>
+        <Text style={styles.versionTxt}>v {flags?.WEB3 || flags?.V_2_03 ? '2.03' : (flags?.WEB2 || flags?.V_2_02) ? '2.02' : "2.01"}</Text>
       </View>
     </ImageBackground>
   );

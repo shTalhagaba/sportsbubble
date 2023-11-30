@@ -32,8 +32,9 @@ export default function Splash() {
 
   const getFeatureFlags = async () => {
     try {
-      const flags = await axios.get(Config.FLAGS_URL)
-      console.log('Config.FLAGS_URL ',Config,flags?.data)
+      // const flags = await axios.get(Config.FLAGS_URL)
+      const flags = await axios.get("https://dfj4syg8c5w70.cloudfront.net/feature-flags/flags-mobile.json")
+      console.log('flags?.data ', flags?.data)
       setFlag(flags?.data)
       dispatch(setFeatureFlag(flags?.data))
       return flags
@@ -118,7 +119,7 @@ export default function Splash() {
   };
 
   const navigateToAuthScreen = () => {
-    if (flag?.WEB2) {
+    if (flag?.WEB2 || flags?.V_2_02_AUTH) {
       setTimeout(() => {
         navigation.replace('Auth');
       }, 1000);
@@ -165,7 +166,7 @@ export default function Splash() {
             resizeMode="contain"
           />
           <Text style={styles.versionTxt}>
-            v {flag?.WEB3 || flags?.WEB3 ? '2.03' : flag?.WEB2 || flags?.WEB2 ? '2.02' : "2.01"}
+            v {flag?.WEB3 || flags?.WEB3 || flags?.V_2_03 ? '2.03' : flag?.WEB2 || flags?.WEB2 || flags?.V_2_02 ? '2.02' : "2.01"}
           </Text>
         </View>
       </ImageBackground>

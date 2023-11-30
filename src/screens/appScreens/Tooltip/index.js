@@ -6,6 +6,9 @@ import { TouchableWithoutFeedback } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { Platform } from 'react-native';
+import {
+    setTooltipStatus
+} from 'src/store/types';
 
 const DATA = [
     {

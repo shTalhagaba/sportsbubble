@@ -125,7 +125,7 @@ export default function Setting() {
             title={Strings.reportProblem}
             onpress={() => Instabug.show()}
           />
-          {flags?.WEB2 && data?.user && (
+          {(flags?.WEB2 || flags?.V_2_02) && data?.user && (
             <TouchableOpacity
               onPress={() => setLogoutModal(!logoutModal)}
               style={{
