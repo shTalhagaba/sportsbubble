@@ -733,7 +733,7 @@ export default function Guide() {
           </View>
         </GestureRecognizer>
         {/* featured event */}
-        {flags?.WEB4 && featuredEvent &&
+        {(flags?.WEB4 || flags?.V_2_04_FEATURED_EVENTS) && featuredEvent &&
           featuredEvent?.logo1 &&
           (selectedCategory === 'all' ||
             selectedCategory.includes(
@@ -823,13 +823,14 @@ export default function Guide() {
             />
           </ScrollView>
         )}
-        {flags?.WEB4 ?
+        {flags?.WEB4 || flags?.V_2_04_PROMO_POPUP ?
           <LiveMatchView
             setLiveMatchModal={setLiveMatchModal}
             liveMatchModal={liveMatchModal}
             navigation={navigation}
           /> : null}
         {/* Access Features pop up  */}
+        {flags?.WEB2 || flags?.V_2_02_CONTINUE_AS_GUEST_POPUP ?
         <CustomModalView
           visible={mySportModal}
           desTxt={Strings.accessFeaturesGuide}
@@ -843,7 +844,7 @@ export default function Guide() {
             setLiveMatchModal(true);
           }}
           otherBtnPress={() => handleCreateAccount()}
-        />
+        />:null}
       </ImageBackground>
     </View>
     </>

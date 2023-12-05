@@ -32,8 +32,7 @@ export default function Splash() {
 
   const getFeatureFlags = async () => {
     try {
-      // const flags = await axios.get(Config.FLAGS_URL)
-      const flags = await axios.get("https://dfj4syg8c5w70.cloudfront.net/feature-flags/flags-mobile.json")
+      const flags = await axios.get(Config.FLAGS_URL)
       console.log('flags?.data ', flags?.data)
       setFlag(flags?.data)
       dispatch(setFeatureFlag(flags?.data))
@@ -166,7 +165,7 @@ export default function Splash() {
             resizeMode="contain"
           />
           <Text style={styles.versionTxt}>
-            v {flag?.WEB3 || flags?.WEB3 || flags?.V_2_03 ? '2.03' : flag?.WEB2 || flags?.WEB2 || flags?.V_2_02 ? '2.02' : "2.01"}
+            v {flags?.V_2_04 ? '2.04' : flag?.WEB3 || flags?.WEB3 || flags?.V_2_03 ? '2.03' : flag?.WEB2 || flags?.WEB2 || flags?.V_2_02 ? '2.02' : "2.01"}
           </Text>
         </View>
       </ImageBackground>
