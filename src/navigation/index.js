@@ -47,7 +47,7 @@ const AppStackNavigator = () => {
     try {
       let dmaCode = ''
       if (reduxData?.userData && reduxData?.userData?.email) {
-        const dmaResponse = await axios.get(`${Config.GEO_LOC_URL}/geo`, {
+        const dmaResponse = await axios.get(`${Config?.GEO_LOC_URL}/geo`, {
           params: { zip: reduxData?.userData?.['custom:zipcode'] }
         })
         const dma = dmaResponse?.data?.dma ?? ''
@@ -60,7 +60,7 @@ const AppStackNavigator = () => {
           dmaCode = reduxData?.userData?.['custom:dma']
         }
       } else {
-        const response = await axios.get(`${Config.GEO_NBC_URL}`)
+        const response = await axios.get(`${Config?.GEO_NBC_URL}`)
         const geoData = response.data
         console.log('GEO_NBC_URL : ', Config?.GEO_NBC_URL, geoData)
         dmaCode = geoData?.dma ?? null

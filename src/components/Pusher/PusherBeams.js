@@ -15,7 +15,7 @@ const showToast = (title, body) => {
   });
 }
 export const initializePusher = () => {
-  RNPusherPushNotifications.setInstanceId(Config.INSTANCE_ID)
+  RNPusherPushNotifications.setInstanceId(Config?.INSTANCE_ID)
   listener = RNPusherPushNotifications.on('registered', (response) => {
     console.log('response: ', response)
     defaultIntrests.map((item) => {
