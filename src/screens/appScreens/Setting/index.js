@@ -83,7 +83,7 @@ export default function Setting() {
         <Text style={styles.loginTxt}>{Strings.settings}</Text>
         <View style={styles.innerContainer}>
           {/* changes for next version */}
-          {flags?.WEB2 && data?.user && (
+          {(flags?.WEB2  || flags?.V_2_02) && data?.user && (
             <>
               {flags?.WEB3 ?
                 <ButtonWithIcon
