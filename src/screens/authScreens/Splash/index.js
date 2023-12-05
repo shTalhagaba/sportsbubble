@@ -32,7 +32,8 @@ export default function Splash() {
 
   const getFeatureFlags = async () => {
     try {
-      const flags = await axios.get(Config.FLAGS_URL)
+      // const flags = await axios.get(Config.FLAGS_URL)
+      const flags = await axios.get("https://dfj4syg8c5w70.cloudfront.net/feature-flags/flags-mobile.json")
       console.log('flags?.data ', flags?.data)
       setFlag(flags?.data)
       dispatch(setFeatureFlag(flags?.data))

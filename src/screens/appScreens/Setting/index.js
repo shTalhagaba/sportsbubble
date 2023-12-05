@@ -85,7 +85,7 @@ export default function Setting() {
           {/* changes for next version */}
           {(flags?.WEB2  || flags?.V_2_02) && data?.user && (
             <>
-              {flags?.WEB3 ?
+              {flags?.WEB3 || flags?.V_2_03 ?
                 <ButtonWithIcon
                   title={Strings.personalInfo}
                   onpress={() =>
