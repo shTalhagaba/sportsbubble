@@ -224,7 +224,7 @@ const BottomTab = () => {
           ),
         }}
       />
-      {flags?.WEB2 || flags?.V_2_02_SPORTS_STREAMING_APPS ?
+      {flags?.WEB2 || flags?.V_2_02 ?
         <Tab.Screen
           name="MySports"
           component={MySports}
