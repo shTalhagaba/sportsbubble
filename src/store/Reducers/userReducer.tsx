@@ -19,7 +19,8 @@ const initialState = {
   userSignupData: '',
   userEmail: '',
   userLoginVerified: false,
-  tooltipStatus: true
+  tooltipStatus: true,
+  searchFlag: false
 };
 
 const user = (state = initialState, action: any) => {
@@ -54,6 +55,18 @@ const user = (state = initialState, action: any) => {
         return {
           ...state,
           eventList: action.payload,
+        };
+      } catch (e) {
+        alert(e);
+        return state;
+      }
+      break;
+    // event list
+    case 'SET_SEARCH_FLAG':
+      try {
+        return {
+          ...state,
+          searchFlag: action.payload,
         };
       } catch (e) {
         alert(e);

@@ -5,12 +5,14 @@ import { Images, Colors, Constants, Strings } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
 import dayjs from 'dayjs';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 import strings from 'src/utils/strings';
-
+import { setSearchFlag } from 'src/store/types';
 export default function Search() {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
   let isFocused = useIsFocused()
   const reduxData = useSelector(state => state.user);
   const currentDate = dayjs(new Date()).toISOString(); // Get the current date and time
@@ -22,6 +24,7 @@ export default function Search() {
 
   useEffect(() => {
     if (isFocused) {
+      dispatch(setSearchFlag(true))
       handleFocus()
       inputRef?.current?.focus();
       // Keyboard.dismiss();
@@ -29,6 +32,8 @@ export default function Search() {
     return () => {
       Keyboard.dismiss();
       setIsFocusedFlag(false)
+      dispatch(setSearchFlag(null))
+
       // setSearchText('')
     }
   }, [isFocused]);
@@ -48,6 +53,8 @@ export default function Search() {
     };
   }, []);
 
+
+
   const keyboardDidShow = () => {
     setIsKeyboardOpen(true);
   };
@@ -65,6 +72,11 @@ export default function Search() {
     // setIsFocusedFlag(false);
     // Keyboard.dismiss();
   };
+  useEffect(() => {
+    if (searchText?.length > 0) {
+      handleInputChange(searchText)
+    }
+  }, [reduxData.eventList])
   const handleInputChange = text => {
     setSearchText(text);
     if (
@@ -76,15 +88,15 @@ export default function Search() {
     ) {
       const filtered = reduxData.eventList.filter(item => {
         if (
-          (item?.line1.toLowerCase().includes(text.toLowerCase()) || 
-          item?.line2.toLowerCase().includes(text.toLowerCase()) || 
-          item?.category &&
-          item?.category?.name &&
-          item?.category?.name.toLowerCase().includes(text.toLowerCase()) || // Check 'category.name'
-          item?.sport &&
-          item?.sport?.name &&
-          item?.sport?.name.toLowerCase().includes(text.toLowerCase()) // Check 'sport.name'
-        )) {
+          (item?.line1.toLowerCase().includes(text.toLowerCase()) ||
+            item?.line2.toLowerCase().includes(text.toLowerCase()) ||
+            item?.category &&
+            item?.category?.name &&
+            item?.category?.name.toLowerCase().includes(text.toLowerCase()) || // Check 'category.name'
+            item?.sport &&
+            item?.sport?.name &&
+            item?.sport?.name.toLowerCase().includes(text.toLowerCase()) // Check 'sport.name'
+          )) {
           return true;
         }
         return false;
@@ -101,7 +113,7 @@ export default function Search() {
     }
   }
 
-    const hasRightHolders = (rightHolders) => {
+  const hasRightHolders = (rightHolders) => {
     return (
       rightHolders?.edges?.filter((edge) => edge?.node?.weight > 1000).length >
       0

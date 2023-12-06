@@ -139,4 +139,10 @@ export const setFeatureFlag = (args: any) => {
     payload: args,
   };
 };
+export const setSearchFlag = (args: any) => {
+  return {
+    type: 'SET_SEARCH_FLAG',
+    payload: args,
+  };
+};
 
