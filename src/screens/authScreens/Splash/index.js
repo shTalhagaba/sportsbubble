@@ -33,7 +33,7 @@ export default function Splash() {
   const getFeatureFlags = async () => {
     try {
       // const flags = await axios.get(Config?.FLAGS_URL)
-      const flags = await axios.get("https://dfj4syg8c5w70.cloudfront.net/feature-flags/flags-mobile.json")
+      const flags = await axios.get("https://flags.watchsports.io/feature-flags/flags-mobile.json")
       console.log('flags?.data ', flags?.data)
       setFlag(flags?.data)
       dispatch(setFeatureFlag(flags?.data))
@@ -102,74 +102,74 @@ export default function Splash() {
     },
   });
 
-  useEffect(() => {
-    if (!loading) {
+  if (!loading) {
+    us                                         eEffect(() => {
+      navigateToMainScreen();
+    } else {
+      navigateToAuthScreen();
+    }
       if ((reduxData?.user) && reduxData?.eventList?.length > 0) {
-        navigateToMainScreen();
-      } else {
-        navigateToAuthScreen();
-      }
     }
   }, [!loading]);
-
   const navigateToMainScreen = () => {
+    setTimeout(() => {
+
+      navigation.replace('Root');
+    };
+  }, 1000);
+  const navigateToAuthScreen = () => {
+
+    setTimeout(() => {
+      navigation.replace('Auth');
+    }, 1000);
+  } else {
     setTimeout(() => {
       navigation.replace('Root');
     }, 1000);
-  };
+}
+if (flag?.WEB2 || flags?.V_2_02_AUTH) {
+};
 
-  const navigateToAuthScreen = () => {
-    if (flag?.WEB2 || flags?.V_2_02_AUTH) {
-      setTimeout(() => {
-        navigation.replace('Auth');
-      }, 1000);
-    } else {
-      setTimeout(() => {
-        navigation.replace('Root');
-      }, 1000);
-    }
-  };
-
-  return (
-    <View style={styles.container}>
+return (
+  <View style={styles.container}>
+    <ImageBackground
+      source={Images.Background2}
+      style={{ height: '100%', width: '100%' }}
+      resizeMode="cover">
       <ImageBackground
-        source={Images.Background2}
-        style={{ height: '100%', width: '100%' }}
+        source={Images.SplashBackTop}
+        style={{ height: height / 2.5 }}
         resizeMode="cover">
-        <ImageBackground
-          source={Images.SplashBackTop}
-          style={{ height: height / 2.5 }}
-          resizeMode="cover">
-          <StatusBar
-            backgroundColor={Colors.transparent}
-            translucent
-            barStyle="light-content"
-          />
-        </ImageBackground>
-        <View style={[styles.logoStyle, { marginTop: height / 4 }]}>
-          <Image
-            source={Images.LogoText}
-            style={styles.logo}
-            resizeMode="contain"
-          />
-        </View>
-        {/* Powered by sports bubble */}
-        <View style={styles.sbContainer}>
-          <Image
-            source={Images.Sports}
-            style={styles.leftArrowIcon}
-            resizeMode="contain"
-          />
-          <Image
-            source={Images.PoweredSB}
-            style={styles.powerImage}
-            resizeMode="contain"
-          />
-          <Text style={styles.versionTxt}>
-            v {flags?.V_2_04 ? '2.04' : (flag?.WEB3 || flags?.V_2_03) ? '2.03' : (flags?.WEB2 || flags?.V_2_02) ? '2.02' : "2.01"}
-          </Text>
-        </View>
+        <StatusBar
+          backgroundColor={Colors.transparent}
+          translucent
+          barStyle="light-content"
+        />
       </ImageBackground>
-    </View>
-  );
+      <View style={[styles.logoStyle, { marginTop: height / 4 }]}>
+        <Image
+          source={Images.LogoText}
+          style={styles.logo}
+          resizeMode="contain"
+        />
+      </View>
+      {/* Powered by sports bubble */}
+      <View style={styles.sbContainer}>
+        <Image
+          source={Images.Sports}
+          style={styles.leftArrowIcon}
+          resizeMode="contain"
+        />
+        <Image
+          source={Images.PoweredSB}
+          style={styles.powerImage}
+          resizeMode="contain"
+        />
+        <Text style={styles.versionTxt}>
+          v {flags?.V_2_04 ? '2.04' : (flag?.WEB3 || flags?.V_2_03) ? '2.03' : (flags?.WEB2 || flags?.V_2_02) ? '2.02' : "2.01"}
+        </Text>
+      </View>
+    </ImageBackground>
+  </View>
+);
 }
