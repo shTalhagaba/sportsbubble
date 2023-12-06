@@ -102,7 +102,7 @@ export default function Setting() {
                   })
                 }
               />
-              {flags?.WEB4 ?
+              {flags?.WEB2 || flags?.V_2_02_SPORTS_STREAMING_APPS ?
                 <ButtonWithIcon
                   title={Strings.sportsStreamingApps}
                   onpress={() =>
