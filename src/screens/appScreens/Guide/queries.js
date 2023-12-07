@@ -9,7 +9,6 @@ export const GET_SORTED_EVENTS = gql`
       startTime
       endTime
       logo1
-      isFeatured
       category {
         id
         name
@@ -40,3 +39,5 @@ export const GET_SORTED_EVENTS = gql`
     }
   }
 `;
+
+// isFeatured

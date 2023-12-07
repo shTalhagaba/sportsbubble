@@ -931,14 +931,14 @@
 				CODE_SIGN_ENTITLEMENTS = sportsbubble/sportsbubble.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = N2NJSCBBBJ;
 				INFOPLIST_FILE = sportsbubble/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.02;
+				MARKETING_VERSION = 2.01;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1271,7 +1271,7 @@
 				CODE_SIGN_ENTITLEMENTS = sportsbubblePassport.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 43;
+				CURRENT_PROJECT_VERSION = 44;
 				DEVELOPMENT_TEAM = N2NJSCBBBJ;
 				INFOPLIST_FILE = "sportsbubble passport-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "passport sportsbubble";
