@@ -21,6 +21,12 @@ export default function Search() {
   const [isFocusedFlag, setIsFocusedFlag] = useState(false);
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
   const inputRef = useRef(null);
+  const [masterData, setMasterData] = useState(reduxData.eventList);
+
+  useEffect(() => {
+    setMasterData(reduxData?.eventList)
+    setList(reduxData?.eventList)
+  }, [])
 
   useEffect(() => {
     if (isFocused) {
@@ -72,38 +78,60 @@ export default function Search() {
     // setIsFocusedFlag(false);
     // Keyboard.dismiss();
   };
+
   useEffect(() => {
     if (searchText?.length > 0) {
       handleInputChange(searchText)
     }
   }, [reduxData.eventList])
-  const handleInputChange = text => {
-    setSearchText(text);
-    if (
-      text &&
-      text.length > 0 &&
-      reduxData &&
-      reduxData.eventList &&
-      reduxData.eventList.length > 0
-    ) {
-      const filtered = reduxData.eventList.filter(item => {
-        if (
-          (item?.line1.toLowerCase().includes(text.toLowerCase()) ||
-            item?.line2.toLowerCase().includes(text.toLowerCase()) ||
-            item?.category &&
-            item?.category?.name &&
-            item?.category?.name.toLowerCase().includes(text.toLowerCase()) || // Check 'category.name'
-            item?.sport &&
-            item?.sport?.name &&
-            item?.sport?.name.toLowerCase().includes(text.toLowerCase()) // Check 'sport.name'
-          )) {
-          return true;
-        }
-        return false;
+  // const handleInputChange = text => {
+  //   setSearchText(text);
+  //   if (
+  //     text &&
+  //     text.length > 0 &&
+  //     reduxData &&
+  //     reduxData.eventList &&
+  //     reduxData.eventList.length > 0
+  //   ) {
+  //     const filtered = reduxData.eventList.filter(item => {
+  //       if (
+  //         (item?.line1.toLowerCase().includes(text.toLowerCase()) ||
+  //           item?.line2.toLowerCase().includes(text.toLowerCase()) ||
+  //           item?.category &&
+  //           item?.category?.name &&
+  //           item?.category?.name.toLowerCase().includes(text.toLowerCase()) || // Check 'category.name'
+  //           item?.sport &&
+  //           item?.sport?.name &&
+  //           item?.sport?.name.toLowerCase().includes(text.toLowerCase()) // Check 'sport.name'
+  //         )) {
+  //         return true;
+  //       }
+  //       return false;
+  //     });
+  //     setList(filtered);
+  //   }
+  // };
+  const handleInputChange = (text) => {
+    if (text) {
+      var tempArr = [...masterData];
+      var filterArr = tempArr.filter((item) => {
+        const itemData =
+          item?.line1.toLowerCase().includes(text.toLowerCase()) ||
+          item?.line2.toLowerCase().includes(text.toLowerCase()) ||
+          item?.category?.name.toLowerCase().includes(text.toLowerCase()) ||
+          item?.sport?.name.toLowerCase().includes(text.toLowerCase());
+        return itemData;
       });
-      setList(filtered);
+      setList(filterArr);
+      setSearchText(text);
+    } else {
+      setList(masterData);
+      setSearchText(text);
     }
   };
+
+
+
 
   const handleEnd = () => {
     if (isKeyboardOpen) {
