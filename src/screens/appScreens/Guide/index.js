@@ -830,8 +830,7 @@ export default function Guide() {
               />
             </ScrollView>
           )}
-          {flags?.WEB4 || flags?.V_2_04_PROMO_POPUP ?
-            <LiveMatchView
+        {(flags?.WEB4 || flags?.V_2_04_PROMO_POPUP) && reduxData?.user ?            <LiveMatchView
               setLiveMatchModal={setLiveMatchModal}
               liveMatchModal={liveMatchModal}
               navigation={navigation}
