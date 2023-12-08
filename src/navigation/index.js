@@ -112,21 +112,35 @@ const AppStackNavigator = () => {
           open: config,
           close: closeConfig
         },
-        // cardStyleInterpolator: cardStyleInterpolators.forHorizontalIOS,
         cardStyleInterpolator: ({ current, layouts }) => {
           return {
             cardStyle: {
               transform: [
                 {
-                  translateX: current.progress.interpolate({
+                  rotateY: current.progress.interpolate({
                     inputRange: [0, 1],
-                    outputRange: [layouts.screen.width, 0],
+                    outputRange: ['180deg', '0deg'],
                   }),
                 },
               ],
             },
           };
         },
+        // cardStyleInterpolator: cardStyleInterpolators.forHorizontalIOS,
+        // cardStyleInterpolator: ({ current, layouts }) => {
+        //   return {
+        //     cardStyle: {
+        //       transform: [
+        //         {
+        //           translateX: current.progress.interpolate({
+        //             inputRange: [0, 1],
+        //             outputRange: [layouts.screen.width, 0],
+        //           }),
+        //         },
+        //       ],
+        //     },
+        //   };
+        // },
 
 
       }}>

@@ -48,21 +48,34 @@ const GuideNavigation = () => {
         transitionpec: {
           open: config,
           close: closeConfig
-        },
-        cardStyleInterpolator: ({ current, layouts }) => {
+        }, cardStyleInterpolator: ({ current, layouts }) => {
           return {
             cardStyle: {
               transform: [
                 {
-                  translateX: current.progress.interpolate({
+                  rotateY: current.progress.interpolate({
                     inputRange: [0, 1],
-                    outputRange: [layouts.screen.width, 0],
+                    outputRange: ['180deg', '0deg'],
                   }),
                 },
               ],
             },
           };
         },
+        // cardStyleInterpolator: ({ current, layouts }) => {
+        //   return {
+        //     cardStyle: {
+        //       transform: [
+        //         {
+        //           translateX: current.progress.interpolate({
+        //             inputRange: [0, 1],
+        //             outputRange: [layouts.screen.width, 0],
+        //           }),
+        //         },
+        //       ],
+        //     },
+        //   };
+        // },
       }}>
       <GuideNavigator.Screen name="GuideMain" component={Guide} />
       <GuideNavigator.Screen name="Watch" component={Watch} />
@@ -85,15 +98,29 @@ const SettingNavigation = () => {
             cardStyle: {
               transform: [
                 {
-                  translateX: current.progress.interpolate({
+                  rotateY: current.progress.interpolate({
                     inputRange: [0, 1],
-                    outputRange: [layouts.screen.width, 0],
+                    outputRange: ['180deg', '0deg'],
                   }),
                 },
               ],
             },
           };
         },
+        // cardStyleInterpolator: ({ current, layouts }) => {
+        //   return {
+        //     cardStyle: {
+        //       transform: [
+        //         {
+        //           translateX: current.progress.interpolate({
+        //             inputRange: [0, 1],
+        //             outputRange: [layouts.screen.width, 0],
+        //           }),
+        //         },
+        //       ],
+        //     },
+        //   };
+        // },
       }}>
       <SettingNavigator.Screen name="SettingMain" component={Setting} />
       <SettingNavigator.Screen name="Legal" component={Legal} />
@@ -117,15 +144,29 @@ const SearchNavigation = () => {
             cardStyle: {
               transform: [
                 {
-                  translateX: current.progress.interpolate({
+                  rotateY: current.progress.interpolate({
                     inputRange: [0, 1],
-                    outputRange: [layouts.screen.width, 0],
+                    outputRange: ['180deg', '0deg'],
                   }),
                 },
               ],
             },
           };
         },
+        // cardStyleInterpolator: ({ current, layouts }) => {
+        //   return {
+        //     cardStyle: {
+        //       transform: [
+        //         {
+        //           translateX: current.progress.interpolate({
+        //             inputRange: [0, 1],
+        //             outputRange: [layouts.screen.width, 0],
+        //           }),
+        //         },
+        //       ],
+        //     },
+        //   };
+        // },
       }}>
       <SearchNavigator.Screen name="SearchMain" component={Search} />
       <SearchNavigator.Screen name="SearchWatch" component={Watch} />
