@@ -503,7 +503,7 @@ export default function Guide() {
                 ? Colors.mediumGreen
                 : Colors.mediumBlue,
               width: `${item?.endGrad + item.startGrad <= 86
-                ? item?.endGrad - item?.startGrad
+                ? item?.endGrad - item?.startGrad - 2
                 : item?.endGrad + item?.startGrad >= 86
                   ? 86 - item?.startGrad
                   : item?.endGrad - item?.startGrad
@@ -830,11 +830,11 @@ export default function Guide() {
               />
             </ScrollView>
           )}
-        {(flags?.WEB4 || flags?.V_2_04_PROMO_POPUP) && reduxData?.user ?            <LiveMatchView
-              setLiveMatchModal={setLiveMatchModal}
-              liveMatchModal={liveMatchModal}
-              navigation={navigation}
-            /> : null}
+          {(flags?.WEB4 || flags?.V_2_04_PROMO_POPUP) && reduxData?.user ? <LiveMatchView
+            setLiveMatchModal={setLiveMatchModal}
+            liveMatchModal={liveMatchModal}
+            navigation={navigation}
+          /> : null}
           {/* Access Features pop up  */}
           {flags?.WEB2 || flags?.V_2_02_CONTINUE_AS_GUEST_POPUP ?
             <CustomModalView
