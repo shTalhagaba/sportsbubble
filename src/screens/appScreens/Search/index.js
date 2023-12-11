@@ -9,10 +9,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
 import strings from 'src/utils/strings';
 import { setSearchFlag } from 'src/store/types';
+
 export default function Search() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-
   let isFocused = useIsFocused()
   const reduxData = useSelector(state => state.user);
   const currentDate = dayjs(new Date()).toISOString(); // Get the current date and time
@@ -39,7 +39,6 @@ export default function Search() {
       Keyboard.dismiss();
       setIsFocusedFlag(false)
       dispatch(setSearchFlag(null))
-
       // setSearchText('')
     }
   }, [isFocused]);
@@ -84,42 +83,17 @@ export default function Search() {
       handleInputChange(searchText)
     }
   }, [reduxData.eventList])
-  // const handleInputChange = text => {
-  //   setSearchText(text);
-  //   if (
-  //     text &&
-  //     text.length > 0 &&
-  //     reduxData &&
-  //     reduxData.eventList &&
-  //     reduxData.eventList.length > 0
-  //   ) {
-  //     const filtered = reduxData.eventList.filter(item => {
-  //       if (
-  //         (item?.line1.toLowerCase().includes(text.toLowerCase()) ||
-  //           item?.line2.toLowerCase().includes(text.toLowerCase()) ||
-  //           item?.category &&
-  //           item?.category?.name &&
-  //           item?.category?.name.toLowerCase().includes(text.toLowerCase()) || // Check 'category.name'
-  //           item?.sport &&
-  //           item?.sport?.name &&
-  //           item?.sport?.name.toLowerCase().includes(text.toLowerCase()) // Check 'sport.name'
-  //         )) {
-  //         return true;
-  //       }
-  //       return false;
-  //     });
-  //     setList(filtered);
-  //   }
-  // };
+
   const handleInputChange = (text) => {
     if (text) {
-      var tempArr = [...masterData];
+      var tempArr = [...reduxData.eventList];
       var filterArr = tempArr.filter((item) => {
         const itemData =
-          item?.line1.toLowerCase().includes(text.toLowerCase()) ||
-          item?.line2.toLowerCase().includes(text.toLowerCase()) ||
-          item?.category?.name.toLowerCase().includes(text.toLowerCase()) ||
-          item?.sport?.name.toLowerCase().includes(text.toLowerCase());
+          (item?.line1.toLowerCase().includes(text.toLowerCase()) ||
+            item?.line2.toLowerCase().includes(text.toLowerCase()) ||
+            item?.category?.name.toLowerCase().includes(text.toLowerCase()) ||
+            item?.sport?.name.toLowerCase().includes(text.toLowerCase())) &&
+          dayjs(currentDate).isBefore(item?.endTime);
         return itemData;
       });
       setList(filterArr);
@@ -129,8 +103,6 @@ export default function Search() {
       setSearchText(text);
     }
   };
-
-
 
 
   const handleEnd = () => {
