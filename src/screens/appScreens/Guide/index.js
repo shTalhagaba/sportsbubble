@@ -502,7 +502,7 @@ export default function Guide() {
                 ? Colors.mediumGreen
                 : Colors.mediumBlue,
               width: `${item?.endGrad + item.startGrad <= 86
-                ? item?.endGrad - item?.startGrad - 2
+                ? item?.endGrad - item?.startGrad - 6
                 : item?.endGrad + item?.startGrad >= 86
                   ? 86 - item?.startGrad
                   : item?.endGrad - item?.startGrad

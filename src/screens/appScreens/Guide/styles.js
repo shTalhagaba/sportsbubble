@@ -67,6 +67,7 @@ export default ScaledSheet.create({
     shadowRadius: 3,
     shadowOpacity: 1,
     marginTop: '0@ms0.3',
+    marginLeft: '12@ms0.3',
   },
   liveMainContainer: {
     width: fontScale > 1 ? (width / 5) * fontScale : width / 4,
