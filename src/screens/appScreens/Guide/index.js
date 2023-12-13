@@ -81,43 +81,12 @@ export default function Guide() {
     dayjs(new Date()).add(7, 'day').toISOString(),
   );
 
-  // Use useEffect to call fetchData every 5 minutes
+  // Use#1
   useEffect(() => {
+    getTimeList();
     searchRefetch();
+    // to call fetchData every 5 minutes
     const interval = setInterval(searchRefetch, 300000);
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
-
-  const subscribeToInterests = async (interestList) => {
-    const { status } = await checkNotifications()
-    if (status === 'granted') {
-      initializePusher()
-      for await (const interest of interestList) {
-        subscribeInterest(interest)
-      }
-    }
-  }
-
-  useEffect(() => {
-    if (reduxData?.sportsList?.length > 0) {
-      const interestList = reduxData?.sportsList?.flatMap(favoriteSport => {
-        if (!favoriteSport?.notifications) return []
-
-        if (!['pro', 'esports', 'college']?.includes(favoriteSport?.categories?.[0]?.name)) {
-          return `others-${favoriteSport?.sport?.name?.replaceAll(/[^A-Z0-9]+/ig, '')}`
-        } else {
-          return `${favoriteSport?.categories?.[0]?.name}-${favoriteSport?.sport?.name?.replaceAll(/[^A-Z0-9]+/ig, '')}`
-        }
-      })
-      if (interestList && interestList?.length > 0) {
-        subscribeToInterests(interestList)
-      }
-    }
-  }, [reduxData?.sportsList])
-
-  useEffect(() => {
     const handleAppStateChange = nextAppState => {
       console.log('appState appState =>', nextAppState); // Log the nextAppState, not the previous appState
       if (nextAppState === 'active') {
@@ -146,9 +115,39 @@ export default function Guide() {
     // Unsubscribe and perform cleanup when the component unmounts
     return () => {
       appStateSubscription.remove();
+      clearInterval(interval);
     };
   }, []);
+  // Use#2
+  useEffect(() => {
+    setList(reduxData?.sportsList);
+    setReload(!reload);
+    setEventList(eventList);
+    if (reduxData?.sportsList?.length > 0) {
+      const interestList = reduxData?.sportsList?.flatMap(favoriteSport => {
+        if (!favoriteSport?.notifications) return [];
 
+        if (
+          !['pro', 'esports', 'college']?.includes(
+            favoriteSport?.categories?.[0]?.name,
+          )
+        ) {
+          return `others-${favoriteSport?.sport?.name?.replaceAll(
+            /[^A-Z0-9]+/gi,
+            '',
+          )}`;
+        } else {
+          return `${
+            favoriteSport?.categories?.[0]?.name
+          }-${favoriteSport?.sport?.name?.replaceAll(/[^A-Z0-9]+/gi, '')}`;
+        }
+      });
+      if (interestList && interestList?.length > 0) {
+        subscribeToInterests(interestList);
+      }
+    }
+  }, [reduxData?.sportsList]);
+  // Use#3
   useEffect(() => {
     if (reduxData?.eventList && reduxData.eventList.length > 0) {
       setEventList(
@@ -160,13 +159,54 @@ export default function Guide() {
       }
     }
   }, [reduxData?.eventList]);
-
+  // Use#4
   useEffect(() => {
     if (reduxData?.searchFlag) {
-      console.log("Enter")
-      searchRefetch()
+      console.log('Enter');
+      searchRefetch();
     }
-  }, [reduxData?.searchFlag])
+  }, [reduxData?.searchFlag]);
+  // Use#5
+  useEffect(() => {
+    if (isFocused) {
+      refetch();
+      if (reduxData?.refresh || reduxData?.selectedTimebar === -1) {
+        handleLive();
+        dispatch(refreshData(false)); // Dispatch the action
+      } else {
+        setSelectedTimeIndex(reduxData?.selectedTimebar);
+      }
+      searchRefetch();
+      getTimeList();
+    }
+  }, [isFocused, reduxData?.refresh]);
+  // Use#6
+  useEffect(() => {
+    if (reduxData?.eventList && reduxData?.eventList.length > 0) {
+      const filteredEvents = UpdateEvents(
+        reduxData.eventList,
+        startTime,
+        new Date().toISOString(),
+      );
+      const list = filteredEvents.filter(event => {
+        const isCategoryMatch =
+          selectedCategory.includes('all') ||
+          selectedCategory.includes(event.category.name.toLowerCase());
+        return isCategoryMatch;
+      });
+      setFilteredEventList(list);
+    }
+  }, [selectedCategory, startTime, reduxData?.eventList]);
+
+  const subscribeToInterests = async interestList => {
+    const {status} = await checkNotifications();
+    if (status === 'granted') {
+      initializePusher();
+      for await (const interest of interestList) {
+        subscribeInterest(interest);
+      }
+    }
+  };
 
   const {
     loading: searchLoading,
@@ -234,11 +274,6 @@ export default function Guide() {
     const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
     return `${formattedHours} ${period}`;
   };
-  useEffect(() => {
-    setList(reduxData?.sportsList);
-    setReload(!reload);
-    setEventList(eventList);
-  }, [reduxData?.sportsList]);
 
   const getTimeList = () => {
     const hoursList = [];
@@ -264,41 +299,6 @@ export default function Guide() {
     setTimeData(timeData);
     return timeData;
   };
-
-  useEffect(() => {
-    getTimeList();
-  }, []);
-
-  useEffect(() => {
-    if (isFocused) {
-      refetch();
-      if (reduxData?.refresh || reduxData?.selectedTimebar === -1) {
-        handleLive();
-        dispatch(refreshData(false)); // Dispatch the action
-      } else {
-        setSelectedTimeIndex(reduxData?.selectedTimebar);
-      }
-      searchRefetch();
-      getTimeList();
-    }
-  }, [isFocused, reduxData?.refresh]);
-
-  useEffect(() => {
-    if (reduxData?.eventList && reduxData?.eventList.length > 0) {
-      const filteredEvents = UpdateEvents(
-        reduxData.eventList,
-        startTime,
-        new Date().toISOString(),
-      );
-      const list = filteredEvents.filter(event => {
-        const isCategoryMatch =
-          selectedCategory.includes('all') ||
-          selectedCategory.includes(event.category.name.toLowerCase());
-        return isCategoryMatch;
-      });
-      setFilteredEventList(list);
-    }
-  }, [selectedCategory, startTime, reduxData?.eventList]);
 
   const handleSelectedCategory = (e, index) => {
     console.log("Index =>", index)
