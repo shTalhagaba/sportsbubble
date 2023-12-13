@@ -67,11 +67,6 @@ export default function Guide() {
   const [mySportModal, setMySportModal] = useState(
     reduxData?.guest === true ? true : false,
   );
-  const [eventList, setEventList] = useState(
-    reduxData && reduxData?.eventList && reduxData?.eventList.length > 0
-      ? reduxData?.eventList
-      : [],
-  );
   const [filteredEventList, setFilteredEventList] = useState([]);
   const [startTime, setStartTime] = useState(new Date());
   const [startSearchTime, setStartSearchTime] = useState(
@@ -83,6 +78,7 @@ export default function Guide() {
 
   // Use#1
   useEffect(() => {
+    console.log('Use#1  : ')
     getTimeList();
     searchRefetch();
     // to call fetchData every 5 minutes
@@ -120,9 +116,9 @@ export default function Guide() {
   }, []);
   // Use#2
   useEffect(() => {
+    console.log('Use#2  : ')
     setList(reduxData?.sportsList);
     setReload(!reload);
-    setEventList(eventList);
     if (reduxData?.sportsList?.length > 0) {
       const interestList = reduxData?.sportsList?.flatMap(favoriteSport => {
         if (!favoriteSport?.notifications) return [];
@@ -148,19 +144,21 @@ export default function Guide() {
     }
   }, [reduxData?.sportsList]);
   // Use#3
-  useEffect(() => {
-    if (reduxData?.eventList && reduxData.eventList.length > 0) {
-      setEventList(
-        UpdateEvents(reduxData.eventList, startTime, new Date().toISOString()),
-      );
-      const filter = reduxData?.eventList.filter(item => item.isFeatured);
-      if (filter && filter.length > 0) {
-        setFeaturedEvent(filter[0]);
-      }
-    }
-  }, [reduxData?.eventList]);
+  // useEffect(() => { // android speed issue fix
+  //   console.log('Use#3  : ')
+  //   // if (reduxData?.eventList && reduxData.eventList.length > 0) {
+  //   //   setEventList(
+  //   //     UpdateEvents(reduxData.eventList, startTime, new Date().toISOString()),
+  //   //   );
+  //   //   const filter = reduxData?.eventList.filter(item => item.isFeatured);
+  //   //   if (filter && filter.length > 0) {
+  //   //     setFeaturedEvent(filter[0]);
+  //   //   }
+  //   // }
+  // }, [reduxData?.eventList]);
   // Use#4
   useEffect(() => {
+    console.log('Use#4  : ')
     if (reduxData?.searchFlag) {
       console.log('Enter');
       searchRefetch();
@@ -168,6 +166,7 @@ export default function Guide() {
   }, [reduxData?.searchFlag]);
   // Use#5
   useEffect(() => {
+    console.log('Use#5 is focus : ',isFocused)
     if (isFocused) {
       refetch();
       if (reduxData?.refresh || reduxData?.selectedTimebar === -1) {
@@ -343,19 +342,19 @@ export default function Guide() {
       setSelectedCategory('all');
       filteredEvents =
         selectedTimeIndex === 0
-          ? eventList
-          : eventList.filter(event =>
+          ? reduxData?.eventList
+          : reduxData?.eventList.filter(event =>
             dayjs(event.startTime).isAfter(formattedTime),
           );
     } else {
       filteredEvents =
         selectedTimeIndex === 0
-          ? eventList.filter(event =>
+          ? reduxData?.eventList.filter(event =>
             selectedCategoryValues.includes(
               event.category.name.toLowerCase(),
             ),
           )
-          : eventList.filter(
+          : reduxData?.eventList.filter(
             event =>
               selectedCategoryValues.includes(
                 event.category.name.toLowerCase(),
