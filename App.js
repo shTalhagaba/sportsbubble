@@ -45,60 +45,60 @@ const App = () => {
   LogBox.ignoreAllLogs();
   const [flag, setFlag] = useState(undefined)
 
-const getFeatureFlags = async () => {
-  try {
-    const flags = await axios.get(Config.FLAGS_URL)
-    setFlag(flags?.data)
-    return flags
-  } catch (error) {
-    return false
+  const getFeatureFlags = async () => {
+    try {
+      const flags = await axios.get(Config.FLAGS_URL)
+      setFlag(flags?.data)
+      return flags
+    } catch (error) {
+      return false
+    }
   }
-}
 
-useEffect(() => {
-  if (!flag) {
-    getFeatureFlags()
-  }
-}, [])
+  useEffect(() => {
+    if (!flag) {
+      getFeatureFlags()
+    }
+  }, [])
 
-const httpLink = createHttpLink({
-  // uri: 'https://9oa4ll4zp8.execute-api.us-west-2.amazonaws.com/stage/graphql',  // sb3 staging
-  // uri: 'https://6953ptqg3b.execute-api.us-west-2.amazonaws.com/dev/graphql', // sb2 watch sport dev
-  // uri: 'https://09a84a77s4.execute-api.us-west-2.amazonaws.com/dev/graphql', // sb5 dev passport 
-  // uri: 'https://62nyqda343.execute-api.us-west-2.amazonaws.com/prod/graphql', // sb4 production
-  // uri: 'https://api.watchsports.io/graphql',
-  uri: flag?.USE_SB3 ? Config?.USE_SB3 : Config?.BASE_URL
-});
+  const httpLink = createHttpLink({
+    // uri: 'https://9oa4ll4zp8.execute-api.us-west-2.amazonaws.com/stage/graphql',  // sb3 staging
+    // uri: 'https://6953ptqg3b.execute-api.us-west-2.amazonaws.com/dev/graphql', // sb2 watch sport dev
+    uri: 'https://09a84a77s4.execute-api.us-west-2.amazonaws.com/dev/graphql', // sb5 dev passport 
+    // uri: 'https://62nyqda343.execute-api.us-west-2.amazonaws.com/prod/graphql', // sb4 production
+    // uri: 'https://api.watchsports.io/graphql',
+    // uri: flag?.USE_SB3 ? Config?.USE_SB3 : Config?.BASE_URL
+  });
 
-const authLink = setContext((_, { headers }) => {
-  const token = Platform.OS === 'android' ? `Bearer ${stageToken}` : `Bearer ${Config.BEARER_TOKEN}`;
-  return {
-    headers: {
-      ...headers,
-      authorization: token ? token : '',
+  const authLink = setContext((_, { headers }) => {
+    const token = Platform.OS === 'android' ? `Bearer ${stageToken}` : `Bearer ${Config.BEARER_TOKEN}`;
+    return {
+      headers: {
+        ...headers,
+        authorization: token ? token : '',
+      },
+    };
+  });
+
+  const client = new ApolloClient({
+    link: authLink.concat(httpLink),
+    cache: new InMemoryCache(),
+    defaultOptions: {
+      watchQuery: {
+        fetchPolicy: 'cache-and-network',
+      },
+    },
+  });
+
+  const theme = {
+    ...DefaultTheme,
+    colors
+      : {
+      ...DefaultTheme.colors,
+      background: 'black'
+      ,
     },
   };
-});
-
-const client = new ApolloClient({
-  link: authLink.concat(httpLink),
-  cache: new InMemoryCache(),
-  defaultOptions: {
-    watchQuery: {
-      fetchPolicy: 'cache-and-network',
-    },
-  },
-});
-
-const theme = {
-  ...DefaultTheme,
-  colors
-    : {
-    ...DefaultTheme.colors,
-    background: 'black'
-    ,
-  },
-};
 
 
 

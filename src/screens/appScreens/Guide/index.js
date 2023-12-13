@@ -19,6 +19,7 @@ import AppHeader from 'src/components/AppHeader';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 import LiveMatchView from 'src/components/Modal/LiveMatchModal';
 import { useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import dayjs from 'dayjs';
 import { GET_SORTED_EVENTS } from './queries';
 import { useDispatch, useSelector } from 'react-redux';
@@ -133,9 +134,8 @@ export default function Guide() {
             '',
           )}`;
         } else {
-          return `${
-            favoriteSport?.categories?.[0]?.name
-          }-${favoriteSport?.sport?.name?.replaceAll(/[^A-Z0-9]+/gi, '')}`;
+          return `${favoriteSport?.categories?.[0]?.name
+            }-${favoriteSport?.sport?.name?.replaceAll(/[^A-Z0-9]+/gi, '')}`;
         }
       });
       if (interestList && interestList?.length > 0) {
@@ -166,7 +166,7 @@ export default function Guide() {
   }, [reduxData?.searchFlag]);
   // Use#5
   useEffect(() => {
-    console.log('Use#5 is focus : ',isFocused)
+    console.log('Use#5 is focus : ', isFocused)
     if (isFocused) {
       refetch();
       if (reduxData?.refresh || reduxData?.selectedTimebar === -1) {
@@ -198,7 +198,7 @@ export default function Guide() {
   }, [selectedCategory, startTime, reduxData?.eventList]);
 
   const subscribeToInterests = async interestList => {
-    const {status} = await checkNotifications();
+    const { status } = await checkNotifications();
     if (status === 'granted') {
       initializePusher();
       for await (const interest of interestList) {
@@ -207,11 +207,13 @@ export default function Guide() {
     }
   };
 
-  const {
-    loading: searchLoading,
-    refetch: searchRefetch,
-    error: searchError,
-  } = useQuery(GET_SORTED_EVENTS, {
+  const [getSortedEvents, { loading: searchLoading, data: searchData, error: searchError, refetch: searchRefetch }] = useLazyQuery(GET_SORTED_EVENTS, {
+
+    // const {
+    //   loading: searchLoading,
+    //   refetch: searchRefetch,
+    //   error: searchError,
+    // } = useQuery(GET_SORTED_EVENTS, {
     variables: {
       startTime: startSearchTime,
       endTime: endSearchTime,
