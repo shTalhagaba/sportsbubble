@@ -147,6 +147,12 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            storeFile file('sportsbubble.keystore')
+            storePassword 'sportsbubble2023'
+            keyAlias 'sportsbubble'
+            keyPassword 'sportsbubble2023'
+        }
     }
  buildTypes {
         debug {
