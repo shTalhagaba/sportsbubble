@@ -2,9 +2,14 @@ import { Colors, Fonts } from "src/utils";
 import { ScaledSheet } from "react-native-size-matters";
 
 const styles = ScaledSheet.create({
-    container: {
+    viewContainer: {
         flex: 1,
         backgroundColor: Colors.darkBlue90,
+    },
+    container: {
+        flex: 1,
+        width:'100%',
+        height:'100%',
     },
     mainView: {
         flex: 1,

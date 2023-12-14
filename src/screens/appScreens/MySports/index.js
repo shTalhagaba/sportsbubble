@@ -52,7 +52,8 @@ export default function MySports() {
   const [reminderModal, setReminderModal] = useState(false);
   const [settingsModal, setSettingsModal] = useState(false);
   const [fvrtModal, setFvrtModal] = useState(
-    reduxData?.guest === true ? true : false,
+    true
+    // reduxData?.guest === true ? true : false,
   );
   const [mySportData, setSportData] = useState([]);
   const [currentIndex, setCurrentIndex] = useState();

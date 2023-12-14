@@ -41,6 +41,7 @@ import useSportsList from 'src/services/useSportsList';
 import StarView from 'src/components/StarView';
 import { initializePusher, subscribeInterest } from 'src/components/Pusher/PusherBeams';
 import { checkNotifications } from 'react-native-permissions';
+import Tooltip from 'src/components/Tooltip';
 
 const screenWidth = Dimensions.get('window').width;
 const { fontScale } = Dimensions.get('window');
@@ -79,6 +80,7 @@ export default function Guide() {
 
   // Use#1
   useEffect(() => {
+    dispatch(setTooltipStatus(true))
     console.log('Use#1  : ')
     getTimeList();
     searchRefetch();
@@ -543,7 +545,7 @@ export default function Guide() {
 
   return (
     <>
-      {/* <TooltipView
+       {/* <Tooltip
       visible={reduxData?.tooltipStatus}
       closePress={() => dispatch(setTooltipStatus(false))} /> */}
       <View style={styles.container}>

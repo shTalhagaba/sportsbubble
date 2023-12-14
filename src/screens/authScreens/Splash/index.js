@@ -32,7 +32,7 @@ export default function Splash() {
 
   const getFeatureFlags = async () => {
     try {
-      const flags = await axios.get(Config.FLAGS_URL)
+      const flags = await axios.get('https://dfj4syg8c5w70.cloudfront.net/feature-flags/flags-mobile.json')
       setFlag(flags?.data)
       dispatch(setFeatureFlag(flags?.data))
       return flags
@@ -112,7 +112,7 @@ export default function Splash() {
 
   const navigateToMainScreen = () => {
     setTimeout(() => {
-      navigation.replace('Root');
+      navigation.replace('Auth');
     }, 1000);
   };
 
@@ -123,7 +123,7 @@ export default function Splash() {
       }, 1000);
     } else {
       setTimeout(() => {
-        navigation.replace('Root');
+        navigation.replace('Auth');
       }, 1000);
     }
   };
