@@ -12,60 +12,67 @@ const CustomMySportsModalView = props => {
         translucent
         barStyle="light-content"
       />
-      <ImageBackground
-        source={Images.BackgroundMySportsGuide}
-        resizeMode="cover"
-        style={styles.container} >
-        <TouchableWithoutFeedback style={styles.mainView}>
-          <View style={styles.mainView}>
-            <View style={styles.checkBoxContainer}>
-              {props.headerTxt && (
-                <Text style={[styles.headerTxt, props.headerTxtStyle]}>
-                  {props?.headerTxt}
+      <View style={{
+        flex: 1,
+        backgroundColor: Colors.darkBlue90
+      }}>
+        <ImageBackground
+          source={Images.BackgroundMySportsGuide}
+          resizeMode="contain"
+          style={styles.container} >
+          <TouchableWithoutFeedback style={styles.mainView}>
+            <View style={styles.mainView}>
+              <View style={styles.checkBoxContainer}>
+                {props.headerTxt && (
+                  <Text style={[styles.headerTxt, props.headerTxtStyle]}>
+                    {props?.headerTxt}
+                  </Text>
+                )}
+                <Text style={[styles.desTxt, props.dexTxtStyle]}>
+                  {props?.desTxt}
                 </Text>
-              )}
-              <Text style={[styles.desTxt, props.dexTxtStyle]}>
-                {props?.desTxt}
-              </Text>
-              {props.btn && (
-                <View style={props.rowStyle ? styles.rowBtn : styles.columnBtn}>
-                  {props.orangrBTn ? (
+                {props.btn && (
+                  <View style={props.rowStyle ? styles.rowBtn : styles.columnBtn}>
+                    {props.orangrBTn ? (
+                      <CustomButton
+                        title={props.orangeBtnTxt}
+                        Container={
+                          props.rowStyle
+                            ? styles.orangeBtnContainer
+                            : styles.blackBtnContainer2
+                        }
+                        onpress={props.ornageBtnPress}
+                        txt={styles.orangeTxt}
+                      />
+                    ) : (
+                      <CustomButton
+                        blue={props.blue}
+                        Container={props.rowStyle ? { flex: 1 } : styles.buttonStyle}
+                        title={props.otherBtnTxt}
+                        txt={styles.buttonTxt}
+                        onpress={props.otherBtnPress}
+                      />
+                    )}
                     <CustomButton
-                      title={props.orangeBtnTxt}
+                      title={props.blackBtnTxt}
                       Container={
                         props.rowStyle
-                          ? styles.orangeBtnContainer
+                          ? styles.blackBtnContainer
                           : styles.blackBtnContainer2
                       }
-                      onpress={props.ornageBtnPress}
-                      txt={styles.orangeTxt}
-                    />
-                  ) : (
-                    <CustomButton
-                      blue={props.blue}
-                      Container={props.rowStyle ? { flex: 1 } : styles.buttonStyle}
-                      title={props.otherBtnTxt}
                       txt={styles.buttonTxt}
-                      onpress={props.otherBtnPress}
+                      onpress={props.blackBtnPress}
                     />
-                  )}
-                  <CustomButton
-                    title={props.blackBtnTxt}
-                    Container={
-                      props.rowStyle
-                        ? styles.blackBtnContainer
-                        : styles.blackBtnContainer2
-                    }
-                    txt={styles.buttonTxt}
-                    onpress={props.blackBtnPress}
-                  />
-                </View>
-              )}
+                  </View>
+                )}
+              </View>
             </View>
-          </View>
-        </TouchableWithoutFeedback>
-      </ImageBackground>
+          </TouchableWithoutFeedback>
+        </ImageBackground>
+      </View>
+
     </Modal>
+
   );
 };
 export default CustomMySportsModalView;

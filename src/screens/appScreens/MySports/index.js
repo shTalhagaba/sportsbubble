@@ -526,7 +526,7 @@ export default function MySports() {
         //DENIED: The permission has not been requested / is denied but requestable
         //BLOCKED: The permission is denied and not requestable anymore
         //GRANTED: The permission is granted
-        console.log('status - ',status)
+        console.log('status - ', status)
         switch (status) {
           case 'granted':
             resolve(true);
@@ -536,7 +536,7 @@ export default function MySports() {
               ({ status, settings }) => {
                 if (status == 'granted') {
                   resolve(true);
-                } else if(status == 'blocked'){
+                } else if (status == 'blocked') {
                   setSettingsModal(true);
                   resolve(false);
                 } else {
@@ -615,161 +615,185 @@ export default function MySports() {
   };
 
   return (
-    <ImageBackground
-      source={Images.Background2}
-      resizeMode="cover"
-      style={styles.container}>
-      <StatusBar
-        backgroundColor={Colors.transparent}
-        translucent
-        barStyle="light-content"
-      />
-      {/* Header with Logo only  */}
-      <AppHeader centerImage={Images.Logo} />
-      {/* Slider all pro  */}
-      <View style={styles.sliderContainer}>
-        <FlatList
-          horizontal
-          data={categoryData}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={
-            fontScale > 1
-              ? { justifyContent: 'center' }
-              : { justifyContent: 'center', flex: 1 }
-          }
-          scrollEnabled={fontScale > 1 ? true : false}
-          renderItem={({ item, index }) => (
-            <TouchableOpacity
-              onPress={() =>
-                reduxData?.user ? handleSelectedCategory(item, index) : {}
-              }
-              style={styles.sliderInnerContainer}>
-              <View
-                style={[
-                  styles.sliderInnerMainContainer,
-                  { borderWidth: item?.selected ? moderateScale(2, 0.3) : 0 },
-                ]}>
-                {item?.selected && <View style={styles.rectangle2} />}
-                <ImageBackground
-                  source={
-                    item?.selected
-                      ? Images.ActiveSliderBack
-                      : Images.InActiveSliderBorder
-                  }
-                  style={styles.sliderImageBackground}
-                  imageStyle={
-                    Platform.OS === 'android'
-                      ? {
-                        borderRadius: moderateScale(22, 0.3),
-                        borderWidth: item?.selected
-                          ? 0
-                          : moderateScale(2.5, 0.3),
-                        borderColor: Colors.darkBlue,
-                      }
-                      : {}
-                  }
-                  resizeMode={'stretch'}>
-                  <Image
-                    source={
-                      index === 0
-                        ? Images.Crown
-                        : index === 1
-                          ? Images.College
-                          : index === 2
-                            ? Images.Game
-                            : Images.Trophy
-                    }
-                    style={styles.sliderIcon}
-                    resizeMode={'contain'}
-                  />
-                  <Text style={styles.sliderTxt}>
-                    {item?.title.toUpperCase()}
-                  </Text>
-                </ImageBackground>
-              </View>
-            </TouchableOpacity>
-          )}
+    <>
+      <ImageBackground
+        source={Images.Background2}
+        resizeMode="cover"
+        style={styles.container}>
+        <StatusBar
+          backgroundColor={Colors.transparent}
+          translucent
+          barStyle="light-content"
         />
-      </View>
-      {/*  header text */}
-      <View style={styles.mangeFvrtContainer}>
-        <Text style={styles.mangeFavTxt}>{Strings.manageFavorite}</Text>
-      </View>
-      {/* main list */}
-      <FlatList
-        data={filteredEventList}
-        showsVerticalScrollIndicator={false}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-        renderItem={({ item, index }) => {
-          const favouriteStar = isFavoriteCheck(item);
-          return reduxData?.user &&
-            item?.name &&
-            item?.categories?.[0]?.name ? (
-            <View style={styles.listContainer}>
-              <View style={styles.innerContainer}>
-                <Image
-                  source={Images.BaseBall}
-                  style={styles.imageIcon}
-                  resizeMode={'contain'}
-                />
-                <View style={styles.userNameContainer}>
-                  <Text style={styles.titleTxt}>{item?.name}</Text>
+        {/* Header with Logo only  */}
+        <AppHeader centerImage={Images.Logo} />
+        {/* Slider all pro  */}
+        <View style={styles.sliderContainer}>
+          <FlatList
+            horizontal
+            data={categoryData}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={
+              fontScale > 1
+                ? { justifyContent: 'center' }
+                : { justifyContent: 'center', flex: 1 }
+            }
+            scrollEnabled={fontScale > 1 ? true : false}
+            renderItem={({ item, index }) => (
+              <TouchableOpacity
+                onPress={() =>
+                  reduxData?.user ? handleSelectedCategory(item, index) : {}
+                }
+                style={styles.sliderInnerContainer}>
+                <View
+                  style={[
+                    styles.sliderInnerMainContainer,
+                    { borderWidth: item?.selected ? moderateScale(2, 0.3) : 0 },
+                  ]}>
+                  {item?.selected && <View style={styles.rectangle2} />}
+                  <ImageBackground
+                    source={
+                      item?.selected
+                        ? Images.ActiveSliderBack
+                        : Images.InActiveSliderBorder
+                    }
+                    style={styles.sliderImageBackground}
+                    imageStyle={
+                      Platform.OS === 'android'
+                        ? {
+                          borderRadius: moderateScale(22, 0.3),
+                          borderWidth: item?.selected
+                            ? 0
+                            : moderateScale(2.5, 0.3),
+                          borderColor: Colors.darkBlue,
+                        }
+                        : {}
+                    }
+                    resizeMode={'stretch'}>
+                    <Image
+                      source={
+                        index === 0
+                          ? Images.Crown
+                          : index === 1
+                            ? Images.College
+                            : index === 2
+                              ? Images.Game
+                              : Images.Trophy
+                      }
+                      style={styles.sliderIcon}
+                      resizeMode={'contain'}
+                    />
+                    <Text style={styles.sliderTxt}>
+                      {item?.title.toUpperCase()}
+                    </Text>
+                  </ImageBackground>
                 </View>
-                <TouchableOpacity
-                  onPress={() => handleReminder(item, index, favouriteStar)}>
+              </TouchableOpacity>
+            )}
+          />
+        </View>
+        {/*  header text */}
+        <View style={styles.mangeFvrtContainer}>
+          <Text style={styles.mangeFavTxt}>{Strings.manageFavorite}</Text>
+        </View>
+        {/* main list */}
+        <FlatList
+          data={filteredEventList}
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          renderItem={({ item, index }) => {
+            const favouriteStar = isFavoriteCheck(item);
+            return reduxData?.user &&
+              item?.name &&
+              item?.categories?.[0]?.name ? (
+              <View style={styles.listContainer}>
+                <View style={styles.innerContainer}>
                   <Image
-                    source={Images.Bell}
-                    resizeMode={'contain'}
-                    style={[
-                      styles.bellIcon,
-                      {
-                        tintColor: isFavoriteNotification(item)
-                          ? Colors.darkOrange
-                          : Colors.white,
-                      },
-                    ]}
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => handleFvrt(item)}>
-                  <Image
-                    source={favouriteStar ? Images.FilledFvrt : Images.Favorite}
-                    style={[
-                      styles.fvrtIcon,
-                      favouriteStar ? { tintColor: Colors.darkOrange } : {},
-                    ]}
+                    source={Images.BaseBall}
+                    style={styles.imageIcon}
                     resizeMode={'contain'}
                   />
-                </TouchableOpacity>
+                  <View style={styles.userNameContainer}>
+                    <Text style={styles.titleTxt}>{item?.name}</Text>
+                  </View>
+                  <TouchableOpacity
+                    onPress={() => handleReminder(item, index, favouriteStar)}>
+                    <Image
+                      source={Images.Bell}
+                      resizeMode={'contain'}
+                      style={[
+                        styles.bellIcon,
+                        {
+                          tintColor: isFavoriteNotification(item)
+                            ? Colors.darkOrange
+                            : Colors.white,
+                        },
+                      ]}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => handleFvrt(item)}>
+                    <Image
+                      source={favouriteStar ? Images.FilledFvrt : Images.Favorite}
+                      style={[
+                        styles.fvrtIcon,
+                        favouriteStar ? { tintColor: Colors.darkOrange } : {},
+                      ]}
+                      resizeMode={'contain'}
+                    />
+                  </TouchableOpacity>
+                </View>
               </View>
+            ) : null;
+          }}
+          ListEmptyComponent={
+            <View>
+              <Text style={styles.emptyTxt}>
+                {Strings.emptyFavoriteSportList}
+              </Text>
             </View>
-          ) : null;
-        }}
-        ListEmptyComponent={
-          <View>
-            <Text style={styles.emptyTxt}>
-              {Strings.emptyFavoriteSportList}
-            </Text>
-          </View>
-        }
-      />
-      {/* event reminder pop up  */}
-      <CustomModalView
-        visible={reminderModal}
-        headerTxt={Strings.eventReminder}
-        desTxt={Strings.eventReminderNotifications}
-        headerTxtStyle={styles.headerTxtStyle}
-        dexTxtStyle={styles.dexTxtStyle}
-        blackBtnTxt={Strings.no}
-        otherBtnTxt={Strings.yes}
-        fillBefore={false}
-        btn
-        rowStyle={true}
-        blue
-        blackBtnPress={() => setReminderModal(!reminderModal)}
-        otherBtnPress={() => handleNotificationAlert(currentIndex)}
-      />
+          }
+        />
+        {/* event reminder pop up  */}
+        <CustomModalView
+          visible={reminderModal}
+          headerTxt={Strings.eventReminder}
+          desTxt={Strings.eventReminderNotifications}
+          headerTxtStyle={styles.headerTxtStyle}
+          dexTxtStyle={styles.dexTxtStyle}
+          blackBtnTxt={Strings.no}
+          otherBtnTxt={Strings.yes}
+          fillBefore={false}
+          btn
+          rowStyle={true}
+          blue
+          blackBtnPress={() => setReminderModal(!reminderModal)}
+          otherBtnPress={() => handleNotificationAlert(currentIndex)}
+        />
+
+
+        <CustomModalView
+          visible={settingsModal}
+          headerTxt={Strings.enableNotification}
+          desTxt={Strings.enableNotificationDesc}
+          headerTxtStyle={styles.headerTxtStyle}
+          dexTxtStyle={styles.dexNotiTxtStyle}
+          blackBtnTxt={Strings.cancel}
+          otherBtnTxt={Strings.settings}
+          fillBefore={false}
+          btn
+          rowStyle={true}
+          blue
+          blackBtnPress={() => setSettingsModal(false)}
+          otherBtnPress={() => goToSettings()}
+        />
+
+        <LoaderModal
+          visible={reduxData?.user ? loading || loadingFavourite : false}
+          loadingText={''}
+        />
+      </ImageBackground>
       {/* My Sport Popup for guest  */}
       {fvrtModal ? (
         <CustomMySportsModalView
@@ -788,27 +812,6 @@ export default function MySports() {
           }}
         />
       ) : null}
-
-      <CustomModalView
-        visible={settingsModal}
-        headerTxt={Strings.enableNotification}
-        desTxt={Strings.enableNotificationDesc}
-        headerTxtStyle={styles.headerTxtStyle}
-        dexTxtStyle={styles.dexNotiTxtStyle}
-        blackBtnTxt={Strings.cancel}
-        otherBtnTxt={Strings.settings}
-        fillBefore={false}
-        btn
-        rowStyle={true}
-        blue
-        blackBtnPress={() => setSettingsModal(false)}
-        otherBtnPress={() => goToSettings()}
-      />
-
-      <LoaderModal
-        visible={reduxData?.user ? loading || loadingFavourite : false}
-        loadingText={''}
-      />
-    </ImageBackground>
+    </>
   );
 }

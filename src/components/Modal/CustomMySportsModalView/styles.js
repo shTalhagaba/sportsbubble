@@ -1,19 +1,21 @@
 import { Colors, Fonts } from "src/utils";
 import { ScaledSheet } from "react-native-size-matters";
-
+import { Dimensions } from 'react-native';
+const { height } = Dimensions.get('window');
+console.log(height)
 const styles = ScaledSheet.create({
     container: {
         flex: 1,
         backgroundColor: Colors.darkBlue90,
     },
     mainView: {
-        flex: 1,
+        flex: 1
     },
     checkBoxContainer: {
         backgroundColor: Colors.backBlack,
         width: "80%",
         alignSelf: "center",
-        marginTop: "160@ms0.3",
+        marginTop: height <= 736 ? "100@ms0.3" : "160@ms0.3",
         borderWidth: "1@ms0.3",
         borderColor: Colors.white,
         borderRadius: "16@ms0.3",

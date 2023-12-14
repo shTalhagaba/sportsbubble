@@ -265,7 +265,7 @@ const BottomTab = () => {
           ),
         }}
       />
-      {flags?.WEB2 || flags?.V_2_02 ?
+      {!flags?.WEB2 || flags?.V_2_02 ?
         <Tab.Screen
           name="MySports"
           component={MySports}

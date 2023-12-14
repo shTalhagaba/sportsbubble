@@ -117,7 +117,7 @@ export default function Splash() {
   };
 
   const navigateToAuthScreen = () => {
-    if (flags?.WEB2 || flags?.V_2_02_AUTH) {
+    if (!flags?.WEB2 || !flags?.V_2_02_AUTH) {
       setTimeout(() => {
         navigation.replace('Auth');
       }, 1000);
