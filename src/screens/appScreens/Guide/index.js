@@ -495,7 +495,7 @@ export default function Guide() {
           </View>
           <View
             style={{
-              width: `${item?.startGrad}%`,
+              width: `${item?.startGrad-6}%`,
               backgroundColor: Colors.darkBlue,
             }}></View>
           <View
@@ -504,9 +504,9 @@ export default function Guide() {
                 ? Colors.mediumGreen
                 : Colors.mediumBlue,
               width: `${item?.endGrad + item.startGrad <= 86
-                ? item?.endGrad - item?.startGrad - 6
+                ? item?.endGrad - item?.startGrad -6
                 : item?.endGrad + item?.startGrad >= 86
-                  ? 86 - item?.startGrad
+                  ? 92 - item?.startGrad
                   : item?.endGrad - item?.startGrad
                 }%`,
             }}></View>

@@ -85,9 +85,9 @@ export default function About(props) {
           <View>
             {content && content !== null && typeof content === 'object' ?
                   <>
-                    <Text style={styles.contentTxt}>
-                      {content?.title} {/* Display the title */}
-                    </Text>
+                    {/* <Text style={styles.contentTxt}>
+                      {content?.title}
+                    </Text> */}
                     {content?.description?.content.map((contentNode, index) => (
                       <RenderContentNode key={index} node={contentNode} />
                     ))}
