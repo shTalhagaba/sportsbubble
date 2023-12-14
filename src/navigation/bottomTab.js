@@ -265,7 +265,6 @@ const BottomTab = () => {
           ),
         }}
       />
-      {flags?.WEB2 || flags?.V_2_02 ?
         <Tab.Screen
           name="MySports"
           component={MySports}
@@ -285,7 +284,7 @@ const BottomTab = () => {
               </View>
             ),
           }}
-        /> : null}
+        />
       <Tab.Screen
         name="Search"
         component={SearchNavigation}
