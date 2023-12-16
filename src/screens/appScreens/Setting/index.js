@@ -83,7 +83,7 @@ export default function Setting() {
         <Text style={styles.loginTxt}>{Strings.settings}</Text>
         <View style={styles.innerContainer}>
           {/* changes for next version */}
-          {!(flags?.WEB2 || flags?.V_2_02) && data?.user && (
+          {(flags?.WEB2 || flags?.V_2_02) && data?.user && (
             <>
               {flags?.WEB3 || flags?.V_2_03 ?
                 <ButtonWithIcon
@@ -102,7 +102,7 @@ export default function Setting() {
                   })
                 }
               />
-              {!flags?.WEB2 || flags?.V_2_02_SPORTS_STREAMING_APPS ?
+              {flags?.WEB2 || flags?.V_2_02_SPORTS_STREAMING_APPS ?
                 <ButtonWithIcon
                   title={Strings.sportsStreamingApps}
                   onpress={() =>
@@ -125,7 +125,7 @@ export default function Setting() {
             title={Strings.reportProblem}
             onpress={() => Instabug.show()}
           />
-          {!(flags?.WEB2 || flags?.V_2_02) && data?.user && (
+          {(flags?.WEB2 || flags?.V_2_02) && data?.user && (
             <TouchableOpacity
               onPress={() => setLogoutModal(!logoutModal)}
               style={{

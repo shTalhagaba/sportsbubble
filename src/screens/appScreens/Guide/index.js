@@ -837,7 +837,7 @@ export default function Guide() {
             navigation={navigation}
           /> : null}
           {/* Access Features pop up  */}
-          {!flags?.WEB2 || flags?.V_2_02_CONTINUE_AS_GUEST_POPUP ?
+          {flags?.WEB2 || flags?.V_2_02_CONTINUE_AS_GUEST_POPUP ?
             <CustomModalView
               visible={mySportModal}
               desTxt={Strings.accessFeaturesGuide}
