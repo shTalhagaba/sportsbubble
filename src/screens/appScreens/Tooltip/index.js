@@ -60,11 +60,12 @@ const Tooltip = () => {
                         resizeMode={"contain"} />}
                 </View>
                 <View style={{
-                    position: "absolute", bottom: index === 0 ? 168 :
-                        index === 6 ?
-                            128 :
-                            index === 5 ?
-                                138 : 75,
+                    position: "absolute", bottom: 112,
+                    // position: "absolute", bottom: index === 0 ? 168 :
+                    //     index === 6 ?
+                    //         128 :
+                    //         index === 5 ?
+                    //             138 : 75,
                     flexDirection: "row", alignItems: "center",
                 }}>
                     <TouchableWithoutFeedback onPress={() => handleBackIndicator()}>

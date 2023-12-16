@@ -495,7 +495,7 @@ export default function Guide() {
           </View>
           <View
             style={{
-              width: `${item?.startGrad-6}%`,
+              width: `${item?.startGrad - 6}%`,
               backgroundColor: Colors.darkBlue,
             }}></View>
           <View
@@ -504,7 +504,7 @@ export default function Guide() {
                 ? Colors.mediumGreen
                 : Colors.mediumBlue,
               width: `${item?.endGrad + item.startGrad <= 86
-                ? item?.endGrad - item?.startGrad -6
+                ? item?.endGrad - item?.startGrad - 6
                 : item?.endGrad + item?.startGrad >= 86
                   ? 92 - item?.startGrad
                   : item?.endGrad - item?.startGrad
@@ -837,7 +837,7 @@ export default function Guide() {
             navigation={navigation}
           /> : null}
           {/* Access Features pop up  */}
-          {flags?.WEB2 || flags?.V_2_02_CONTINUE_AS_GUEST_POPUP ?
+          {!flags?.WEB2 || flags?.V_2_02_CONTINUE_AS_GUEST_POPUP ?
             <CustomModalView
               visible={mySportModal}
               desTxt={Strings.accessFeaturesGuide}
