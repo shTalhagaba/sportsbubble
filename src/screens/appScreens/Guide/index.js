@@ -535,7 +535,7 @@ export default function Guide() {
               </Text>
             </View>
           </View>
-          {reduxData?.user && <StarView isFavorite={isFavorite(item)} />}
+          {reduxData?.user && flags?.V_2_02 && flags?.V_2_02_AUTH && <StarView isFavorite={isFavorite(item)} />}
         </View>
       </TouchableOpacity>
     );
