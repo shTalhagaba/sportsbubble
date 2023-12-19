@@ -134,7 +134,10 @@ export default function Watch(props) {
                   onPress={() => {
                     navigation.navigate('withoutBottomtab', {
                       screen: 'Connect',
-                      params: { item: itemSelected, holderItem: item },
+                      params: {
+                        item: itemSelected, holderItem: item,
+                        eventFlag: false,
+                      },
                     })
                   }}
                   style={[styles.listMainContainer, (dayjs(currentDate).isAfter(itemSelected?.startTime) &&
@@ -249,10 +252,10 @@ export default function Watch(props) {
               </TouchableOpacity>
               <Text style={styles.wayToWatch}>{Strings.otherWays}</Text>
               <View style={styles.bottomFlatlist}>
-                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ justifyContent: 'center', flex: 1 }}>                
-                {otherList.map((item, index) => (
-                  <ItemComponent key={index} item={item} />
-                ))}
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ justifyContent: 'center', flex: 1 }}>
+                  {otherList.map((item, index) => (
+                    <ItemComponent key={index} item={item} />
+                  ))}
                 </ScrollView>
               </View>
             </ImageBackground>
