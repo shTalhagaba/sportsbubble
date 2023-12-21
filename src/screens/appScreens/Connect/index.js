@@ -132,6 +132,13 @@ export default function Connect(props) {
               rightIcon={true}
               onpress={() =>
                 handleClick(
+                  // console.log("eventFlag => ", eventFlag),
+                  // console.log("holderItem?.rhVideoUrl => ", holderItem?.rhVideoUrl),
+                  // console.log("item?.rightsHoldersConnection?.edges?.[0]?.rhVideoUrl => ", item?.rightsHoldersConnection?.edges?.[0]),
+                  // item?.rightsHoldersConnection?.edges?.[0]?.node?.useVideoUrl ?
+                  //   item?.rightsHoldersConnection?.edges?.[0]?.node?.videoUrl :
+                  //   item?.rightsHoldersConnection?.edges?.[0]?.rhVideoUrl
+
                   eventFlag
                     ? item?.rightsHoldersConnection?.edges?.[0]?.rhVideoUrl
                     : holderItem?.rhVideoUrl,
