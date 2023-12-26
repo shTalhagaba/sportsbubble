@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "673134313408",
+    "project_id": "sportsbubble-android",
+    "storage_bucket": "sportsbubble-android.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:673134313408:android:bd6058262c7a011da11225",
+        "android_client_info": {
+          "package_name": "com.sportsbubble.development"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASPwYB4wbrdLGbHu1XIfHZ9dd1Zh0KM2I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:673134313408:android:5abd49a2f88a527fa11225",
+        "android_client_info": {
+          "package_name": "com.sportsbubble.staging"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASPwYB4wbrdLGbHu1XIfHZ9dd1Zh0KM2I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

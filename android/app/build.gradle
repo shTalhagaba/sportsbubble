@@ -99,7 +99,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName "2.01"
     }
 
     splits {
@@ -110,6 +110,36 @@ android {
             include (*reactNativeArchitectures())
         }
     }
+
+    // add this block
+    flavorDimensions "default"
+    productFlavors {
+        production {
+            minSdkVersion rootProject.ext.minSdkVersion
+            applicationId "com.sportsbubble"
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            resValue "string", "build_config_package", "com.sportsbubble"
+        }
+        staging {
+            minSdkVersion rootProject.ext.minSdkVersion
+            applicationId "com.sportsbubble.staging"
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            resValue "string", "build_config_package", "com.sportsbubble.staging"
+        }
+        development {
+            minSdkVersion rootProject.ext.minSdkVersion
+            applicationId "com.sportsbubble.development"
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            resValue "string", "build_config_package", "com.sportsbubble.development"
+        }
+        passport {
+            minSdkVersion rootProject.ext.minSdkVersion
+            applicationId "com.passport.sportsbubble.development"
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            resValue "string", "build_config_package", "com.passport.sportsbubble.development"
+        }
+    }
+   // ---
     signingConfigs {
         debug {
             storeFile file('debug.keystore')
@@ -117,14 +147,19 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            storeFile file('sportsbubble.keystore')
+            storePassword 'sportsbubble2023'
+            keyAlias 'sportsbubble'
+            keyPassword 'sportsbubble2023'
+        }
     }
-    buildTypes {
+ buildTypes {
         debug {
             signingConfig signingConfigs.debug
+            matchingFallbacks = ['debug', 'release'] // <- add this line
         }
         release {
-            // Caution! In production, you need to generate your own keystore file.
-            // see https://reactnative.dev/docs/signed-apk-android.
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
@@ -148,11 +183,15 @@ android {
     }
 }
 
+
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
-
+    implementation project(':react-native-pusher-push-notifications')
+    implementation 'com.pusher:push-notifications-android:1.4.4'
+implementation project(':react-native-config')
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.0.0")
+implementation project(':instabug-reactnative')
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
@@ -165,6 +204,25 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+
+    implementation 'com.google.firebase:firebase-messaging:20.2.3' // Update to the latest version
+    implementation project(':react-native-pusher-push-notifications')
+    implementation 'com.pusher:push-notifications-android:1.9.0'
+
 }
 
+    // add this block
+project.ext.envConfigFiles = [
+   productiondebug: ".env.production",
+   productionrelease: ".env.production",
+   developmentrelease: ".env.development",
+   developmentdebug: ".env.development",
+   passportrelease: ".env.passport",
+   passportdebug: ".env.passport",
+   stagingrelease: ".env.staging",
+   stagingdebug: ".env.staging"
+]
+// ---
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle" // <- add this line
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+apply plugin: 'com.google.gms.google-services'

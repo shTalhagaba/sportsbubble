@@ -4,6 +4,9 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 platform :ios, min_ios_version_supported
 prepare_react_native_project!
 
+permissions_path = '../node_modules/react-native-permissions/ios'
+pod 'Permission-Notifications', :path => "#{permissions_path}/Notifications"
+
 # If you are using a `react-native-flipper` your iOS build will fail when `NO_FLIPPER=1` is set.
 # because `react-native-flipper` depends on (FlipperKit,...) that will be excluded
 #
@@ -21,7 +24,8 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-target 'sportsbubble' do
+# target 'sportsbubble' do
+abstract_target 'sportsbubbleCommonPods' do
   config = use_native_modules!
 
   # Flags change depending on the env values.
@@ -32,7 +36,7 @@ target 'sportsbubble' do
     # Hermes is now enabled by default. Disable by setting this flag to false.
     # Upcoming versions of React Native may rely on get_default_flags(), but
     # we make it explicit here to aid in the React Native upgrade process.
-    :hermes_enabled => flags[:hermes_enabled],
+    :hermes_enabled => false,
     :fabric_enabled => flags[:fabric_enabled],
     # Enables Flipper.
     #
@@ -42,8 +46,32 @@ target 'sportsbubble' do
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
+  # target 'sportsbubbleDevelopment' do
+  # end
+ 
+  # target 'sportsbubbleStaging' do
+  # end
+ 
+  # target 'sportsbubble' do
+  # end
 
-  target 'sportsbubbleTests' do
+  # target 'sportsbubbleTests' do
+  #   inherit! :complete
+  #   # Pods for testing
+  # end
+  target 'sportsbubblePassport' do
+    inherit! :complete
+    # Pods for testing
+  end
+  target 'sportsbubbleDevelopment' do
+    inherit! :complete
+    # Pods for testing
+  end
+  target 'sportsbubbleStaging' do
+    inherit! :complete
+    # Pods for testing
+  end
+  target 'sportsbubble' do
     inherit! :complete
     # Pods for testing
   end

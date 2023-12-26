@@ -1,4 +1,9 @@
 rootProject.name = 'sportsbubble'
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
-include ':app'
+include ':react-native-pusher-push-notifications'
+project(':react-native-pusher-push-notifications').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-pusher-push-notifications/android')
 includeBuild('../node_modules/react-native-gradle-plugin')
+include ':instabug-reactnative'
+project(':instabug-reactnative').projectDir = new File(rootProject.projectDir, '../node_modules/instabug-reactnative/android')
+include ':app'
+

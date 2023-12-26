@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "87575546977",
+    "project_id": "sb-android-dev",
+    "storage_bucket": "sb-android-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:87575546977:android:602bfa881be168afe02e20",
+        "android_client_info": {
+          "package_name": "com.passport.sportsbubble.development"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAtSIT6VnKy67El1HdbxjLabxNpSnkmg8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:87575546977:android:9c99f82a1ae18986e02e20",
+        "android_client_info": {
+          "package_name": "com.sportsbubble.development"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAtSIT6VnKy67El1HdbxjLabxNpSnkmg8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
