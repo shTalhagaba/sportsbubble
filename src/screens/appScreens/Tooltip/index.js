@@ -104,6 +104,7 @@ const Tooltip = () => {
                 viewPosition: 0.5, // Set viewPosition to 0.5 to center the item
             });
         } else {
+            handleClose()
             console.log("Reached the last indicator");
         }
     };
