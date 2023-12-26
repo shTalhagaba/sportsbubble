@@ -711,7 +711,9 @@ export default function MySports() {
               <View style={styles.listContainer}>
                 <View style={styles.innerContainer}>
                   <Image
-                    source={Images.BaseBall}
+                    source={item?.logo1 && item?.logo1 != 'null'?{
+                      uri: item?.logo1
+                    }:Images.BaseBall}
                     style={styles.imageIcon}
                     resizeMode={'contain'}
                   />

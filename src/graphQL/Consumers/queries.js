@@ -33,6 +33,7 @@ query {
     id
     name
     weight
+    logo1
     categories {
       name
     }
