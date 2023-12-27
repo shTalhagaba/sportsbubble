@@ -122,7 +122,7 @@ export default function WelcomeAccount(props) {
         await AsyncStorage.setItem('refreshToken', JSON.stringify(user?.refreshToken?.token));
         setLoadingLocal(false);
         // navigation.replace('Root'); // Navigate to the 'Root' screen
-        if ((flags?.WEB3 || flags?.V_2_03_TOOL_TIPS) && reduxData?.tooltipStatus) {
+        if ((flags?.V_2_02 && flags?.V_2_03_TOOL_TIPS) && reduxData?.tooltipStatus) {
           navigation.replace("Tooltip")
         } else {
           navigation.replace('Root')

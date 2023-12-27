@@ -29,7 +29,7 @@ export default function Splash() {
   const height = Dimensions.get('window').height;
   const version = DeviceInfo.getVersion();
   const [flag, setFlag] = useState(undefined)
-
+console.log('Config : ',JSON.stringify(Config,2))
   const getFeatureFlags = async () => {
     try {
       const flags = await axios.get(Config.FLAGS_URL)

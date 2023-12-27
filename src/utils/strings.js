@@ -11,6 +11,7 @@ export default {
   otherWays: 'Other ways to watch...',
   settings: 'Settings',
   legal: 'Legal',
+  howItWorks: 'How it Works',
   reportProblem: 'Report a Problem',
   termUse: 'Terms of Use',
   privacyPolicy: 'Privacy Policy/Info We Collect',

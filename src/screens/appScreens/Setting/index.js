@@ -121,6 +121,11 @@ export default function Setting() {
             title={Strings.legal}
             onpress={() => navigation.navigate('Legal')}
           />
+          {(flags?.V_2_03 && flags?.V_2_03_TOOL_TIPS) &&
+            <ButtonWithIcon
+              title={Strings.howItWorks}
+              onpress={() => navigation.replace("Tooltip")}
+            />}
           <ButtonWithIcon
             title={Strings.reportProblem}
             onpress={() => Instabug.show()}

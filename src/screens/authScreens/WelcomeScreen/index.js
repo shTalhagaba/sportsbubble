@@ -65,7 +65,7 @@ export default function WelcomeScreen() {
               onPress={() => {
                 dispatch(setGuest(true));
                 dispatch(setUser(false));
-                if ((flags?.WEB3 || flags?.V_2_03_TOOL_TIPS) && reduxData?.tooltipStatus) {
+                if ((flags?.V_2_02 && flags?.V_2_03_TOOL_TIPS) && reduxData?.tooltipStatus) {
                   navigation.replace("Tooltip")
                 } else {
                   navigation.replace('Root')
