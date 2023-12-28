@@ -132,12 +132,26 @@ export default function Connect(props) {
               rightIcon={true}
               onpress={() =>
                 handleClick(
-                  item?.rightsHoldersConnection?.edges?.[0]?.node?.useVideoUrl ?
-                    item?.rightsHoldersConnection?.edges?.[0]?.node?.videoUrl :
-                    item?.rightsHoldersConnection?.edges?.[0]?.rhVideoUrl
-                  // eventFlag
-                  //   ? item?.rightsHoldersConnection?.edges?.[0]?.rhVideoUrl
-                  //   : holderItem?.rhVideoUrl,
+                  // console.log("eventFlag => ", eventFlag),
+                  // console.log("holderItem => ", holderItem)
+                  // console.log("item?.rightsHoldersConnection?.edges?.[0]?.node?.useVideoUrl => ", item?.rightsHoldersConnection?.edges?.[0]?.node?.useVideoUrl),
+                  // console.log("item?.rightsHoldersConnection?.edges?.[0]?.node?.videoUrl => ", item?.rightsHoldersConnection?.edges?.[0]?.node?.videoUrl)
+                  eventFlag ?
+                    (item?.rightsHoldersConnection?.edges?.[0]?.node?.useVideoUrl ?
+                      item?.rightsHoldersConnection?.edges?.[0]?.node?.videoUrl :
+                      item?.rightsHoldersConnection?.edges?.[0]?.rhVideoUrl)
+                    :
+                    (holderItem?.node?.useVideoUrl ?
+                      holderItem?.node?.videoUrl :
+                      holderItem?.rhVideoUrl)
+
+
+                  // item?.rightsHoldersConnection?.edges?.[0]?.node?.useVideoUrl ?
+                  //   item?.rightsHoldersConnection?.edges?.[0]?.node?.videoUrl :
+                  //   item?.rightsHoldersConnection?.edges?.[0]?.rhVideoUrl
+                  // // eventFlag
+                  // //   ? item?.rightsHoldersConnection?.edges?.[0]?.rhVideoUrl
+                  // //   : holderItem?.rhVideoUrl,
                 )
               }
             />
