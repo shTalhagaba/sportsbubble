@@ -92,6 +92,8 @@ export default function Search() {
           (item?.line1.toLowerCase().includes(text.toLowerCase()) ||
             item?.line2.toLowerCase().includes(text.toLowerCase()) ||
             item?.category?.name.toLowerCase().includes(text.toLowerCase()) ||
+            item?.league?.name?.toLowerCase()?.includes(text.toLowerCase()) ||
+            item?.title?.toLowerCase()?.includes(text.toLowerCase()) ||
             item?.sport?.name.toLowerCase().includes(text.toLowerCase())) &&
           dayjs(currentDate).isBefore(item?.endTime);
         return itemData;
