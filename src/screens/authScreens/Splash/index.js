@@ -29,7 +29,7 @@ export default function Splash() {
   const height = Dimensions.get('window').height;
   const version = DeviceInfo.getVersion();
   const [flag, setFlag] = useState(undefined)
-console.log('Config : ',JSON.stringify(Config,2))
+
   const getFeatureFlags = async () => {
     try {
       const flags = await axios.get(Config.FLAGS_URL)
@@ -117,7 +117,7 @@ console.log('Config : ',JSON.stringify(Config,2))
   };
 
   const navigateToAuthScreen = () => {
-    if (flags?.WEB2 || flags?.V_2_02_AUTH) {
+    if (flags?.V_2_02 && flags?.V_2_02_AUTH) {
       setTimeout(() => {
         navigation.replace('Auth');
       }, 1000);
@@ -164,7 +164,7 @@ console.log('Config : ',JSON.stringify(Config,2))
             resizeMode="contain"
           />
           <Text style={styles.versionTxt}>
-            v {flags?.V_2_04 ? '2.04' : (flags?.WEB3 || flags?.V_2_03) ? '2.03' : (flags?.WEB2 || flags?.V_2_02) ? '2.02' : "2.01"}
+            v {flags?.V_2_04 ? '2.04' : (flags?.V_2_03) ? '2.03' : (flags?.V_2_02) ? '2.02' : "2.01"}
           </Text>
         </View>
       </ImageBackground>
