@@ -1,0 +1,38 @@
+before_all do
+    ensure_git_branch
+    ensure_git_status_clean
+    git_pull
+end
+
+platform :ios do
+    private_lane:update_version do
+        version=  get_app_store_version_number(bundle_id:'com.sportsbubble.staging')
+        plist_version = get_version_number_from_plist(xcodeproj : './ios/sportsbubble.xcodeproj')
+        if Gem ::Version.new(plist_version.to_f) == Gem:Version.new(app_store_version.to_f)
+            UI.message 'bumping minor'
+            increment_build_number_in_plist(xcodeproj : './ios/sportsbubble.xcodeproj', bump_type:'minor')
+        else
+            UI.message 'bumping patch'
+            increment_version_number_in_plist(xcodeproj : './ios/sportsbubble.xcodeproj', bump_type:'patch')
+     end
+    private_lane: staging_build do
+        increment_build_number_in_plist(xcodeproj : './ios/sportsbubble.xcodeproj' , target:'sportsbubbleStaging')
+        gym(scheme: 'sportsbubble staging', workspace:'./ios/sportsbubble.xcworkspace' )
+    end 
+    lane : beta do
+        staging_build
+        upload_to_testflight(username: "sportbubble@gmail.com", app_identifier: 'com.sportsbubble.staging')
+        commit_version_bump(message : 'bump build')
+        push_to_git_remote
+    end 
+end
+
+platform :android do
+    desc "Android build and release to beta "
+    lane :beta do
+        increment_version_code(app_project_dir:'./android/app')
+        gradle(task: "clean" , project_dir:'./android/')
+        gradle(task: "bundle" , build_type:'Release', project_dir:'/ndroid')
+        supply(track:'beta' , aab:'./android/app/build/outputs/bundle/release/app-release.aab ')
+    end
+end
