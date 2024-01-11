@@ -60,7 +60,7 @@ const Tooltip = () => {
                         resizeMode={"contain"} />}
                 </View>
                 <View style={{
-                    position: "absolute", bottom: 112,
+                    position: "absolute", bottom: 50,
                     // position: "absolute", bottom: index === 0 ? 168 :
                     //     index === 6 ?
                     //         128 :
@@ -68,9 +68,9 @@ const Tooltip = () => {
                     //             138 : 75,
                     flexDirection: "row", alignItems: "center",
                 }}>
-                    <TouchableWithoutFeedback onPress={() => handleBackIndicator()}>
+                    <TouchableOpacity style={{ paddingVertical: 50, paddingLeft: 90 }} onPress={() => handleBackIndicator()}>
                         <Image source={Images.LeftArrow} style={{ height: 16, width: 14, marginRight: 6 }} />
-                    </TouchableWithoutFeedback>
+                    </TouchableOpacity>
                     <Image source={index === 0 ?
                         Images.SliderOne :
                         index === 1 ?
@@ -81,9 +81,10 @@ const Tooltip = () => {
                                             Images.SliderSix : index === 6 ?
                                                 Images.SliderSeven : null
                     } style={{ height: 40, width: 152, }} resizeMode={"contain"} />
-                    <TouchableWithoutFeedback onPress={() => handleNextIndicator()}>
+
+                    <TouchableOpacity style={{ paddingVertical: 50, paddingRight: 90 }} onPress={() => handleNextIndicator()}>
                         <Image source={Images.RightSlider} style={{ height: 16, width: 14, marginLeft: 6 }} />
-                    </TouchableWithoutFeedback>
+                    </TouchableOpacity>
                 </View>
             </View>
         )

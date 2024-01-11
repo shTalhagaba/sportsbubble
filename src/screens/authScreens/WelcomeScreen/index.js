@@ -65,11 +65,13 @@ export default function WelcomeScreen() {
               onPress={() => {
                 dispatch(setGuest(true));
                 dispatch(setUser(false));
-                if ((flags?.V_2_02 && flags?.V_2_03_TOOL_TIPS) && reduxData?.tooltipStatus) {
-                  navigation.replace("Tooltip")
-                } else {
-                  navigation.replace('Root')
-                }
+                navigation.replace("Tooltip")
+
+                // if ((flags?.V_2_02 && flags?.V_2_03_TOOL_TIPS) && reduxData?.tooltipStatus) {
+                //   navigation.replace("Tooltip")
+                // } else {
+                //   navigation.replace('Root')
+                // }
               }
               }
               style={styles.guestContainer}>
