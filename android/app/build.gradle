@@ -93,13 +93,13 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.sportsbubble"
+    namespace "com.watchsports"
     defaultConfig {
-        applicationId "com.sportsbubble"
+        applicationId "com.watchsports"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "2.01"
+        versionName "2.04"
     }
 
     splits {
@@ -116,9 +116,9 @@ android {
     productFlavors {
         production {
             minSdkVersion rootProject.ext.minSdkVersion
-            applicationId "com.sportsbubble"
+            applicationId "com.watchsports"
             targetSdkVersion rootProject.ext.targetSdkVersion
-            resValue "string", "build_config_package", "com.sportsbubble"
+            resValue "string", "build_config_package", "com.watchsports"
         }
         staging {
             minSdkVersion rootProject.ext.minSdkVersion

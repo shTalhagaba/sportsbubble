@@ -1,4 +1,4 @@
-package com.sportsbubble;
+package com.watchsports;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

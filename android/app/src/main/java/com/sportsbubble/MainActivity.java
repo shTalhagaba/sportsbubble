@@ -1,4 +1,4 @@
-package com.sportsbubble;
+package com.watchsports;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
