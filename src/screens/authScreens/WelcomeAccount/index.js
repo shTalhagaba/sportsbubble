@@ -6,7 +6,7 @@ import {
   StatusBar,
   FlatList,
   TouchableOpacity,
-  Keyboard
+  Keyboard, Platform
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from './styles';
@@ -233,7 +233,9 @@ export default function WelcomeAccount(props) {
   };
   const handleConfirm = (date) => {
     // const selectedDate = moment(date).format('DD MMMM YYYY');
+
     setDate(date)
+    console.log("date.toDateString() => ", date.toDateString())
     setDOB(date.toDateString())
     hideDatePicker();
   };
@@ -379,13 +381,21 @@ export default function WelcomeAccount(props) {
         <LoaderModal visible={loadingLocal} loadingText={''} />
         {date && isDatePickerVisible ?
           <DateTimePickerModal
-            date={date}
             isVisible={isDatePickerVisible}
             mode="date"
             onConfirm={handleConfirm}
             onCancel={hideDatePicker}
-            maximumDate={new Date()}
-          /> : null}
+            {...(Platform.OS === "android" && { display: "spinner" })}
+          />
+          // <DateTimePickerModal
+          //   date={date}
+          //   isVisible={isDatePickerVisible}
+          //   mode="date"
+          //   onConfirm={handleConfirm}
+          //   onCancel={hideDatePicker}
+          //   maximumDate={new Date()}
+          // /> 
+          : null}
       </ImageBackground>
     </View>
 
