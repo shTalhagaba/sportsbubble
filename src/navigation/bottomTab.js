@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Images, Colors } from 'src/utils';
 import { Image, Platform, View } from 'react-native';
@@ -14,7 +14,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useDispatch, useSelector } from 'react-redux';
 import { refreshData } from 'src/store/types';
 import { Easing } from "react-native";
-
+import crashlytics from '@react-native-firebase/crashlytics';
 const Tab = createBottomTabNavigator();
 const SettingNavigator = createNativeStackNavigator();
 const GuideNavigator = createNativeStackNavigator();
@@ -179,6 +179,34 @@ const BottomTab = () => {
   const reduxData = useSelector(state => state.user);
   const flags = useSelector(state => state?.feature?.flags);
 
+  useEffect(() => {
+    // crashlytics().crash()
+    crashlytics().log("Analytic Page")
+    getUserData()
+    return () => {
+      crashlytics().log("Analytic Page Return")
+    }
+  }, [])
+
+  const getUserData = () => {
+    crashlytics().log('Updating user count.');
+    try {
+      if (reduxData?.userData) {
+        console.log("reduxData => ", reduxData?.userData)
+        crashlytics().setUserId(reduxData?.userData?.aud)
+        // crashlytics().setAttribute("userName", reduxData?.userData?.given_name + reduxData?.userData?.family_name)
+        crashlytics.setAttribute({
+          userName: reduxData?.userData?.given_name + reduxData?.userData?.family_name,
+          email: reduxData?.userData?.email
+        })
+      }
+    }
+    catch (error) {
+      crashlytics().recordError(error)
+    }
+
+
+  }
   const tabBarGuideListeners = ({ navigation, route }) => ({
     tabPress: () => {
       navigation.navigate('GuideMain'),
