@@ -1,4 +1,4 @@
-package com.watchsports;
+package com.watchsportsapp;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

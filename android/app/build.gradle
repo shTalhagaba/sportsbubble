@@ -93,9 +93,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.watchsports"
+    namespace "com.watchsportsapp"
     defaultConfig {
-        applicationId "com.watchsports"
+        applicationId "com.watchsportsapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -116,9 +116,9 @@ android {
     productFlavors {
         production {
             minSdkVersion rootProject.ext.minSdkVersion
-            applicationId "com.watchsports"
+            applicationId "com.watchsportsapp"
             targetSdkVersion rootProject.ext.targetSdkVersion
-            resValue "string", "build_config_package", "com.watchsports"
+            resValue "string", "build_config_package", "com.watchsportsapp"
         }
         staging {
             minSdkVersion rootProject.ext.minSdkVersion
