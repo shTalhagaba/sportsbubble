@@ -18,7 +18,6 @@ import { toastConfig } from "src/components/ToastConfig";
 import { stageToken } from 'src/utils/list';
 import { setContext } from 'apollo-link-context';
 import axios from 'axios';
-
 const blacklist = ['signup']; // Add the keys of slices to exclude
 const sagaMiddleware = createSagaMiddleware();
 const persistConfig = {
