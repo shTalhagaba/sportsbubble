@@ -7,8 +7,14 @@ prepare_react_native_project!
 pod 'Firebase', :modular_headers => true
 pod 'FirebaseCoreInternal', :modular_headers => true
 pod 'FirebaseCore', :modular_headers => true
+pod 'FirebaseInstallations', :modular_headers => true
+pod 'FirebaseSessions', :modular_headers => true
+pod 'FirebaseCoreExtension', :modular_headers => true  # Add this line
+pod 'GoogleDataTransport', :modular_headers => true
+pod 'nanopb', :modular_headers => true
 pod 'GoogleUtilities', :modular_headers => true
-install! 'cocoapods', :deterministic_uuids => false
+
+
 
 permissions_path = '../node_modules/react-native-permissions/ios'
 pod 'Permission-Notifications', :path => "#{permissions_path}/Notifications"

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0449519E2B5EE8230048B12D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0449519D2B5EE8230048B12D /* GoogleService-Info.plist */; };
 		048DD9402A6084A3002E6735 /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8EB929DCEE7D4136AED466AD /* Lato-Black.ttf */; };
 		048DD9412A6084A3002E6735 /* Lato-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6E79C282259D43D190FC762B /* Lato-BlackItalic.ttf */; };
 		048DD9422A6084A3002E6735 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3159C7199A284E32A2A28A5D /* Lato-Bold.ttf */; };
@@ -66,12 +67,13 @@
 		E084AEC84D1872AC680DA74A /* libPods-sportsbubbleCommonPods-sportsbubble.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A18861C80EFBE04976E94D1 /* libPods-sportsbubbleCommonPods-sportsbubble.a */; };
 		ECD8B23834F04A46A20E135B /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85EBC3D84A7A4D379AC96C30 /* Lato-Light.ttf */; };
 		F2CE8393DF55448F837BAA3A /* Lato-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E120C17725514735851EBBFE /* Lato-BoldItalic.ttf */; };
-		FFC0C99651DB8535D5292FAB /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		FFC0C99651DB8535D5292FAB /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* sportsbubbleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = sportsbubbleTests.m; sourceTree = "<group>"; };
+		0449519D2B5EE8230048B12D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		04B14FE1391282ADFAB285BE /* Pods-sportsbubbleCommonPods-sportsbubblePassport.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sportsbubbleCommonPods-sportsbubblePassport.debug.xcconfig"; path = "Target Support Files/Pods-sportsbubbleCommonPods-sportsbubblePassport/Pods-sportsbubbleCommonPods-sportsbubblePassport.debug.xcconfig"; sourceTree = "<group>"; };
 		04B71A572A54AC1E00FA415D /* sportsbubble development-info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "sportsbubble development-info.plist"; sourceTree = "<group>"; };
 		04B71A592A54AC4300FA415D /* sportsbubble staging-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "sportsbubble staging-Info.plist"; sourceTree = "<group>"; };
@@ -133,7 +135,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FFC0C99651DB8535D5292FAB /* BuildFile in Frameworks */,
+				FFC0C99651DB8535D5292FAB /* (null) in Frameworks */,
 				5C9644F533739CC74DBF785A /* libPods-sportsbubbleCommonPods-sportsbubbleDevelopment.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -210,6 +212,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				0449519D2B5EE8230048B12D /* GoogleService-Info.plist */,
 				8AF513012AFCEF4F00D83DA2 /* sportsbubble passport-Info.plist */,
 				DC6677D32AC85DE800D64FE3 /* sportsbubbleStaging.entitlements */,
 				8AF513032AFCFBDE00D83DA2 /* sportsbubblePassport.entitlements */,
@@ -410,6 +413,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				04B71A582A54AC1E00FA415D /* sportsbubble development-info.plist in Resources */,
+				0449519E2B5EE8230048B12D /* GoogleService-Info.plist in Resources */,
 				04B71A5A2A54AC4300FA415D /* sportsbubble staging-Info.plist in Resources */,
 				ADA1B15644D1428687317762 /* Lato-Black.ttf in Resources */,
 				8AF513022AFCEF4F00D83DA2 /* sportsbubble passport-Info.plist in Resources */,
