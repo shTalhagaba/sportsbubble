@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0449519E2B5EE8230048B12D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0449519D2B5EE8230048B12D /* GoogleService-Info.plist */; };
 		048DD9402A6084A3002E6735 /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8EB929DCEE7D4136AED466AD /* Lato-Black.ttf */; };
 		048DD9412A6084A3002E6735 /* Lato-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6E79C282259D43D190FC762B /* Lato-BlackItalic.ttf */; };
 		048DD9422A6084A3002E6735 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3159C7199A284E32A2A28A5D /* Lato-Bold.ttf */; };
@@ -35,6 +34,10 @@
 		8A2376972A544DF100F2EA20 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		8A2376982A544DF100F2EA20 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		8A23769D2A544DF100F2EA20 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		8A7636DC2B6057CD001D837C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8A7636DB2B6057CD001D837C /* GoogleService-Info.plist */; };
+		8A7636DD2B6057CD001D837C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8A7636DB2B6057CD001D837C /* GoogleService-Info.plist */; };
+		8A7636DE2B6057CD001D837C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8A7636DB2B6057CD001D837C /* GoogleService-Info.plist */; };
+		8A7636DF2B6057CD001D837C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8A7636DB2B6057CD001D837C /* GoogleService-Info.plist */; };
 		8AD252E02A8BE362009434F7 /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8EB929DCEE7D4136AED466AD /* Lato-Black.ttf */; };
 		8AD252E12A8BE366009434F7 /* Lato-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6E79C282259D43D190FC762B /* Lato-BlackItalic.ttf */; };
 		8AD252E22A8BE369009434F7 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3159C7199A284E32A2A28A5D /* Lato-Bold.ttf */; };
@@ -73,7 +76,6 @@
 /* Begin PBXFileReference section */
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* sportsbubbleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = sportsbubbleTests.m; sourceTree = "<group>"; };
-		0449519D2B5EE8230048B12D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		04B14FE1391282ADFAB285BE /* Pods-sportsbubbleCommonPods-sportsbubblePassport.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sportsbubbleCommonPods-sportsbubblePassport.debug.xcconfig"; path = "Target Support Files/Pods-sportsbubbleCommonPods-sportsbubblePassport/Pods-sportsbubbleCommonPods-sportsbubblePassport.debug.xcconfig"; sourceTree = "<group>"; };
 		04B71A572A54AC1E00FA415D /* sportsbubble development-info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "sportsbubble development-info.plist"; sourceTree = "<group>"; };
 		04B71A592A54AC4300FA415D /* sportsbubble staging-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "sportsbubble staging-Info.plist"; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 		89C6BE57DB24E9ADA2F236DE /* Pods-sportsbubble-sportsbubbleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sportsbubble-sportsbubbleTests.release.xcconfig"; path = "Target Support Files/Pods-sportsbubble-sportsbubbleTests/Pods-sportsbubble-sportsbubbleTests.release.xcconfig"; sourceTree = "<group>"; };
 		8A2376912A544DEE00F2EA20 /* sportsbubbleDevelopment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sportsbubbleDevelopment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A2376A72A544DF100F2EA20 /* sportsbubbleStaging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sportsbubbleStaging.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A7636DB2B6057CD001D837C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8AF12FC32AFA2EE800997224 /* sportsbubblePassport.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sportsbubblePassport.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AF513012AFCEF4F00D83DA2 /* sportsbubble passport-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "sportsbubble passport-Info.plist"; sourceTree = "<group>"; };
 		8AF513032AFCFBDE00D83DA2 /* sportsbubblePassport.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = sportsbubblePassport.entitlements; sourceTree = "<group>"; };
@@ -179,6 +182,7 @@
 		13B07FAE1A68108700A75B9A /* sportsbubble */ = {
 			isa = PBXGroup;
 			children = (
+				8A7636DB2B6057CD001D837C /* GoogleService-Info.plist */,
 				DC6677D12AC85DB300D64FE3 /* sportsbubble.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
@@ -212,7 +216,6 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				0449519D2B5EE8230048B12D /* GoogleService-Info.plist */,
 				8AF513012AFCEF4F00D83DA2 /* sportsbubble passport-Info.plist */,
 				DC6677D32AC85DE800D64FE3 /* sportsbubbleStaging.entitlements */,
 				8AF513032AFCFBDE00D83DA2 /* sportsbubblePassport.entitlements */,
@@ -413,13 +416,13 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				04B71A582A54AC1E00FA415D /* sportsbubble development-info.plist in Resources */,
-				0449519E2B5EE8230048B12D /* GoogleService-Info.plist in Resources */,
 				04B71A5A2A54AC4300FA415D /* sportsbubble staging-Info.plist in Resources */,
 				ADA1B15644D1428687317762 /* Lato-Black.ttf in Resources */,
 				8AF513022AFCEF4F00D83DA2 /* sportsbubble passport-Info.plist in Resources */,
 				8CE46E65500F46938FBA6BB8 /* Lato-BlackItalic.ttf in Resources */,
 				1FDB8259E0A24A6E81E90ADC /* Lato-Bold.ttf in Resources */,
 				F2CE8393DF55448F837BAA3A /* Lato-BoldItalic.ttf in Resources */,
+				8A7636DC2B6057CD001D837C /* GoogleService-Info.plist in Resources */,
 				922965D57C474B5589D09420 /* Lato-Italic.ttf in Resources */,
 				ECD8B23834F04A46A20E135B /* Lato-Light.ttf in Resources */,
 				4D4D088A2DE646D689165EC5 /* Lato-LightItalic.ttf in Resources */,
@@ -433,6 +436,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A7636DE2B6057CD001D837C /* GoogleService-Info.plist in Resources */,
 				048DD9402A6084A3002E6735 /* Lato-Black.ttf in Resources */,
 				048DD9412A6084A3002E6735 /* Lato-BlackItalic.ttf in Resources */,
 				048DD9422A6084A3002E6735 /* Lato-Bold.ttf in Resources */,
@@ -451,6 +455,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A7636DF2B6057CD001D837C /* GoogleService-Info.plist in Resources */,
 				8AD252E92A8BE379009434F7 /* Lato-ThinItalic.ttf in Resources */,
 				8AD252E82A8BE377009434F7 /* Lato-Thin.ttf in Resources */,
 				8AD252E72A8BE375009434F7 /* Lato-Regular.ttf in Resources */,
@@ -469,6 +474,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A7636DD2B6057CD001D837C /* GoogleService-Info.plist in Resources */,
 				8AF12FB22AFA2EE800997224 /* Lato-Black.ttf in Resources */,
 				8AF12FB32AFA2EE800997224 /* Lato-BlackItalic.ttf in Resources */,
 				8AF12FB42AFA2EE800997224 /* Lato-Bold.ttf in Resources */,
@@ -901,8 +907,8 @@
 				CODE_SIGN_ENTITLEMENTS = sportsbubble/sportsbubble.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = N2NJSCBBBJ;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = sportsbubble/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = WatchSports;
@@ -936,15 +942,15 @@
 				CODE_SIGN_ENTITLEMENTS = sportsbubble/sportsbubble.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = N2NJSCBBBJ;
 				INFOPLIST_FILE = sportsbubble/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = WatchSports;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.01;
+				MARKETING_VERSION = 2.02.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1277,7 +1283,7 @@
 				CODE_SIGN_ENTITLEMENTS = sportsbubblePassport.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 45;
+				CURRENT_PROJECT_VERSION = 54;
 				DEVELOPMENT_TEAM = N2NJSCBBBJ;
 				INFOPLIST_FILE = "sportsbubble passport-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "passport sportsbubble";

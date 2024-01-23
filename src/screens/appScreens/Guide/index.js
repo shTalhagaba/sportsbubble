@@ -41,6 +41,7 @@ import useSportsList from 'src/services/useSportsList';
 import StarView from 'src/components/StarView';
 import { initializePusher, subscribeInterest } from 'src/components/Pusher/PusherBeams';
 import { checkNotifications } from 'react-native-permissions';
+import Config from 'react-native-config';
 
 const screenWidth = Dimensions.get('window').width;
 const { fontScale } = Dimensions.get('window');
@@ -50,6 +51,7 @@ export default function Guide() {
   const dispatch = useDispatch();
   let isFocused = useIsFocused();
   const flags = useSelector(state => state?.feature?.flags);
+  const data = useSelector(state => state.user);
   const { loading, refetch, favoriteSports } = useSportsList('network-only');
   const currentDate = dayjs(new Date()).toISOString(); // Get the current date and time
   const reduxData = useSelector(state => state.user);
@@ -64,7 +66,6 @@ export default function Guide() {
   const [selectedTimeIndex, setSelectedTimeIndex] = useState(0);
   const [featuredEvent, setFeaturedEvent] = useState({});
   const [reload, setReload] = useState(false);
-  const [list, setList] = useState([]);
   const [mySportModal, setMySportModal] = useState(
     reduxData?.guest === true ? true : false,
   );
@@ -118,7 +119,6 @@ export default function Guide() {
   // Use#2
   useEffect(() => {
     console.log('Use#2  : ')
-    setList(reduxData?.sportsList);
     setReload(!reload);
     if (reduxData?.sportsList?.length > 0) {
       const interestList = reduxData?.sportsList?.flatMap(favoriteSport => {
@@ -196,6 +196,34 @@ export default function Guide() {
       setFilteredEventList(list);
     }
   }, [selectedCategory, startTime, reduxData?.eventList]);
+
+  const getNotificationSports = (favoriteSports) => {
+    return favoriteSports?.flatMap(favoriteSport => {
+      if (!favoriteSport?.notifications) return [];
+      if (
+        !['pro', 'esports', 'college']?.includes(
+          favoriteSport?.categories?.[0]?.name,
+        )
+      ) {
+        return `others-${favoriteSport?.sport?.name?.replaceAll(
+          /[^A-Z0-9]+/gi,
+          '',
+        )}`;
+      } else {
+        return `${favoriteSport?.categories?.[0]?.name
+          }-${favoriteSport?.sport?.name?.replaceAll(/[^A-Z0-9]+/gi, '')}`;
+      }
+    })
+  }
+  useEffect(() => {
+    console.log('Use#7  : ', favoriteSports)
+    if (data?.user && favoriteSports?.length > 0) {
+      const interestList = getNotificationSports(favoriteSports);
+      if (interestList && interestList?.length > 0) {
+        subscribeToInterests(interestList);
+      }
+    }
+  }, [])
 
   const subscribeToInterests = async interestList => {
     const { status } = await checkNotifications();
