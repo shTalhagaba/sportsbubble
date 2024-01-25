@@ -76,7 +76,11 @@ export default function MySports() {
   ] = useMutation(UPDATE_NOTIFICATION_CONSUMERS);
 
   // Initialize Pusher
-  useEffect(() => pusherInitalizer(), []);
+  useEffect(() => {
+    pusherInitalizer()
+    const list = categoryData.map((item, index) => ({ ...item, selected: index === 0 }));
+    setCategoryData(list);
+  }, []);
 
   const pusherInitalizer = () => {
     checkNotifications().then(({ status, settings }) => {
@@ -711,9 +715,9 @@ export default function MySports() {
               <View style={styles.listContainer}>
                 <View style={styles.innerContainer}>
                   <Image
-                    source={item?.logo1 && item?.logo1 != 'null'?{
+                    source={item?.logo1 && item?.logo1 != 'null' ? {
                       uri: item?.logo1
-                    }:Images.BaseBall}
+                    } : Images.BaseBall}
                     style={styles.imageIcon}
                     resizeMode={'contain'}
                   />
