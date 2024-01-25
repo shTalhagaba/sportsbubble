@@ -39,16 +39,21 @@ export const categoryArr = [
     id: 2,
     title: 'pro',
     value: 'pro',
+    selected: false
   },
   {
     id: 3,
     title: 'college',
     value: 'college',
+    selected: false
+
   },
   {
     id: 4,
     title: 'esports',
     value: 'esports',
+    selected: false
+
   },
 ];
 
