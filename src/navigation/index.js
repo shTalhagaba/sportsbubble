@@ -12,7 +12,7 @@ import { CognitoAPI, getCognitoUser, refreshSession } from "src/services/cognito
 import Config from "react-native-config";
 import axios from "axios";
 import ShowMessage from "src/components/ShowMessage";
-import { setJwtToken, setRefreshToken, setSportsList, setDMA, setToken, setUser, setUserData } from 'src/store/types';
+import { setJwtToken, setRefreshToken, setSportsList, setDMA, setToken, setUser, setUserData, setSyncFlag } from 'src/store/types';
 import { Easing } from "react-native";
 
 
@@ -90,6 +90,7 @@ const AppStackNavigator = () => {
       dispatch(setToken(''));
       dispatch(setJwtToken(''));
       dispatch(setRefreshToken(''));
+      dispatch(setSyncFlag(false));
       await AsyncStorage.removeItem('refreshToken');
       await AsyncStorage.removeItem('accessToken');
       dispatch(setSportsList([]));

@@ -29,7 +29,8 @@ import {
   setGuest,
   setStoreEventList,
   setUser,
-  setTooltipStatus
+  setTooltipStatus,
+  setSyncFlag
 } from 'src/store/types';
 import { moderateScale } from 'react-native-size-matters';
 import ImageWithPlaceHolder from 'src/components/ImageWithPlaceHolder';
@@ -52,6 +53,7 @@ export default function Guide() {
   let isFocused = useIsFocused();
   const flags = useSelector(state => state?.feature?.flags);
   const data = useSelector(state => state.user);
+  const syncFlag = useSelector(state => state.syncFlag);
   const { loading, refetch, favoriteSports } = useSportsList('network-only');
   const currentDate = dayjs(new Date()).toISOString(); // Get the current date and time
   const reduxData = useSelector(state => state.user);
@@ -217,7 +219,7 @@ export default function Guide() {
   }
   useEffect(() => {
     console.log('Use#7  : ', favoriteSports)
-    if (data?.user && favoriteSports?.length > 0) {
+    if (data?.user && favoriteSports?.length > 0 && syncFlag === false) {
       const interestList = getNotificationSports(favoriteSports);
       if (interestList && interestList?.length > 0) {
         subscribeToInterests(interestList);
@@ -232,6 +234,7 @@ export default function Guide() {
       for await (const interest of interestList) {
         subscribeInterest(interest);
       }
+      dispatch(setSyncFlag(true));
     }
   };
 

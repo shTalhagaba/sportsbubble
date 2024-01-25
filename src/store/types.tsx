@@ -145,4 +145,10 @@ export const setSearchFlag = (args: any) => {
     payload: args,
   };
 };
+export const setSyncFlag = (args: any) => {
+  return {
+    type: 'SET_SYNC_FLAG',
+    payload: args,
+  };
+};
 

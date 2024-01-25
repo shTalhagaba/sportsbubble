@@ -16,7 +16,7 @@ import { updatePasswordValidation } from 'src/common/authValidation';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { signOut } from 'src/services/authOTP';
 import { CognitoAPI } from "src/services/cognitoApi";
-import { setJwtToken, setRefreshToken, setSportsList, setToken, setUser, setUserData } from 'src/store/types';
+import { setJwtToken, setRefreshToken, setSportsList, setSyncFlag, setToken, setUser, setUserData } from 'src/store/types';
 
 export default function UpdatePassword() {
   const navigation = useNavigation();
@@ -59,6 +59,7 @@ export default function UpdatePassword() {
             dispatch(setToken(''));
             dispatch(setJwtToken(''));
             dispatch(setRefreshToken(''));
+            dispatch(setSyncFlag(false));
             removeAsyncStorage();
             dispatch(setSportsList([]));
             navigation.replace('Auth');

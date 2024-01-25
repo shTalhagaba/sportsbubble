@@ -18,7 +18,7 @@ import Strings from 'src/utils/strings';
 import CustomModalView from 'src/components/Modal/CustomModal';
 import Instabug, { InvocationEvent } from 'instabug-reactnative';
 import { useDispatch, useSelector } from 'react-redux';
-import { setJwtToken, setRefreshToken, setSportsList, setToken, setUser, setUserData } from 'src/store/types';
+import { setJwtToken, setRefreshToken, setSportsList, setSyncFlag, setToken, setUser, setUserData } from 'src/store/types';
 import { signOut } from 'src/services/authOTP';
 import { checkNotifications } from 'react-native-permissions';
 import { initializePusher, unsubscribeInterest } from "src/components/Pusher/PusherBeams";
@@ -165,6 +165,7 @@ export default function Setting() {
               console.error('response', response);
               handleInitialPusher();
               dispatch(setUser(false));
+              dispatch(setSyncFlag(false));
               dispatch(setUserData({}));
               dispatch(setToken(''));
               dispatch(setJwtToken(''));
@@ -178,6 +179,7 @@ export default function Setting() {
               // ShowMessage(error.message)
               if (error?.message === 'User not authenticated.') {
                 dispatch(setUser(false));
+                dispatch(setSyncFlag(false));
                 dispatch(setUserData({}));
                 dispatch(setToken(''));
                 dispatch(setJwtToken(''));

@@ -20,7 +20,8 @@ const initialState = {
   userEmail: '',
   userLoginVerified: false,
   tooltipStatus: true,
-  searchFlag: false
+  searchFlag: false,
+  syncFlag: false,
 };
 
 const user = (state = initialState, action: any) => {
@@ -252,6 +253,18 @@ const user = (state = initialState, action: any) => {
         return {
           ...state,
           selectedTimebar: action.payload,
+        };
+      } catch (e) {
+        alert(e);
+        return state;
+      }
+      break;
+    // sync flag
+    case 'SET_SYNC_FLAG':
+      try {
+        return {
+          ...state,
+          syncFlag: action.payload,
         };
       } catch (e) {
         alert(e);

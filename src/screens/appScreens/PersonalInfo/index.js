@@ -22,7 +22,7 @@ import { deleteUser, userUpdateProfile } from 'src/services/updateProfile';
 import LoaderModal from 'src/components/LoaderModal';
 import { ShowMessage } from 'src/components/ShowMessage';
 import { updateProfileValidation } from 'src/common/authValidation';
-import { setJwtToken, setRefreshToken, setToken, setUser, setUserData } from 'src/store/types';
+import { setJwtToken, setRefreshToken, setSyncFlag, setToken, setUser, setUserData } from 'src/store/types';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { optionsList } from 'src/utils/list';
 
@@ -147,6 +147,7 @@ export default function PersonalInfo() {
         dispatch(setToken(''));
         dispatch(setJwtToken(''));
         dispatch(setRefreshToken(''));
+        dispatch(setSyncFlag(false));
         await AsyncStorage.removeItem('refreshToken');
         await AsyncStorage.removeItem('accessToken');
         setLoadingLocal(false);

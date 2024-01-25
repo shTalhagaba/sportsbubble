@@ -18,6 +18,7 @@ import {
   setGuest,
   setJwtToken,
   setRefreshToken,
+  setSyncFlag,
   setToken,
   setUser,
   setUserData,
@@ -90,6 +91,7 @@ export default function Login() {
       for (const interest of interestList) {
         await subscribeInterest(interest);
       }
+      // dispatch(setSyncFlag(true));
       console.log('All interests subscribed successfully');
     } catch (error) {
       console.error('Error subscribing to interests:', error);
