@@ -59,6 +59,7 @@ export default function UpdatePassword() {
             dispatch(setToken(''));
             dispatch(setJwtToken(''));
             dispatch(setRefreshToken(''));
+            console.log('setting sync flag to false due to globalLogout')
             dispatch(setSyncFlag(false));
             removeAsyncStorage();
             dispatch(setSportsList([]));

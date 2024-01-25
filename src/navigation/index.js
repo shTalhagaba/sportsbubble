@@ -91,6 +91,8 @@ const AppStackNavigator = () => {
       dispatch(setJwtToken(''));
       dispatch(setRefreshToken(''));
       dispatch(setSyncFlag(false));
+      console.log('error: ', error);
+      console.log('setting syncFlag To False Due to error in verifySession')
       await AsyncStorage.removeItem('refreshToken');
       await AsyncStorage.removeItem('accessToken');
       dispatch(setSportsList([]));

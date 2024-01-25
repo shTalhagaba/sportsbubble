@@ -88,10 +88,12 @@ export default function Login() {
 
   const subscribeToInterests = async (interestList) => {
     try {
-      for (const interest of interestList) {
-        await subscribeInterest(interest);
+      for await (const interest of interestList) {
+        await subscribeInterest(interest).promise();
+        console.log(`Subscribed to interest: ${interest} successfully on login`);
+
       }
-      // dispatch(setSyncFlag(true));
+      dispatch(setSyncFlag(true));
       console.log('All interests subscribed successfully');
     } catch (error) {
       console.error('Error subscribing to interests:', error);

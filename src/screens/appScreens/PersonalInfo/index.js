@@ -148,6 +148,7 @@ export default function PersonalInfo() {
         dispatch(setJwtToken(''));
         dispatch(setRefreshToken(''));
         dispatch(setSyncFlag(false));
+        console.log('setting syncFlag To False in handleDeleteAccount')
         await AsyncStorage.removeItem('refreshToken');
         await AsyncStorage.removeItem('accessToken');
         setLoadingLocal(false);

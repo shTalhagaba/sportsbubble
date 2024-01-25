@@ -166,6 +166,7 @@ export default function Setting() {
               handleInitialPusher();
               dispatch(setUser(false));
               dispatch(setSyncFlag(false));
+              console.log('setting syncFlag To False Due to Logout')
               dispatch(setUserData({}));
               dispatch(setToken(''));
               dispatch(setJwtToken(''));
@@ -180,6 +181,7 @@ export default function Setting() {
               if (error?.message === 'User not authenticated.') {
                 dispatch(setUser(false));
                 dispatch(setSyncFlag(false));
+                console.log('setting syncFlag To False Due to Error Logout')
                 dispatch(setUserData({}));
                 dispatch(setToken(''));
                 dispatch(setJwtToken(''));

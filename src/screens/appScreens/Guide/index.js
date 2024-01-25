@@ -80,6 +80,7 @@ export default function Guide() {
     dayjs(new Date()).add(7, 'day').toISOString(),
   );
 
+
   // Use#1
   useEffect(() => {
     console.log('Use#1  : ')
@@ -233,7 +234,9 @@ export default function Guide() {
       initializePusher();
       for await (const interest of interestList) {
         subscribeInterest(interest);
+        console.log('syncing interest : ', interest);
       }
+      console.log('setting syncFlag To True');
       dispatch(setSyncFlag(true));
     }
   };
