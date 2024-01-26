@@ -72,15 +72,19 @@ const handleNotification = notification => {
 export const subscribeInterest = interest => {
   console.log("interest => ", interest)
   console.log("RNPusherPushNotifications => ", RNPusherPushNotifications)
-  RNPusherPushNotifications.subscribe(
-    interest,
-    (statusCode, response) => {
-      console.error(statusCode, response);
-    },
-    () => {
-      console.log('Success subscribeInterest');
-    }
-  );
+  return new Promise((resolve, reject) => {
+    RNPusherPushNotifications.subscribe(
+      interest,
+      (statusCode, response) => {
+        console.error(statusCode, response);
+        reject(response)
+      },
+      () => {
+        console.log('Success subscribeInterest');
+        resolve()
+      }
+    );
+  });
 };
 
 export const unsubscribeInterest = interest => {

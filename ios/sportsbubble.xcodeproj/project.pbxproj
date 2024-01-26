@@ -907,7 +907,7 @@
 				CODE_SIGN_ENTITLEMENTS = sportsbubble/sportsbubble.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = N2NJSCBBBJ;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = sportsbubble/Info.plist;
@@ -942,7 +942,7 @@
 				CODE_SIGN_ENTITLEMENTS = sportsbubble/sportsbubble.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = N2NJSCBBBJ;
 				INFOPLIST_FILE = sportsbubble/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = WatchSports;

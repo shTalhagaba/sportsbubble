@@ -193,7 +193,7 @@ const BottomTab = () => {
     try {
       if (reduxData?.userData) {
         console.log("reduxData => ", reduxData?.userData)
-        crashlytics().setUserId(reduxData?.userData?.aud)
+        crashlytics().setUserId(reduxData?.userData?.aud.toString())
         // crashlytics().setAttribute("userName", reduxData?.userData?.given_name + reduxData?.userData?.family_name)
         crashlytics.setAttribute({
           userName: reduxData?.userData?.given_name + reduxData?.userData?.family_name,
