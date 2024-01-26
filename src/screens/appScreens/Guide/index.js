@@ -113,9 +113,6 @@ export default function Guide() {
       'change',
       handleAppStateChange,
     );
-
-    const list = categoryData.map((item, index) => ({ ...item, selected: index === 0 }));
-    setCategoryData(list);
     // Unsubscribe and perform cleanup when the component unmounts
     return () => {
       appStateSubscription.remove();
