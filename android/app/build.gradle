@@ -189,33 +189,26 @@ dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
     implementation project(':react-native-pusher-push-notifications')
-    implementation 'com.pusher:push-notifications-android:1.4.4'
-implementation project(':react-native-config')
+    implementation project(':react-native-config')
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.0.0")
-implementation project(':instabug-reactnative')
-
-     implementation platform('com.google.firebase:firebase-bom:31.1.0')
+    implementation project(':instabug-reactnative')
+    implementation platform('com.google.firebase:firebase-bom:31.1.0')
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-core:20.0.0'
-
-
-
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
         exclude group:'com.squareup.okhttp3', module:'okhttp'
     }
-
     debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}")
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
     } else {
         implementation jscFlavor
     }
-
     implementation 'com.google.firebase:firebase-messaging:20.2.3' // Update to the latest version
     implementation project(':react-native-pusher-push-notifications')
     implementation 'com.pusher:push-notifications-android:1.9.0'
-
+    implementation "com.google.firebase:firebase-iid:21.1.0"
 }
 
     // add this block
