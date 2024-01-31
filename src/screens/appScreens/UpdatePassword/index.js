@@ -64,7 +64,7 @@ export default function UpdatePassword() {
             removeAsyncStorage();
             dispatch(setSportsList([]));
             navigation.replace('Auth');
-            ShowMessage('Password changed successfully.')
+            ShowMessage(Strings.passwordChanged)
           })
           .catch(error => {
             console.error('Error signing out:', error.message);
@@ -87,7 +87,7 @@ export default function UpdatePassword() {
         } else {
           console.log('error.message =>>', error.message);
           if (error.message == 'Incorrect username or password.') {
-            ShowMessage('Please enter valid current password');
+            ShowMessage(Strings.enterValidPassword);
           } else {
             ShowMessage(error?.message);
           }

@@ -92,7 +92,7 @@ export default function MySports() {
   const updateConsumers = async (sport, flag, isBellIcon) => {
     try {
       if (!sport?.name) {
-        ShowMessage('Invalid data');
+        ShowMessage(Strings.invalidData);
         return;
       }
       const updateData = {
@@ -140,7 +140,7 @@ export default function MySports() {
       });
       if (!loadingFavourite && data?.updateConsumers?.consumers) {
         ShowMessage(
-          'Added to Favorites successfully! ',
+          Strings.addedToFav,
           data?.updateConsumers?.consumers,
         );
         if (
@@ -151,10 +151,6 @@ export default function MySports() {
             setSportsList(
               data?.updateConsumers?.consumers?.[0]?.favoriteSports,
             ),
-          );
-          console.log(
-            'Subscribe: ',
-            data?.updateConsumers?.consumers?.[0]?.favoriteSports,
           );
           if (isBellIcon) {
             if (await checkPermission()) {
@@ -169,7 +165,6 @@ export default function MySports() {
           }
         }
       }
-      // console.log('Updated consumer:', data?.updateConsumers?.consumers);
     } catch (err) {
       console.error('Error updating consumer:', err);
     }
@@ -211,7 +206,7 @@ export default function MySports() {
           variables: updateData,
         });
         if (!loadingFavourite && data?.updateConsumers?.consumers) {
-          ShowMessage('Removed from Favorites successfully!');
+          ShowMessage(Strings.removeFromFav);
           dispatch(
             setSportsList(
               data?.updateConsumers?.consumers?.[0]?.favoriteSports,
@@ -230,7 +225,7 @@ export default function MySports() {
         console.error('Error updating consumer:', err);
       }
     } else {
-      ShowMessage('Invalid data');
+      ShowMessage(Strings.invalidData);
     }
   };
   // Define a function to execute the mutation
@@ -277,8 +272,8 @@ export default function MySports() {
         if (!loadingNotification && data?.updateConsumers?.consumers) {
           ShowMessage(
             flag === false
-              ? 'Notification is Active'
-              : 'Notification is Inactive',
+              ? Strings.notificationActive
+              : Strings.notificationInactive,
           );
           dispatch(
             setSportsList(
@@ -307,7 +302,7 @@ export default function MySports() {
           }
         }
       } else {
-        ShowMessage('Invalid data');
+        ShowMessage(Strings.invalidData);
       }
     } catch (err) {
       console.error('Error updating consumer:', err);

@@ -18,7 +18,6 @@ import { Images, Colors, Strings, Constants } from 'src/utils';
 import AppHeader from 'src/components/AppHeader';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 import LiveMatchView from 'src/components/Modal/LiveMatchModal';
-import { useQuery } from '@apollo/client';
 import { useLazyQuery } from '@apollo/client';
 import dayjs from 'dayjs';
 import { GET_SORTED_EVENTS } from './queries';
@@ -29,7 +28,6 @@ import {
   setGuest,
   setStoreEventList,
   setUser,
-  setTooltipStatus,
   setSyncFlag
 } from 'src/store/types';
 import { moderateScale } from 'react-native-size-matters';
@@ -42,7 +40,6 @@ import useSportsList from 'src/services/useSportsList';
 import StarView from 'src/components/StarView';
 import { initializePusher, subscribeInterest } from 'src/components/Pusher/PusherBeams';
 import { checkNotifications } from 'react-native-permissions';
-import Config from 'react-native-config';
 
 const screenWidth = Dimensions.get('window').width;
 const { fontScale } = Dimensions.get('window');
@@ -701,7 +698,7 @@ export default function Guide() {
                           ? styles.sliderActiveTimeTxt
                           : styles.sliderInactiveTimeTxt
                       }>
-                      {'Live'}
+                      {Strings.live}
                     </Text>
                   </TouchableOpacity>
                 </View>

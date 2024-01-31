@@ -25,7 +25,6 @@ export default function Term(props) {
       const termUse = await fetchContentFulContent('64plgJDecqRVW4KQX9PgQ8');
       const privacyPolicy = await fetchContentFulContent('52UJuQgc1nZAm8kLrkAlke');
       const californiaPolicy = await fetchContentFulContent('4QghRl8LFoRAvWRNyTDeX4');
-      console.log('Strings.privacyPolicy : ', JSON.stringify(privacyPolicy, 2))
       setContent({
         termUse: termUse?.fields,
         privacyPolicy: privacyPolicy?.fields,

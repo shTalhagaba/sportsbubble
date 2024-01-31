@@ -12,7 +12,6 @@ export default function About(props) {
   useEffect(() => {
     async function fetchAboutContent() {
       const about = await fetchContentFulContent('549YiMQUWzYZxR1qpstDYd');
-      console.log('about.fields.description.content[0].content[0].value',JSON.stringify(about.fields.description,2))
       setContent(about.fields);
     }
     fetchAboutContent();

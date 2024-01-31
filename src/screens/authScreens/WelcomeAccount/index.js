@@ -202,7 +202,7 @@ export default function WelcomeAccount(props) {
     try {
       setLoadingLocal(true);
       const user = await resendCode(email);
-      ShowMessage('Verification code sent successfully!');
+      ShowMessage(Strings.verificationCodeSent);
       setLoadingLocal(false);
     } catch (error) {
       if (error.message.includes(':')) {

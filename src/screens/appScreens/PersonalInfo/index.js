@@ -84,8 +84,8 @@ export default function PersonalInfo() {
         && user?.['custom:zipcode'] === zipCode && user?.['custom:pronouns'] === pronouns) {
         // ShowMessage('Not saving any data successfully');
         Alert.alert(
-          'Changes not saved',
-          'Do you want to leave changes?',
+          Strings.changesNotSaved,
+          Strings.leaveChanges,
           [
             {
               text: 'No',
@@ -119,7 +119,7 @@ export default function PersonalInfo() {
               'custom:pronouns': pronouns,
             };
             dispatch(setUserData(updatedProfile));
-            ShowMessage('Profile updated successfully!!');
+            ShowMessage(Strings.profileUpdated);
             setButtonDisable(true)
             // navigation.goBack();
           }
@@ -174,8 +174,8 @@ export default function PersonalInfo() {
   const handleBack = () => {
     if (!buttonDisable) {
       Alert.alert(
-        'Changes not saved',
-        'Do you want to leave changes?',
+        Strings.changesNotSaved,
+        Strings.leaveChanges,
         [
           {
             text: 'No',
